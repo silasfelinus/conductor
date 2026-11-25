@@ -237,11 +237,8 @@ tasks:
   - id: t-007
     milestone: m3
     title: "Write and implement all six distinctive tactical story missions"
-    status: review
-    owner: worker
-    claimed_by: 20261125T042500Z-evt-t007-continuity-92b6
-    claimed_at: '2026-11-25T04:25:00Z'
-    updated: '2026-11-25T04:27:00Z'
+    status: ready
+    updated: '2026-11-25T07:29:00Z'
     depends_on: [t-003, t-005, t-006]
     passes: 0
     stakes: reversible
@@ -293,6 +290,8 @@ tasks:
       Reopen the remaining Crossfire campaign continuity scope for independent production. No open matching implementation PR was found; preserve previously merged contributions and all acceptance requirements. Do not count partial implementation as done.
 
       Crossfire rescue and evidence now independently grant earned tactical carryover and finale allies, including both in First Bell. Preserve existing single debrief classification and save schema. Regression tests for simultaneous statuses, save round trip and finale threshold committed at f9e4c7b03cd5468f21c7794e39af0a7ca86876ad, branch worker/every-villain-tactics-t-007-dual-callback-92b6. Full CI and full campaign QA remain pending; partial scope.
+
+      2026-11-24 PT: PR #5799 merged into kind_robots main at 7099e20291fb3785148d4f8e7af2b8b7050c1903 after all seven latest-head workflows passed (including Tactics gameplay and four contract shards). Rescue and evidence independently earn carryover and finale support; full campaign QA remains open. Returning partial umbrella scope to ready.
   - id: t-008
     milestone: m3
     title: "Author 48 hero and villain playable arcs with distinct supporting cast"

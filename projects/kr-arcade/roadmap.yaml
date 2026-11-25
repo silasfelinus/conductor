@@ -3028,10 +3028,7 @@ tasks:
   - id: t-183
     milestone: m12
     title: "Superkate Spectrum: endless, puzzle atelier, cooperative relay, achievements and ranked leaderboard fairness"
-    status: review
-    owner: worker
-    claimed_by: 2026-11-25T055800Z-spectrum-relay-d1a4c9
-    claimed_at: '2026-11-25T05:58:00Z'
+    status: ready
     passes: 0
     stakes: reversible
     depends_on: [t-178]
@@ -3047,7 +3044,9 @@ tasks:
       2026-11-24 PT: verified kind_robots #5796 merged b36773cbbd921bc36cff4d802b3d7a5112697b3f after nine successful workflows on exact latest head. Six introductory Atelier puzzles and actual trajectory regression tests confirmed in main. Remaining cooperative relay, advanced Atelier and competition QA.
 
       2026-11-24 PT: implemented local pass-and-play relay over six existing Atelier boards, alternating players after shot settlement, shared combo score, round progression and retry checkpoints, without ranked or career mutations. Actual projectile regression cases cover full relay, turn alternation, score, retry and save isolation. Head 1b0020d46a155248b63220f98f6d6e692345cd04; CI pending. Distinct relay boards, independent ammunition, gifted specials, finale boss, persistent records and device QA remain. Partial scope; no deploy.
-    updated: '2026-11-25T06:01:00Z'
+
+      2026-11-24 PT: verified #5805 merged b7c6ff6d28779e91c06f3966c909787e4750f160. Local relay landed; dedicated cooperative puzzles, records and finale remain. Partial, no deploy.
+    updated: '2026-11-25T07:29:00Z'
   - id: t-184
     milestone: m12
     title: "Superkate Spectrum: adversarial full campaign playthrough, mobile QA, save/retry/ending tests and visual acceptance"
@@ -3075,11 +3074,11 @@ tasks:
   - id: t-186
     milestone: m12
     title: "Superkate Spectrum: navigable 30-level star map, cosmetic bubble collection and earned animated effects"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 2026-11-25T072900Z-spectrum-map-7a91bd
     claimed_at: '2026-11-25T07:29:00Z'
-    updated: '2026-11-25T07:29:00Z'
+    updated: '2026-11-25T07:31:00Z'
     passes: 0
     stakes: reversible
     depends_on: [t-176]
@@ -3089,6 +3088,8 @@ tasks:
       2026-11-24 PT: implemented a six-district serpentine 30-stage map with individual stars, locked nodes, selected replay, total medals and four cosmetic previews with rank locks on worker/kr-arcade-t-186-spectrum-map-6cb4e8. Added traversal and replay regression tests. CI, delivered illustrated art, touch input and unlock celebrations remain pending; partial slice.
 
       2026-11-24 PT: Kind Robots #5734 merged b6c5e82b463b010fd76b77a39245ba32124ab36f after nine completed successful workflows on exact head 8a784cf7e0182a339fcd6c1d0f994fea255047bd. Requeue illustrated art, direct touch selection, unlock celebrations and device QA. No deploy initiated.
+
+      2026-11-24 PT: illustrated all six district rows using recovered robot-only boss art (ArtJobs 76805-76810), aspect-preserving crop, contrast veil and missing-image fallback. Added earned cosmetic threshold notifications with animated bubble preview, calm-motion support, sound, unchanged selected style and save compatibility. Regression tests cover all thresholds and actual Story/Classic projectile unlocks, expiry and reload. Head 41eaab763424e7f4dcbcf16767213bed7e0fc4d3; CI pending. Power tutorials and rendered device/art verification remain. No new art generation or deployment.
 
   - id: t-187
     milestone: m12
