@@ -1,6 +1,6 @@
 # Superkate's Spectrum: human playtest checklist
 
-**Prepared:** 2026-11-25 PT, after kind_robots#5816. **Where:** Arcade, then the Superkate's Spectrum cabinet.
+**Prepared:** 2026-11-25 PT, after kind_robots#5816 and #5823. **Where:** Arcade, then the Superkate's Spectrum cabinet.
 This is a handoff for people to play, not a gate the build roadmap waits on. Agents verified everything
 in "Already machine-verified"; humans are asked only for what a machine cannot judge.
 
@@ -17,8 +17,14 @@ in "Already machine-verified"; humans are asked only for what a machine cannot j
   768 px by touch, and 1440 px by keyboard and gamepad: hub tabs, stage start, aim and fire, the
   power tip, all six bosses rendered, save → reopen, game over keeps progress, and relay turns.
   The touch controls never cover the board.
+- **Hub.** `verifySuperkateSpectrumHub.browser.test.mjs` covers the Scrapbook (earned and locked
+  memories), all trophy pages, every setting including the music and effects levels, the in-game save
+  state, and site achievements awarded once.
+- **Two devices, one account.** `verifySuperkateSpectrumAccounts.browser.test.mjs` covers guest
+  adoption, a second device, a stale-device 409 merge, an account switch and an outage, all on the real
+  sync code against a mock server.
 - **Engine, save and audio suites.** Boards, bosses, cloud-save merges and races, 14 recorded music
-  masters.
+  masters, and a music-versus-effects balance check.
 
 ## Please play and tell us
 
@@ -31,11 +37,12 @@ in "Already machine-verified"; humans are asked only for what a machine cannot j
 4. **Power orbs.** When the first Prism, Burst or Ribbon card appears, is it clear what to do?
 5. **Story.** Do the choices after stages 5, 15 and 25 feel meaningful? Was the ending you reached
    satisfying? (Three exist.)
-6. **Sound on a real device.** Phone speaker and headphones: are music and pops balanced? Do the
-   mute, music and effects switches behave? **Machines cannot check this one (t-182).**
+6. **Sound on a real device.** Phone speaker and headphones: are music and pops balanced? Try MUSIC LEVEL and EFFECTS LEVEL in
+   Settings. The levels are balanced by measurement; only ears can judge the real speaker.
 7. **Two devices, signed in.** Play a few stages on one device, sign in on a second device and
    confirm the stars and stage carried over, guest progress was adopted, and nothing went
-   backwards. **This needs production accounts (t-185).**
+   backwards. The hub's Settings page shows the save state. The sync logic is machine-verified against
+   a mock server; this confirms the deployed server and database.
 8. **Co-op Relay with two people on one device.** Classic card → LEFT or tap Relay. Is the turn
    passing clear? Is the gifted Prism noticeable?
 9. **Look and feel.** Is the hub (Play, Scrapbook, Achievements, Settings) attractive enough for the
@@ -43,9 +50,10 @@ in "Already machine-verified"; humans are asked only for what a machine cannot j
 
 ## Decisions only Silas or Kate can make
 
-- **Kate's consent** before any recognisable likeness (character portraits, t-188) is shown publicly.
-  Shipped art is robot-only boss art plus the title card.
-- **Visual acceptance**, and moving the cabinet from the `growing` to the `showcase` shelf.
+- **Kate's consent (t-189)** before art showing the Superkate character goes in the game. Six scrapbook
+  district illustrations are rendered and live on the media host but not wired. Shipped in-game art is
+  robot-only boss art plus the title card.
+- **Visual acceptance (t-184)**, and moving the cabinet from the `growing` to the `showcase` shelf.
 - **Any deploy or public promotion.**
 
 Report findings as Conductor tasks with `playtest_iteration: true` under `kr-arcade`, or as comments
