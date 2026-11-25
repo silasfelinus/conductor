@@ -119,6 +119,12 @@ jobs:
           print(f'Validated {len(paths)} YAML files.')
           PY
 
+      # memory-dungeon/t-071: GitHub skips every job of an unparseable workflow
+      # file instead of failing a check, so a broken ci.yml looks green. Parse
+      # them all from here, a workflow other than ci.yml.
+      - name: Every workflow file parses
+        run: python scripts/check_workflow_yaml.py
+
       - name: Python syntax check
         run: |
           set -euo pipefail

@@ -1664,11 +1664,11 @@ tasks:
   - id: t-071
     milestone: m4
     title: "Parse every .github/workflows/*.yml from a workflow other than ci.yml so an unparseable CI file shows as a red check"
-    status: claimed
+    status: done
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-25T01:50:36Z'
+    updated: '2026-11-25T01:51:44Z'
     note: |-
       Kaizen from the t-070 review (conductor#7326). Head 0bff092 made .github/workflows/ci.yml unparseable; GitHub then ran none of its jobs and the PR showed 16 green checks instead of 26, so nothing was red. Add a step to the Static checks workflow (or any workflow that is not ci.yml) that yaml.safe_loads every file under .github/workflows/ and fails on the first parse error, with a pytest that seeds one bad file. Reversible, CI-only; lives in this roadmap because the conductor project is finished and takes no new tasks.
 
@@ -1676,9 +1676,16 @@ tasks:
       the only agent working on this project currently, so any claimed roadmap items are
       likely stale"). Playtest-ready means the complete twelve-world game; see
       ASSESSMENT-2026-11-20.md for this task's gap.
+
+      2026-11-24 PT: done. scripts/check_workflow_yaml.py yaml.safe_loads every
+      .github/workflows/*.yml|*.yaml and fails on a parse error, a non-mapping root or a
+      missing `jobs` mapping. It runs as the "Every workflow file parses" step of the Static
+      checks job in security-audit.yml (not ci.yml). tests/test_check_workflow_yaml.py seeds
+      a mis-indented ci.yml and asserts exit 1; all 72 current workflow files parse.
     owner: worker
     claimed_by: 2026-11-25T01:55Z-claude-c92s8h
     claimed_at: '2026-11-25T01:50:36Z'
+    implementation_pr: 'silasfelinus/conductor#PRNUM'
   - id: t-072
     milestone: m4
     title: "Add a .github/pull_request_template.md that mirrors the AGENTS.md Worker handoff headings so connector-opened worker PRs start from the template"
