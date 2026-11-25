@@ -190,7 +190,7 @@ tasks:
   - id: t-005
     milestone: m2
     title: "Implement enemy interaction, held objects and powerup systems"
-    status: claimed
+    status: review
     depends_on: [t-003]
     passes: 0
     stakes: reversible
@@ -228,7 +228,9 @@ tasks:
       power badge. verifySavePlumberReserve.test.ts (banking, catch, steering, expiry, death,
       seeded fuzz) is in test:arcade-engine. Remaining: carrying enemies, Gen-2 powers (glide,
       suit, heavy form), map-usable inventory, ride companion. Return to ready.
-    updated: '2026-11-25T22:10:31.909Z'
+
+      Added Down + Wrench pickup of stunned regular Rivet Rollers, carried-state isolation, directional throw using existing kicked-roller collision, blocked overhead release, damage return and death cleanup, plus guide and movement regressions. Isolated committed-method tests passed. App branch worker/save-the-plumber-t-005-roller-j8w2 head 282a4762; full CI pending. Partial scope; remaining expanded powers, inventory and ride companion.
+    updated: '2026-11-25T22:12:43.126Z'
     owner: worker
     claimed_by: 20261125T221031Z-plumber-reserve-j8w2
     claimed_at: '2026-11-25T22:10:31.909Z'
@@ -490,10 +492,10 @@ tasks:
   - id: t-020
     milestone: m6
     title: "Gen-2 level engine: sub-areas, vertical rooms, midpoints, secret exits, campaign-wide switches"
-    status: review
+    status: ready
     passes: 0
     stakes: reversible
-    updated: '2026-11-25T10:43:20.297Z'
+    updated: '2026-11-25T22:10:25.385Z'
     note: |-
       GEN2-STANDARD.md section 2. Doors, pipes and ladders into sub-rooms with their own camera bounds; vertical shafts and climbs; a midpoint checkpoint per level; a second, hidden exit type that reports `secret` to the overworld (t-011); Valve Chapel switch state read by every level so pressed switches make outlined blocks solid campaign-wide; auto-scroll and haunted-maze (Hush House) exit logic. Deterministic replay tests for each: secret exit reachable, sub-room return position, switch persistence across levels and save/reload.
 
@@ -514,9 +516,8 @@ tasks:
       Verified kind_robots#5769 merged 2026-11-24 PT. Verdigris Chapel and persistent switch blocks delivered; remaining chapels, subrooms and vertical stages. Return partial scope to ready.
 
       Generalized optional chapel entry, respawn, completion and backdrop; authored Brass, Cobalt and Rose Chapel courses and persistent per-slot switch blocks in Worlds 3, 4 and 6. Added map, death-reload, clear, save and fresh-slot regression coverage. App branch worker/save-the-plumber-t-020-chapels-v5c1 head d1190ef3. Full CI pending. Subrooms, vertical traversal, auto-scroll and haunted mazes remain.
-    owner: worker
-    claimed_by: 20261125T091708Z-plumber-chapels-v5c1
-    claimed_at: '2026-11-25T09:17:08.821Z'
+
+      Verified kind_robots#5821 merged at cdd5acb4. All four Valve Chapels are implemented with persistent per-slot switches. Return partial engine scope to ready: subrooms, vertical routes, auto-scroll and haunted mazes remain.
   - id: t-021
     milestone: m6
     title: "Gen-2 World 1: re-author Bluebell Pipeworks as a full SMB3/SMW-class world"
