@@ -3178,11 +3178,11 @@ tasks:
   - id: t-187
     milestone: m12
     title: "Superkate Spectrum: integrate retro-modern Arcade hub with Play, Classic, Scrapbook, Achievements and Settings"
-    status: review
+    status: done
     owner: worker
-    claimed_by: 2026-11-25T091630Z-spectrum-cabinet-6b0c29
+    claimed_by: 2026-11-25T094544Z-spectrum-qa-sbjq3s
     claimed_at: '2026-11-25T09:16:30Z'
-    updated: '2026-11-25T09:19:00Z'
+    updated: '2026-11-25T11:37:58Z'
     passes: 0
     stakes: reversible
     depends_on: [t-176]
@@ -3190,6 +3190,16 @@ tasks:
       Silas, 2026-11-22 PT: preserve old-school game character but wrap it in premium modern presentation. No second disconnected route: provide a cohesive console-first cabinet home with illustrated stage-map cards, classic/story mode selection, collected bubble cosmetics, chapter and character scrapbook, earned trophies, music/effects/volume and accessibility settings, and a visible account/device cloud-save state. Foundation is in app PR #5624: in-canvas four-tab menu with story stars, local scrapbook, achievement list and aim/animation/high-contrast toggles. Remaining: delivered art, accessible touch interaction, responsive polish, readable one-screen layout at 390/768/1440, input QA and full UI playback validation.
 
       2026-11-25 PT: added six boss-memory collectible album panels, earned from actual persisted boss-stage medals, and all nine trophy displays with touch and keyboard/controller pagination. Uses existing robot-only art (ArtJobs 76805-76810), no unapproved likeness art. Regression tests verify no premature unlocks, migrated saves, full navigation and no mutation. Head 202145550fc2ddf36e4c37bda8022c6053ebda57; CI pending. Partial t-187; rendered device and integration QA remain. No deploy.
+
+      2026-11-25 PT: taken over at Silas's direction (prior claim expired; #5813 had merged
+      without rendered checks). verifySuperkateSpectrumHub renders and drives the hub through
+      the real cabinet + store at 390/768 touch and 1440 keyboard with real art checked
+      locally: six Scrapbook districts (earned memories vs locked), three trophy pages, every
+      setting, reopen persistence; the hub now shows the account save state
+      (synced/syncing/offline/device) pushed from the cabinet. verified kind_robots#5823
+      merged dbe07455fa7a063ec00e6963c4cf90818b685b06 after all 17 checks passed on exact head
+      1642fd95 (incl. TypeScript and the Spectrum cabinet job). No deploy.
+    implementation_pr: 'silasfelinus/kind_robots#5823'
   - id: t-188
     milestone: m12
     title: "Superkate Spectrum: finish audio production and collectible scrapbook portraits with account-safe achievements"
