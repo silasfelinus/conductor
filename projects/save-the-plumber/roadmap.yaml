@@ -387,13 +387,12 @@ tasks:
   - id: t-015
     milestone: m2
     title: "Prove the movement lab replay and real shared-cabinet controls"
-    status: review
-    owner: worker
+    status: done
     claimed_by: 20261125T231100Z-plumber-air-steering-p7m4
     claimed_at: '2026-11-25T23:11:00Z'
     passes: 0
     stakes: reversible
-    updated: '2026-11-25T23:11:00Z'
+    updated: '2026-11-25T23:31:00Z'
     note: |-
       Reviewer kaizen after kind_robots#3564: add deterministic input replays asserting coyote time, buffered jumps, landing/camera bounds and respawn; exercise real shared ArcadeCabinet keyboard/gamepad/touch controls and visible Admin help at phone/tablet/desktop widths. Use browser fixtures with actual consumers rather than source-field matches. Keep public registry and score exclusions. Initial isolated engine pixels are not shared-cabinet/auth integration or full campaign acceptance.
 
@@ -441,6 +440,8 @@ tasks:
       Verified kind_robots#5695 merged at efec50ae. Neutral-air momentum shipped; remaining movement and cross-width verification. Return to ready.
 
       Independent movement-tuning slice: Springstep preserves momentum during held descent with normal drag restored on release, and deterministic bilateral comparison and counter-steering regressions. App branch worker/save-the-plumber-t-015-air-steering-p7m4 head 45a6a53d; full CI pending. Distinct Gen-2 glide power remains t-005 scope; shared-cabinet browser acceptance remains t-015 scope.
+
+      Verified kind_robots#5846 merged at 3273d5b3 after all 12 pre-merge exact-head workflows passed on 8d345d5b, including real cabinet Chromium run 45721357740 and movement replay contract run 45721357777. Deterministic movement, camera, respawn, keyboard/gamepad/touch and rendered tutorial at 390/768/1440 are complete for this task; physical-device and campaign acceptance remain t-013. Branch janitor in progress; production deployment unverified.
 
   - id: t-016
     milestone: m4
