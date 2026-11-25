@@ -346,7 +346,7 @@ subjects:
 - key: idle-salvager
   verdict: 'reject: 2026-11-25 PT source check before render, source ArtImage 262193 is not the shipped sprite (a
     stale draft or a different creature), so this take cannot ship; retake idle-salvager-v2 from the shipped still.
-    The job could not be cancelled from the session, so discard its render'
+    It rendered before the cancel went in; discard the render'
   lane: wan-mp4
   entity: sprite-animation
   title: salvager idle loop
@@ -371,7 +371,7 @@ subjects:
 - key: idle-skate
   verdict: 'reject: 2026-11-25 PT source check before render, source ArtImage 262194 is not the shipped sprite (a
     stale draft or a different creature), so this take cannot ship; retake idle-skate-v2 from the shipped still.
-    The job could not be cancelled from the session, so discard its render'
+    It rendered before the cancel went in; discard the render'
   lane: wan-mp4
   entity: sprite-animation
   title: skate idle loop
@@ -395,7 +395,7 @@ subjects:
 - key: idle-squid
   verdict: 'reject: 2026-11-25 PT source check before render, source ArtImage 262197 is not the shipped sprite (a
     stale draft or a different creature), so this take cannot ship; retake idle-squid-v2 from the shipped still.
-    The job could not be cancelled from the session, so discard its render'
+    It rendered before the cancel went in; discard the render'
   lane: wan-mp4
   entity: sprite-animation
   title: squid idle loop
@@ -415,12 +415,12 @@ subjects:
     wan-mp4: 77147
   art:
     wan-mp4:
-      status: RUNNING
-      art_image_id: null
+      status: DONE
+      art_image_id: 280332
 - key: idle-turret
   verdict: 'reject: 2026-11-25 PT source check before render, source ArtImage 262198 is not the shipped sprite (a
     stale draft or a different creature), so this take cannot ship; retake idle-turret-v2 from the shipped still.
-    The job could not be cancelled from the session, so discard its render'
+    It rendered before the cancel went in; discard the render'
   lane: wan-mp4
   entity: sprite-animation
   title: turret idle loop
@@ -440,7 +440,7 @@ subjects:
     wan-mp4: 77148
   art:
     wan-mp4:
-      status: PENDING
+      status: RUNNING
       art_image_id: null
 - key: idle-guardian-armory-siren
   lane: wan-mp4
@@ -489,7 +489,7 @@ subjects:
 - key: idle-guardian-bulwark
   verdict: 'reject: 2026-11-25 PT source check before render, source ArtImage 262125 is not the shipped sprite (a
     stale draft or a different creature), so this take cannot ship; retake idle-guardian-bulwark-v2 from the shipped
-    still. The job could not be cancelled from the session, so discard its render'
+    still. Cancelled while pending when Silas asked, 2026-11-24 PT'
   lane: wan-mp4
   entity: sprite-animation
   title: guardian-bulwark idle loop
@@ -509,12 +509,12 @@ subjects:
     wan-mp4: 77151
   art:
     wan-mp4:
-      status: PENDING
+      status: CANCELLED
       art_image_id: null
 - key: idle-guardian-clawstrike
   verdict: 'reject: 2026-11-25 PT source check before render, source ArtImage 262126 is not the shipped sprite (a
     stale draft or a different creature), so this take cannot ship; retake idle-guardian-clawstrike-v2 from the
-    shipped still. The job could not be cancelled from the session, so discard its render'
+    shipped still. Cancelled while pending when Silas asked, 2026-11-24 PT'
   lane: wan-mp4
   entity: sprite-animation
   title: guardian-clawstrike idle loop
@@ -534,7 +534,7 @@ subjects:
     wan-mp4: 77152
   art:
     wan-mp4:
-      status: PENDING
+      status: CANCELLED
       art_image_id: null
 - key: idle-guardian-comet-herder
   lane: wan-mp4
@@ -626,7 +626,7 @@ subjects:
 - key: idle-guardian-lantern
   verdict: 'reject: 2026-11-25 PT source check before render, source ArtImage 262129 is not the shipped sprite (a
     stale draft or a different creature), so this take cannot ship; retake idle-guardian-lantern-v2 from the shipped
-    still. The job could not be cancelled from the session, so discard its render'
+    still. Cancelled while pending when Silas asked, 2026-11-24 PT'
   lane: wan-mp4
   entity: sprite-animation
   title: guardian-lantern idle loop
@@ -646,7 +646,7 @@ subjects:
     wan-mp4: 77157
   art:
     wan-mp4:
-      status: PENDING
+      status: CANCELLED
       art_image_id: null
 - key: idle-guardian-mirror
   lane: wan-mp4
@@ -695,7 +695,7 @@ subjects:
 - key: idle-guardian-salvager
   verdict: 'reject: 2026-11-25 PT source check before render, source ArtImage 262184 is not the shipped sprite (a
     stale draft or a different creature), so this take cannot ship; retake idle-guardian-salvager-v2 from the shipped
-    still. The job could not be cancelled from the session, so discard its render'
+    still. Cancelled while pending when Silas asked, 2026-11-24 PT'
   lane: wan-mp4
   entity: sprite-animation
   title: guardian-salvager idle loop
@@ -715,7 +715,7 @@ subjects:
     wan-mp4: 77160
   art:
     wan-mp4:
-      status: PENDING
+      status: CANCELLED
       art_image_id: null
 - key: idle-guardian-shoal-koi
   lane: wan-mp4
@@ -741,7 +741,7 @@ subjects:
 - key: idle-guardian-urchin
   verdict: 'reject: 2026-11-25 PT source check before render, source ArtImage 262185 is not the shipped sprite (a
     stale draft or a different creature), so this take cannot ship; retake idle-guardian-urchin-v2 from the shipped
-    still. The job could not be cancelled from the session, so discard its render'
+    still. Cancelled while pending when Silas asked, 2026-11-24 PT'
   lane: wan-mp4
   entity: sprite-animation
   title: guardian-urchin idle loop
@@ -761,12 +761,12 @@ subjects:
     wan-mp4: 77161
   art:
     wan-mp4:
-      status: PENDING
+      status: CANCELLED
       art_image_id: null
 - key: idle-comet-crown
   verdict: 'reject: 2026-11-25 PT source check before render, source ArtImage 262083 is not the shipped sprite (a
     stale draft or a different creature), so this take cannot ship; retake idle-comet-crown-v2 from the shipped
-    still. The job could not be cancelled from the session, so discard its render'
+    still. Cancelled while pending when Silas asked, 2026-11-24 PT'
   lane: wan-mp4
   entity: sprite-animation
   title: comet-crown idle loop
@@ -786,12 +786,12 @@ subjects:
     wan-mp4: 77162
   art:
     wan-mp4:
-      status: PENDING
+      status: CANCELLED
       art_image_id: null
 - key: idle-halo-fin
   verdict: 'reject: 2026-11-25 PT source check before render, source ArtImage 262084 is not the shipped sprite (a
     stale draft or a different creature), so this take cannot ship; retake idle-halo-fin-v2 from the shipped still.
-    The job could not be cancelled from the session, so discard its render'
+    Cancelled while pending when Silas asked, 2026-11-24 PT'
   lane: wan-mp4
   entity: sprite-animation
   title: halo-fin idle loop
@@ -811,12 +811,12 @@ subjects:
     wan-mp4: 77163
   art:
     wan-mp4:
-      status: PENDING
+      status: CANCELLED
       art_image_id: null
 - key: idle-petal-wing
   verdict: 'reject: 2026-11-25 PT source check before render, source ArtImage 262085 is not the shipped sprite (a
     stale draft or a different creature), so this take cannot ship; retake idle-petal-wing-v2 from the shipped still.
-    The job could not be cancelled from the session, so discard its render'
+    Cancelled while pending when Silas asked, 2026-11-24 PT'
   lane: wan-mp4
   entity: sprite-animation
   title: petal-wing idle loop
@@ -836,12 +836,12 @@ subjects:
     wan-mp4: 77164
   art:
     wan-mp4:
-      status: PENDING
+      status: CANCELLED
       art_image_id: null
 - key: idle-prism-lance
   verdict: 'reject: 2026-11-25 PT source check before render, source ArtImage 262086 is not the shipped sprite (a
     stale draft or a different creature), so this take cannot ship; retake idle-prism-lance-v2 from the shipped
-    still. The job could not be cancelled from the session, so discard its render'
+    still. Cancelled while pending when Silas asked, 2026-11-24 PT'
   lane: wan-mp4
   entity: sprite-animation
   title: prism-lance idle loop
@@ -861,7 +861,7 @@ subjects:
     wan-mp4: 77165
   art:
     wan-mp4:
-      status: PENDING
+      status: CANCELLED
       art_image_id: null
 - key: idle-b01-phase1
   lane: wan-mp4
@@ -1208,7 +1208,7 @@ subjects:
 - key: idle-b07-phase1
   verdict: 'reject: 2026-11-25 PT source check before render, source ArtImage 262105 is not the shipped sprite (a
     stale draft or a different creature), so this take cannot ship; retake idle-b07-phase1-v2 from the shipped still.
-    The job could not be cancelled from the session, so discard its render'
+    Cancelled while pending when Silas asked, 2026-11-24 PT'
   lane: wan-mp4
   entity: sprite-animation
   title: b07-phase1 idle loop
@@ -1227,12 +1227,12 @@ subjects:
     wan-mp4: 77192
   art:
     wan-mp4:
-      status: PENDING
+      status: CANCELLED
       art_image_id: null
 - key: idle-b07-phase2
   verdict: 'reject: 2026-11-25 PT source check before render, source ArtImage 262106 is not the shipped sprite (a
     stale draft or a different creature), so this take cannot ship; retake idle-b07-phase2-v2 from the shipped still.
-    The job could not be cancelled from the session, so discard its render'
+    Cancelled while pending when Silas asked, 2026-11-24 PT'
   lane: wan-mp4
   entity: sprite-animation
   title: b07-phase2 idle loop
@@ -1251,12 +1251,12 @@ subjects:
     wan-mp4: 77193
   art:
     wan-mp4:
-      status: PENDING
+      status: CANCELLED
       art_image_id: null
 - key: idle-b07-phase3
   verdict: 'reject: 2026-11-25 PT source check before render, source ArtImage 262107 is not the shipped sprite (a
     stale draft or a different creature), so this take cannot ship; retake idle-b07-phase3-v2 from the shipped still.
-    The job could not be cancelled from the session, so discard its render'
+    Cancelled while pending when Silas asked, 2026-11-24 PT'
   lane: wan-mp4
   entity: sprite-animation
   title: b07-phase3 idle loop
@@ -1276,7 +1276,7 @@ subjects:
     wan-mp4: 77167
   art:
     wan-mp4:
-      status: PENDING
+      status: CANCELLED
       art_image_id: null
 - key: idle-b08-phase1
   lane: wan-mp4
@@ -1344,7 +1344,7 @@ subjects:
 - key: idle-b09-phase1
   verdict: 'reject: 2026-11-25 PT source check before render, source ArtImage 262111 is not the shipped sprite (a
     stale draft or a different creature), so this take cannot ship; retake idle-b09-phase1-v2 from the shipped still.
-    The job could not be cancelled from the session, so discard its render'
+    Cancelled while pending when Silas asked, 2026-11-24 PT'
   lane: wan-mp4
   entity: sprite-animation
   title: b09-phase1 idle loop
@@ -1363,12 +1363,12 @@ subjects:
     wan-mp4: 77197
   art:
     wan-mp4:
-      status: PENDING
+      status: CANCELLED
       art_image_id: null
 - key: idle-b09-phase2
   verdict: 'reject: 2026-11-25 PT source check before render, source ArtImage 262112 is not the shipped sprite (a
     stale draft or a different creature), so this take cannot ship; retake idle-b09-phase2-v2 from the shipped still.
-    The job could not be cancelled from the session, so discard its render'
+    Cancelled while pending when Silas asked, 2026-11-24 PT'
   lane: wan-mp4
   entity: sprite-animation
   title: b09-phase2 idle loop
@@ -1387,12 +1387,12 @@ subjects:
     wan-mp4: 77198
   art:
     wan-mp4:
-      status: PENDING
+      status: CANCELLED
       art_image_id: null
 - key: idle-b09-phase3
   verdict: 'reject: 2026-11-25 PT source check before render, source ArtImage 262113 is not the shipped sprite (a
     stale draft or a different creature), so this take cannot ship; retake idle-b09-phase3-v2 from the shipped still.
-    The job could not be cancelled from the session, so discard its render'
+    Cancelled while pending when Silas asked, 2026-11-24 PT'
   lane: wan-mp4
   entity: sprite-animation
   title: b09-phase3 idle loop
@@ -1411,7 +1411,7 @@ subjects:
     wan-mp4: 77199
   art:
     wan-mp4:
-      status: PENDING
+      status: CANCELLED
       art_image_id: null
 - key: ending-motion-restore
   lane: wan-mp4
@@ -2424,6 +2424,10 @@ subjects:
     palette hold; neon school-folder airbrush.
   jobs:
     wan-mp4: 77260
+  art:
+    wan-mp4:
+      status: PENDING
+      art_image_id: null
 - key: idle-pistol-v2
   lane: wan-mp4
   entity: sprite-animation
@@ -2442,3 +2446,7 @@ subjects:
     match the source; glossy 1980s sticker style.
   jobs:
     wan-mp4: 77261
+  art:
+    wan-mp4:
+      status: PENDING
+      art_image_id: null
