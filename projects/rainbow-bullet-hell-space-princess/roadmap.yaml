@@ -339,7 +339,7 @@ tasks:
   - id: t-011
     milestone: m4
     title: "Build lavish stage parallax, readable effects and character animation"
-    status: claimed
+    status: review
     depends_on: [t-002, t-007]
     passes: 0
     stakes: reversible
@@ -445,8 +445,15 @@ tasks:
       calm keeps a fifth; truce craft never tense. PR silasfelinus/kind_robots#5793 merged as
       ae5461fd after all 21 checks passed. Still open: painted stage planes, sprite rigs and
       atlases, and visual acceptance. Stays ready and unclaimed.
-    updated: '2026-11-25T04:48:53Z'
-    implementation_pr: 'silasfelinus/kind_robots#5793'
+
+      2026-11-24 PT pilot hit-jolt increment: a landed hit now knocks the pilot's craft back,
+      twists and squashes it over 10 frames (rainbowShipJolt, SHIP_JOLT_FRAMES), recorded in a
+      WeakMap at hitShip so the Ship type is unchanged. Draw-only; calm keeps it still. PR
+      silasfelinus/kind_robots#5802 (head a3a13163), CI pending. Note: #5797 (idle loops for
+      courier, cutter, clawstrike, dolphin) also merged since the last note. Still open:
+      painted stage planes, sprite rigs and atlases, and visual acceptance.
+    updated: '2026-11-25T04:55:47Z'
+    implementation_pr: 'silasfelinus/kind_robots#5802'
     owner: worker
     claimed_by: worker-20261125T044852Z-dm2rg0
     claimed_at: '2026-11-25T04:48:53Z'
