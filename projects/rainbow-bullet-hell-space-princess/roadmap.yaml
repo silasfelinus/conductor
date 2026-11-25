@@ -1114,11 +1114,11 @@ tasks:
     implementation_pr: 'silasfelinus/kind_robots#4105'
   - id: t-042
     title: "Rainbow Bullet Hell Space Princess — Master Roadmap to Final Creative Approval"
-    status: claimed
+    status: ready
     stakes: reversible
     passes: 0
     source_issue: "silasfelinus/kind_robots#4146"
-    updated: '2026-11-25T21:47:33Z'
+    updated: '2026-11-25T22:11:08Z'
     note: |-
       FROM GITHUB ISSUE silasfelinus/kind_robots#4146 (https://github.com/silasfelinus/kind_robots/issues/4146), opened by @silasfelinus on 2026-10-25. Imported by scripts/sync_github_issues.py. Reference the canonical roadmap in implementation PRs with `Refs silasfelinus/kind_robots#4146`, never `Closes`. Keep #4146 open throughout finite build, art and QA work. Only the verified playtest handoff workflow may prefix `[FLAGGED FOR HUMAN TESTING]` and close the single master issue after Conductor lifecycle, priority, evidence and genuine `needs-human` subjective-acceptance gate are confirmed; closing the issue is not human approval or permission to publish.
 
@@ -1162,10 +1162,15 @@ tasks:
       (under 2.7 floor); verdicts in conductor#8027, retakes queued as jobs 77283-77286. Next:
       review those retakes and the ~45 pending loops, P-03 ending clips. Partial master-
       roadmap scope; return to ready.
+
+      2026-11-25 PT P-01 batch 3: reviewed 3 finished idle renders. Shipped guardian-shoal-koi
+      (motion 3.79) in kind_robots#5835 (merged green). Rejected guardian-kelp-warden-v2
+      (render squashed ~16% vertically vs the still, green fringe) and b01-phase3-v2 (motion
+      1.44 under the 2.7 floor); verdicts in conductor#8029, retakes queued as jobs
+      77287-77288. Next: review b02-phase1-v2 (running), the pending loops and retakes, P-03
+      ending clips. Partial master-roadmap scope; return to ready.
     owner: worker
-    implementation_pr: 'silasfelinus/kind_robots#5834'
-    claimed_by: session_01L5NKxb33C2v7zcj8pcq87Q
-    claimed_at: '2026-11-25T21:47:33Z'
+    implementation_pr: 'silasfelinus/kind_robots#5835'
   - id: t-043
     milestone: m4
     title: "Fever Dream look: review the doodle re-renders (DOODLE-SET-2) and ship the keepers"
