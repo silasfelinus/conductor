@@ -2957,8 +2957,8 @@ tasks:
   - id: t-179
     milestone: m12
     title: "Superkate Spectrum: six interactive bosses with telegraphed patterns and tested fair collision"
-    status: claimed
-    updated: '2026-11-25T01:17:09Z'
+    status: review
+    updated: '2026-11-25T01:18:50Z'
     passes: 0
     stakes: reversible
     depends_on: [t-178]
@@ -2966,6 +2966,8 @@ tasks:
       2026-11-24 PT: implemented six post-puzzle boss core encounters on worker/kr-arcade-t-179-spectrum-boss-f37e92, with distinct target sequences, bank-only inspector, visible miss budgets, chapter rewards gated on victory and actual projectile regression tests. Pending CI, art and encounter polish; do not mark complete yet.
 
       2026-11-24 PT: verified Kind Robots #5724 merged 306e097a33b1d5685963ff6981cb08ee7476faf9. Six core sequences and victory-gated progression landed. Requeue for further distinctive boss attacks, illustrated presentation and device QA, not done.
+
+      2026-11-24 PT: committed five distinct visible shield patterns, retaining Neon Inspector bank-only cores, in Kind Robots head 285fa9e13e1bc63647efdfbb483f74be03eef5f0. Shared contact checks cover both aim preview and actual projectile collision. Standalone deterministic trajectory sweep found 21-99 legal sampled angles per core; expanded existing actual-game boss regressions to verify blocked shots consume one miss and never award stars. Await exact-head CI, illustration wiring and device QA; partial scope only.
     owner: worker
     claimed_by: 2026-11-25T011709Z-spectrum-boss-6fc2a1
     claimed_at: '2026-11-25T01:17:09Z'
