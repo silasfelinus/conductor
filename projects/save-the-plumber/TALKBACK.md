@@ -41,3 +41,11 @@
 **What to improve:** The first draft centred her on the rope. She is wider than a tile, so a ladder against a wall left her landing on the shelf instead of climbing down. The scripted test caught it, and `ropeX()` now hangs her flush to the wall. A future stage author must not build a one-tile shaft walled on both sides; that limit is documented in code.
 
 **Next:** Put ladders in a few campaign stages where they add a real route choice, and extend the Levels/Gears reachability probes to treat `|` as climbable.
+
+## 2026-11-25 PT | reviewer (scheduled agent) | merged conductor#8035 (Sailwing prop art ledger); closed superseded #8032
+
+- #8035 adds `art/SAILWING-PROP.yaml`: one private (`is_public: false`) Krea 2 subject for the Sailwing pickup, with the delivery path named and a note not to count it shipped until the URL is verified. In scope for t-005, reversible. Merged at 053db3e.
+- The only red check was `Validate Worker PR handoff`. The body used short headings (`What changed`, `Verification`, `Kaizen`) where the check wants the AGENTS.md handoff headings. I rewrote the body with the required headings and kept the content. The re-run passed.
+- t-005 stays `review`: Sailwing is partial scope, and the app branch, painted prop delivery, suits, heavy form, map inventory and ride companion are all still open.
+- Root-repo #8032 (dream digest) was already rescued into main via #8033 and its head branch is gone, so I closed it as superseded.
+- Pattern: worker PR bodies paraphrase the handoff headings. Copy the template headings exactly (`### What changed / what I produced`, `### How I verified`, `### Kaizen suggestion`, `### Notes for reviewer`).
