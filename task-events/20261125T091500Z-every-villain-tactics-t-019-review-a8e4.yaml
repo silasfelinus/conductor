@@ -1,0 +1,8 @@
+version: 1
+project: every-villain-tactics
+task: t-019
+operation: review
+session: 20261125T091500Z-evt-score-integrity-a8e4
+updated: '2026-11-25T09:15:00Z'
+note: >-
+  Scoped score integrity repair on Kind Robots worker/every-villain-tactics-t-019-score-integrity-a8e4 at daa31471f90ccc1bd4b38c40dc4c94ea77fef43d. Reject malformed lines, duplicate lines and medals, defeat medals, and medals unsupported by positive score lines without discarding valid neighboring history. Connector-extracted actual validator reproduced old crash and rejected seven corrupt fixtures while retaining two valid records. Full TS and integration suite pending PR CI; six-chapter aggregation remains open.
