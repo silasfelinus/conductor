@@ -1108,11 +1108,11 @@ tasks:
     implementation_pr: 'silasfelinus/kind_robots#4105'
   - id: t-042
     title: "Rainbow Bullet Hell Space Princess — Master Roadmap to Final Creative Approval"
-    status: review
+    status: ready
     stakes: reversible
     passes: 0
     source_issue: "silasfelinus/kind_robots#4146"
-    updated: '2026-11-25T19:07:17Z'
+    updated: '2026-11-25T19:25:08Z'
     note: |-
       FROM GITHUB ISSUE silasfelinus/kind_robots#4146 (https://github.com/silasfelinus/kind_robots/issues/4146), opened by @silasfelinus on 2026-10-25. Imported by scripts/sync_github_issues.py. Reference the canonical roadmap in implementation PRs with `Refs silasfelinus/kind_robots#4146`, never `Closes`. Keep #4146 open throughout finite build, art and QA work. Only the verified playtest handoff workflow may prefix `[FLAGGED FOR HUMAN TESTING]` and close the single master issue after Conductor lifecycle, priority, evidence and genuine `needs-human` subjective-acceptance gate are confirmed; closing the issue is not human approval or permission to publish.
 
@@ -1145,9 +1145,11 @@ tasks:
       need -v2 from shipped still); 13 rejects under the 2.7 motion floor. Verdicts in ANIM-
       BACKLOG. Next: -v2 retakes for the holds/rejects, remaining ~40 pending loops, P-03
       ending clips, B02 requeue (P-12). Return to ready after merge.
+
+      Merged kind_robots#5831 (14 idle loops) after all exact-head checks passed. Queued 13
+      -v2 retakes (jobs 77268-77280) for the holds and static rejects. Partial master-roadmap
+      scope; return to ready.
     owner: worker
-    claimed_by: 2026-11-25T18:47:41Z-qechiq
-    claimed_at: '2026-11-25T18:47:42Z'
     implementation_pr: 'silasfelinus/kind_robots#5831'
   - id: t-043
     milestone: m4
