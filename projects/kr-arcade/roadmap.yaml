@@ -2959,8 +2959,8 @@ tasks:
   - id: t-179
     milestone: m12
     title: "Superkate Spectrum: six interactive bosses with telegraphed patterns and tested fair collision"
-    status: claimed
-    updated: '2026-11-25T10:06:39Z'
+    status: review
+    updated: '2026-11-25T10:09:26Z'
     passes: 0
     stakes: reversible
     depends_on: [t-178]
@@ -2976,9 +2976,15 @@ tasks:
       2026-11-24 PT: integrated six recovered boss illustrations (ArtJobs 76805-76810) as static cropped backdrops beneath readable targeting overlays, with stronger high-contrast veil and existing headless/missing-image fallback. Head 1be22b06e1abc630d4deaf9d908d00a1211e9716 includes path regression assertions. Live URL probes failed DNS resolution in this sandbox; device QA and CI pending. Partial scope, no deployment.
 
       2026-11-24 PT: verified kind_robots #5795 merged 23ae128bbd27330f810d9c791ebb5251972c75d0 after nine successful workflows on exact latest head. All six boss illustration paths and rendering integration confirmed in main. Remaining rendered device QA; recovered ArtJobs 76805-76810, no new generation or deploy.
+
+      2026-11-25 PT: rendered all six boss encounters at 390px through the real cabinet
+      (targets, shields, miss budget readable; kind_robots#5816) and
+      verifySpectrumCampaign.test.ts defeats every boss by real shots on three routes (30 boss
+      shots per route, 0 lives lost). Device feel goes to the human playtest checklist.
     owner: worker
     claimed_by: 2026-11-25T094544Z-spectrum-qa-sbjq3s
     claimed_at: '2026-11-25T10:06:39Z'
+    implementation_pr: 'silasfelinus/kind_robots#5816'
   - id: t-180
     milestone: m12
     title: "Superkate Spectrum: story scenes, character dialogue, three meaningful choices and three endings"
