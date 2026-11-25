@@ -502,10 +502,10 @@ tasks:
   - id: t-019
     milestone: m3
     title: "Deterministic post-battle points and earned scrapbook achievements"
-    status: claimed
+    status: ready
     depends_on: [t-006, t-016]
     passes: 0
-    updated: '2026-11-25T11:16:19Z'
+    updated: '2026-11-25T12:53:45Z'
     stakes: reversible
     note: |-
       Mission-end scored breakdown for flawless survival, zero damage, no knockouts, optional secrets, rescues and tactical bonuses, with explicit eligible conditions. Replay-safe recorded points, scrapbook heroes won with, villains beaten and authored route discoveries. Distinguish end-of-turn summaries from mission completion.
@@ -525,9 +525,6 @@ tasks:
       Scoped score integrity repair on Kind Robots worker/every-villain-tactics-t-019-score-integrity-a8e4 at daa31471f90ccc1bd4b38c40dc4c94ea77fef43d. Reject malformed lines, duplicate lines and medals, defeat medals, and medals unsupported by positive score lines without discarding valid neighboring history. Connector-extracted actual validator reproduced old crash and rejected seven corrupt fixtures while retaining two valid records. Full TS and integration suite pending PR CI; six-chapter aggregation remains open.
 
       Verified PR #5812 merged at 1eeeb00282f267c5ea72407aa5fde73ccf347c73 with seven successful implementation workflows and successful branch janitor. Malformed and inconsistent scrapbook records are now rejected. Full campaign scoring remains open; return to ready.
-    owner: worker
-    claimed_by: 20261125T111619Z-evt-campaign-score-7b2f
-    claimed_at: '2026-11-25T11:16:19Z'
   - id: t-020
     milestone: m3
     title: "48 canonical hero-villain foil pairings beyond generic story mode"
