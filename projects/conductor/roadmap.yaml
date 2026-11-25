@@ -3363,6 +3363,22 @@ tasks:
     trim pointer notes to the archive reference where backfill_learning.py does not need the
     first sentence -- with a test pinning the new payload shape, and update the advisory text
     in check_roadmap_note_size.py so it no longer points at a script that cannot help.
+- id: t-223
+  milestone: m1
+  title: 'Make select_role report when the worker-PR lookup was skipped for lack of a GitHub token'
+  status: ready
+  stakes: reversible
+  passes: 0
+  depends_on: []
+  updated: '2026-11-25T10:55:00Z'
+  note: >-
+    Reviewer kaizen 2026-11-25 PT from ruler-hooked/t-045 (conductor#8011, kind_robots#5818).
+    Second day running, select_role printed pending_worker_pr_count 0 while the worker branch
+    already had an open PR. Cause: split_pending_worker_reviews returns early when no token is
+    set (scripts/select_role.py), the normal sandbox state, so 0 means "not checked" rather
+    than "none open". Emit an explicit pending_worker_pr_lookup field (checked / skipped-no-token)
+    and have the reviewer playbook tell sessions to look up the branch's PR via GitHub MCP when
+    it is skipped. Pin both shapes with a test.
 goal: 'Keep Conductor a trustworthy coordination system of record: projects, priorities, task state, human gates, automation,
   and generated status must agree.'
 
