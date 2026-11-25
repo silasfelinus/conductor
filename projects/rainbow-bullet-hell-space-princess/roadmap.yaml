@@ -339,7 +339,7 @@ tasks:
   - id: t-011
     milestone: m4
     title: "Build lavish stage parallax, readable effects and character animation"
-    status: review
+    status: ready
     depends_on: [t-002, t-007]
     passes: 0
     stakes: reversible
@@ -494,11 +494,13 @@ tasks:
       ignored calm motion, now use rainbowSignalPulse, so calm keeps a fifth of the swing.
       Draw-only. PR silasfelinus/kind_robots#5828, CI pending. Still open: painted stage
       planes, sprite rigs and atlases, and visual acceptance.
-    updated: '2026-11-25T15:49:14Z'
+
+      PR silasfelinus/kind_robots#5828 merged as afad99e8 after all 22 run checks passed.
+      Calm-aware route markers are live on main. Still open: painted stage planes, sprite rigs
+      and atlases, and visual acceptance. Stays ready and unclaimed.
+    updated: '2026-11-25T16:02:04Z'
     implementation_pr: 'silasfelinus/kind_robots#5828'
     owner: worker
-    claimed_by: 2026-11-25T15:45:40Z-dfu9ae
-    claimed_at: '2026-11-25T15:45:41Z'
   - id: t-012
     milestone: m4
     title: "Produce opening, between-stage dialogue, endings, sound and score"
