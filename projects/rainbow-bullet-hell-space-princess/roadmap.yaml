@@ -339,7 +339,7 @@ tasks:
   - id: t-011
     milestone: m4
     title: "Build lavish stage parallax, readable effects and character animation"
-    status: claimed
+    status: ready
     depends_on: [t-002, t-007]
     passes: 0
     stakes: reversible
@@ -456,11 +456,20 @@ tasks:
       PR silasfelinus/kind_robots#5802 merged as 8a2f599c after all 23 checks passed. Pilot
       hit-jolt is live on main. Still open: painted stage planes, sprite rigs and atlases, and
       visual acceptance. Stays ready and unclaimed.
-    updated: '2026-11-25T06:47:29Z'
-    implementation_pr: 'silasfelinus/kind_robots#5802'
+
+      2026-11-24 PT idle-hover increment: a parked pilot craft now hovers (~1px bob, slight
+      sway, offset per seat) and fades into the flight pose as she banks or surges
+      (rainbowShipHover); the hull alone moves, so the hitbox core marker stays put. Maribel's
+      barrel roll now honours calm motion (rainbowBarrelRoll: shallow squash, no full flip).
+      PR silasfelinus/kind_robots#5807, CI pending. Still open: painted stage planes, sprite
+      rigs and atlases, and visual acceptance.
+
+      PR silasfelinus/kind_robots#5807 merged as 4769f260 after all 23 checks passed. Idle
+      hover and calm barrel roll are live on main. Still open: painted stage planes, sprite
+      rigs and atlases, and visual acceptance. Stays ready and unclaimed.
+    updated: '2026-11-25T07:09:10Z'
+    implementation_pr: 'silasfelinus/kind_robots#5807'
     owner: worker
-    claimed_by: 2026-11-25T06:47:29Z-focused-johnson
-    claimed_at: '2026-11-25T06:47:29Z'
   - id: t-012
     milestone: m4
     title: "Produce opening, between-stage dialogue, endings, sound and score"
