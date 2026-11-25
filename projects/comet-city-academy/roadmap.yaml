@@ -1187,16 +1187,15 @@ tasks:
   - id: t-049
     milestone: m4
     title: "Deliver original adaptive music and event-driven sound effects with persistent accessible audio settings before Prom human playtests"
-    status: review
-    claimed_by: 20261122T234300Z-comet-t049-original-audio-v8k5
-    claimed_at: '2026-11-22T23:41:52.987Z'
-    updated: '2026-11-22T23:41:52.987Z'
+    status: ready
+    updated: '2026-11-25T04:08:00Z'
     depends_on: []
-    owner: worker
     passes: 0
     stakes: reversible
     note: |-
       Silas's explicit 2026-11-22 PT pre-playtest requirement. There was no music/SFX task in this roadmap or game-page implementation. Compose original licensed-safe title, school/day, patrol/tension and finale/ending cues; original navigational, recruit, investigation, injury, choice, success/failure and villain-reveal SFX; route real run transitions to cues rather than generic button-only beeps. Provide opt-in browser audio unlock, independently persisted master/music/SFX volume and mute, reduced-motion/accessible visual-equivalent behavior, cleanup on navigation and no SSR/autoplay crash. Add deterministic cue/state, settings migration, mute/unlock and source-level integration contract tests; test actual playback on the supported browser/mobile path before marking delivered. Music and SFX are required for agent-complete playtest readiness, not the later human verdict.
+
+      Original audio implementation #5609 merged at e4393cef8b411b5079b31f7d332d39a2e3c10cfa. No active Prom audio PR found. Remaining playback lifecycle regression repair and browser acceptance are not complete. Reopen for independent scoped implementation alongside Tactics audio PR #5770.
   - id: t-050
     milestone: m4
     title: "Summarize post-merge Prom LEDGER_MEDIA_PROOF results per ArtImage into the ledger without re-enqueueing failures"

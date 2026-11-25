@@ -3029,7 +3029,7 @@ tasks:
   - id: t-183
     milestone: m12
     title: "Superkate Spectrum: endless, puzzle atelier, cooperative relay, achievements and ranked leaderboard fairness"
-    status: claimed
+    status: review
     passes: 0
     stakes: reversible
     depends_on: [t-178]
@@ -3039,7 +3039,9 @@ tasks:
       2026-11-24 PT: head 61fbc5b38577afe6be5b6b422ce2e7b01f1d5963 separates Story and Classic board keys using existing score storage and registry. Story late-stage replay is unranked, Classic remains ranked; cabinet selects and labels board, hall uses new Story bracket, legacy rows and career saves untouched. Pure helper verified for all 30 stages in both modes; engine and registry regression assertions added, CI pending. Remaining Atelier, cooperative relay and competition QA are not done.
 
       2026-11-24 PT: verified Kind Robots #5791 merged 756371908893a1eceb54aa6c6c346ae99b2c0ff1. Story and Classic rank separation landed; Atelier, relay and competition QA remain. No deploy initiated.
-    updated: '2026-11-25T04:10:00Z'
+
+      2026-11-24 PT: first playable Atelier mode adds six authored fixed-ammunition challenges with tap/controller selection, retry, back, isolated career and no ranked score or generic run completion. Standalone trajectory simulation cleared all six in 18 shots; actual engine regression coverage added for all six, exhaustion, retry and unchanged save. Head e6e54e98364da09a0e6e4e6f14eafc5573eb7969, CI pending. Remaining cooperative relay, deeper Atelier designs and competition QA; partial scope only.
+    updated: '2026-11-25T04:15:00Z'
     owner: worker
     claimed_by: 2026-11-25T041000Z-spectrum-atelier-8a71fc
     claimed_at: '2026-11-25T04:10:00Z'
