@@ -52,6 +52,9 @@ subjects:
       status: DONE
       art_image_id: 280314
 - key: idle-brood
+  verdict: 'reject: 2026-11-25 PT review, rendered from source ArtImage 262116, which is not the shipped sprite
+    (a cropped draft, cell 109x192 against the 141x192 still) and it barely moves (motion 1.4 vs the angler floor
+    2.7); retake idle-brood-v2 from the shipped still'
   lane: wan-mp4
   entity: sprite-animation
   title: brood idle loop
@@ -74,6 +77,8 @@ subjects:
       status: DONE
       art_image_id: 280315
 - key: idle-bulwark
+  verdict: 'reject: 2026-11-25 PT review, on model but nearly static (motion 0.6 vs the angler floor 2.7); retake
+    idle-bulwark-v2 from the shipped still with bigger fin strokes and a bob'
   lane: wan-mp4
   entity: sprite-animation
   title: bulwark idle loop
@@ -96,6 +101,8 @@ subjects:
       status: DONE
       art_image_id: 280316
 - key: idle-clawstrike
+  verdict: 'keep: 2026-11-25 PT review, the tail fan and belly fins flick while the cannon holds steady (motion
+    2.9, just over the angler floor); eight cells keyed to the 192x79 still, shipped as doodle/anim/clawstrike-idle'
   lane: wan-mp4
   entity: sprite-animation
   title: clawstrike idle loop
@@ -118,6 +125,9 @@ subjects:
       status: DONE
       art_image_id: 280317
 - key: idle-courier
+  verdict: 'keep: 2026-11-25 PT review, the tail sweeps and the fins flex with the body on model (motion 9.7 vs
+    the angler floor 2.7); a green spill on the belly fin was hue-shifted back to the still''s cyan; eight cells
+    keyed to the 192x85 still, shipped as doodle/anim/courier-idle'
   lane: wan-mp4
   entity: sprite-animation
   title: courier idle loop
@@ -140,6 +150,8 @@ subjects:
       status: DONE
       art_image_id: 280318
 - key: idle-cutter
+  verdict: 'keep: 2026-11-25 PT review, the jaw works and the tail beats with the shark steady and on model (motion
+    4.7); eight cells keyed to the 192x100 still, shipped as doodle/anim/cutter-idle'
   lane: wan-mp4
   entity: sprite-animation
   title: cutter idle loop
@@ -162,6 +174,8 @@ subjects:
       status: DONE
       art_image_id: 280319
 - key: idle-dolphin
+  verdict: 'keep: 2026-11-25 PT review, the tail lifts and the flippers paddle with the face on model (motion 3.5);
+    eight cells keyed to the 192x103 still, shipped as doodle/anim/dolphin-idle'
   lane: wan-mp4
   entity: sprite-animation
   title: dolphin idle loop
@@ -184,6 +198,9 @@ subjects:
       status: DONE
       art_image_id: 280320
 - key: idle-eel
+  verdict: 'reject: 2026-11-25 PT review, rendered from source ArtImage 262124, which is not the shipped sprite
+    (a neon striped eel, the still is the glassy blue netted eel) and it barely moves (motion 1.2); retake idle-eel-v2
+    from the shipped still'
   lane: wan-mp4
   entity: sprite-animation
   title: eel idle loop
@@ -228,6 +245,9 @@ subjects:
       status: PENDING
       art_image_id: null
 - key: idle-harbinger
+  verdict: 'reject: 2026-11-25 PT review, rendered from source ArtImage 262187, which is not the shipped sprite
+    (a pink octopus, the still is the blue stained-glass disc) and it barely moves (motion 0.8); retake idle-harbinger-v2
+    from the shipped still'
   lane: wan-mp4
   entity: sprite-animation
   title: harbinger idle loop
@@ -250,6 +270,9 @@ subjects:
       status: DONE
       art_image_id: 280322
 - key: idle-mirror
+  verdict: 'reject: 2026-11-25 PT review, rendered from source ArtImage 262189, which is not the shipped sprite
+    (a different fish with painted lettering, the still is the magenta piranha) and it barely moves (motion 1.3);
+    retake idle-mirror-v2 from the shipped still'
   lane: wan-mp4
   entity: sprite-animation
   title: mirror idle loop
@@ -272,6 +295,8 @@ subjects:
       status: DONE
       art_image_id: 280323
 - key: idle-motherdrone
+  verdict: 'reject: 2026-11-25 PT review, on model but nearly static (motion 0.5 vs the angler floor 2.7), and its
+    source sits on a dull green the keyer leaves behind; retake idle-motherdrone-v2 from the shipped still'
   lane: wan-mp4
   entity: sprite-animation
   title: motherdrone idle loop
@@ -294,6 +319,9 @@ subjects:
       status: DONE
       art_image_id: 280328
 - key: idle-pistol
+  verdict: 'reject: 2026-11-25 PT review, the fish drifts around the shot and shrinks to about 60% of the still,
+    and the first ten frames ramp in noisy and washed out; retake idle-pistol-v2 from the shipped still, held at
+    one size'
   lane: wan-mp4
   entity: sprite-animation
   title: pistol idle loop
@@ -316,6 +344,9 @@ subjects:
       status: DONE
       art_image_id: 280329
 - key: idle-salvager
+  verdict: 'reject: 2026-11-25 PT source check before render, source ArtImage 262193 is not the shipped sprite (a
+    stale draft or a different creature), so this take cannot ship; retake idle-salvager-v2 from the shipped still.
+    The job could not be cancelled from the session, so discard its render'
   lane: wan-mp4
   entity: sprite-animation
   title: salvager idle loop
@@ -338,6 +369,9 @@ subjects:
       status: DONE
       art_image_id: 280330
 - key: idle-skate
+  verdict: 'reject: 2026-11-25 PT source check before render, source ArtImage 262194 is not the shipped sprite (a
+    stale draft or a different creature), so this take cannot ship; retake idle-skate-v2 from the shipped still.
+    The job could not be cancelled from the session, so discard its render'
   lane: wan-mp4
   entity: sprite-animation
   title: skate idle loop
@@ -356,9 +390,12 @@ subjects:
     wan-mp4: 77146
   art:
     wan-mp4:
-      status: RUNNING
-      art_image_id: null
+      status: DONE
+      art_image_id: 280331
 - key: idle-squid
+  verdict: 'reject: 2026-11-25 PT source check before render, source ArtImage 262197 is not the shipped sprite (a
+    stale draft or a different creature), so this take cannot ship; retake idle-squid-v2 from the shipped still.
+    The job could not be cancelled from the session, so discard its render'
   lane: wan-mp4
   entity: sprite-animation
   title: squid idle loop
@@ -378,9 +415,12 @@ subjects:
     wan-mp4: 77147
   art:
     wan-mp4:
-      status: PENDING
+      status: RUNNING
       art_image_id: null
 - key: idle-turret
+  verdict: 'reject: 2026-11-25 PT source check before render, source ArtImage 262198 is not the shipped sprite (a
+    stale draft or a different creature), so this take cannot ship; retake idle-turret-v2 from the shipped still.
+    The job could not be cancelled from the session, so discard its render'
   lane: wan-mp4
   entity: sprite-animation
   title: turret idle loop
@@ -447,6 +487,9 @@ subjects:
       status: PENDING
       art_image_id: null
 - key: idle-guardian-bulwark
+  verdict: 'reject: 2026-11-25 PT source check before render, source ArtImage 262125 is not the shipped sprite (a
+    stale draft or a different creature), so this take cannot ship; retake idle-guardian-bulwark-v2 from the shipped
+    still. The job could not be cancelled from the session, so discard its render'
   lane: wan-mp4
   entity: sprite-animation
   title: guardian-bulwark idle loop
@@ -469,6 +512,9 @@ subjects:
       status: PENDING
       art_image_id: null
 - key: idle-guardian-clawstrike
+  verdict: 'reject: 2026-11-25 PT source check before render, source ArtImage 262126 is not the shipped sprite (a
+    stale draft or a different creature), so this take cannot ship; retake idle-guardian-clawstrike-v2 from the
+    shipped still. The job could not be cancelled from the session, so discard its render'
   lane: wan-mp4
   entity: sprite-animation
   title: guardian-clawstrike idle loop
@@ -578,6 +624,9 @@ subjects:
       status: PENDING
       art_image_id: null
 - key: idle-guardian-lantern
+  verdict: 'reject: 2026-11-25 PT source check before render, source ArtImage 262129 is not the shipped sprite (a
+    stale draft or a different creature), so this take cannot ship; retake idle-guardian-lantern-v2 from the shipped
+    still. The job could not be cancelled from the session, so discard its render'
   lane: wan-mp4
   entity: sprite-animation
   title: guardian-lantern idle loop
@@ -644,6 +693,9 @@ subjects:
       status: PENDING
       art_image_id: null
 - key: idle-guardian-salvager
+  verdict: 'reject: 2026-11-25 PT source check before render, source ArtImage 262184 is not the shipped sprite (a
+    stale draft or a different creature), so this take cannot ship; retake idle-guardian-salvager-v2 from the shipped
+    still. The job could not be cancelled from the session, so discard its render'
   lane: wan-mp4
   entity: sprite-animation
   title: guardian-salvager idle loop
@@ -687,6 +739,9 @@ subjects:
       status: PENDING
       art_image_id: null
 - key: idle-guardian-urchin
+  verdict: 'reject: 2026-11-25 PT source check before render, source ArtImage 262185 is not the shipped sprite (a
+    stale draft or a different creature), so this take cannot ship; retake idle-guardian-urchin-v2 from the shipped
+    still. The job could not be cancelled from the session, so discard its render'
   lane: wan-mp4
   entity: sprite-animation
   title: guardian-urchin idle loop
@@ -709,6 +764,9 @@ subjects:
       status: PENDING
       art_image_id: null
 - key: idle-comet-crown
+  verdict: 'reject: 2026-11-25 PT source check before render, source ArtImage 262083 is not the shipped sprite (a
+    stale draft or a different creature), so this take cannot ship; retake idle-comet-crown-v2 from the shipped
+    still. The job could not be cancelled from the session, so discard its render'
   lane: wan-mp4
   entity: sprite-animation
   title: comet-crown idle loop
@@ -731,6 +789,9 @@ subjects:
       status: PENDING
       art_image_id: null
 - key: idle-halo-fin
+  verdict: 'reject: 2026-11-25 PT source check before render, source ArtImage 262084 is not the shipped sprite (a
+    stale draft or a different creature), so this take cannot ship; retake idle-halo-fin-v2 from the shipped still.
+    The job could not be cancelled from the session, so discard its render'
   lane: wan-mp4
   entity: sprite-animation
   title: halo-fin idle loop
@@ -753,6 +814,9 @@ subjects:
       status: PENDING
       art_image_id: null
 - key: idle-petal-wing
+  verdict: 'reject: 2026-11-25 PT source check before render, source ArtImage 262085 is not the shipped sprite (a
+    stale draft or a different creature), so this take cannot ship; retake idle-petal-wing-v2 from the shipped still.
+    The job could not be cancelled from the session, so discard its render'
   lane: wan-mp4
   entity: sprite-animation
   title: petal-wing idle loop
@@ -775,6 +839,9 @@ subjects:
       status: PENDING
       art_image_id: null
 - key: idle-prism-lance
+  verdict: 'reject: 2026-11-25 PT source check before render, source ArtImage 262086 is not the shipped sprite (a
+    stale draft or a different creature), so this take cannot ship; retake idle-prism-lance-v2 from the shipped
+    still. The job could not be cancelled from the session, so discard its render'
   lane: wan-mp4
   entity: sprite-animation
   title: prism-lance idle loop
@@ -1139,6 +1206,9 @@ subjects:
       status: PENDING
       art_image_id: null
 - key: idle-b07-phase1
+  verdict: 'reject: 2026-11-25 PT source check before render, source ArtImage 262105 is not the shipped sprite (a
+    stale draft or a different creature), so this take cannot ship; retake idle-b07-phase1-v2 from the shipped still.
+    The job could not be cancelled from the session, so discard its render'
   lane: wan-mp4
   entity: sprite-animation
   title: b07-phase1 idle loop
@@ -1160,6 +1230,9 @@ subjects:
       status: PENDING
       art_image_id: null
 - key: idle-b07-phase2
+  verdict: 'reject: 2026-11-25 PT source check before render, source ArtImage 262106 is not the shipped sprite (a
+    stale draft or a different creature), so this take cannot ship; retake idle-b07-phase2-v2 from the shipped still.
+    The job could not be cancelled from the session, so discard its render'
   lane: wan-mp4
   entity: sprite-animation
   title: b07-phase2 idle loop
@@ -1181,6 +1254,9 @@ subjects:
       status: PENDING
       art_image_id: null
 - key: idle-b07-phase3
+  verdict: 'reject: 2026-11-25 PT source check before render, source ArtImage 262107 is not the shipped sprite (a
+    stale draft or a different creature), so this take cannot ship; retake idle-b07-phase3-v2 from the shipped still.
+    The job could not be cancelled from the session, so discard its render'
   lane: wan-mp4
   entity: sprite-animation
   title: b07-phase3 idle loop
@@ -1266,6 +1342,9 @@ subjects:
       status: PENDING
       art_image_id: null
 - key: idle-b09-phase1
+  verdict: 'reject: 2026-11-25 PT source check before render, source ArtImage 262111 is not the shipped sprite (a
+    stale draft or a different creature), so this take cannot ship; retake idle-b09-phase1-v2 from the shipped still.
+    The job could not be cancelled from the session, so discard its render'
   lane: wan-mp4
   entity: sprite-animation
   title: b09-phase1 idle loop
@@ -1287,6 +1366,9 @@ subjects:
       status: PENDING
       art_image_id: null
 - key: idle-b09-phase2
+  verdict: 'reject: 2026-11-25 PT source check before render, source ArtImage 262112 is not the shipped sprite (a
+    stale draft or a different creature), so this take cannot ship; retake idle-b09-phase2-v2 from the shipped still.
+    The job could not be cancelled from the session, so discard its render'
   lane: wan-mp4
   entity: sprite-animation
   title: b09-phase2 idle loop
@@ -1308,6 +1390,9 @@ subjects:
       status: PENDING
       art_image_id: null
 - key: idle-b09-phase3
+  verdict: 'reject: 2026-11-25 PT source check before render, source ArtImage 262113 is not the shipped sprite (a
+    stale draft or a different creature), so this take cannot ship; retake idle-b09-phase3-v2 from the shipped still.
+    The job could not be cancelled from the session, so discard its render'
   lane: wan-mp4
   entity: sprite-animation
   title: b09-phase3 idle loop
@@ -1793,3 +1878,567 @@ subjects:
     wan-mp4:
       status: PENDING
       art_image_id: null
+- key: idle-brood-v2
+  lane: wan-mp4
+  entity: sprite-animation
+  title: brood idle loop
+  asset: rainbow-princess-art/doodle/anim/brood-idle
+  size: 672x832
+  seed: 1125100
+  source_url: /rainbow-princess-art/doodle/enemies/brood.webp
+  last_image_id: /rainbow-princess-art/doodle/enemies/brood.webp
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: A spiky magenta star spore with four long points and an orange drip below spins a slow quarter turn
+    back and forth, its points flexing and its core flashing pink. Locked view on a flat green field; its exact
+    look and palette hold; neon school-folder airbrush.
+  jobs:
+    wan-mp4: 77234
+  art:
+    wan-mp4:
+      status: PENDING
+      art_image_id: null
+- key: idle-bulwark-v2
+  lane: wan-mp4
+  entity: sprite-animation
+  title: bulwark idle loop
+  asset: rainbow-princess-art/doodle/anim/bulwark-idle
+  size: 832x624
+  seed: 1125101
+  source_url: /rainbow-princess-art/doodle/enemies/bulwark.webp
+  last_image_id: /rainbow-princess-art/doodle/enemies/bulwark.webp
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: The dark armoured shell fish with the big yellow spiral eye bobs clearly up and down, both small
+    fins paddling hard, its spiral eye whirling and the stripes on its dome shimmering. Still camera, solid green
+    border all round, colours match the source; glossy 1980s sticker style.
+  jobs:
+    wan-mp4: 77235
+  art:
+    wan-mp4:
+      status: PENDING
+      art_image_id: null
+- key: idle-eel-v2
+  lane: wan-mp4
+  entity: sprite-animation
+  title: eel idle loop
+  asset: rainbow-princess-art/doodle/anim/eel-idle
+  size: 832x560
+  seed: 1125102
+  source_url: /rainbow-princess-art/doodle/enemies/eel.webp
+  last_image_id: /rainbow-princess-art/doodle/enemies/eel.webp
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: A glassy pale blue eel with dark netted scales coils and uncoils in a smooth S-curve, a ripple running
+    down its long body to the flicking tail tip. Fixed shot, even green surround, the same silhouette and paint
+    throughout; airbrushed neon doodle.
+  jobs:
+    wan-mp4: 77236
+  art:
+    wan-mp4:
+      status: PENDING
+      art_image_id: null
+- key: idle-harbinger-v2
+  lane: wan-mp4
+  entity: sprite-animation
+  title: harbinger idle loop
+  asset: rainbow-princess-art/doodle/anim/harbinger-idle
+  size: 832x832
+  seed: 1125103
+  source_url: /rainbow-princess-art/doodle/enemies/harbinger.webp
+  last_image_id: /rainbow-princess-art/doodle/enemies/harbinger.webp
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: A round stained-glass sea disc in deep blues, topped by a gold shell dome and a gold star, rocks
+    gently while its star twinkles and the coloured panes pulse with light. Locked view on a flat green field; its
+    exact look and palette hold; neon school-folder airbrush.
+  jobs:
+    wan-mp4: 77237
+  art:
+    wan-mp4:
+      status: PENDING
+      art_image_id: null
+- key: idle-mirror-v2
+  lane: wan-mp4
+  entity: sprite-animation
+  title: mirror idle loop
+  asset: rainbow-princess-art/doodle/anim/mirror-idle
+  size: 832x624
+  seed: 1125104
+  source_url: /rainbow-princess-art/doodle/enemies/mirror.webp
+  last_image_id: /rainbow-princess-art/doodle/enemies/mirror.webp
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: The magenta piranha with a yellow eye and jagged teeth snaps its jaw open and shut, its spiky back
+    fins rippling and its lilac belly fins swinging under it. Still camera, solid green border all round, colours
+    match the source; glossy 1980s sticker style.
+  jobs:
+    wan-mp4: 77238
+  art:
+    wan-mp4:
+      status: PENDING
+      art_image_id: null
+- key: idle-salvager-v2
+  lane: wan-mp4
+  entity: sprite-animation
+  title: salvager idle loop
+  asset: rainbow-princess-art/doodle/anim/salvager-idle
+  size: 832x736
+  seed: 1125105
+  source_url: /rainbow-princess-art/doodle/enemies/salvager.webp
+  last_image_id: /rainbow-princess-art/doodle/enemies/salvager.webp
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: A purple starry dome jellyfish craft drifts up and down as its curly golden tentacles curl and uncurl
+    beneath the dome, glints crossing the speckled bell. Fixed shot, even green surround, the same silhouette and
+    paint throughout; airbrushed neon doodle.
+  jobs:
+    wan-mp4: 77239
+  art:
+    wan-mp4:
+      status: PENDING
+      art_image_id: null
+- key: idle-skate-v2
+  lane: wan-mp4
+  entity: sprite-animation
+  title: skate idle loop
+  asset: rainbow-princess-art/doodle/anim/skate-idle
+  size: 832x672
+  seed: 1125106
+  source_url: /rainbow-princess-art/doodle/enemies/skate.webp
+  last_image_id: /rainbow-princess-art/doodle/enemies/skate.webp
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: A pale blue winged skate beats its broad translucent wings in slow strokes, its thin body steady
+    and the long pink tip on its tail swaying. Locked view on a flat green field; its exact look and palette hold;
+    neon school-folder airbrush.
+  jobs:
+    wan-mp4: 77240
+  art:
+    wan-mp4:
+      status: PENDING
+      art_image_id: null
+- key: idle-squid-v2
+  lane: wan-mp4
+  entity: sprite-animation
+  title: squid idle loop
+  asset: rainbow-princess-art/doodle/anim/squid-idle
+  size: 832x816
+  seed: 1125107
+  source_url: /rainbow-princess-art/doodle/enemies/squid.webp
+  last_image_id: /rainbow-princess-art/doodle/enemies/squid.webp
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: A crystal blue diamond squid with one dark eye pulses its facets brighter and dimmer while its fan
+    of fine black tendrils sweeps behind it. Still camera, solid green border all round, colours match the source;
+    glossy 1980s sticker style.
+  jobs:
+    wan-mp4: 77241
+  art:
+    wan-mp4:
+      status: PENDING
+      art_image_id: null
+- key: idle-turret-v2
+  lane: wan-mp4
+  entity: sprite-animation
+  title: turret idle loop
+  asset: rainbow-princess-art/doodle/anim/turret-idle
+  size: 688x832
+  seed: 1125108
+  source_url: /rainbow-princess-art/doodle/enemies/turret.webp
+  last_image_id: /rainbow-princess-art/doodle/enemies/turret.webp
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: A violet flower-bud turret on a teal stalk sways from its base, its petal crown opening a little
+    and closing again like a breathing blossom. Fixed shot, even green surround, the same silhouette and paint throughout;
+    airbrushed neon doodle.
+  jobs:
+    wan-mp4: 77242
+  art:
+    wan-mp4:
+      status: PENDING
+      art_image_id: null
+- key: idle-guardian-bulwark-v2
+  lane: wan-mp4
+  entity: sprite-animation
+  title: guardian-bulwark idle loop
+  asset: rainbow-princess-art/doodle/anim/guardian-bulwark-idle
+  size: 832x688
+  seed: 1125109
+  source_url: /rainbow-princess-art/doodle/enemies/guardian-bulwark.webp
+  last_image_id: /rainbow-princess-art/doodle/enemies/guardian-bulwark.webp
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: A violet armoured shell guardian with a spiral marking on its side sways forward and back, the pink
+    fringe of short tentacles under its shell rippling. Locked view on a flat green field; its exact look and palette
+    hold; neon school-folder airbrush.
+  jobs:
+    wan-mp4: 77243
+  art:
+    wan-mp4:
+      status: PENDING
+      art_image_id: null
+- key: idle-guardian-clawstrike-v2
+  lane: wan-mp4
+  entity: sprite-animation
+  title: guardian-clawstrike idle loop
+  asset: rainbow-princess-art/doodle/anim/guardian-clawstrike-idle
+  size: 832x640
+  seed: 1125110
+  source_url: /rainbow-princess-art/doodle/enemies/guardian-clawstrike.webp
+  last_image_id: /rainbow-princess-art/doodle/enemies/guardian-clawstrike.webp
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: A blue armoured crab walker with an orange belly shifts its weight from leg to leg, its long dark
+    cannon bobbing as its shell plates catch the light. Still camera, solid green border all round, colours match
+    the source; glossy 1980s sticker style.
+  jobs:
+    wan-mp4: 77244
+  art:
+    wan-mp4:
+      status: PENDING
+      art_image_id: null
+- key: idle-guardian-lantern-v2
+  lane: wan-mp4
+  entity: sprite-animation
+  title: guardian-lantern idle loop
+  asset: rainbow-princess-art/doodle/anim/guardian-lantern-idle
+  size: 784x832
+  seed: 1125111
+  source_url: /rainbow-princess-art/doodle/enemies/guardian-lantern.webp
+  last_image_id: /rainbow-princess-art/doodle/enemies/guardian-lantern.webp
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: A rainbow jellyfish with a glowing heart-shaped bell throbs warmly, its pastel tentacles streaming
+    and curling below in long soft waves. Fixed shot, even green surround, the same silhouette and paint throughout;
+    airbrushed neon doodle.
+  jobs:
+    wan-mp4: 77245
+  art:
+    wan-mp4:
+      status: PENDING
+      art_image_id: null
+- key: idle-guardian-salvager-v2
+  lane: wan-mp4
+  entity: sprite-animation
+  title: guardian-salvager idle loop
+  asset: rainbow-princess-art/doodle/anim/guardian-salvager-idle
+  size: 832x720
+  seed: 1125112
+  source_url: /rainbow-princess-art/doodle/enemies/guardian-salvager.webp
+  last_image_id: /rainbow-princess-art/doodle/enemies/guardian-salvager.webp
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: A grey metal helmet octopus with glowing orange eyes flexes its curled steel tentacles, its eyes
+    brightening and dimming as it hovers. Locked view on a flat green field; its exact look and palette hold; neon
+    school-folder airbrush.
+  jobs:
+    wan-mp4: 77246
+  art:
+    wan-mp4:
+      status: PENDING
+      art_image_id: null
+- key: idle-guardian-urchin-v2
+  lane: wan-mp4
+  entity: sprite-animation
+  title: guardian-urchin idle loop
+  asset: rainbow-princess-art/doodle/anim/guardian-urchin-idle
+  size: 832x752
+  seed: 1125113
+  source_url: /rainbow-princess-art/doodle/enemies/guardian-urchin.webp
+  last_image_id: /rainbow-princess-art/doodle/enemies/guardian-urchin.webp
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: A white armoured beetle walker with purple spikes and one yellow eye stamps lightly in place, the
+    spikes along its back bristling up and settling. Still camera, solid green border all round, colours match the
+    source; glossy 1980s sticker style.
+  jobs:
+    wan-mp4: 77247
+  art:
+    wan-mp4:
+      status: PENDING
+      art_image_id: null
+- key: idle-comet-crown-v2
+  lane: wan-mp4
+  entity: sprite-animation
+  title: comet-crown idle loop
+  asset: rainbow-princess-art/doodle/anim/comet-crown-idle
+  size: 832x720
+  seed: 1125114
+  source_url: /rainbow-princess-art/doodle/ships/comet-crown.webp
+  last_image_id: /rainbow-princess-art/doodle/ships/comet-crown.webp
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: A lavender swept-wing jet hovers with a light bob, its engine glow flickering at the tail and a
+    highlight sliding along its pointed nose. Fixed shot, even green surround, the same silhouette and paint throughout;
+    airbrushed neon doodle.
+  jobs:
+    wan-mp4: 77248
+  art:
+    wan-mp4:
+      status: PENDING
+      art_image_id: null
+- key: idle-halo-fin-v2
+  lane: wan-mp4
+  entity: sprite-animation
+  title: halo-fin idle loop
+  asset: rainbow-princess-art/doodle/anim/halo-fin-idle
+  size: 832x576
+  seed: 1125115
+  source_url: /rainbow-princess-art/doodle/ships/halo-fin.webp
+  last_image_id: /rainbow-princess-art/doodle/ships/halo-fin.webp
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: A yellow flying saucer with a cyan glass dome wobbles softly, the pink lights around its rim chasing
+    each other in a circle. Locked view on a flat green field; its exact look and palette hold; neon school-folder
+    airbrush.
+  jobs:
+    wan-mp4: 77249
+  art:
+    wan-mp4:
+      status: PENDING
+      art_image_id: null
+- key: idle-petal-wing-v2
+  lane: wan-mp4
+  entity: sprite-animation
+  title: petal-wing idle loop
+  asset: rainbow-princess-art/doodle/anim/petal-wing-idle
+  size: 832x464
+  seed: 1125116
+  source_url: /rainbow-princess-art/doodle/ships/petal-wing.webp
+  last_image_id: /rainbow-princess-art/doodle/ships/petal-wing.webp
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: A pink and white jet fighter with a navy underside hovers and banks slightly, its wingtip lights
+    blinking and exhaust flaring at the rear. Still camera, solid green border all round, colours match the source;
+    glossy 1980s sticker style.
+  jobs:
+    wan-mp4: 77250
+  art:
+    wan-mp4:
+      status: PENDING
+      art_image_id: null
+- key: idle-prism-lance-v2
+  lane: wan-mp4
+  entity: sprite-animation
+  title: prism-lance idle loop
+  asset: rainbow-princess-art/doodle/anim/prism-lance-idle
+  size: 832x464
+  seed: 1125117
+  source_url: /rainbow-princess-art/doodle/ships/prism-lance.webp
+  last_image_id: /rainbow-princess-art/doodle/ships/prism-lance.webp
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: A navy delta jet traced in white outline hovers steadily while its gold thruster pulses and a spark
+    of light runs along its wing edges. Fixed shot, even green surround, the same silhouette and paint throughout;
+    airbrushed neon doodle.
+  jobs:
+    wan-mp4: 77251
+  art:
+    wan-mp4:
+      status: PENDING
+      art_image_id: null
+- key: idle-b07-phase1-v2
+  lane: wan-mp4
+  entity: sprite-animation
+  title: b07-phase1 idle loop
+  asset: rainbow-princess-art/doodle/anim/b07-phase1-idle
+  size: 832x560
+  seed: 1125118
+  source_url: /rainbow-princess-art/doodle/bosses/b07-phase1.webp
+  last_image_id: /rainbow-princess-art/doodle/bosses/b07-phase1.webp
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: A coiled glassy blue sea serpent with dark netted scales sways its head side to side, the coils
+    of its body rolling in a slow wave. Locked view on a flat green field; its exact look and palette hold; neon
+    school-folder airbrush.
+  jobs:
+    wan-mp4: 77252
+  art:
+    wan-mp4:
+      status: PENDING
+      art_image_id: null
+- key: idle-b07-phase2-v2
+  lane: wan-mp4
+  entity: sprite-animation
+  title: b07-phase2 idle loop
+  asset: rainbow-princess-art/doodle/anim/b07-phase2-idle
+  size: 832x560
+  seed: 1125119
+  source_url: /rainbow-princess-art/doodle/bosses/b07-phase2.webp
+  last_image_id: /rainbow-princess-art/doodle/bosses/b07-phase2.webp
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: The cracked glassy sea serpent shudders, its coils tightening and loosening while sparks flicker
+    along the fractures in its netted scales. Still camera, solid green border all round, colours match the source;
+    glossy 1980s sticker style.
+  jobs:
+    wan-mp4: 77253
+  art:
+    wan-mp4:
+      status: PENDING
+      art_image_id: null
+- key: idle-b07-phase3-v2
+  lane: wan-mp4
+  entity: sprite-animation
+  title: b07-phase3 idle loop
+  asset: rainbow-princess-art/doodle/anim/b07-phase3-idle
+  size: 832x560
+  seed: 1125120
+  source_url: /rainbow-princess-art/doodle/bosses/b07-phase3.webp
+  last_image_id: /rainbow-princess-art/doodle/bosses/b07-phase3.webp
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: The wounded glassy serpent rears back as a magenta starburst at its chest blazes and fades, its
+    coils trembling and its jaw gaping. Fixed shot, even green surround, the same silhouette and paint throughout;
+    airbrushed neon doodle.
+  jobs:
+    wan-mp4: 77254
+  art:
+    wan-mp4:
+      status: PENDING
+      art_image_id: null
+- key: idle-b09-phase1-v2
+  lane: wan-mp4
+  entity: sprite-animation
+  title: b09-phase1 idle loop
+  asset: rainbow-princess-art/doodle/anim/b09-phase1-idle
+  size: 832x592
+  seed: 1125121
+  source_url: /rainbow-princess-art/doodle/bosses/b09-phase1.webp
+  last_image_id: /rainbow-princess-art/doodle/bosses/b09-phase1.webp
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: A dark navy leviathan outlined in white glides in place, its spiky back ridges rising and falling
+    and its long tail sweeping slowly. Locked view on a flat green field; its exact look and palette hold; neon
+    school-folder airbrush.
+  jobs:
+    wan-mp4: 77255
+  art:
+    wan-mp4:
+      status: PENDING
+      art_image_id: null
+- key: idle-b09-phase2-v2
+  lane: wan-mp4
+  entity: sprite-animation
+  title: b09-phase2 idle loop
+  asset: rainbow-princess-art/doodle/anim/b09-phase2-idle
+  size: 832x592
+  seed: 1125122
+  source_url: /rainbow-princess-art/doodle/bosses/b09-phase2.webp
+  last_image_id: /rainbow-princess-art/doodle/bosses/b09-phase2.webp
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: The starry navy leviathan heaves, the constellations inside its body twinkling while its jagged
+    fins flare out and fold back. Still camera, solid green border all round, colours match the source; glossy 1980s
+    sticker style.
+  jobs:
+    wan-mp4: 77256
+  art:
+    wan-mp4:
+      status: PENDING
+      art_image_id: null
+- key: idle-b09-phase3-v2
+  lane: wan-mp4
+  entity: sprite-animation
+  title: b09-phase3 idle loop
+  asset: rainbow-princess-art/doodle/anim/b09-phase3-idle
+  size: 832x592
+  seed: 1125123
+  source_url: /rainbow-princess-art/doodle/bosses/b09-phase3.webp
+  last_image_id: /rainbow-princess-art/doodle/bosses/b09-phase3.webp
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: The battered navy leviathan surges and sags as the golden heart in its chest beats bright, its torn
+    fins fluttering. Fixed shot, even green surround, the same silhouette and paint throughout; airbrushed neon
+    doodle.
+  jobs:
+    wan-mp4: 77257
+  art:
+    wan-mp4:
+      status: PENDING
+      art_image_id: null
+- key: idle-motherdrone-v2
+  lane: wan-mp4
+  entity: sprite-animation
+  title: motherdrone idle loop
+  asset: rainbow-princess-art/doodle/anim/motherdrone-idle
+  size: 832x544
+  seed: 1125124
+  source_url: /rainbow-princess-art/doodle/enemies/motherdrone.webp
+  last_image_id: /rainbow-princess-art/doodle/enemies/motherdrone.webp
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: A white and gold crystal drone ship with swept gold fins hovers and tilts nose up and down, its
+    pink thruster flame flaring long and short behind it. Locked view on a flat green field; its exact look and
+    palette hold; neon school-folder airbrush.
+  jobs:
+    wan-mp4: 77260
+- key: idle-pistol-v2
+  lane: wan-mp4
+  entity: sprite-animation
+  title: pistol idle loop
+  asset: rainbow-princess-art/doodle/anim/pistol-idle
+  size: 832x704
+  seed: 1125125
+  source_url: /rainbow-princess-art/doodle/enemies/pistol.webp
+  last_image_id: /rainbow-princess-art/doodle/enemies/pistol.webp
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: The blue barrel fish with a yellow cog mouth and pink core holds one spot at one size while its
+    cog spins round, its core throbs and its little fins flap. Still camera, solid green border all round, colours
+    match the source; glossy 1980s sticker style.
+  jobs:
+    wan-mp4: 77261
