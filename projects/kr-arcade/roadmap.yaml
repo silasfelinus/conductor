@@ -2987,8 +2987,8 @@ tasks:
   - id: t-181
     milestone: m12
     title: "Superkate Spectrum: touch aim, aim assist, colorblind/high-contrast modes, calm motion and full controller support"
-    status: claimed
-    updated: '2026-11-25T01:43:28Z'
+    status: review
+    updated: '2026-11-25T01:45:10Z'
     passes: 0
     stakes: reversible
     depends_on: [t-176]
@@ -2996,6 +2996,8 @@ tasks:
       2026-11-24 PT: implemented opt-in cabinet stage pointer capture, Spectrum drag-to-aim/release-to-fire, cancellation and out-of-field guards, tap-to-play unlocked stage nodes, cosmetic selection, next-bubble swap and story choices. The aim preview uses actual projectile movement and collision. Added engine regressions for all 30 nodes, locked cosmetics/stages, gesture cancellation and shot exclusion. Pending CI and rendered device/controller QA; partial scope only.
 
       2026-11-24 PT: Kind Robots #5757 merged 29db193c80241a779a50e49da07328f0a4a2c8f8; exact head 96b90db62f1b62436395bfbc8cdf71cc4d8d99bf passed all substantive checks including Chromium, TypeScript and viewport contracts. Direct touch aim and stage selection landed. Requeue remaining controller/device QA and settings touch navigation.
+
+      2026-11-24 PT: head 834b5b7082b1d2250ffe091d09479d0562759020 adds touch navigation for all four menu tabs, chapter browsing, all seven setting rows, mixer volume and Story/Classic mode switching. Shared setting actions preserve keyboard/controller behavior. Regression assertions added for touch navigation, persistence, mixer and canceled drag; CI and actual device QA pending. Partial scope.
     owner: worker
     claimed_by: 2026-11-25T014328Z-spectrum-access-22a5f9
     claimed_at: '2026-11-25T01:43:28Z'
