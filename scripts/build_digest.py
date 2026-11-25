@@ -524,6 +524,7 @@ def container_log_health():
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--since", default="24 hours ago")
+    ap.add_argument("--history-output", help="Write 90-day aggregate history for the project projection")
     args = ap.parse_args()
 
     inactive_slugs = load_inactive_project_slugs()
@@ -578,6 +579,18 @@ def main():
             }
             yesterday_output["page"] = ""  # /daily-dream page removed
 
+    from project_progress_history import digest_history, history
+
+    full_history = None
+    if args.history_output:
+        try:
+            full_history = history(days=90)
+            with open(args.history_output, "w", encoding="utf-8") as output:
+                json.dump(full_history, output, separators=(",", ":"))
+                output.write("\n")
+        except (OSError, ValueError, RuntimeError, subprocess.CalledProcessError, yaml.YAMLError) as error:
+            print(f"Project history unavailable: {error}", file=sys.stderr)
+
     payload = {
         "date": datetime.datetime.now(_TZ).date().isoformat(),
         "greeting": time_greeting(),
@@ -596,7 +609,7 @@ def main():
         "pitches_awaiting_vote": scan_pitches(),
         "daily_pitches": daily_pitches_payload(),
         "daily_project_deliveries": daily_project_deliveries_payload(),
-        "dead_air_private_film": dead_air_private_film_payload(),
+        "project_progress_history": digest_history(full=full_history),
         "daily_playbook_challenge": daily_playbook_challenge_payload(),
         "open_branches": scan_branches(),
         "render_engine": render_engine_health(),

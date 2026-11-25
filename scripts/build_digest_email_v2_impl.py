@@ -437,6 +437,50 @@ def dead_air_section(film: dict[str, Any] | None) -> str:
     )
 
 
+def project_progress_history_section(history: dict[str, Any] | None) -> str:
+    """Email-safe heatmap of historical finite-task completion."""
+    archive = (
+        '<p><a href="https://kindrobots.org/admin/dead-air">'
+        'Dead Air private commercial archive (admin)</a></p>'
+    )
+    if not isinstance(history, dict) or history.get("status") != "ready":
+        return '<h2>Game roadmap progress</h2><p>History unavailable; no progress inferred.</p>' + archive
+    dates = history.get("dates") or []
+    rows = history.get("series") or {}
+    masters = history.get("masters") or {}
+    header = '<th align="left">Game</th>' + ''.join(
+        f'<th style="font-size:10px">{esc(day[5:])}</th>' for day in dates
+    ) + '<th>Δ done</th>'
+    lines = []
+    for slug, points in rows.items():
+        first = points[0] if points else None
+        last = points[-1] if points else None
+        delta = last["done"] - first["done"] if first and last else None
+        cells = []
+        for point in points:
+            if point is None or not point["total"]:
+                cells.append('<td style="color:#64748b">–</td>')
+                continue
+            pct = round(100 * point["done"] / point["total"])
+            color = "#dcfce7" if pct >= 75 else "#fef3c7" if pct >= 40 else "#f1f5f9"
+            cells.append(f'<td style="background:{color};color:#172554;text-align:center;font-size:10px">{pct}%</td>')
+        movement = f'{delta:+d}' if delta is not None else '–'
+        title = esc(slug.replace("-", " ").title())
+        url = esc(masters.get(slug, ""))
+        label = f'<a href="{url}">{title}</a>' if url else title
+        lines.append(f'<tr><td>{label}</td>{"".join(cells)}<td>{movement}</td></tr>')
+    return (
+        '<h2>Game roadmap progress · last 14 days</h2>'
+        '<p>Daily committed finite tasks done / total (PT); today is partial. '
+        'Δ done is net completed tasks, not commits. Flat rows with unfinished work '
+        'may need attention; scope additions can lower the percentage.</p>'
+        '<div style="overflow-x:auto"><table cellpadding="3" style="border-collapse:collapse;width:100%">'
+        f'<thead><tr>{header}</tr></thead><tbody>{"".join(lines)}</tbody></table></div>'
+        + '<p><a href="https://kindrobots.org/admin/project-progress">Explore project history and date ranges (admin)</a></p>'
+        + archive
+    )
+
+
 def daily_deliveries_section(daily: dict[str, Any] | None) -> str:
     """Show implementation evidence FIRST; review decisions come afterward."""
     if not isinstance(daily, dict):
@@ -849,7 +893,7 @@ def build_payload(digest: dict[str, Any]) -> dict[str, Any]:
     animation_html = animation_release_section(digest)
     operational_html = engine_banner(digest) + container_log_banner(digest) + review_html
     pitch_html = next_pitch_section(digest.get("next_dream_proposal"))
-    middle = dead_air_section(digest.get("dead_air_private_film")) + daily_asset_freshness_section(digest) + animation_html + operational_html + pitch_html + daily_deliveries_section(digest.get("daily_project_deliveries")) + playbook_challenge_section(digest.get("daily_playbook_challenge")) + daily_pitches_section(digest.get("daily_pitches"))
+    middle = project_progress_history_section(digest.get("project_progress_history")) + daily_asset_freshness_section(digest) + animation_html + operational_html + pitch_html + daily_deliveries_section(digest.get("daily_project_deliveries")) + playbook_challenge_section(digest.get("daily_playbook_challenge")) + daily_pitches_section(digest.get("daily_pitches"))
 
     # Place health and the next text pitch directly after the previous pitch's generated output.
     # If a build failed so there is no fresh output, put them immediately after

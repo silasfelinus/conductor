@@ -105,12 +105,12 @@ def test_digest_freezes_email_before_preparing_tomorrows_art():
     assert "continue-on-error: true" in workflow
 
 
-def test_dead_air_catch_up_precedes_morning_digest():
+def test_dead_air_is_on_demand_and_digest_schedule_is_unchanged():
     dead_air = ROOT / ".github" / "workflows" / "dead-air-daily.yml"
     scripts = ROOT / "scripts" / "ensure_daily_digest.sh"
-    last_film_attempt = max(daily_minutes(c) for c in cron_schedules(dead_air))
-    digest = daily_minutes(cron_schedules(DIGEST)[0])
-    assert last_film_attempt < digest
-    assert last_film_attempt == 17 * 60
-    assert digest == 17 * 60 + 30
+    workflow = dead_air.read_text(encoding="utf-8")
+    assert "  workflow_dispatch:" in workflow
+    assert "  schedule:" not in workflow
+    assert "  push:" not in workflow
+    assert daily_minutes(cron_schedules(DIGEST)[0]) == 17 * 60 + 30
     assert 'MIN_UTC_HOUR="${MIN_UTC_HOUR:-18}"' in scripts.read_text()

@@ -2,8 +2,8 @@ project: dead-air
 kind: software
 autonomous: true
 goal: >-
-  Create one surprising, playable, privately archived 15-second animated
-  fictional-universe television commercial each Pacific day. The fictional AI
+  Maintain a private archive of surprising, playable 15-second animated
+  fictional-universe television commercials; produce new films on explicit request. The fictional AI
   broadcaster uses pop-culture formats to attempt communication with humanity,
   preserving authored creative provenance, source-rights metadata, reliable
   ArtJob IDs, cinematic editorial motion, at most one optional GPU clip, audible original sound and an actual MP4.
@@ -35,6 +35,10 @@ notes_from_silas: |-
   All queer identities are welcome without ranking, especially lesbian,
   bisexual, transgender and asexual experiences. Humor must not target identity.
   Do not publish completed films without human approval.
+  2026-11-25 PT: The daily commercial requirement is retired. Preserve the
+  existing archive and in-flight evidence at /admin/dead-air. No scheduled
+  or routine agent film production or runway replenishment; on-demand only.
+  Replace the daily digest premiere with the open game roadmap progress chart.
 milestones:
   - id: m1
     title: Editorial identity and first locked short
@@ -98,17 +102,19 @@ tasks:
     updated: '2026-11-14T23:51:00Z'
   - id: t-004
     milestone: m4
-    title: Daily Dead Air film production and quality iteration
+    title: Private Dead Air archive maintenance and on-demand quality iteration
     status: ready
     recurring: true
-    daily_commitment: true
+    daily_commitment: false
     daily_last_checked: '2026-11-24'
     daily_last_completed: '2026-11-24'
     stakes: reversible
     passes: 0
     depends_on: t-002
     note: >-
-      Attempt one finished private multi-shot film per Pacific calendar day, respecting the two-hour new-generation budget, morning screening deadline, and one-clip maximum;
+      Owner direction 2026-11-25 PT supersedes the historical daily target below: maintain the archive only; no new films or scheduled production unless specifically requested. Preserve all existing evidence.
+
+      HISTORICAL: Attempt one finished private multi-shot film per Pacific calendar day, respecting the two-hour new-generation budget, morning screening deadline, and one-clip maximum;
       prioritize oldest incomplete ArtJobs, and grow distinct pop-culture-aware
       format experiments. Report reviewed finished media vs rendering or blocked,
       never falsely claim daily completion. Maintain concept/draft/rejection
@@ -315,7 +321,8 @@ tasks:
   - id: t-011
     milestone: m4
     title: Make Dead Air's follow-up production passes independent of GitHub's late schedule queue
-    status: ready
+    status: cancelled
+    cancelled_reason: 'Owner retired daily commercial cadence on 2026-11-25 PT.'
     stakes: reversible
     passes: 0
     depends_on: []
