@@ -12933,3 +12933,10 @@ kind_robots #5517 (canon-art quarantine) made `comicIntroArt` return null for `m
 - `worker/ruler-hooked-t075-20261123-k7m9` gained one commit (292c8abf, 09:48 PT) after the #7927 rescue: the fish-parity test now treats the queue as "unique and in-roster" instead of an exact bijection. Accepted as correct: `distribute_images.py` prunes a request once its file is delivered, so the strict check on main would go red as soon as the six queued t-031 Fishopedia plates render. Cherry-picked onto the session branch; 12 ruler-hooked parity/uniqueness tests pass. Runtime-vs-roster equality (the other half of t-075) is unchanged.
 - t-031 and t-073 branches: still fully on main (#7921, #7916). All three worker branches are retired in this run so they stop routing sessions to `reviewer`.
 - Pattern: the worker kept committing to a branch after a reviewer had rescued it. The rescue reviewer should delete or janitor the source branch in the same run so later commits go to a new branch and a new PR.
+
+## 2026-11-24 PT | reviewer (scheduled agent) | merged #7992; left #7993 to its owner; built memory-dungeon/t-071
+
+- Merged conductor#7992 (Rainbow handoff sheet, art tools and round-2 briefs). Docs and scripts only, all 24 checks were green on the head, and the sheet itself asks to be merged when green.
+- Left #7993 (crystal-street/t-026 -> review) open. Its body says the owner session adds the `done` transition once kind_robots#5779 merges, and #5779 was still being updated minutes earlier.
+- art_queue_health still flags ArtJobs 77110-77113. #7990 (01:06 UTC) superseded them and rewrote the prose as b02-*-fix-3/4, after the last health record (00:33 UTC). The next Auto Art Generate run drops them; no hand edit.
+- Fallback ladder rung 1: built memory-dungeon/t-071. The new workflow-parse guard runs from security-audit.yml, so a broken ci.yml now shows a red check.
