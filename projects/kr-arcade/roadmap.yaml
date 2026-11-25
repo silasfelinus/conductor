@@ -3040,8 +3040,8 @@ tasks:
   - id: t-182
     milestone: m12
     title: "Superkate Spectrum: original salon and six-region music themes, matching sound effects and accessible audio settings"
-    status: ready
-    updated: '2026-11-25T00:49:19Z'
+    status: needs-human
+    updated: '2026-11-25T10:23:44Z'
     passes: 0
     stakes: reversible
     depends_on: []
@@ -3055,6 +3055,15 @@ tasks:
       2026-11-24 PT: expanded six regional scores to two contrasting phrases and added harmonies, extended finale percussion, rendered 14 original mastered WAV loops (six regions, six boss arrangements, Classic, menu) with deterministic offline synthesis. Committed all binary masters, runtime recorded paths with existing oscillator fallback, reproducible renderer and audio header/duration/peak/RMS regression tests. Generated audio measured peak at most 0.54 and RMS 0.109–0.145; CI and real playback, individual effects balance and mobile acceptance remain. Partial scope; no deployment.
 
       2026-11-24 PT: Kind Robots #5758 merged bc26f621438992f5df1208e9052e310e00ba2310 after all 15 substantive check runs completed successfully on exact head 86b8df5a2f2f47f0a7369504a26ed973a0f5b45c; optional autofix skipped. Fourteen mastered original WAV loops and renderer regression checks landed. Requeue remaining mobile playback and SFX balance QA; no deployment initiated.
+
+      2026-11-25 PT: agent-side audio scope is complete (14 recorded masters + suite now on
+      every cabinet PR via kind_robots#5816; mixer/toggles covered). What remains is listening
+      on real phone speakers/headphones for music vs SFX balance and mute transitions, which
+      this sandbox cannot do. Soft gate: item 6 of projects/kr-arcade/superkate-
+      spectrum/PLAYTEST-CHECKLIST.md. Close done when a human playtest reports balance
+      acceptable, or file playtest_iteration tasks.
+    gate_reason: physical-access
+    soft_gate: true
 
   - id: t-183
     milestone: m12
