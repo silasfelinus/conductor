@@ -237,7 +237,7 @@ tasks:
   - id: t-007
     milestone: m3
     title: "Write and implement all six distinctive tactical story missions"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 20261125T221300Z-evt-finale-continuity-7c4b
     claimed_at: '2026-11-25T22:13:00Z'
@@ -295,6 +295,8 @@ tasks:
       Crossfire rescue and evidence now independently grant earned tactical carryover and finale allies, including both in First Bell. Preserve existing single debrief classification and save schema. Regression tests for simultaneous statuses, save round trip and finale threshold committed at f9e4c7b03cd5468f21c7794e39af0a7ca86876ad, branch worker/every-villain-tactics-t-007-dual-callback-92b6. Full CI and full campaign QA remain pending; partial scope.
 
       2026-11-24 PT: PR #5799 merged into kind_robots main at 7099e20291fb3785148d4f8e7af2b8b7050c1903 after all seven latest-head workflows passed (including Tactics gameplay and four contract shards). Rescue and evidence independently earn carryover and finale support; full campaign QA remains open. Returning partial umbrella scope to ready.
+
+      Crossfire finale now uses shared tactical support thresholds, preserving both rescue and evidence earned on First Bell and rejecting a defeated prior chapter. Rescue ending takes precedence if both thresholds are reached. Kind Robots 3045a23e8983a1f34d9aa1c40cd77a7d16939496; six isolated finale cases passed with stubbed helpers, real-save regression committed for CI. Partial umbrella; full campaign QA remains open.
   - id: t-008
     milestone: m3
     title: "Author 48 hero and villain playable arcs with distinct supporting cast"
