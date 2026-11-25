@@ -2996,8 +2996,8 @@ tasks:
   - id: t-181
     milestone: m12
     title: "Superkate Spectrum: touch aim, aim assist, colorblind/high-contrast modes, calm motion and full controller support"
-    status: claimed
-    updated: '2026-11-25T09:45:49Z'
+    status: review
+    updated: '2026-11-25T10:09:04Z'
     passes: 0
     stakes: reversible
     depends_on: [t-176]
@@ -3009,9 +3009,20 @@ tasks:
       2026-11-24 PT: head 834b5b7082b1d2250ffe091d09479d0562759020 adds touch navigation for all four menu tabs, chapter browsing, all seven setting rows, mixer volume and Story/Classic mode switching. Shared setting actions preserve keyboard/controller behavior. Regression assertions added for touch navigation, persistence, mixer and canceled drag; CI and actual device QA pending. Partial scope.
 
       2026-11-24 PT: verified Kind Robots #5783 merged 60f76be3a0d4f5b8ae9061fb70551ed38f717445 after exact head 834b5b7082b1d2250ffe091d09479d0562759020 passed all substantive CI checks; post-merge prune in progress. All cabinet tabs, settings and mode switches now touch-accessible. Remaining Spectrum-specific rendered controller/device QA; requeue, not done.
+
+      2026-11-25 PT: rendered QA through the real cabinet + real arcade store in Chromium at
+      390x844/768x1024 (touch) and 1440x900 (keyboard + standard gamepad), kind_robots#5816.
+      Found and fixed: phone leave/fullscreen chips on the top bubble row (Spectrum now uses
+      the clear-stage touch plan; planner learns labelled four-button size); upright tablet
+      controls over HUD/NEXT/launcher (opt-in touchClearMinShare 0.5 → 490px board, controls
+      in a band); NEXT/HEARTS, hub-hint/HUD, map LOCK/district-name text overlaps. New
+      verifySuperkateSpectrumCabinet.browser.test.mjs runs on every cabinet PR. Real-hardware
+      feel is in projects/kr-arcade/superkate-spectrum/PLAYTEST-CHECKLIST.md, not an agent
+      gate.
     owner: worker
     claimed_by: 2026-11-25T094544Z-spectrum-qa-sbjq3s
     claimed_at: '2026-11-25T09:45:49Z'
+    implementation_pr: 'silasfelinus/kind_robots#5816'
   - id: t-182
     milestone: m12
     title: "Superkate Spectrum: original salon and six-region music themes, matching sound effects and accessible audio settings"
