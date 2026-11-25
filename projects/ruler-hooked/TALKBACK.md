@@ -653,3 +653,20 @@ Decision: no merge, no PR; dispatched `branch-janitor` with `force_delete_branch
 **Pattern:** a reviewer that judges a branch superseded should dispatch the janitor in the same
 session (AGENTS.md: "A rescue PR deletes the branch it supersedes in the same session"); writing
 "safe for branch-janitor" without running it cost a second review cycle.
+
+## 2026-11-24 PT — Reviewer (scheduled): t-045 third slice art requests merged
+
+select_role routed to `reviewer` for `worker/ruler-hooked-t-045-art-d39b` (two pending Krea 2
+card requests: flood-debt-council, harbour-apprentice-hearing). The Worker's PR #7997 was open
+and green — the first "Validate Worker PR handoff" attempt failed but its 04:04Z rerun passed, so
+the latest attempt is the gate. YAML parses, no duplicate ids, prompts are specific scene
+descriptions with no in-image text. The app side (kind_robots#5792) had already merged. Decision:
+squash-merged #7997 at 24e9fac; t-045 returned to `ready` (partial slice, as with slices one and
+two). Art delivery and inspection remain t-047's acceptance.
+
+**Kaizen:** none created — the only natural follow-up (bind and inspect these renders) is t-047's
+existing scope, and a duplicate task would split it.
+
+**Pattern:** select_role reported `pending_worker_pr_count: 0` while #7997 was open for this
+branch; the reviewer only found the PR when create_pull_request reported a duplicate. Worth
+checking the head-filter in select_role's PR lookup if it recurs.

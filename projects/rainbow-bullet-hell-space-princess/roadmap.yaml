@@ -445,9 +445,20 @@ tasks:
       calm keeps a fifth; truce craft never tense. PR silasfelinus/kind_robots#5793 merged as
       ae5461fd after all 21 checks passed. Still open: painted stage planes, sprite rigs and
       atlases, and visual acceptance. Stays ready and unclaimed.
-    updated: '2026-11-25T04:03:07Z'
-    implementation_pr: 'silasfelinus/kind_robots#5793'
-    owner: ''
+
+      2026-11-24 PT pilot hit-jolt increment: a landed hit now knocks the pilot's craft back,
+      twists and squashes it over 10 frames (rainbowShipJolt, SHIP_JOLT_FRAMES), recorded in a
+      WeakMap at hitShip so the Ship type is unchanged. Draw-only; calm keeps it still. PR
+      silasfelinus/kind_robots#5802 (head a3a13163), CI pending. Note: #5797 (idle loops for
+      courier, cutter, clawstrike, dolphin) also merged since the last note. Still open:
+      painted stage planes, sprite rigs and atlases, and visual acceptance.
+
+      PR silasfelinus/kind_robots#5802 merged as 8a2f599c after all 23 checks passed. Pilot
+      hit-jolt is live on main. Still open: painted stage planes, sprite rigs and atlases, and
+      visual acceptance. Stays ready and unclaimed.
+    updated: '2026-11-25T05:09:27Z'
+    implementation_pr: 'silasfelinus/kind_robots#5802'
+    owner: worker
   - id: t-012
     milestone: m4
     title: "Produce opening, between-stage dialogue, endings, sound and score"

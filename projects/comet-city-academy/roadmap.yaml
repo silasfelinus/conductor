@@ -493,12 +493,9 @@ tasks:
   - id: t-004
     milestone: m3
     title: "Author at least 36 good/evil/rogue patrol cases with meaningful results"
-    status: review
-    owner: worker
-    claimed_by: 2026-11-20T061139Z-comet-city-academy-t-004-r6k2
-    claimed_at: '2026-11-20T06:11:39Z'
+    status: ready
     depends_on: t-003
-    updated: '2026-11-20T06:17:00Z'
+    updated: '2026-11-25T04:23:00Z'
     passes: 0
     stakes: reversible
     note: |-
@@ -552,6 +549,8 @@ tasks:
       2026-11-19 PT review recovery: Original patrol-faction PR silasfelinus/kind_robots#5370 failed the seeded morning callback contract because faction prose appeared after the district-trust odds suffix. Superseding rescue PR #5385 preserves the 4-district by 5-grade delayed faction responses, places them ahead of the trusted odds line, and merged to main as fee5f93 after all eight latest-head checks passed. Mark #5370 obsolete; never merge it. The scoped contribution is done, but the 36-case umbrella remains open for patrol art, additional identity-specific consequences and full from-new-game acceptance QA.
 
       Added a regression fix for faction responses hidden by newer district witness reports. Scoped Kind Robots PR to follow; remaining patrol art and identity QA stay open.
+
+      Reopen the remaining Patrol consequences scope for independent production. No open matching implementation PR was found; preserve previously merged contributions and all acceptance requirements. Do not count partial implementation as done.
   - id: t-005
     milestone: m3
     title: "Author 30 daily anchors, 60 location cards and relationship scenes"
@@ -1187,8 +1186,11 @@ tasks:
   - id: t-049
     milestone: m4
     title: "Deliver original adaptive music and event-driven sound effects with persistent accessible audio settings before Prom human playtests"
-    status: ready
-    updated: '2026-11-25T04:08:00Z'
+    status: review
+    owner: worker
+    claimed_by: 20261125T041800Z-prom-t049-audio-lifecycle-c6e3
+    claimed_at: '2026-11-25T04:18:00Z'
+    updated: '2026-11-25T04:20:00Z'
     depends_on: []
     passes: 0
     stakes: reversible
@@ -1196,6 +1198,8 @@ tasks:
       Silas's explicit 2026-11-22 PT pre-playtest requirement. There was no music/SFX task in this roadmap or game-page implementation. Compose original licensed-safe title, school/day, patrol/tension and finale/ending cues; original navigational, recruit, investigation, injury, choice, success/failure and villain-reveal SFX; route real run transitions to cues rather than generic button-only beeps. Provide opt-in browser audio unlock, independently persisted master/music/SFX volume and mute, reduced-motion/accessible visual-equivalent behavior, cleanup on navigation and no SSR/autoplay crash. Add deterministic cue/state, settings migration, mute/unlock and source-level integration contract tests; test actual playback on the supported browser/mobile path before marking delivered. Music and SFX are required for agent-complete playtest readiness, not the later human verdict.
 
       Original audio implementation #5609 merged at e4393cef8b411b5079b31f7d332d39a2e3c10cfa. No active Prom audio PR found. Remaining playback lifecycle regression repair and browser acceptance are not complete. Reopen for independent scoped implementation alongside Tactics audio PR #5770.
+
+      Prom audio scheduler repair staged at kind_robots c8f3804986a83034bbdf233f56dab15fca20276c on worker/comet-city-academy-t-049-audio-lifecycle-c6e3. Cancels voices across mood, mute, channel-zero, hidden tab and disposal; suspended contexts cannot accumulate effects. Active WebAudio stand-in regression added. Two files disjoint from #5770. Full CI and live playback pending; task remains partial.
   - id: t-050
     milestone: m4
     title: "Summarize post-merge Prom LEDGER_MEDIA_PROOF results per ArtImage into the ledger without re-enqueueing failures"
