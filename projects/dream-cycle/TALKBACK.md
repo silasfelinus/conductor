@@ -594,3 +594,10 @@ Three-field diff in `projects/dream-cycle/roadmap.yaml` (`daily_last_checked`, `
 - Rechecked current head `aa927e2`: Security Audit, Daily Dream Contract, Roadmap Audit, Daily Dream Creative Contract, Worker PR CI, Worker PR handoff template, and Process task events all completed successfully. Earlier 15-test failures were superseded.
 - Squash-merged #7410 as `dcb2b75`. No publication, deploy, spend, or live catalog-object creation occurred. Queued the session-aware t-040 done event with exact merge/check evidence.
 - Review lesson: before preserving a reversible provenance gate, check standing user direction; a missing repository citation does not erase an explicit scoped clarification.
+
+## 2026-11-25 PT — reviewer (scheduled agent): #8014 progress digest merged
+- PR #8014 (worker/dream-cycle-progress-digest-20261125, head af9814e): retires the scheduled Dead Air film workflow (now workflow_dispatch only), adds `scripts/project_progress_history.py` (daily committed finite-task counts per open game master issue) and replaces the digest's Dead Air premiere with a 14-day progress heatmap. Projection v2 has a v1 fallback for the not-yet-deployed receiver (kind_robots#5825).
+- All 27 checks on the exact head were green and mergeable_state was clean. Targeted tests (13) passed locally. Merged as 43487f1.
+- Open item for Silas: the roadmap `notes_from_silas` now says "no routine runway replenishment", but CLAUDE.md step 5 still requires the Dead Air storyboard runway ritual. I didn't edit CLAUDE.md, because git authorship is shared with agents (see 2026-11-15). Until Silas confirms and rewords it, this session skipped runway authoring.
+- Worker note: when a PR retires a ritual that CLAUDE.md mandates, change CLAUDE.md in the same PR or state the conflict, so it doesn't fall to the next reviewer.
+- Kaizen: dream-cycle/t-041 (site reads the committed history projection).
