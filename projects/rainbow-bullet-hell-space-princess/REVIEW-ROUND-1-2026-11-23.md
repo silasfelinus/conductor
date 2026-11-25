@@ -34,7 +34,7 @@ Silas's decision; it stays as it is until he decides).
 | D6 | major | the Eclipse Crown's 20° spoke steps leave permanent safe pockets that still deal damage | t-065 | fixed in #5713 (alternate volleys aim a spoke; verifyRainbowBossCamping) |
 | D7 | minor | the mortar is reused across 7 Acts and a detour | t-065 | fixed in kind_robots#5737 (one launcher, eight Act shells: own burst pattern and colours, 6-16 pellets each) |
 | D8 | minor | infinite continues plus boss-HP carry-over remove the fail state for a parked co-op party | t-065 | **owner call, unchanged**: the phase-reset default was tried and reverted (B01 became unbeatable for the solo test bot), so the kinder carry-over stays until Silas decides |
-| D9 | minor | the seed changes nothing | t-065 | open (optional: seeded authored variations, same-seed replay exact) |
+| D9 | minor | the seed changes nothing | t-065 | fixed in kind_robots#5829 (a run's seed mirrors whole authored waves across the lane band, wave by wave; same seed replays exactly; the attract demo keeps authored lanes) |
 | (persona QA) | major | Delphion phase 3: a parked crew is never hit and never hits, so the fight stalls (found by the t-013 personas) | t-013 | fixed in kind_robots#5709 (aimed twin fans) plus `verifyRainbowBossCamping` |
 
 ## Story (story critic)
