@@ -41,7 +41,8 @@ if (( hour < MIN_UTC_HOUR )); then
   exit 0
 fi
 
-today="$(date -u +%F)"
+today="$(TZ=America/Los_Angeles date +%F)"
+since="$(TZ=America/Los_Angeles date -d "${today} 00:00:00" +%s)"
 runs="$(
   gh api --method GET \
     "repos/${GITHUB_REPOSITORY}/actions/workflows/${WORKFLOW_FILE}/runs" \
@@ -49,21 +50,43 @@ runs="$(
     -f per_page=20
 )"
 
-# Include both the primary scheduled run and any replacement dispatched by an
-# earlier pass. Otherwise a later pass sees "no schedule" again and can dispatch
-# a duplicate email run outside the retry cap.
-run="$(
-  jq -c --arg today "${today}" '
+# A green workflow with a skipped digest (or dry run) is not delivery.
+candidates="$(
+  jq -c --argjson since "${since}" '
     [.workflow_runs[]
       | select(.event == "schedule" or .event == "workflow_dispatch")
-      | select(.created_at | startswith($today))]
-    | sort_by(.created_at)
-    | last // empty
+      | select((.created_at | fromdateiso8601) >= $since)]
+    | sort_by(.created_at) | reverse | .[]
   ' <<<"${runs}"
 )"
+run=""
+missed=0
+while IFS= read -r candidate; do
+  [[ -n "$candidate" ]] || continue
+  candidate_id="$(jq -r '.id' <<<"$candidate")"
+  candidate_status="$(jq -r '.status' <<<"$candidate")"
+  if [[ "$candidate_status" != "completed" ]]; then
+    echo "::notice::Digest run $candidate_id is $candidate_status; no duplicate dispatch."
+    exit 0
+  fi
+  jobs="$(gh api --method GET "repos/${GITHUB_REPOSITORY}/actions/runs/${candidate_id}/jobs" -f per_page=100)"
+  if jq -e 'any(.jobs[]?; .name == "digest" and any(.steps[]?; .name == "Email via Brevo" and .conclusion == "success"))' <<<"$jobs" >/dev/null; then
+    echo "::notice::Pacific-date digest already sent by run $candidate_id."
+    exit 0
+  fi
+  if [[ "$(jq -r '.conclusion' <<<"$candidate")" == "success" ]]; then
+    missed=$((missed + 1))
+    continue
+  fi
+  if [[ -z "$run" ]]; then run="$candidate"; fi
+done <<<"$candidates"
 
 if [[ -z "${run}" ]]; then
-  echo "::warning::No daily-digest run exists for ${today}; dispatching one."
+  if (( missed >= MAX_ATTEMPTS )); then
+    echo "::error::Digest exhausted ${MAX_ATTEMPTS} undelivered runs for ${today} PT."
+    exit 1
+  fi
+  echo "::warning::No email-delivering daily-digest run exists for ${today} PT; dispatching one."
   gh api --method POST \
     "repos/${GITHUB_REPOSITORY}/actions/workflows/${WORKFLOW_FILE}/dispatches" \
     -f ref=main \

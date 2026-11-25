@@ -84,7 +84,8 @@ jobs:
             exit 0
           fi
 
-          today="$(date -u +%F)"
+          today="$(TZ=America/Los_Angeles date +%F)"
+          since="$(TZ=America/Los_Angeles date -d "${today} 00:00:00" +%s)"
           runs="$(gh api --method GET             "repos/${GITHUB_REPOSITORY}/actions/workflows/daily-digest.yml/runs"             -f branch=main             -f per_page=30)"
 
           # Look only backward. More importantly, a workflow can conclude
@@ -92,10 +93,10 @@ jobs:
           # conclusion alone is not proof that mail was or will be sent. Confirm
           # the actual digest job is queued/running or completed successfully.
           candidate_ids="$(
-            jq -r --arg today "$today" --argjson current "${GITHUB_RUN_ID}" '
+            jq -r --argjson since "$since" --argjson current "${GITHUB_RUN_ID}" '
               [.workflow_runs[]
                 | select(.id < $current)
-                | select(.created_at | startswith($today))
+                | select((.created_at | fromdateiso8601) >= $since)
                 | select(
                     .event == "schedule"
                     or (.event == "workflow_dispatch" and .actor.login == "github-actions[bot]")
@@ -113,7 +114,7 @@ jobs:
               jq -r '
                 [.jobs[]
                   | select(.name == "digest")
-                  | select(.status != "completed" or .conclusion == "success")]
+                  | select(.status != "completed" or any(.steps[]?; .name == "Email via Brevo" and .conclusion == "success"))]
                 | length
               ' <<<"$jobs"
             )"
