@@ -3134,8 +3134,8 @@ tasks:
   - id: t-185
     milestone: m12
     title: "Superkate Spectrum: durable cross-device account saves with safe guest migration and conflict-aware career merge"
-    status: needs-human
-    updated: '2026-11-25T10:23:47Z'
+    status: done
+    updated: '2026-11-25T11:38:05Z'
     passes: 0
     stakes: reversible
     depends_on: [t-176]
@@ -3151,8 +3151,18 @@ tasks:
       on every cabinet PR via kind_robots#5816; relay records merge by max). Remaining is a
       live two-device signed-in check on production, which needs real accounts and a deployed
       build. Soft gate: item 7 of projects/kr-arcade/superkate-spectrum/PLAYTEST-CHECKLIST.md.
-    gate_reason: physical-access
-    soft_gate: true
+
+      2026-11-25 PT: closed at Silas's direction. verifySuperkateSpectrumAccounts runs two
+      browser contexts (two devices) on the real cabinet and store sync against a mock API
+      following the server's revision rules: guest adoption on sign-in, second device pulls
+      the career, stale device 409 -> refetch -> merge losing nothing, account switch inherits
+      nothing, outage keeps play local and syncs after. Live accounts on the deployed site are
+      item 7 of PLAYTEST-CHECKLIST.md. verified kind_robots#5823 merged
+      dbe07455fa7a063ec00e6963c4cf90818b685b06 after all 17 checks passed on exact head
+      1642fd95 (incl. TypeScript and the Spectrum cabinet job). No deploy.
+    gate_reason: ''
+    soft_gate: false
+    implementation_pr: 'silasfelinus/kind_robots#5823'
   - id: t-186
     milestone: m12
     title: "Superkate Spectrum: navigable 30-level star map, cosmetic bubble collection and earned animated effects"
