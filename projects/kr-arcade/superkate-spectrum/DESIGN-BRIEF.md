@@ -10,8 +10,8 @@ finds no hang or lost progress. The Co-op Relay (own orbs, gifted Prisms, duet b
 and all 12 Atelier puzzles are proven solvable. Rendered cabinet QA covers 390/768 touch and 1440
 keyboard/gamepad, covering the hub, settings (separate music and effects levels), the in-game save
 state, and two-device account sync (kind_robots#5823). Every build task is done. What is left needs
-people: Kate's consent for art showing the Superkate character (t-189), and visual acceptance and
-shelf placement (t-184).
+people: visual acceptance and shelf placement (t-184). Superkate's six district illustrations are now the
+Scrapbook memories, approved by Silas (t-189, kind_robots#5836).
 See [PLAYTEST-CHECKLIST.md](PLAYTEST-CHECKLIST.md).
 
 ## Promise
