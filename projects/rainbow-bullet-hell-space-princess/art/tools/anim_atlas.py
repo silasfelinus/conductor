@@ -56,12 +56,33 @@ def key(image, near=48.0, far=110.0):
     return keyed
 
 
+def key2(image):
+    """Key twice when the source still sat on its own flat matte inside the render's green pad (Krea's muted
+    green, or a plate colour): the first key clears the pad, leaving the inner rectangle opaque; if that box's
+    edge rows are still solid, key the rectangle again against its own border colour."""
+    first = key(image)
+    box = first.getbbox()
+    if not box:
+        return first
+    # Look a few pixels in from the box: the first key leaves a soft ramp right at the rectangle's border.
+    a = np.asarray(first.getchannel("A"))[box[1] + 8 : box[3] - 8, box[0] + 8 : box[2] - 8]
+    if a.size == 0:
+        return first
+    edge = np.concatenate([a[:3].ravel(), a[-3:].ravel(), a[:, :3].ravel(), a[:, -3:].ravel()])
+    if (edge > 200).mean() < 0.9:
+        return first
+    inner = key(image.crop((box[0] + 8, box[1] + 8, box[2] - 8, box[3] - 8)))
+    out = Image.new("RGBA", image.size, (0, 0, 0, 0))
+    out.paste(inner, (box[0] + 8, box[1] + 8))
+    return out
+
+
 frames = [Image.open(f).convert("RGB") for f in sorted(glob.glob(f"{name}/all*.png"))][
     1:
 ]
 # Raw frames (no crossfade: a drifting creature ghosts when two positions blend), 8 evenly spaced.
 picks = [frames[round(i * (len(frames) - 1) / 8)] for i in range(8)]
-cells = [key(p) for p in picks]
+cells = [key2(p) for p in picks]
 
 
 def despill(cell):

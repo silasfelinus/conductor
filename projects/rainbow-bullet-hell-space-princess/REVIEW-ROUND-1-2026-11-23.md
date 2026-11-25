@@ -68,20 +68,20 @@ Silas's decision; it stays as it is until he decides).
 
 | id | sev | finding | task | status |
 | --- | --- | --- | --- | --- |
-| P-01 | blocker | no frame animation for any enemy, boss, ship or pilot | t-030 | partly fixed: picket, urchin, anchor and lantern atlases (#5717, #5727), all pilot poses (#5727, #5738); the idle-atlas clock (#5767); loops for every other sprite are rendering (ANIM-BACKLOG-2026-11-24) |
+| P-01 | blocker | no frame animation for any enemy, boss, ship or pilot | t-030 | partly fixed: picket, urchin, anchor and lantern atlases (#5717, #5727), all pilot poses (#5727, #5738); the idle-atlas clock (#5767); angler (#5774); courier, cutter, clawstrike and dolphin (#5797); the armory siren, bellkeeper and comet herder guardians (#5810); the rest are rendering, with stale-source first takes retaken from the shipped stills (ANIM-BACKLOG-2026-11-24) |
 | P-02 | blocker | the living interludes barely move (mean luma difference 0.6–2.6); S03, S04 and S08 have none | t-030 | fixed in kind_robots#5743 and #5744 (every Act card is a one-shot clip in which the squadron crosses the sky; 3-22% of pixels change vs 1-2% for the loops) |
 | P-03 | blocker | the endings are 3 still plates with no Fever Dream version; sever is in a different style | t-030 | partly fixed: loyal-road plates and a house-style sever plate (#5741); moving-ending support (#5767); the six plate clips are rendering (ANIM-BACKLOG-2026-11-24) |
 | P-04 | blocker | main Acts have 1–2 painted planes, not 4+; the top half of X3, Act VIII and the finale does not scroll; there is no s09 art | t-022 / t-011 | fixed: painted sky, far and mid planes for all eight main Acts in both looks (kind_robots#5761, #5762, #5764, #5767), the finale's planes, card and foreground strip (#5767); detour skies drift (#5742) |
 | P-05 | major | four touch pads cover the play area at 1024×768 | t-067 | fixed in #5741 (touch controls in a band below the stage at 1024x768) |
 | P-06 | major | the P2 pad covers the boss at 844×390 | t-067 | fixed in #5741 (side rails at 844x390; no pad over the stage) |
-| P-07 | major | the finale reuses Act VIII's card and backdrop | t-022 | fixed in #5767: the finale's own planes, title card and foreground strip, and the switch to stage s09 (a Fever Dream card retake is rendering in ANIM-BACKLOG-2026-11-24) |
+| P-07 | major | the finale reuses Act VIII's card and backdrop | t-022 | fixed in #5767: the finale's own planes, title card and foreground strip, and the switch to stage s09 and the Fever Dream S09 card is its own painting (#5810) |
 | P-08 | major | the 4-pilot HUD covers the boss bar | t-067 | fixed in kind_robots#5716 |
 | P-09 | major | phone portrait wastes about 75% of the screen; HUD text is unreadable | t-067 | fixed: chips off the canvas and a turn-sideways prompt (#5741); a large-type status readout under the stage (kind_robots#5768) |
 | P-10 | major | Classic background bubbles look like bullets | t-067 | fixed in kind_robots#5719 (two faint far planes) |
 | P-11 | major | pink pellets blend into pink scenes in Fever Dream unless bold shots are on | t-067 | fixed in kind_robots#5716 (firmer default halo and ring) |
-| P-12 | major | B02 changes creature between phases | t-030 | open (art regen from the phase-1 reference) |
+| P-12 | major | B02 changes creature between phases | t-030 | fixed in #5810: phases 2 and 3 redrawn from the phase-1 jellyfish (cracked, then split with a gold core), in both looks |
 | P-13 | major | the Act V wreck frames are 1-px outlines | t-067 | fixed in kind_robots#5719 (solid crane silhouettes) |
-| P-14 | minor | the detour planes have no Fever Dream twins; the X3 footer has no plate | t-022 | partly fixed: status footers on a plate (#5741); X1's Fever Dream sky, mid and near (#5767); X1 far (retake) and X2–X4 twins are rendering (ART-BACKLOG-2026-11-24) |
+| P-14 | minor | the detour planes have no Fever Dream twins; the X3 footer has no plate | t-022 | partly fixed: status footers on a plate (#5741); X1's Fever Dream sky, mid and near (#5767); the remaining X1 far, X2 far, X3 mid and near, X4 far and near from green-matte retakes (#5810). Fixed |
 | P-15 | minor | Leviathan's gem-open burst is an illegible clump | t-065 | fixed in #5737 (the two rings spawn 16 px and 28 px out along their spokes) |
 | P-16 | major | the stage uses about 27% of a 1920×1080 screen | t-067 | fixed in kind_robots#5720 (stage 1446x813 at 1920x1080, about 57%) |
 | P-17 | minor | the settings panel scrolls at 360×640 | t-067 | fixed in #5741 (one Settings pop-over on short screens) |
