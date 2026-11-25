@@ -34,6 +34,8 @@ CELLS = {
     "bosses/b09-phase1": "A dark navy leviathan outlined in white glides in place, its spiky back ridges rising and falling and its long tail sweeping slowly.",
     "bosses/b09-phase2": "The starry navy leviathan heaves, the constellations inside its body twinkling while its jagged fins flare out and fold back.",
     "bosses/b09-phase3": "The battered navy leviathan surges and sags as the golden heart in its chest beats bright, its torn fins fluttering.",
+    "enemies/motherdrone": "A white and gold crystal drone ship with swept gold fins hovers and tilts nose up and down, its pink thruster flame flaring long and short behind it.",
+    "enemies/pistol": "The blue barrel fish with a yellow cog mouth and pink core holds one spot at one size while its cog spins round, its core throbs and its little fins flap.",
 }
 TAILS = [
     "Locked view on a flat green field; its exact look and palette hold; neon school-folder airbrush.",
