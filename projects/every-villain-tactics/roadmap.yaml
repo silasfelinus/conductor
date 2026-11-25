@@ -503,10 +503,10 @@ tasks:
   - id: t-019
     milestone: m3
     title: "Deterministic post-battle points and earned scrapbook achievements"
-    status: claimed
+    status: review
     depends_on: [t-006, t-016]
     passes: 0
-    updated: '2026-11-25T23:31:38.139Z'
+    updated: '2026-11-25T23:32:43.189Z'
     stakes: reversible
     note: |-
       Mission-end scored breakdown for flawless survival, zero damage, no knockouts, optional secrets, rescues and tactical bonuses, with explicit eligible conditions. Replay-safe recorded points, scrapbook heroes won with, villains beaten and authored route discoveries. Distinguish end-of-turn summaries from mission completion.
@@ -530,6 +530,8 @@ tasks:
       Crossfire journal scrapbook restoration committed at Kind Robots f1d5b6e2856700dec991311bd9a6a85a65956ae0 on worker/every-villain-tactics-t-019-journal-recovery-f93b. Recover validated completed and active chapter saves on load without awarding achievements again; finished journal excludes duplicate finale. Nine isolated selector cases passed with a stubbed validator. Added six-chapter real-save recovery and deduplication regressions to the existing CI verifier. Full integration checks pending; umbrella remains partial.
 
       2026-11-25 PT review reconciliation: Verified #5838 merged 7f707034d252; scrapbook recovery delivered, cumulative six-chapter scoring remains. No open matching implementation PR or worker branch found in either repository.
+
+      Cumulative Crossfire scoring and aftermath display implemented in Kind Robots afc89fbb3fed1f13af41ea89908e10709cbc338f. Validated journal only, active victory counts once, no defeat credit, stable on advancement and reload. Six chapter regression coverage committed; CI and rendered QA pending. Full adversarial campaign and secret audit remain open.
     owner: worker
     claimed_by: 20261125T233000Z-evt-score-91f7
     claimed_at: '2026-11-25T23:31:38.139Z'
