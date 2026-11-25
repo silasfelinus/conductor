@@ -615,18 +615,19 @@ tasks:
   - id: t-027
     milestone: m4
     title: "Record the post-merge media-proof run's per-image aspect/blank/bytes outcome on the t-018 art ledger"
-    status: review
+    status: done
     depends_on: []
-    owner: worker
     claimed_by: 20261122T122838Z-evt-t027-media-evidence-k5r8
     claimed_at: '2026-11-22T12:28:38Z'
-    updated: '2026-11-22T12:30:45Z'
+    updated: '2026-11-24T23:55:00Z'
     passes: 0
     stakes: reversible
     note: |-
       Kaizen from reviewer of conductor#7820 (2026-11-22). After the prom-tactics-media-proof workflow runs on main, record each Tactics telegraph ArtImage's actual result (downloaded bytes, aspect match, blank check) against its ledger receipt, so receipt-only rows stop counting as delivery. Never publish private art or switch is_public.
 
       Scoped art QA implementation: authenticated private byte length, decoded image dimensions, blank and aspect check, pixel checksum and safe per-image media_proof metadata on the twelve t-018 receipts. CI workflow checkpoints only metadata with exact ArtJob/ArtImage identities and preserves the original private images and is_public=false. Branch worker/every-villain-tactics-t027-private-media-evidence-20261122-k5r8; pending full CI, merge and production API-run evidence before completion.
+
+      Verified completed finite QA scope: Conductor #7837 merged at 957cfd62e13375439a666c4c45f7e06cc2f00640 with four successful latest-head workflows. Main ledger records twelve matching ArtJobs 74393–74404 / ArtImages 277786–277797, all VERIFIED with nonzero downloaded bytes, decoded dimensions, aspect_match true, blank_check PASS and pixel hashes. Production proof run 45118667491 job 137507202611 completed successfully, including Tactics gameplay media and private access. Artistic approval and remaining gameplay work are separate.
   - id: t-028
     milestone: m4
     title: "Generate the tactical arena receipt map from verified ledger keys so fallback paintings drop out once an original venue render is proven"
@@ -644,8 +645,11 @@ tasks:
   - id: t-029
     milestone: m4
     title: "Ship original tactical music and contextual combat SFX with accessible persistent mixer before human playtests"
-    status: ready
-    updated: '2026-11-23T05:52:50Z'
+    status: review
+    owner: worker
+    claimed_by: 20261124T235600Z-evt-audio-lifecycle-4e9d
+    claimed_at: '2026-11-24T23:56:00Z'
+    updated: '2026-11-24T23:58:00Z'
     depends_on: []
     passes: 0
     stakes: reversible
@@ -655,3 +659,5 @@ tasks:
       Original seven-mood WebAudio score and 13 context-mapped tactical sound effects implemented on a scoped Kind Robots worker branch. The game now unlocks playback from real gestures, follows battle/scene/turn/impact state with pure deterministic cues, persists master/music/effects/mute controls, pauses on hidden tabs, and disposes the player on route exit. Dedicated Node regression and source integration checks are included in the Tactics test command. PR CI and real post-merge browser/mobile playback proof are pending, so t-029 remains in review rather than being marked delivered.
 
       Merged original sound implementation Kind Robots #5608 as 91f146a048a1188fa253c4f2df1f1c58b492b214 after all ten required latest-head workflows completed successfully. Seven original synthesized score themes, 13 contextual cues, gesture unlock, persistent mixer and reduced-interruption route cleanup are on main. Final self-hosted deployment, actual playback, phone mute/resume and speaker audition remain unverified; t-029 is partial and must return ready, not done.
+
+      Scoped scheduler repair committed to Kind Robots worker/every-villain-tactics-t-029-audio-lifecycle-4e9d at 6425d131446ae4637b007719f2d52bea8b531478. Cancel active and queued voices on mood/mute/visibility/disable/disposal, stop scheduling inaudible channels, prevent suspended-context cue buildup, preserve independent mixer channels, and add deterministic active WebAudio stand-in regression. CI and actual browser playback pending; this does not close t-029.
