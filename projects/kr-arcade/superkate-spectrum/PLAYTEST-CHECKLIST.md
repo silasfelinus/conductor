@@ -47,12 +47,11 @@ in "Already machine-verified"; humans are asked only for what a machine cannot j
    passing clear? Is the gifted Prism noticeable?
 9. **Look and feel.** Is the hub (Play, Scrapbook, Achievements, Settings) attractive enough for the
    showcase shelf? Anything that looks unfinished?
+10. **Scrapbook memories.** Beat a district boss and open the Scrapbook. Do Superkate's district
+    illustrations look right on the memory cards (Silas approved them in-game 2026-11-25, t-189)?
 
 ## Decisions only Silas or Kate can make
 
-- **Kate's consent (t-189)** before art showing the Superkate character goes in the game. Six scrapbook
-  district illustrations are rendered and live on the media host but not wired. Shipped in-game art is
-  robot-only boss art plus the title card.
 - **Visual acceptance (t-184)**, and moving the cabinet from the `growing` to the `showcase` shelf.
 - **Any deploy or public promotion.**
 
