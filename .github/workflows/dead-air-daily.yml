@@ -1,23 +1,8 @@
-name: Dead Air daily film production
+name: Dead Air on-demand private film production
 
-# A scheduled attempt is not a completed film. It can queue/recover ArtJobs
-# and leave an honest "rendering" ledger until a private 15s MP4 passes probes.
+# Owner direction 2026-11-25 PT: no automatic daily commercial quota.
+# Existing screenings and production evidence are preserved.
 on:
-  schedule:
-    # Four budget-aware passes, roughly 1am–3:15am PST / 2am–4:15am PDT.
-    # First pass starts the production clock; the last can make a kinetic
-    # fallback cut rather than holding breakfast hostage for a GPU clip.
-    - cron: "0 9 * * *"
-    - cron: "45 9 * * *"
-    - cron: "30 10 * * *"
-    - cron: "15 11 * * *"
-    # Late-morning catch-up if the art queue finished after the overnight passes.
-    - cron: "0 17 * * *"
-  push:
-    branches: [main]
-    paths:
-      - "projects/dead-air/episodes/*.yaml"
-      - ".github/workflows/dead-air-daily.yml"
   workflow_dispatch:
 
 concurrency:
@@ -42,8 +27,6 @@ jobs:
           python -m pip install pyyaml
           sudo apt-get update -qq
           sudo apt-get install -y -qq ffmpeg espeak-ng
-      - name: Check authored seven-day runway
-        run: python scripts/check_dead_air_runway.py --days 7
       - name: Attempt oldest private unfinished commercial
         id: film
         shell: bash

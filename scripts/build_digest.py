@@ -578,6 +578,8 @@ def main():
             }
             yesterday_output["page"] = ""  # /daily-dream page removed
 
+    from project_progress_history import digest_history
+
     payload = {
         "date": datetime.datetime.now(_TZ).date().isoformat(),
         "greeting": time_greeting(),
@@ -596,7 +598,7 @@ def main():
         "pitches_awaiting_vote": scan_pitches(),
         "daily_pitches": daily_pitches_payload(),
         "daily_project_deliveries": daily_project_deliveries_payload(),
-        "dead_air_private_film": dead_air_private_film_payload(),
+        "project_progress_history": digest_history(),
         "daily_playbook_challenge": daily_playbook_challenge_payload(),
         "open_branches": scan_branches(),
         "render_engine": render_engine_health(),
