@@ -91,12 +91,12 @@ tasks:
       images asserted as live.
   - id: t-028
     title: 'Main-game standard: audit and close the gaps for Save the Plumber'
-    status: ready
+    status: claimed
     milestone: m6
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-25T05:52:32.813Z'
+    updated: '2026-11-25T19:09:19Z'
     note: |-
       Silas 2026-11-11 PT, in session: "Our games should all have a base standard of quality ... We want our main games to have 12 plus achievements." Standard: docs/agents/main-game-standard.md; CONTROL.md global overview.
 
@@ -123,6 +123,9 @@ tasks:
       Separated title New Game and Continue shortcuts using a scoped cabinet launch intent, safe eligible file selection, no erase in shortcut modes, and retained Files / Endless access. Added runtime regression scenarios for existing-slot isolation, stale Continue and choosing another saved file. Branch worker/save-the-plumber-t-028-newgame-k7d3 head 69c11cba. Partial main-game scope; full CI and rendered viewport acceptance pending.
 
       Merged kind_robots#5773 at 85a864ba after 14/14 exact-head workflows completed successfully. Separate New Game and Continue delivered; remaining endings, customization and accessibility. Production visual acceptance unverified.
+    owner: worker
+    claimed_by: 2026-11-25T19:12:00Z-qechiq-stp
+    claimed_at: '2026-11-25T19:09:19Z'
   - id: t-029
     title: 'Save the Plumber achievement upgrade: 12 or more live achievements'
     status: done
