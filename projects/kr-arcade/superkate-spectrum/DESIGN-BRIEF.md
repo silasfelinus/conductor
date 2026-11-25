@@ -2,6 +2,16 @@
 
 **Project:** kr-arcade | **Cabinet:** `superkate-spectrum` | **Priority:** HIGH | **Style:** 16-bit premium western-animation | **Riff:** arcade hex-grid bubble shooters (mechanics only)
 
+## Status (2026-11-25 PT): ready for human playtests
+
+Agent-verified on every cabinet PR (kind_robots#5816). The full 30-stage campaign and all six bosses
+are beaten by real shots on three choice routes, reaching all three endings. A careless-play soak
+finds no hang or lost progress. The Co-op Relay (own orbs, gifted Prisms, duet boss, saved records)
+and all 12 Atelier puzzles are proven solvable. Rendered cabinet QA covers 390/768 touch and 1440
+keyboard/gamepad. What is left needs people: real-device audio (t-182), live two-device sign-in
+(t-185), Kate's likeness consent (portraits, t-188), and visual acceptance and shelf placement.
+See [PLAYTEST-CHECKLIST.md](PLAYTEST-CHECKLIST.md).
+
 ## Promise
 
 A rainbow-haired stylist who believes every person and robot deserves to express themselves rescues a city from the Prism Sorter, a misguided beautification AI that has decided all citizens must conform to one "optimal" shade. Superkate refuses the premise. Instead of blasting enemies, she fires radiant color orbs into the Sorter's suspended monochrome bubbles. Matching clusters release trapped personalities, and falling chains return colors to the neighborhoods.
