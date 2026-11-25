@@ -698,3 +698,14 @@ tasks:
     Created by reviewer 2026-11-14 PT for untracked PR conductor#7410 (worker/dream-cycle-catalog-only-10-assets-20261114).
 
     Full history: projects/dream-cycle/HISTORY.md#t-040
+- id: t-041
+  milestone: m4
+  title: 'Serve the kind_robots project-progress page from the committed 90-day history projection instead of live per-project GitHub requests'
+  status: ready
+  passes: 0
+  stakes: reversible
+  updated: '2026-11-25T12:10:00Z'
+  note: >-
+    Kaizen from reviewer merge of conductor#8014 (2026-11-25 PT). project-progress-history.json
+    now ships in projection v2 (receiver: kind_robots#5825); have the site read that snapshot
+    rather than fetching each roadmap/issue live.
