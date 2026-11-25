@@ -2944,3 +2944,18 @@ pitches:
         verification:
           - headless Chromium render at 1280x720, 390x844 and reduced-motion 800x500, no page errors, ~60 fps
           - registered in stores/animationCatalog.ts
+  - id: prism-sun-catcher
+    title: Prism Sun-Catcher
+    status: shipped
+    priority: 99
+    surprise: Cut-glass sun-catchers hang from a brass rod in a sunny window, each a coupled torsion and swing pendulum whose facets are drawn from the live twist; every crystal throws two refracted spectra onto the wall that follow twice the twist angle and fade as the facet turns from the sun, with dust motes drifting in the beam; pointer motion stirs a draught, click flicks the nearest crystal into a spin.
+    builds:
+      - version: 1
+        status: shipped
+        component: components/screenfx/prism-sun-catcher.vue
+        pull_request: silasfelinus/kind_robots#5817
+        merge_sha: 2018d5a
+        released_at: '2026-11-25T14:00:00Z'
+        verification:
+          - headless Chromium render at 1280x800 and 390x844 with hover and click, no page errors
+          - vue-tsc, eslint, prettier and verifyAnimationCatalog clean; registered in stores/animationCatalog.ts
