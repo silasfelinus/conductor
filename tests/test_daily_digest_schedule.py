@@ -60,8 +60,8 @@ def test_digest_sentinel_recovers_from_non_schedule_conductor_activity():
     assert "github.event_name == 'pull_request'" not in sentinel
     assert "task-events/*.yaml" in workflow
     assert "pull_request_target:" in workflow
-    assert 'recovery_epoch="$(date -u -d "${today} 18:00:00" +%s)"' in sentinel
-    assert "gh workflow run daily-digest.yml" in sentinel
+    assert "scripts/ensure_daily_digest.sh?ref=main" in sentinel
+    assert "bash /tmp/ensure_daily_digest.sh" in sentinel
 
 
 def test_daily_dream_sidecars_warn_without_manufacturing_a_failed_digest_run():
@@ -84,6 +84,9 @@ def test_delayed_schedule_cannot_resend_after_watchdog_replacement_succeeds():
     assert '.actor.login == "github-actions[bot]"' in workflow
     assert 'select(.name == "digest")' in workflow
     assert '.conclusion == "success"' in workflow
+    assert 'TZ=America/Los_Angeles date +%F' in workflow
+    assert 'fromdateiso8601) >= $since' in workflow
+    assert '.name == "Email via Brevo"' in workflow
     assert "needs: delivery-guard" in workflow
     assert "needs.delivery-guard.outputs.should_run == 'true'" in workflow
     assert "Human workflow_dispatch is explicit" in workflow
@@ -96,7 +99,7 @@ def test_digest_freezes_email_before_preparing_tomorrows_art():
     email_payload_pos = workflow.index("python scripts/build_digest_email_v2.py")
     build_pos = workflow.index("python scripts/run_daily_dream_build.py --date")
     submit_pos = workflow.index("python scripts/submit_daily_dream_art.py")
-    email_pos = workflow.index("Email via Brevo")
+    email_pos = workflow.index("- name: Email via Brevo")
 
     assert digest_pos < email_payload_pos < build_pos < submit_pos < email_pos
     assert "submit_daily_dream_art.py --wait-timeout" not in workflow
@@ -114,3 +117,11 @@ def test_dead_air_is_on_demand_and_digest_schedule_is_unchanged():
     assert "  push:" not in workflow
     assert daily_minutes(cron_schedules(DIGEST)[0]) == 17 * 60 + 30
     assert 'MIN_UTC_HOUR="${MIN_UTC_HOUR:-18}"' in scripts.read_text()
+
+
+def test_watchdog_requires_pacific_date_and_actual_email_step():
+    script = (ROOT / "scripts" / "ensure_daily_digest.sh").read_text()
+    assert 'TZ=America/Los_Angeles date +%F' in script
+    assert 'fromdateiso8601) >= $since' in script
+    assert '.name == "Email via Brevo" and .conclusion == "success"' in script
+    assert "missed >= MAX_ATTEMPTS" in script
