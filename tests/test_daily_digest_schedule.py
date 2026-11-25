@@ -99,7 +99,7 @@ def test_digest_freezes_email_before_preparing_tomorrows_art():
     email_payload_pos = workflow.index("python scripts/build_digest_email_v2.py")
     build_pos = workflow.index("python scripts/run_daily_dream_build.py --date")
     submit_pos = workflow.index("python scripts/submit_daily_dream_art.py")
-    email_pos = workflow.index("Email via Brevo")
+    email_pos = workflow.index("- name: Email via Brevo")
 
     assert digest_pos < email_payload_pos < build_pos < submit_pos < email_pos
     assert "submit_daily_dream_art.py --wait-timeout" not in workflow

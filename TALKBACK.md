@@ -12940,3 +12940,9 @@ kind_robots #5517 (canon-art quarantine) made `comicIntroArt` return null for `m
 - Left #7993 (crystal-street/t-026 -> review) open. Its body says the owner session adds the `done` transition once kind_robots#5779 merges, and #5779 was still being updated minutes earlier.
 - art_queue_health still flags ArtJobs 77110-77113. #7990 (01:06 UTC) superseded them and rewrote the prose as b02-*-fix-3/4, after the last health record (00:33 UTC). The next Auto Art Generate run drops them; no hand edit.
 - Fallback ladder rung 1: built memory-dungeon/t-071. The new workflow-parse guard runs from security-audit.yml, so a broken ci.yml now shows a red check.
+
+## 2026-11-25 PT | reviewer (scheduled agent) | worker/dream-digest-pacific-delivery-20261125 rescued with a test-anchor fix
+
+- Reviewed 052e822 (digest watchdog/delivery guard: Pacific-date window, "delivered" now means the `Email via Brevo` step succeeded, process-task-events sentinel reuses `scripts/ensure_daily_digest.sh`). Logic is sound; checked with a mocked `gh` (newer green-but-unsent dispatch + older failed run whose email step succeeded → no duplicate dispatch).
+- Defect: adding the literal `"Email via Brevo"` to the delivery-guard jq shifted `workflow.index("Email via Brevo")` in `test_digest_freezes_email_before_preparing_tomorrows_art`, so the branch failed 1/8 digest tests. Anchored the test on `- name: Email via Brevo`. Also restored the script's executable bit, which the commit dropped for no reason (callers use `bash`, so harmless, but unrelated churn).
+- Pattern: worker pushed without running the touched test file. Run `pytest tests/<file touched>` before pushing; string-position tests break when the same string is added elsewhere.
