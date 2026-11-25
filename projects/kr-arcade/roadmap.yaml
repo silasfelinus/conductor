@@ -3116,8 +3116,8 @@ tasks:
   - id: t-185
     milestone: m12
     title: "Superkate Spectrum: durable cross-device account saves with safe guest migration and conflict-aware career merge"
-    status: ready
-    updated: '2026-11-24T06:09:00Z'
+    status: needs-human
+    updated: '2026-11-25T10:23:47Z'
     passes: 0
     stakes: reversible
     depends_on: [t-176]
@@ -3127,6 +3127,14 @@ tasks:
       Fixed cloud conflict retries to merge latest local career rather than stale request snapshots, isolated concurrent uploads by sync generation, made saving status truthful, and retired active cabinet instances on account change. Added VM regression exercising actual store functions with deferred PUTs, 409, and account switch. Branch worker/kr-arcade-t185-save-race-8fa19c. CI and real two-device QA pending.
 
       2026-11-23 PT: Kind Robots #5707 merged b5b6df1a3dd4777e5ac4570020f95ea57a6f884b after ten completed successful workflows on head 2e694b27b14752766067b89c64c010e1b7572f4b. Save conflict/account-generation races regression-tested. Requeue remaining actual guest/offline/two-device QA; no production account writes or deployment.
+
+      2026-11-25 PT: guest adoption, conflict-aware max merge, account-switch retirement and
+      sync races are implemented and regression-tested (verifyCabinetSpectrumSaveRace now runs
+      on every cabinet PR via kind_robots#5816; relay records merge by max). Remaining is a
+      live two-device signed-in check on production, which needs real accounts and a deployed
+      build. Soft gate: item 7 of projects/kr-arcade/superkate-spectrum/PLAYTEST-CHECKLIST.md.
+    gate_reason: physical-access
+    soft_gate: true
   - id: t-186
     milestone: m12
     title: "Superkate Spectrum: navigable 30-level star map, cosmetic bubble collection and earned animated effects"
