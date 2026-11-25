@@ -3100,8 +3100,8 @@ tasks:
   - id: t-186
     milestone: m12
     title: "Superkate Spectrum: navigable 30-level star map, cosmetic bubble collection and earned animated effects"
-    status: claimed
-    updated: '2026-11-25T10:06:44Z'
+    status: review
+    updated: '2026-11-25T10:09:30Z'
     passes: 0
     stakes: reversible
     depends_on: [t-176]
@@ -3115,9 +3115,15 @@ tasks:
       2026-11-24 PT: illustrated all six district rows using recovered robot-only boss art (ArtJobs 76805-76810), aspect-preserving crop, contrast veil and missing-image fallback. Added earned cosmetic threshold notifications with animated bubble preview, calm-motion support, sound, unchanged selected style and save compatibility. Regression tests cover all thresholds and actual Story/Classic projectile unlocks, expiry and reload. Head 41eaab763424e7f4dcbcf16767213bed7e0fc4d3; CI pending. Power tutorials and rendered device/art verification remain. No new art generation or deployment.
 
       2026-11-25 PT: verified #5808 merged 22dbfefa25d5e750fb3f8f7cc86eecb139d43443 after nine successful exact-head workflows. Illustrated districts and earned skin celebrations landed. Power tutorials and rendered device QA remain; partial scope, no deployment.
+
+      2026-11-25 PT: power tutorials shipped in kind_robots#5816: first Prism/Burst/Ribbon per
+      visit shows an explaining card (fire or timeout dismisses; repeats and demo none),
+      loaded-power label moved off the DROP counter, star-map medals now pips inside nodes.
+      Rendered at 390/768/1440 in the cabinet contract. Remaining scope: none agent-side.
     owner: worker
     claimed_by: 2026-11-25T094544Z-spectrum-qa-sbjq3s
     claimed_at: '2026-11-25T10:06:44Z'
+    implementation_pr: 'silasfelinus/kind_robots#5816'
 
   - id: t-187
     milestone: m12
