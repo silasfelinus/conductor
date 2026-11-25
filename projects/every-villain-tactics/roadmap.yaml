@@ -90,15 +90,12 @@ tasks:
       Full history: projects/every-villain-tactics/HISTORY.md#t-001
   - id: t-025
     title: 'Main-game standard: audit and close the gaps for Every Villain Tactics'
-    status: review
-    owner: worker
-    claimed_by: 20261123T051610Z-evt-t025-private-media-diagnostics-h9q6
-    claimed_at: '2026-11-23T05:16:10Z'
+    status: ready
     milestone: m4
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-23T05:29:00Z'
+    updated: '2026-11-25T23:27:59.182Z'
     note: |-
       Silas 2026-11-11 PT, in session: "Our games should all have a base standard of quality ... We want our main games to have 12 plus achievements." Standard: docs/agents/main-game-standard.md; CONTROL.md global overview.
 
@@ -145,6 +142,8 @@ tasks:
       Reviewed and merged scoped captain art attachment kind_robots PR #5631 as b15a4afe65d8e5302f02d123752d0530721dba00 after all eight latest-head workflows completed successfully. Original private ArtImages 277789, 277793 and 277797 now resolve for named Foreman Thumpkin, Lieutenant Teakettle and Sir Cap-Permission battlefield idle portraits; regular one-hit minions and combat poses remain correct. Three source ArtJob IDs 74396, 74400 and 74404 reused; no new enqueue. Broader t-025 main-game standard incomplete. Production deployment, subjective image QA and human playtest remain unverified.
 
       Scoped original combat-art delivery branch worker/every-villain-tactics-t-025-crew-art-atlas-20261123-h9q6 now exposes all twelve DONE authenticated one-hit crew combat-pose ArtImages 278823-278834 alongside the twelve telegraph plates. Counterplay/combat tabs preserve the single-screen layout, failed-image retry, and previously encountered crews after defeat. Added reachability, exact-ID and private-store regression checks. Pending PR CI and self-hosted runtime deployment; broad t-025 main-game standard remains unfinished.
+
+      2026-11-25 PT review reconciliation: No matching active PR or branch in either repo; #5626 and #5631 are verified merged. Main-game standard remains incomplete, including remaining art and rendered QA. No open matching implementation PR or worker branch found in either repository.
   - id: t-026
     title: 'Every Villain Tactics achievement upgrade: 12 or more live achievements'
     status: done
@@ -237,11 +236,8 @@ tasks:
   - id: t-007
     milestone: m3
     title: "Write and implement all six distinctive tactical story missions"
-    status: review
-    owner: worker
-    claimed_by: 20261125T221300Z-evt-finale-continuity-7c4b
-    claimed_at: '2026-11-25T22:13:00Z'
-    updated: '2026-11-25T22:13:00Z'
+    status: ready
+    updated: '2026-11-25T23:27:50.181Z'
     depends_on: [t-003, t-005, t-006]
     passes: 0
     stakes: reversible
@@ -297,6 +293,8 @@ tasks:
       2026-11-24 PT: PR #5799 merged into kind_robots main at 7099e20291fb3785148d4f8e7af2b8b7050c1903 after all seven latest-head workflows passed (including Tactics gameplay and four contract shards). Rescue and evidence independently earn carryover and finale support; full campaign QA remains open. Returning partial umbrella scope to ready.
 
       Crossfire finale now uses shared tactical support thresholds, preserving both rescue and evidence earned on First Bell and rejecting a defeated prior chapter. Rescue ending takes precedence if both thresholds are reached. Kind Robots 3045a23e8983a1f34d9aa1c40cd77a7d16939496; six isolated finale cases passed with stubbed helpers, real-save regression committed for CI. Partial umbrella; full campaign QA remains open.
+
+      2026-11-25 PT review reconciliation: Verified #5841 merged ad094b84643b; six chapter continuity fix landed, full campaign acceptance remains. Release partial scope for independent continuation. No open matching implementation PR or worker branch found in either repository.
   - id: t-008
     milestone: m3
     title: "Author 48 hero and villain playable arcs with distinct supporting cast"
@@ -347,18 +345,17 @@ tasks:
   - id: t-011
     milestone: m3
     title: "Save, fork, share and browse versioned community levels"
-    status: review
+    status: ready
     depends_on: [t-004, t-005]
-    owner: worker
     passes: 0
     stakes: reversible
     note: |-
       Authenticated drafts, private permissions, immutable versions, provenance, editable forks and level browsing. Validate user scenario schemas, scripts and referenced assets; prevent code execution/private asset leaks. External public publishing remains a separate human gate.
 
       Scoped browser-private stage draft revision history, six previous immutable playable snapshots per local draft, safe restore-as-new-version, name-safe independent local forks and provenance. Added Stage Studio UI and revision, tamper, legacy-save and boundary regressions. Implementation branch worker/every-villain-tactics-t-011-revision-ledger-m8k4 at 5abf1e68176e32f71582a7007c95f8dfb0a0ad8d. CI pending. This is NOT authenticated cloud sharing or public publication: full t-011 still requires secure server drafts and private permission enforcement.
-    claimed_by: 20261121T011203Z-evt-t011-versioned-drafts-m8k4
-    claimed_at: '2026-11-21T01:12:03Z'
-    updated: '2026-11-21T01:14:10Z'
+
+      2026-11-25 PT review reconciliation: Verified #5475 merged ce4774544084; local versioned drafts delivered, authenticated server drafts and private permissions remain. No open matching implementation PR or worker branch found in either repository.
+    updated: '2026-11-25T23:27:51.881Z'
   - id: t-012
     milestone: m4
     title: "Audit and deliver painted art, reused portraits and animation states"
@@ -464,11 +461,8 @@ tasks:
   - id: t-018
     milestone: m3
     title: "One-hit henchmen and Picnic Panic one-shot encounter"
-    status: review
-    owner: worker
-    claimed_by: 20261122T084738132Z-evt-t018-media-proof-m7q2
-    claimed_at: '2026-11-22T08:48:24.566Z'
-    updated: '2026-11-22T08:50:14.736Z'
+    status: ready
+    updated: '2026-11-25T23:27:53.666Z'
     depends_on: [t-004, t-017]
     passes: 0
     stakes: reversible
@@ -504,16 +498,15 @@ tasks:
       Prior ArtImage attachment PR #5507 merged and no open t-018 implementation PR remains. Releasing its review-stage lease to continue authenticated byte QA and actual media proof; 12 recorded DONE receipts remain preserved, not newly accepted.
 
       Authored credentialed production private-media proof on worker/every-villain-tactics-t-018-private-media-proof-m7q2. Checks real bytes, file geometry and duplicate hashes for 12 Tactics one-hit plus 14 Prom Unstable Diffusers receipt images, without exporting private art to this public repo. Acceptance/visual curation remain separate; implementation PR and CI still required.
+
+      2026-11-25 PT review reconciliation: No matching active PR or branch in either repo; prior #5507 and #7788 media work is historical, SPECIES and visual curation still require proof. No open matching implementation PR or worker branch found in either repository.
   - id: t-019
     milestone: m3
     title: "Deterministic post-battle points and earned scrapbook achievements"
-    status: review
-    owner: worker
-    claimed_by: 20261125T221000Z-evt-journal-recovery-f93b
-    claimed_at: '2026-11-25T22:10:00Z'
+    status: ready
     depends_on: [t-006, t-016]
     passes: 0
-    updated: '2026-11-25T22:10:00Z'
+    updated: '2026-11-25T23:27:55.355Z'
     stakes: reversible
     note: |-
       Mission-end scored breakdown for flawless survival, zero damage, no knockouts, optional secrets, rescues and tactical bonuses, with explicit eligible conditions. Replay-safe recorded points, scrapbook heroes won with, villains beaten and authored route discoveries. Distinguish end-of-turn summaries from mission completion.
@@ -535,6 +528,8 @@ tasks:
       Verified PR #5812 merged at 1eeeb00282f267c5ea72407aa5fde73ccf347c73 with seven successful implementation workflows and successful branch janitor. Malformed and inconsistent scrapbook records are now rejected. Full campaign scoring remains open; return to ready.
 
       Crossfire journal scrapbook restoration committed at Kind Robots f1d5b6e2856700dec991311bd9a6a85a65956ae0 on worker/every-villain-tactics-t-019-journal-recovery-f93b. Recover validated completed and active chapter saves on load without awarding achievements again; finished journal excludes duplicate finale. Nine isolated selector cases passed with a stubbed validator. Added six-chapter real-save recovery and deduplication regressions to the existing CI verifier. Full integration checks pending; umbrella remains partial.
+
+      2026-11-25 PT review reconciliation: Verified #5838 merged 7f707034d252; scrapbook recovery delivered, cumulative six-chapter scoring remains. No open matching implementation PR or worker branch found in either repository.
   - id: t-020
     milestone: m3
     title: "48 canonical hero-villain foil pairings beyond generic story mode"
@@ -552,8 +547,8 @@ tasks:
   - id: t-021
     milestone: m3
     title: "Ship 48 power-specific playable origin opening battles"
-    status: review
-    updated: '2026-11-20T23:21:25Z'
+    status: ready
+    updated: '2026-11-25T23:27:57.311Z'
     depends_on: [t-005, t-017]
     passes: 0
     stakes: reversible
@@ -577,9 +572,8 @@ tasks:
       PR silasfelinus/kind_robots#5434 merged as 0c6ef1de8086b671663aefb0f0292972a0201f6a after seven completed green checks. Captain Valcourt origin fight shipped; remaining forty-four unique origin battles and art verification are still pending. Return to ready.
 
       Fifth unique playable origin proposed: Chorus/Fen Halloran accident-social, The Song That Stopped. New radio-tower arena, self-rally counter-melody must be used in the elevated control booth before either evacuation, 2 civilians, timed hazards, hero/villain intro, broadcast-risk choice, success/failure cinematics, save anti-forgery and one-shot menu. Staged in kind_robots commit b83b47d. Dedicated painted tower scene, other 43 origin battles, and full-game QA remain unfinished; do not close t-021.
-    owner: worker
-    claimed_by: 20261120T231800Z-evt-t021-hydrant-k7q2
-    claimed_at: '2026-11-20T23:18:00Z'
+
+      2026-11-25 PT review reconciliation: Verified #5455 merged 0717c7b8d104; fifth origin delivered, remaining origin battles and QA are not complete. No open matching implementation PR or worker branch found in either repository.
   - id: t-022
     milestone: m3
     title: "Build 48 villain-owned lairs with changing tactical environments"
