@@ -328,10 +328,21 @@ def build_entity_art(subject):
     }
 
 
+# The engine Kind Robots' claim-time gate judges a lane as, when that differs from the lane's
+# own name. Claim reads the engine off the ComfyUI graph (inferQueuedArtEngine): a Kontext
+# graph carries FluxGuidance, so it is judged as "flux" and gets the caption-engine rules
+# (frame-noun, art-direction jargon). /api/art/enqueue judges it as "kontext", skips those
+# rules and only warns anyway, so a preflight that sent "kontext" passed prompts claim then
+# failed: rainbow B02 "keep the whole creature inside the frame", ArtJobs 77110-77113 and
+# their requeue 77216-77219 (2026-11-24/25 PT).
+CLAIM_GATE_ENGINE = {"kontext": "flux"}
+
+
 def contract_rows(cells):
-    """What Kind Robots' contract judges for each cell: the prompt and the engine settings."""
+    """What Kind Robots' claim-time contract judges for each cell: the prompt and the engine settings."""
     return [
-        {"id": i, "prompt": compose_prompt(lane, subject), "engine": lane.get("engine"),
+        {"id": i, "prompt": compose_prompt(lane, subject),
+         "engine": CLAIM_GATE_ENGINE.get(lane.get("engine"), lane.get("engine")),
          "steps": lane.get("steps"), "cfg": lane.get("cfg")}
         for i, (subject, lane) in enumerate(cells)
     ]
