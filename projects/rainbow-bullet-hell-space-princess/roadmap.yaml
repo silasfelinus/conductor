@@ -1443,12 +1443,12 @@ tasks:
   - id: t-065
     milestone: m5
     title: 'Gameplay critic round 1: one-button super, super economy, co-op boss HP, guardian variety, Crown safe pockets'
-    status: claimed
+    status: done
     passes: 0
     stakes: reversible
     depends_on: []
     source: independent-review-round-1-2026-11-23
-    updated: '2026-11-25T17:21:31Z'
+    updated: '2026-11-25T17:38:12Z'
     note: >-
       From the independent gameplay critic (REVIEW-ROUND-1-2026-11-23.md, D1-D3, D5-D9, P-15): super on a short B tap only (hold stays focus); cut the kill refund, a radius wipe, boss damage as a share of max HP; co-op boss HP about 2.5 + 2(n-1); per-kind guardian movement, HP tier by Act, aimed fans that close the aimed line, varied arrival; Crown spoke and ring jitter or an aimed spoke so no ray is safe; Act-specific launchers; boss returns to the start of its phase on continue (D8 default, owner may override); optional seeded variations. Extend verifyRainbowBossCamping to every boss and the persona matrix as regression evidence.
 
@@ -1467,7 +1467,13 @@ tasks:
 
       2026-11-24 PT: D7 (eight Act-specific mortar shells) and P-15 (the Leviathan burst
       spawns as two rings) fixed in kind_robots#5737. Left: D9 (optional seed variation).
-    implementation_pr: 'silasfelinus/kind_robots#5737'
+
+      2026-11-25 PT: D9 fixed in kind_robots#5829 (merged 6285d33d): a run's seed mirrors
+      whole authored waves across the lane band, wave by wave; same seed replays exactly; the
+      attract demo and scripted scenarios keep authored lanes and draw nothing extra from the
+      rng. verifyRainbowWaveVariation added. Round-1 gameplay critic closed except D8 (owner
+      call, unchanged).
+    implementation_pr: 'silasfelinus/kind_robots#5829'
     owner: worker
     claimed_by: 01L5NKxcAxU381qnNnpPoNR1
     claimed_at: '2026-11-25T17:21:31Z'
