@@ -339,7 +339,7 @@ tasks:
   - id: t-011
     milestone: m4
     title: "Build lavish stage parallax, readable effects and character animation"
-    status: claimed
+    status: review
     depends_on: [t-002, t-007]
     passes: 0
     stakes: reversible
@@ -488,8 +488,14 @@ tasks:
       a fifth of each swing. Draw-only. PR silasfelinus/kind_robots#5827 merged as 471f20dc
       after all 23 checks passed. Still open: painted stage planes, sprite rigs and atlases,
       and visual acceptance. Stays ready and unclaimed.
-    updated: '2026-11-25T15:45:41Z'
-    implementation_pr: 'silasfelinus/kind_robots#5827'
+
+      2026-11-25 PT route-marker increment: the dashed route-fork lines (trench, wreckyard,
+      crown reef) and the lighthouse next-lamp lane marker, the last 8-frame flickers that
+      ignored calm motion, now use rainbowSignalPulse, so calm keeps a fifth of the swing.
+      Draw-only. PR silasfelinus/kind_robots#5828, CI pending. Still open: painted stage
+      planes, sprite rigs and atlases, and visual acceptance.
+    updated: '2026-11-25T15:49:14Z'
+    implementation_pr: 'silasfelinus/kind_robots#5828'
     owner: worker
     claimed_by: 2026-11-25T15:45:40Z-dfu9ae
     claimed_at: '2026-11-25T15:45:41Z'
