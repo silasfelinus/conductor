@@ -908,7 +908,7 @@ tasks:
 - id: t-048
   milestone: m6
   title: Fishing first-catch fairness, input edge cases and shop/economy adversarial suite
-  status: claimed
+  status: review
   owner: worker
   claimed_by: 20261125T033200Z-ruler-hooked-t048-a92f
   claimed_at: '2026-11-25T03:33:36.053Z'
@@ -928,7 +928,9 @@ tasks:
     Kind Robots commit e58d86c4f286e61babb5048f7bba7d75489ce67b moves purchases into tested pure reducers, rejects invalid balances and completed reigns, and prevents shop mutations during fishing, petitions and pending endings. Repeated clicks and purchase-order regression matrix added. Partial t-048 scope; CI and live device verification remain.
 
     Owner merged #5776 at 6821c99a79f63b8749e65aafb50bf9a6388db9fa. Exact head 2b74954f has successful Ruler Hooked 45525736817, Contract Tests 45525736299 and five other workflows; Playbook Kit was still in progress on recheck. Shop scope delivered; remaining seeded encounter/reward parity and long-run QA stay open.
-  updated: '2026-11-25T03:33:36.053Z'
+
+    Kind Robots commit 9437fa0a00b6d285db1976325b257231a13b7ad5 fixes last-cast-of-day fish preview/reward disagreement; adds 256 day-boundary seed regressions and 12 guided multi-day reigns with purchases, petitions, reward and escape accounting. CI pending; full ending graph and device QA not claimed.
+  updated: '2026-11-25T03:34:20.084Z'
 - id: t-049
   milestone: m6
   title: Full policy-matrix kingdom simulator and witnessed complete ending graph
