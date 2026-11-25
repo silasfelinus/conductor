@@ -2993,8 +2993,8 @@ tasks:
   - id: t-181
     milestone: m12
     title: "Superkate Spectrum: touch aim, aim assist, colorblind/high-contrast modes, calm motion and full controller support"
-    status: ready
-    updated: '2026-11-25T03:33:00Z'
+    status: claimed
+    updated: '2026-11-25T09:45:49Z'
     passes: 0
     stakes: reversible
     depends_on: [t-176]
@@ -3006,6 +3006,9 @@ tasks:
       2026-11-24 PT: head 834b5b7082b1d2250ffe091d09479d0562759020 adds touch navigation for all four menu tabs, chapter browsing, all seven setting rows, mixer volume and Story/Classic mode switching. Shared setting actions preserve keyboard/controller behavior. Regression assertions added for touch navigation, persistence, mixer and canceled drag; CI and actual device QA pending. Partial scope.
 
       2026-11-24 PT: verified Kind Robots #5783 merged 60f76be3a0d4f5b8ae9061fb70551ed38f717445 after exact head 834b5b7082b1d2250ffe091d09479d0562759020 passed all substantive CI checks; post-merge prune in progress. All cabinet tabs, settings and mode switches now touch-accessible. Remaining Spectrum-specific rendered controller/device QA; requeue, not done.
+    owner: worker
+    claimed_by: 2026-11-25T094544Z-spectrum-qa-sbjq3s
+    claimed_at: '2026-11-25T09:45:49Z'
   - id: t-182
     milestone: m12
     title: "Superkate Spectrum: original salon and six-region music themes, matching sound effects and accessible audio settings"
