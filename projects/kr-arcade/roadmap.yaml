@@ -3024,19 +3024,18 @@ tasks:
   - id: t-183
     milestone: m12
     title: "Superkate Spectrum: endless, puzzle atelier, cooperative relay, achievements and ranked leaderboard fairness"
-    status: claimed
+    status: review
     passes: 0
     stakes: reversible
     depends_on: [t-178]
-    note: >-
-      Silas, 2026-11-22 PT: Classic mode is now included in the first
-      playable prototype; ranked Story and Classic scoreboards must be
-      separately keyed before public competition, without erasing
-      device-local best Classic score or Story stars.
+    note: |-
+      Silas, 2026-11-22 PT: Classic mode is now included in the first playable prototype; ranked Story and Classic scoreboards must be separately keyed before public competition, without erasing device-local best Classic score or Story stars.
+
+      2026-11-24 PT: head 61fbc5b38577afe6be5b6b422ce2e7b01f1d5963 separates Story and Classic board keys using existing score storage and registry. Story late-stage replay is unranked, Classic remains ranked; cabinet selects and labels board, hall uses new Story bracket, legacy rows and career saves untouched. Pure helper verified for all 30 stages in both modes; engine and registry regression assertions added, CI pending. Remaining Atelier, cooperative relay and competition QA are not done.
     owner: worker
     claimed_by: 2026-11-25T033500Z-spectrum-rank-5d70bf
     claimed_at: '2026-11-25T03:35:00Z'
-    updated: '2026-11-25T03:35:00Z'
+    updated: '2026-11-25T03:39:00Z'
   - id: t-184
     milestone: m12
     title: "Superkate Spectrum: adversarial full campaign playthrough, mobile QA, save/retry/ending tests and visual acceptance"
