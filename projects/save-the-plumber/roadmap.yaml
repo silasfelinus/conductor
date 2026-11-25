@@ -91,15 +91,12 @@ tasks:
       images asserted as live.
   - id: t-028
     title: 'Main-game standard: audit and close the gaps for Save the Plumber'
-    status: review
-    owner: worker
-    claimed_by: 20261125T005124Z-plumber-newgame-k7d3
-    claimed_at: '2026-11-25T00:51:24Z'
+    status: ready
     milestone: m6
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-25T00:52:23Z'
+    updated: '2026-11-25T05:52:32.813Z'
     note: |-
       Silas 2026-11-11 PT, in session: "Our games should all have a base standard of quality ... We want our main games to have 12 plus achievements." Standard: docs/agents/main-game-standard.md; CONTROL.md global overview.
 
@@ -124,6 +121,8 @@ tasks:
       Verified kind_robots#5772 merged at 28bc1c7b; latest head d6110b2b has eight completed successful workflows and branch janitor queued. Achievement browser and independent scrapbook labels merged. Remaining separate New Game/Continue, endings and accessibility. Return to ready.
 
       Separated title New Game and Continue shortcuts using a scoped cabinet launch intent, safe eligible file selection, no erase in shortcut modes, and retained Files / Endless access. Added runtime regression scenarios for existing-slot isolation, stale Continue and choosing another saved file. Branch worker/save-the-plumber-t-028-newgame-k7d3 head 69c11cba. Partial main-game scope; full CI and rendered viewport acceptance pending.
+
+      Merged kind_robots#5773 at 85a864ba after 14/14 exact-head workflows completed successfully. Separate New Game and Continue delivered; remaining endings, customization and accessibility. Production visual acceptance unverified.
   - id: t-029
     title: 'Save the Plumber achievement upgrade: 12 or more live achievements'
     status: done
@@ -180,7 +179,7 @@ tasks:
   - id: t-005
     milestone: m2
     title: "Implement enemy interaction, held objects and powerup systems"
-    status: ready
+    status: claimed
     depends_on: [t-003]
     passes: 0
     stakes: reversible
@@ -206,7 +205,10 @@ tasks:
       Implemented a new authored World 1-2 optional high route: a floor-level brass key at column 35, a seven-rung ladder at column 39, and a padlocked upper passage at column 42. The existing fast lower corridor remains unobstructed. Added real PlumberRun campaign replay assertions for key collection, climb-to-top, bolt unlock, key consumption and lower-route accessibility. Source branch worker/save-the-plumber-t-005-campaign-route-k4v2. Remaining scope includes slopes, carryable enemies, Gen-2 reserve/powers/companion, plus further campaign gadget placements; t-005 is not fully done.
 
       Verified kind_robots#5633 merged at 4c0f092b. Brass-key ladder route shipped; remaining slopes, carryables and powers. Return to ready.
-    updated: '2026-11-24T21:56:00Z'
+    updated: '2026-11-25T05:52:57.124Z'
+    owner: worker
+    claimed_by: 20261125T055257Z-plumber-slopes-q8m4
+    claimed_at: '2026-11-25T05:52:57.124Z'
   - id: t-006
     milestone: m3
     title: "Build World 1: four complete garden/pipeworks levels and boss"
@@ -464,10 +466,10 @@ tasks:
   - id: t-020
     milestone: m6
     title: "Gen-2 level engine: sub-areas, vertical rooms, midpoints, secret exits, campaign-wide switches"
-    status: review
+    status: ready
     passes: 0
     stakes: reversible
-    updated: '2026-11-24T22:12:02Z'
+    updated: '2026-11-25T05:52:32.813Z'
     note: |-
       GEN2-STANDARD.md section 2. Doors, pipes and ladders into sub-rooms with their own camera bounds; vertical shafts and climbs; a midpoint checkpoint per level; a second, hidden exit type that reports `secret` to the overworld (t-011); Valve Chapel switch state read by every level so pressed switches make outlined blocks solid campaign-wide; auto-scroll and haunted-maze (Hush House) exit logic. Deterministic replay tests for each: secret exit reachable, sub-room return position, switch persistence across levels and save/reload.
 
@@ -484,9 +486,8 @@ tasks:
       Merged kind_robots#5732 at 5ad37ebb after 10/10 exact-head workflows passed. Seven secret exits implemented; remaining persistent switches, destination courses and subrooms. Return to ready.
 
       Added a playable Verdigris Chapel branch course and per-slot persistent solid switch blocks in Rainy Courtyard and Copper Greenhouses, using the existing normal-clear node memory without changing campaign indices or save format. Added map, goal-contact, reload and slot isolation regression assertions. Branch worker/save-the-plumber-t-020-valves-6f8c head b485c045. Partial engine scope; CI and further chapels/subrooms remain.
-    owner: worker
-    claimed_by: 20261124T221037Z-plumber-t020-valves-6f8c
-    claimed_at: '2026-11-24T22:10:37Z'
+
+      Verified kind_robots#5769 merged 2026-11-24 PT. Verdigris Chapel and persistent switch blocks delivered; remaining chapels, subrooms and vertical stages. Return partial scope to ready.
   - id: t-021
     milestone: m6
     title: "Gen-2 World 1: re-author Bluebell Pipeworks as a full SMB3/SMW-class world"
