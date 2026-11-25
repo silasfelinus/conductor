@@ -1562,6 +1562,8 @@ subjects:
       status: DONE
       art_image_id: 280303
 - key: doodle-alt-x2-sky
+  verdict: 'keep: 2026-11-25 PT review, a neon comet sky over rainbow clouds, on layout; the render''s thin white
+    border trimmed, shipped as doodle/alt/x2-sky at 960x540'
   lane: kontext
   title: x2-sky detour plane, Fever Dream twin
   entity: stage-plane
@@ -1577,9 +1579,11 @@ subjects:
     kontext: 77121
   art:
     kontext:
-      status: RUNNING
-      art_image_id: null
+      status: DONE
+      art_image_id: 280304
 - key: doodle-alt-x2-far
+  verdict: 'reject: 2026-11-25 PT review, a vivid seabed band on layout, but its hot-pink stripes are the magenta
+    key colour and key out to holes, and the band stops short of both edges; retaken on a green matte as doodle-alt-x2-far-2'
   lane: kontext
   title: x2-far detour plane, Fever Dream twin
   entity: stage-plane
@@ -1597,9 +1601,11 @@ subjects:
     kontext: 77122
   art:
     kontext:
-      status: PENDING
-      art_image_id: null
+      status: DONE
+      art_image_id: 280305
 - key: doodle-alt-x2-near
+  verdict: 'keep: 2026-11-25 PT review, rainbow dunes behind bare coral on a pink rubble strip; keyed off magenta
+    at 960x330 and shipped as doodle/alt/x2-near'
   lane: kontext
   title: x2-near detour plane, Fever Dream twin
   entity: stage-plane
@@ -1617,9 +1623,11 @@ subjects:
     kontext: 77123
   art:
     kontext:
-      status: PENDING
-      art_image_id: null
+      status: DONE
+      art_image_id: 280306
 - key: doodle-alt-x3-sky
+  verdict: 'keep: 2026-11-25 PT review, the cratered moon and crossing rainbows over neon clouds, on layout; shipped
+    as doodle/alt/x3-sky at 960x540'
   lane: kontext
   title: x3-sky detour plane, Fever Dream twin
   entity: stage-plane
@@ -1636,9 +1644,11 @@ subjects:
     kontext: 77124
   art:
     kontext:
-      status: PENDING
-      art_image_id: null
+      status: DONE
+      art_image_id: 280307
 - key: doodle-alt-x3-far
+  verdict: 'keep: 2026-11-25 PT review, flooded sand flats with turquoise pools, islets on the horizon; keyed off
+    magenta at 960x300 (its open channels match the Classic plane''s) and shipped as doodle/alt/x3-far'
   lane: kontext
   title: x3-far detour plane, Fever Dream twin
   entity: stage-plane
@@ -1656,9 +1666,11 @@ subjects:
     kontext: 77125
   art:
     kontext:
-      status: PENDING
-      art_image_id: null
+      status: DONE
+      art_image_id: 280308
 - key: doodle-alt-x3-mid
+  verdict: 'reject: 2026-11-25 PT review, eight rainbow lighthouses on crystal footings, but the pink towers sit
+    too close to the magenta key and go ghostly when keyed; retaken on a green matte as doodle-alt-x3-mid-2'
   lane: kontext
   title: x3-mid detour plane, Fever Dream twin
   entity: stage-plane
@@ -1676,8 +1688,8 @@ subjects:
     kontext: 77126
   art:
     kontext:
-      status: PENDING
-      art_image_id: null
+      status: DONE
+      art_image_id: 280309
 - key: doodle-alt-x3-near
   lane: kontext
   title: x3-near detour plane, Fever Dream twin
@@ -1696,7 +1708,7 @@ subjects:
     kontext: 77127
   art:
     kontext:
-      status: PENDING
+      status: RUNNING
       art_image_id: null
 - key: doodle-alt-x4-sky
   lane: kontext
@@ -1897,3 +1909,37 @@ subjects:
   source_matte: '#00ff00'
   jobs:
     kontext: 77220
+  art:
+    kontext:
+      status: PENDING
+      art_image_id: null
+- key: doodle-alt-x2-far-2
+  lane: kontext
+  title: x2-far detour plane, Fever Dream twin, second take
+  entity: stage-plane
+  asset: rainbow-princess-art/doodle/alt/x2-far
+  size: 1344x352
+  seed: 1124621
+  source_url: /rainbow-princess-art/alt/x2-far.webp
+  prompt_prose: Repaint this wide seabed band of rippling sand ridges as glossy 1980s neon sticker art in hot pink,
+    orange, sunshine yellow, turquoise and violet stripes with pale oval pebbles, the ridges running edge to edge
+    across the whole width exactly where they lie. Everything above the band becomes one flat bright green, even
+    and untextured.
+  source_matte: '#00ff00'
+  jobs:
+    kontext: 77221
+- key: doodle-alt-x3-mid-2
+  lane: kontext
+  title: x3-mid detour plane, Fever Dream twin, second take
+  entity: stage-plane
+  asset: rainbow-princess-art/doodle/alt/x3-mid
+  size: 1344x400
+  seed: 1124622
+  source_url: /rainbow-princess-art/alt/x3-mid.webp
+  prompt_prose: Repaint this row of six leaning lighthouses on crystal footings as glossy airbrushed neon sticker
+    art, each tower striped in its own candy colours with bold dark outlines and a glowing lamp room, kept at the
+    same spacing and tilt. All the open space around and between the towers becomes one flat bright green, even
+    and untextured.
+  source_matte: '#00ff00'
+  jobs:
+    kontext: 77222
