@@ -87,7 +87,7 @@ tasks:
     direction, and the offline-at-runtime rule.
 - id: t-067
   title: 'Main-game standard: audit and close the gaps for The Ruler Is Hooked'
-  status: claimed
+  status: review
   owner: worker
   claimed_by: 20261125T091730Z-ruler-hooked-t067-b6f2
   claimed_at: '2026-11-25T09:17:30Z'
@@ -95,7 +95,7 @@ tasks:
   stakes: reversible
   passes: 0
   depends_on: []
-  updated: '2026-11-25T09:17:30Z'
+  updated: '2026-11-25T09:18:00Z'
   note: |-
     Silas 2026-11-11 PT, in session: "Our games should all have a base standard of quality ... We want our main games to have 12 plus achievements." Standard: docs/agents/main-game-standard.md; CONTROL.md global overview.
 
@@ -128,6 +128,8 @@ tasks:
     App commit fceb638f on worker/ruler-hooked-t-067-cloud-4bf92 adds explicit private account backup and restore of reign slots and scrapbook, using existing revision-guarded ArcadeCabinetSave storage, strict bounded parsing, latest-timestamp merging and device-only custom portraits. Added regression assertions. CI and live account/device verification pending; no automatic upload or schema migration.
 
     Account backup/restore kind_robots#5735 merged at 1fb504ce4b942857339534a1f94b524627f06cd1; exact-head Ruler Hooked 45370921048 and Contract Tests 45370921234 passed. Audio, scrapbook and display settings are also merged. Return to ready for actual deployed signed-in backup/restore and full standards verification; no production data writes or visual pass claimed.
+
+    Fixed pending court petitions and ending offers disappearing on reload or slot switch. Stable IDs persist in saves and private backup; resume resolves against current authored catalog and ignores retired, answered once-only, dismissed or completed offers. Added local and backup round-trip regressions. App head d183d56d216a1f76f755e11635c36a3b1056a874; CI pending. Partial t-067, mid-fight and rendered device QA remain.
 
 - id: t-068
   title: 'The Ruler Is Hooked achievement upgrade: 12 or more live achievements'

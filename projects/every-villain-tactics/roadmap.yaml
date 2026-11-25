@@ -502,7 +502,7 @@ tasks:
   - id: t-019
     milestone: m3
     title: "Deterministic post-battle points and earned scrapbook achievements"
-    status: claimed
+    status: review
     depends_on: [t-006, t-016]
     passes: 0
     updated: '2026-11-25T09:15:00Z'
@@ -521,6 +521,8 @@ tasks:
       After reclaiming the stale t-019 claim and verifying session ownership, authored code for secret-trigger scoring, a new verified hidden-route medal and achievement, and visible 48-identity hero/villain/supported record in the Tactics scrapbook. Reversible scoped PR kind_robots#5470 is open at b0d27fb302e1fb93c536c25dbc0afa20b7049276 with regressions committed. CI pending: no local runtime execution in this connector-only session. Not done: 6-chapter full campaign scoring QA and broader secret-route audit.
 
       Reopen the remaining Scoring and scrapbook scope for independent production. No open matching implementation PR was found; preserve previously merged contributions and all acceptance requirements. Do not count partial implementation as done.
+
+      Scoped score integrity repair on Kind Robots worker/every-villain-tactics-t-019-score-integrity-a8e4 at daa31471f90ccc1bd4b38c40dc4c94ea77fef43d. Reject malformed lines, duplicate lines and medals, defeat medals, and medals unsupported by positive score lines without discarding valid neighboring history. Connector-extracted actual validator reproduced old crash and rejected seven corrupt fixtures while retaining two valid records. Full TS and integration suite pending PR CI; six-chapter aggregation remains open.
     owner: worker
     claimed_by: 20261125T091500Z-evt-score-integrity-a8e4
     claimed_at: '2026-11-25T09:15:00Z'
@@ -650,11 +652,8 @@ tasks:
   - id: t-029
     milestone: m4
     title: "Ship original tactical music and contextual combat SFX with accessible persistent mixer before human playtests"
-    status: review
-    owner: worker
-    claimed_by: 20261124T235600Z-evt-audio-lifecycle-4e9d
-    claimed_at: '2026-11-24T23:56:00Z'
-    updated: '2026-11-24T23:58:00Z'
+    status: ready
+    updated: '2026-11-25T09:15:00Z'
     depends_on: []
     passes: 0
     stakes: reversible
@@ -666,3 +665,5 @@ tasks:
       Merged original sound implementation Kind Robots #5608 as 91f146a048a1188fa253c4f2df1f1c58b492b214 after all ten required latest-head workflows completed successfully. Seven original synthesized score themes, 13 contextual cues, gesture unlock, persistent mixer and reduced-interruption route cleanup are on main. Final self-hosted deployment, actual playback, phone mute/resume and speaker audition remain unverified; t-029 is partial and must return ready, not done.
 
       Scoped scheduler repair committed to Kind Robots worker/every-villain-tactics-t-029-audio-lifecycle-4e9d at 6425d131446ae4637b007719f2d52bea8b531478. Cancel active and queued voices on mood/mute/visibility/disable/disposal, stop scheduling inaudible channels, prevent suspended-context cue buildup, preserve independent mixer channels, and add deterministic active WebAudio stand-in regression. CI and actual browser playback pending; this does not close t-029.
+
+      2026-11-25 PT: verified merged Kind Robots PR #5770 at d93c234ea958963bd3a696a32bb389e8c0b283cc; all seven implementation workflows and their required jobs passed, branch janitor also succeeded and no t-029 branch remains. Audio lifecycle regression is merged; browser/mobile playback and audible audition remain open. Return partial task to ready rather than done.

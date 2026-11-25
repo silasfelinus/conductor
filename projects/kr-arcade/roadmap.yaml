@@ -3074,11 +3074,8 @@ tasks:
   - id: t-186
     milestone: m12
     title: "Superkate Spectrum: navigable 30-level star map, cosmetic bubble collection and earned animated effects"
-    status: review
-    owner: worker
-    claimed_by: 2026-11-25T072900Z-spectrum-map-7a91bd
-    claimed_at: '2026-11-25T07:29:00Z'
-    updated: '2026-11-25T07:31:00Z'
+    status: ready
+    updated: '2026-11-25T09:16:00Z'
     passes: 0
     stakes: reversible
     depends_on: [t-176]
@@ -3091,30 +3088,23 @@ tasks:
 
       2026-11-24 PT: illustrated all six district rows using recovered robot-only boss art (ArtJobs 76805-76810), aspect-preserving crop, contrast veil and missing-image fallback. Added earned cosmetic threshold notifications with animated bubble preview, calm-motion support, sound, unchanged selected style and save compatibility. Regression tests cover all thresholds and actual Story/Classic projectile unlocks, expiry and reload. Head 41eaab763424e7f4dcbcf16767213bed7e0fc4d3; CI pending. Power tutorials and rendered device/art verification remain. No new art generation or deployment.
 
+      2026-11-25 PT: verified #5808 merged 22dbfefa25d5e750fb3f8f7cc86eecb139d43443 after nine successful exact-head workflows. Illustrated districts and earned skin celebrations landed. Power tutorials and rendered device QA remain; partial scope, no deployment.
+
   - id: t-187
     milestone: m12
     title: "Superkate Spectrum: integrate retro-modern Arcade hub with Play, Classic, Scrapbook, Achievements and Settings"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 2026-11-25T091630Z-spectrum-cabinet-6b0c29
     claimed_at: '2026-11-25T09:16:30Z'
-    updated: '2026-11-25T09:16:30Z'
+    updated: '2026-11-25T09:19:00Z'
     passes: 0
     stakes: reversible
     depends_on: [t-176]
-    note: >-
-      Silas, 2026-11-22 PT: preserve old-school game character but wrap
-      it in premium modern presentation. No second disconnected route:
-      provide a cohesive console-first cabinet home with illustrated
-      stage-map cards, classic/story mode selection, collected bubble
-      cosmetics, chapter and character scrapbook, earned trophies,
-      music/effects/volume and accessibility settings, and a visible
-      account/device cloud-save state. Foundation is in app PR #5624:
-      in-canvas four-tab menu with story stars, local scrapbook,
-      achievement list and aim/animation/high-contrast toggles.
-      Remaining: delivered art, accessible touch interaction, responsive
-      polish, readable one-screen layout at 390/768/1440, input QA and
-      full UI playback validation.
+    note: |-
+      Silas, 2026-11-22 PT: preserve old-school game character but wrap it in premium modern presentation. No second disconnected route: provide a cohesive console-first cabinet home with illustrated stage-map cards, classic/story mode selection, collected bubble cosmetics, chapter and character scrapbook, earned trophies, music/effects/volume and accessibility settings, and a visible account/device cloud-save state. Foundation is in app PR #5624: in-canvas four-tab menu with story stars, local scrapbook, achievement list and aim/animation/high-contrast toggles. Remaining: delivered art, accessible touch interaction, responsive polish, readable one-screen layout at 390/768/1440, input QA and full UI playback validation.
+
+      2026-11-25 PT: added six boss-memory collectible album panels, earned from actual persisted boss-stage medals, and all nine trophy displays with touch and keyboard/controller pagination. Uses existing robot-only art (ArtJobs 76805-76810), no unapproved likeness art. Regression tests verify no premature unlocks, migrated saves, full navigation and no mutation. Head 202145550fc2ddf36e4c37bda8022c6053ebda57; CI pending. Partial t-187; rendered device and integration QA remain. No deploy.
   - id: t-188
     milestone: m12
     title: "Superkate Spectrum: finish audio production and collectible scrapbook portraits with account-safe achievements"
