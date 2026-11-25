@@ -921,7 +921,7 @@ tasks:
 - id: t-048
   milestone: m6
   title: Fishing first-catch fairness, input edge cases and shop/economy adversarial suite
-  status: claimed
+  status: review
   owner: worker
   claimed_by: 20261125T055800Z-ruler-hooked-t048-c4e9
   claimed_at: '2026-11-25T05:58:00Z'
@@ -945,7 +945,9 @@ tasks:
     Kind Robots commit 9437fa0a00b6d285db1976325b257231a13b7ad5 fixes last-cast-of-day fish preview/reward disagreement; adds 256 day-boundary seed regressions and 12 guided multi-day reigns with purchases, petitions, reward and escape accounting. CI pending; full ending graph and device QA not claimed.
 
     2026-11-24 PT: verified kind_robots#5790 merged at 97ba23660b7deb386520c916493688a9197072aa. All eight exact-head PR workflows and Branch janitor completed successfully (Ruler Hooked 45540913438, Contract Tests 45540913813). Catch parity and guided reign regression slice landed; remaining input parity and adversarial economy coverage stay ready. No rendered device QA claimed.
-  updated: '2026-11-25T05:58:00Z'
+
+    Common-only timing-quality curve preserves complete misses and perfect stops while forgiving modest timing errors. Independent reducer-math simulation: alternating +/- 2 percentage points, 4/128 before and 128/128 after; +/- 3 points, 0/128 before and 128/128 after. Added actual encounter regression for 128 seeds and 128 reckless misses. App head ba3ec9d7a83b250636e1c9e4db224d3111b44e88; CI pending. Partial t-048, no interactive browser tests claimed.
+  updated: '2026-11-25T05:58:01Z'
 - id: t-049
   milestone: m6
   title: Full policy-matrix kingdom simulator and witnessed complete ending graph
