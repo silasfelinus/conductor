@@ -81,7 +81,7 @@ Silas's decision; it stays as it is until he decides).
 | P-11 | major | pink pellets blend into pink scenes in Fever Dream unless bold shots are on | t-067 | fixed in kind_robots#5716 (firmer default halo and ring) |
 | P-12 | major | B02 changes creature between phases | t-030 | fixed in #5810: phases 2 and 3 redrawn from the phase-1 jellyfish (cracked, then split with a gold core), in both looks |
 | P-13 | major | the Act V wreck frames are 1-px outlines | t-067 | fixed in kind_robots#5719 (solid crane silhouettes) |
-| P-14 | minor | the detour planes have no Fever Dream twins; the X3 footer has no plate | t-022 | partly fixed: status footers on a plate (#5741); X1's Fever Dream sky, mid and near (#5767); the remaining X1 far, X2 far, X3 mid and near, X4 far and near from green-matte retakes (#5810). Fixed |
+| P-14 | minor | the detour planes have no Fever Dream twins; the X3 footer has no plate | t-022 | fixed: status footers on a plate (#5741); X1's Fever Dream sky, mid and near (#5767); the remaining X1 far, X2 far, X3 mid and near, X4 far and near from green-matte retakes (#5810) |
 | P-15 | minor | Leviathan's gem-open burst is an illegible clump | t-065 | fixed in #5737 (the two rings spawn 16 px and 28 px out along their spokes) |
 | P-16 | major | the stage uses about 27% of a 1920×1080 screen | t-067 | fixed in kind_robots#5720 (stage 1446x813 at 1920x1080, about 57%) |
 | P-17 | minor | the settings panel scrolls at 360×640 | t-067 | fixed in #5741 (one Settings pop-over on short screens) |
