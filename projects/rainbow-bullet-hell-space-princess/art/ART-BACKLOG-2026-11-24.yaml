@@ -1714,6 +1714,8 @@ subjects:
       status: DONE
       art_image_id: 280310
 - key: doodle-alt-x4-sky
+  verdict: 'keep: 2026-11-25 PT review, a rainbow sunburst over a starlit sea between neon clouds, the Mirror Shoal
+    twin; shipped as doodle/alt/x4-sky at 960x540'
   lane: kontext
   title: x4-sky detour plane, Fever Dream twin
   entity: stage-plane
@@ -1732,6 +1734,8 @@ subjects:
       status: DONE
       art_image_id: 280311
 - key: doodle-alt-x4-far
+  verdict: 'reject: 2026-11-25 PT review, the mirrored reef islets on layout, but the band stops short of three
+    edges and its pink water keys half-transparent against the magenta; retaken on a green matte as doodle-alt-x4-far-2'
   lane: kontext
   title: x4-far detour plane, Fever Dream twin
   entity: stage-plane
@@ -1752,6 +1756,9 @@ subjects:
       status: DONE
       art_image_id: 280312
 - key: doodle-alt-x4-near
+  verdict: 'reject: 2026-11-25 PT review, rainbow crystals before rippling water, but the band is inset from both
+    sides and the key cut dark vertical seams and stray flame shapes through the water; retaken on a green matte
+    as doodle-alt-x4-near-2'
   lane: kontext
   title: x4-near detour plane, Fever Dream twin
   entity: stage-plane
@@ -1931,6 +1938,10 @@ subjects:
   source_matte: '#00ff00'
   jobs:
     kontext: 77221
+  art:
+    kontext:
+      status: PENDING
+      art_image_id: null
 - key: doodle-alt-x3-mid-2
   lane: kontext
   title: x3-mid detour plane, Fever Dream twin, second take
@@ -1946,6 +1957,10 @@ subjects:
   source_matte: '#00ff00'
   jobs:
     kontext: 77222
+  art:
+    kontext:
+      status: PENDING
+      art_image_id: null
 - key: doodle-alt-x3-near-2
   lane: kontext
   title: x3-near detour plane, Fever Dream twin, second take
@@ -1961,3 +1976,37 @@ subjects:
   source_matte: '#00ff00'
   jobs:
     kontext: 77223
+  art:
+    kontext:
+      status: PENDING
+      art_image_id: null
+- key: doodle-alt-x4-far-2
+  lane: kontext
+  title: x4-far detour plane, Fever Dream twin, second take
+  entity: stage-plane
+  asset: rainbow-princess-art/doodle/alt/x4-far
+  size: 1344x400
+  seed: 1124624
+  source_url: /rainbow-princess-art/alt/x4-far.webp
+  prompt_prose: Repaint this far band of small rounded reef islets strung along a calm horizon, each mirrored in
+    still water below, as glossy neon sticker art with bold outlines, the islets in candy orange, turquoise and
+    lilac, the water a deep violet fading to rose, the band spanning the full width. The sky above becomes one flat
+    bright green, even and untextured.
+  source_matte: '#00ff00'
+  jobs:
+    kontext: 77224
+- key: doodle-alt-x4-near-2
+  lane: kontext
+  title: x4-near detour plane, Fever Dream twin, second take
+  entity: stage-plane
+  asset: rainbow-princess-art/doodle/alt/x4-near
+  size: 1344x384
+  seed: 1124625
+  source_url: /rainbow-princess-art/alt/x4-near.webp
+  prompt_prose: Repaint this foreground of tall faceted crystals rising in front of gently rippling water as glossy
+    airbrushed sticker art with bold dark outlines, the crystals in turquoise, lemon, tangerine and lilac, the water
+    deep violet with pale ripple lines running edge to edge. The sky above the water becomes one flat bright green,
+    even and untextured.
+  source_matte: '#00ff00'
+  jobs:
+    kontext: 77225
