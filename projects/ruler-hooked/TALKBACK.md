@@ -670,3 +670,24 @@ existing scope, and a duplicate task would split it.
 **Pattern:** select_role reported `pending_worker_pr_count: 0` while #7997 was open for this
 branch; the reviewer only found the PR when create_pull_request reported a duplicate. Worth
 checking the head-filter in select_role's PR lookup if it recurs.
+
+## 2026-11-25 PT — Reviewer (scheduled): t-045 water stewards' strike
+
+select_role routed to `reviewer` for `worker/ruler-hooked-t-045-water-stewards-art-7bd2`, which
+already had PR #8011 (green) open. Its companion, kind_robots#5818, adds the `water-stewards-strike` late
+interrupt with three settlements (public wages / exclusive contract / shared patrol) and six
+seeded legal-route witnesses plus an ecology test. The quests self-test passed on CI, but
+`artPrompts.selftest.ts` failed: the new card prompt rendered at 912 chars against the 900 cap.
+That is an actionable failure, not a quality one, so no pass was spent. The reviewer trimmed
+style adjectives (now 891) and changed "open purse" to "empty purse" to match the conductor queue
+entry (kind_robots ef67c483), then merged both PRs once they were green. t-045 goes back to `ready` as a
+partial slice; render and binding stay with t-047.
+
+**Pattern:** the Worker wrote "CI pending" and stopped before the first `verify` result. The
+900-char prompt cap is a fixed rule in `artPrompts.selftest.ts`, so a Worker adding a
+`scene()` prompt should count the expanded length (the `who()` descriptors add ~500 chars)
+rather than waiting for CI.
+
+**Kaizen:** conductor/t-223. For the second day running, select_role printed
+`pending_worker_pr_count: 0` while the PR was open. It skips the PR lookup when no token is
+set, so 0 means "not checked".
