@@ -1438,12 +1438,12 @@ tasks:
   - id: t-067
     milestone: m5
     title: 'Presentation critic round 1: co-op HUD and touch pads off the playfield, phone and large-screen layout, pellet readability'
-    status: claimed
+    status: done
     passes: 0
     stakes: reversible
     depends_on: []
     source: independent-review-round-1-2026-11-23
-    updated: '2026-11-24T23:45:58Z'
+    updated: '2026-11-25T00:22:35Z'
     note: >-
       From the independent presentation critic and the gameplay critic (REVIEW-ROUND-1-2026-11-23.md, D4, P-05, P-06, P-08 to P-11, P-13, P-16 to P-18, P-20 to P-23): move the 2-4p status panel off the playfield (top bar or bottom edge) and never over the boss bar; keep touch pads out of the stage (gutters, or no four touch seats on one tablet); a portrait-tuned HUD or rotate prompt and corner chips off the canvas on phones; size the stage from content height on large screens; collapse the switches on short screens; ambient bubbles never bullet-sized in the play band; a hostile pellet hue no scene uses (or bold by default); painted Act V wreck frames; per-Act colour keys; fade the control legend after Act I; seat tags off the hull; Seas cards keep art on phones and the route map is a real map. Verify in the real cabinet at 360x640, 390x844, 768x1024, 1024x768, 844x390, 1440x900 and 1920x1080, 1-4 seats.
 
@@ -1466,7 +1466,17 @@ tasks:
       2026-11-24 PT: presentation layout findings fixed: P-05, P-06, P-17, P-23 and the in-
       scope part of P-09 (kind_robots#5741; the portrait HUD stays open); P-18 Seas on phone
       (#5756); P-20 per-Act colour keys (#5740).
-    implementation_pr: 'silasfelinus/kind_robots#5720'
+
+      2026-11-24 PT: P-09 portrait HUD: on an upright phone a large-type status readout (Act,
+      score, shoals and novas, each pilot's lives, shields, power, charge and ready moves)
+      fills the empty gap between the chips and the controls, above the turn-sideways prompt.
+      kind_robots#5768, CI pending. With this, every t-067 finding from presentation critic
+      round 1 has a fix.
+
+      kind_robots#5768 merged as 2b8f24fe after 23 checks passed. Every t-067 finding from
+      presentation critic round 1 is fixed and covered by the browser layout tests at the
+      listed viewports and seat counts.
+    implementation_pr: 'silasfelinus/kind_robots#5768'
     owner: worker
     claimed_by: 2026-11-24T23:45:57Z-g8g9vm
     claimed_at: '2026-11-24T23:45:58Z'

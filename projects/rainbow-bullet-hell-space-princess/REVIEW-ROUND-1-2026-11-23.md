@@ -76,7 +76,7 @@ Silas's decision; it stays as it is until he decides).
 | P-06 | major | the P2 pad covers the boss at 844×390 | t-067 | fixed in #5741 (side rails at 844x390; no pad over the stage) |
 | P-07 | major | the finale reuses Act VIII's card and backdrop | t-022 | fixed in #5767: the finale's own planes, title card and foreground strip, and the switch to stage s09 (a Fever Dream card retake is rendering in ANIM-BACKLOG-2026-11-24) |
 | P-08 | major | the 4-pilot HUD covers the boss bar | t-067 | fixed in kind_robots#5716 |
-| P-09 | major | phone portrait wastes about 75% of the screen; HUD text is unreadable | t-067 | fixed: chips off the canvas and a turn-sideways prompt (#5741); upright, the cabinet shows the game's HUD and comms line in large type under the stage (ArcadeGameInstance.readout, P-09 PR) |
+| P-09 | major | phone portrait wastes about 75% of the screen; HUD text is unreadable | t-067 | fixed: chips off the canvas and a turn-sideways prompt (#5741); a large-type status readout under the stage (kind_robots#5768) |
 | P-10 | major | Classic background bubbles look like bullets | t-067 | fixed in kind_robots#5719 (two faint far planes) |
 | P-11 | major | pink pellets blend into pink scenes in Fever Dream unless bold shots are on | t-067 | fixed in kind_robots#5716 (firmer default halo and ring) |
 | P-12 | major | B02 changes creature between phases | t-030 | open (art regen from the phase-1 reference) |
