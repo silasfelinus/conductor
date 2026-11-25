@@ -2622,6 +2622,9 @@ subjects:
       status: DONE
       art_image_id: 280385
 - key: idle-guardian-kelp-warden-v2
+  verdict: 'reject: 2026-11-25 PT review, on model and lively (motion 7.15) but the 832x576 render squashes the
+    fish about 16% vertically against the 271x154 still, the white rim frays and a green fringe shows at the lure;
+    retake key idle-guardian-kelp-warden-v3 at 832x480.'
   lane: wan-mp4
   entity: sprite-animation
   title: guardian-kelp-warden idle loop
@@ -2643,6 +2646,8 @@ subjects:
       status: DONE
       art_image_id: 280386
 - key: idle-guardian-shoal-koi-v2
+  verdict: 'keep: 2026-11-25 PT review, on the shipped still; fins and tail ripple with the body steady, motion
+    3.79, no fringe. Ships in kind_robots#5835.'
   lane: wan-mp4
   entity: sprite-animation
   title: guardian-shoal-koi idle loop
@@ -2664,6 +2669,8 @@ subjects:
       status: DONE
       art_image_id: 280387
 - key: idle-b01-phase3-v2
+  verdict: 'reject: 2026-11-25 PT review, on model but nearly static, motion 1.44 under the 2.7 floor; retake key
+    idle-b01-phase3-v3 with stronger motion prose.'
   lane: wan-mp4
   entity: sprite-animation
   title: b01-phase3 idle loop
@@ -2682,8 +2689,8 @@ subjects:
     wan-mp4: 77274
   art:
     wan-mp4:
-      status: RUNNING
-      art_image_id: null
+      status: DONE
+      art_image_id: 280388
 - key: idle-b02-phase1-v2
   lane: wan-mp4
   entity: sprite-animation
@@ -2703,7 +2710,7 @@ subjects:
     wan-mp4: 77275
   art:
     wan-mp4:
-      status: PENDING
+      status: RUNNING
       art_image_id: null
 - key: idle-b03-phase1-v2
   lane: wan-mp4
@@ -2898,3 +2905,39 @@ subjects:
     wan-mp4:
       status: PENDING
       art_image_id: null
+- key: idle-guardian-kelp-warden-v3
+  lane: wan-mp4
+  entity: sprite-animation
+  title: guardian-kelp-warden idle loop
+  asset: rainbow-princess-art/doodle/anim/guardian-kelp-warden-idle
+  size: 832x480
+  seed: 1125501
+  source_url: /rainbow-princess-art/doodle/enemies/guardian-kelp-warden.webp
+  last_image_id: /rainbow-princess-art/doodle/enemies/guardian-kelp-warden.webp
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: A violet armoured submarine fish with one big eye and a spiral golden beak hovers steadily while
+    its five salmon belly tendrils sway in a rolling ripple and the pale striped tail streamers flutter. Thick white
+    sticker rim, unchanged proportions, solid green behind it.
+  jobs:
+    wan-mp4: 77287
+- key: idle-b01-phase3-v3
+  lane: wan-mp4
+  entity: sprite-animation
+  title: b01-phase3 idle loop
+  asset: rainbow-princess-art/doodle/anim/b01-phase3-idle
+  size: 832x672
+  seed: 1125502
+  source_url: /rainbow-princess-art/doodle/bosses/b01-phase3.webp
+  last_image_id: /rainbow-princess-art/doodle/bosses/b01-phase3.webp
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: An enraged indigo serpent dragon snaps its toothy jaws shut and wide open twice, its crimson eyes
+    flaring, while its neon cyan crest spikes shiver and the striped coil swells and sinks like heavy breathing.
+    Profile pose and ink linework hold firm against a vivid green field.
+  jobs:
+    wan-mp4: 77288
