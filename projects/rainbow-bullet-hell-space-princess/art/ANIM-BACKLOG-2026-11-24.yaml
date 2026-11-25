@@ -1723,6 +1723,8 @@ subjects:
       status: DONE
       art_image_id: 280379
 - key: idle-captive
+  verdict: 'keep: 2026-11-25 PT review, on the shipped still; fins and tail flap with the body steady, motion 9.5.
+    Ships in kind_robots#5834.'
   lane: wan-mp4
   entity: sprite-animation
   title: captive idle loop
@@ -1744,6 +1746,8 @@ subjects:
       status: DONE
       art_image_id: 280380
 - key: idle-coral-asteroid
+  verdict: 'reject: 2026-11-25 PT review, the lumps melt into a blurred blob in cells 5-7 and snap back at the seam;
+    retake key idle-coral-asteroid-v2 from the shipped still.'
   lane: wan-mp4
   entity: sprite-animation
   title: coral-asteroid idle loop
@@ -2526,6 +2530,8 @@ subjects:
       status: PENDING
       art_image_id: null
 - key: idle-guardian-pearl-warden-v2
+  verdict: 'reject: 2026-11-25 PT review, the fin pose pops at the loop seam and a green matte fringe shows on the
+    wingtip; retake key idle-guardian-pearl-warden-v3.'
   lane: wan-mp4
   entity: sprite-animation
   title: guardian-pearl-warden idle loop
@@ -2547,6 +2553,8 @@ subjects:
       status: DONE
       art_image_id: 280382
 - key: idle-b04-phase1-v2
+  verdict: 'reject: 2026-11-25 PT review, on model but nearly static, motion 1.65 under the 2.7 floor; retake key
+    idle-b04-phase1-v3 with stronger motion prose.'
   lane: wan-mp4
   entity: sprite-animation
   title: b04-phase1 idle loop
@@ -2568,6 +2576,8 @@ subjects:
       status: DONE
       art_image_id: 280383
 - key: idle-b04-phase3-v2
+  verdict: 'reject: 2026-11-25 PT review, on model but nearly static, motion 0.97 under the 2.7 floor; retake key
+    idle-b04-phase3-v3 with stronger motion prose.'
   lane: wan-mp4
   entity: sprite-animation
   title: b04-phase3 idle loop
@@ -2589,6 +2599,8 @@ subjects:
       status: DONE
       art_image_id: 280384
 - key: idle-guardian-herald-v2
+  verdict: 'keep: 2026-11-25 PT review, on the shipped still; rigid hull with a gentle bob and crown glint, motion
+    2.80 just above the 2.7 floor. Ships in kind_robots#5834.'
   lane: wan-mp4
   entity: sprite-animation
   title: guardian-herald idle loop
@@ -2607,8 +2619,8 @@ subjects:
     wan-mp4: 77271
   art:
     wan-mp4:
-      status: RUNNING
-      art_image_id: null
+      status: DONE
+      art_image_id: 280385
 - key: idle-guardian-kelp-warden-v2
   lane: wan-mp4
   entity: sprite-animation
@@ -2628,7 +2640,7 @@ subjects:
     wan-mp4: 77272
   art:
     wan-mp4:
-      status: PENDING
+      status: RUNNING
       art_image_id: null
 - key: idle-guardian-shoal-koi-v2
   lane: wan-mp4
@@ -2798,3 +2810,75 @@ subjects:
     wan-mp4:
       status: PENDING
       art_image_id: null
+- key: idle-coral-asteroid-v2
+  lane: wan-mp4
+  entity: sprite-animation
+  title: coral-asteroid idle loop
+  asset: rainbow-princess-art/doodle/anim/coral-asteroid-idle
+  size: 768x832
+  seed: 1125401
+  source_url: /rainbow-princess-art/doodle/enemies/coral-asteroid.webp
+  last_image_id: /rainbow-princess-art/doodle/enemies/coral-asteroid.webp
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: A lumpy lilac rock studded with pink coral knobs and mint lagoon patches rocks a few degrees left
+    and right, each knob pulsing a little as speckles of light hop across its mint pools. Crisp ink outlines and
+    the same knobby outline hold steady on a bright green surround.
+  jobs:
+    wan-mp4: 77283
+- key: idle-guardian-pearl-warden-v3
+  lane: wan-mp4
+  entity: sprite-animation
+  title: guardian-pearl-warden idle loop
+  asset: rainbow-princess-art/doodle/anim/guardian-pearl-warden-idle
+  size: 832x608
+  seed: 1125402
+  source_url: /rainbow-princess-art/doodle/enemies/guardian-pearl-warden.webp
+  last_image_id: /rainbow-princess-art/doodle/enemies/guardian-pearl-warden.webp
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: A pearl-backed manta warden lifts its sweeping blue fin high and lowers it again in one smooth beat,
+    glowing pink beads rippling along the fin like a wave of lights. Pink sticker rim stays crisp; the creature
+    sits centred over a flat lime-green backdrop.
+  jobs:
+    wan-mp4: 77284
+- key: idle-b04-phase1-v3
+  lane: wan-mp4
+  entity: sprite-animation
+  title: b04-phase1 idle loop
+  asset: rainbow-princess-art/doodle/anim/b04-phase1-idle
+  size: 832x608
+  seed: 1125403
+  source_url: /rainbow-princess-art/doodle/bosses/b04-phase1.webp
+  last_image_id: /rainbow-princess-art/doodle/bosses/b04-phase1.webp
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: A navy robot dolphin standing on four chunky blue mech legs marches on the spot, legs lifting high
+    one pair at a time, its body bouncing as the tail fluke whips up and down and cyan circuit traces race along
+    its hull. Bold white and pink sticker rim on even green.
+  jobs:
+    wan-mp4: 77285
+- key: idle-b04-phase3-v3
+  lane: wan-mp4
+  entity: sprite-animation
+  title: b04-phase3 idle loop
+  asset: rainbow-princess-art/doodle/anim/b04-phase3-idle
+  size: 832x624
+  seed: 1125404
+  source_url: /rainbow-princess-art/doodle/bosses/b04-phase3.webp
+  last_image_id: /rainbow-princess-art/doodle/bosses/b04-phase3.webp
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: A battered circuit dolphin mech rocks hard on its robot legs, head jerking up and back as the magenta
+    star burst in its chest swells large and shrinks, the tail fluke thrashing and sparks spitting from its seams.
+    Chunky white rim with pink trim on solid green.
+  jobs:
+    wan-mp4: 77286
