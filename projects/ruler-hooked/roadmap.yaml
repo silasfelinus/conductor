@@ -908,10 +908,7 @@ tasks:
 - id: t-048
   milestone: m6
   title: Fishing first-catch fairness, input edge cases and shop/economy adversarial suite
-  status: review
-  owner: worker
-  claimed_by: 20261124T235700Z-ruler-hooked-t048-e8d21
-  claimed_at: '2026-11-24T23:58:31.905Z'
+  status: ready
   stakes: reversible
   passes: 0
   note: |-
@@ -922,7 +919,9 @@ tasks:
     Fishing fix kind_robots#5606 merged at 5082bcfc822ec955c3b29a97701e6e4939a0e6df; exact-head Ruler Hooked 45083510690 and Contract Tests 45083510668 passed. Return to ready for the remaining gear/economy, latency, keyboard/touch and long-run adversarial matrix. The cancelled post-merge branch-janitor run is not a gameplay check.
 
     Actual classic fishing uses the gear-aware encounter, not the simplified reducer. Kind Robots commit a53601461eff4e49ea32a3d96545db4d5dc6d1e9 reserves real slack/wait zones, shares target geometry with the reducer, ignores invalid timing inputs, and adds exhaustive gear/rarity/family/beat geometry regressions plus malformed input cases. Partial t-048 scope; CI and broader economy and live device QA remain.
-  updated: '2026-11-24T23:59:37.055Z'
+
+    Kind Robots #5771 merged at efafd03877a952085bb4b0d0ef1f30af4c7ef314. All eight exact-head workflows and branch janitor succeeded, including Ruler Hooked 45514538352 and Contract Tests 45514538561. Return to ready for the remaining seeded playthrough and economy adversarial matrix. No live rendering claimed.
+  updated: '2026-11-25T01:18:07.555Z'
 - id: t-049
   milestone: m6
   title: Full policy-matrix kingdom simulator and witnessed complete ending graph

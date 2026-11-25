@@ -2957,8 +2957,8 @@ tasks:
   - id: t-179
     milestone: m12
     title: "Superkate Spectrum: six interactive bosses with telegraphed patterns and tested fair collision"
-    status: ready
-    updated: '2026-11-24T09:53:10Z'
+    status: claimed
+    updated: '2026-11-25T01:17:09Z'
     passes: 0
     stakes: reversible
     depends_on: [t-178]
@@ -2966,6 +2966,9 @@ tasks:
       2026-11-24 PT: implemented six post-puzzle boss core encounters on worker/kr-arcade-t-179-spectrum-boss-f37e92, with distinct target sequences, bank-only inspector, visible miss budgets, chapter rewards gated on victory and actual projectile regression tests. Pending CI, art and encounter polish; do not mark complete yet.
 
       2026-11-24 PT: verified Kind Robots #5724 merged 306e097a33b1d5685963ff6981cb08ee7476faf9. Six core sequences and victory-gated progression landed. Requeue for further distinctive boss attacks, illustrated presentation and device QA, not done.
+    owner: worker
+    claimed_by: 2026-11-25T011709Z-spectrum-boss-6fc2a1
+    claimed_at: '2026-11-25T01:17:09Z'
   - id: t-180
     milestone: m12
     title: "Superkate Spectrum: story scenes, character dialogue, three meaningful choices and three endings"
@@ -2983,15 +2986,15 @@ tasks:
   - id: t-181
     milestone: m12
     title: "Superkate Spectrum: touch aim, aim assist, colorblind/high-contrast modes, calm motion and full controller support"
-    status: review
-    owner: worker
-    claimed_by: 2026-11-24T215311Z-spectrum-touch-e917b2
-    claimed_at: '2026-11-24T21:53:11Z'
-    updated: '2026-11-24T21:56:00Z'
+    status: ready
+    updated: '2026-11-25T01:17:08Z'
     passes: 0
     stakes: reversible
     depends_on: [t-176]
-    note: '2026-11-24 PT: implemented opt-in cabinet stage pointer capture, Spectrum drag-to-aim/release-to-fire, cancellation and out-of-field guards, tap-to-play unlocked stage nodes, cosmetic selection, next-bubble swap and story choices. The aim preview uses actual projectile movement and collision. Added engine regressions for all 30 nodes, locked cosmetics/stages, gesture cancellation and shot exclusion. Pending CI and rendered device/controller QA; partial scope only.'
+    note: |-
+      2026-11-24 PT: implemented opt-in cabinet stage pointer capture, Spectrum drag-to-aim/release-to-fire, cancellation and out-of-field guards, tap-to-play unlocked stage nodes, cosmetic selection, next-bubble swap and story choices. The aim preview uses actual projectile movement and collision. Added engine regressions for all 30 nodes, locked cosmetics/stages, gesture cancellation and shot exclusion. Pending CI and rendered device/controller QA; partial scope only.
+
+      2026-11-24 PT: Kind Robots #5757 merged 29db193c80241a779a50e49da07328f0a4a2c8f8; exact head 96b90db62f1b62436395bfbc8cdf71cc4d8d99bf passed all substantive checks including Chromium, TypeScript and viewport contracts. Direct touch aim and stage selection landed. Requeue remaining controller/device QA and settings touch navigation.
   - id: t-182
     milestone: m12
     title: "Superkate Spectrum: original salon and six-region music themes, matching sound effects and accessible audio settings"
