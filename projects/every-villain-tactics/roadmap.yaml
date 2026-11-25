@@ -237,11 +237,11 @@ tasks:
   - id: t-007
     milestone: m3
     title: "Write and implement all six distinctive tactical story missions"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 20261125T042500Z-evt-t007-continuity-92b6
     claimed_at: '2026-11-25T04:25:00Z'
-    updated: '2026-11-25T04:25:00Z'
+    updated: '2026-11-25T04:27:00Z'
     depends_on: [t-003, t-005, t-006]
     passes: 0
     stakes: reversible
@@ -291,6 +291,8 @@ tasks:
       Scoped Crossfire sixth-chapter gameplay increment staged as kind_robots commit ee07c64. Cumulative five-chapter rescue evidence now changes the final tactical opening: 3 earned rescue decisions guard all surviving squadmates, and 2 evidence branches mark all starting rivals. Preserves legacy saves, seeded campaign structure and canonical identities. New regression covers cumulative branch thresholds, losses and v2 save/load. 48 bespoke fixed-identity routes, art completeness and full QA remain.
 
       Reopen the remaining Crossfire campaign continuity scope for independent production. No open matching implementation PR was found; preserve previously merged contributions and all acceptance requirements. Do not count partial implementation as done.
+
+      Crossfire rescue and evidence now independently grant earned tactical carryover and finale allies, including both in First Bell. Preserve existing single debrief classification and save schema. Regression tests for simultaneous statuses, save round trip and finale threshold committed at f9e4c7b03cd5468f21c7794e39af0a7ca86876ad, branch worker/every-villain-tactics-t-007-dual-callback-92b6. Full CI and full campaign QA remain pending; partial scope.
   - id: t-008
     milestone: m3
     title: "Author 48 hero and villain playable arcs with distinct supporting cast"
