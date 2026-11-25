@@ -3116,7 +3116,7 @@ tasks:
   - id: t-184
     milestone: m12
     title: "Superkate Spectrum: adversarial full campaign playthrough, mobile QA, save/retry/ending tests and visual acceptance"
-    status: waiting
+    status: needs-human
     passes: 0
     stakes: reversible
     depends_on: [t-177, t-178, t-179, t-180, t-181, t-182, t-183]
@@ -3130,7 +3130,17 @@ tasks:
       390/768/1440 touch/keyboard/gamepad, save/reopen/game over. Remaining is human: playtest
       per PLAYTEST-CHECKLIST.md, visual acceptance and Kate's likeness consent. Waits on
       t-182/t-185/t-187/t-188.
-    updated: '2026-11-25T10:24:04Z'
+
+      2026-11-25 PT: every dependency is done and the agent-side acceptance work is in CI on
+      every cabinet PR. verifySpectrumCampaign beats all 30 boards and 6 bosses by real shots
+      on three routes to all three endings, plus a careless-play soak, the relay with its duet
+      boss and 12 Atelier puzzles. The cabinet, hub and two-device account browser contracts
+      run at 390/768/1440 (kind_robots#5816, #5823). FOR SILAS: play per projects/kr-
+      arcade/superkate-spectrum/PLAYTEST-CHECKLIST.md and accept or waive the visual state
+      (and decide the showcase shelf); file any findings as playtest_iteration tasks. Kate's
+      art consent is separate (t-189).
+    updated: '2026-11-25T11:39:22Z'
+    gate_reason: subjective-acceptance
   - id: t-185
     milestone: m12
     title: "Superkate Spectrum: durable cross-device account saves with safe guest migration and conflict-aware career merge"
