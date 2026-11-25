@@ -91,7 +91,7 @@ tasks:
       images asserted as live.
   - id: t-028
     title: 'Main-game standard: audit and close the gaps for Save the Plumber'
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 20261124T235700Z-plumber-t028-scrapbook-z8k2
     claimed_at: '2026-11-24T23:57:00Z'
@@ -99,7 +99,7 @@ tasks:
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-24T23:57:00Z'
+    updated: '2026-11-24T23:59:00Z'
     note: |-
       Silas 2026-11-11 PT, in session: "Our games should all have a base standard of quality ... We want our main games to have 12 plus achievements." Standard: docs/agents/main-game-standard.md; CONTROL.md global overview.
 
@@ -118,6 +118,8 @@ tasks:
       Added title settings, shared saved audio preferences, functional still-camera option and high-contrast terrain edges with regression tests. Branch worker/save-the-plumber-t-028-settings-v6m2, head d494f77. Partial main-game standard scope; CI and visual acceptance pending.
 
       Merged kind_robots#5722 at 964816b after 12/12 exact-head workflows passed. Settings and contrast shipped; remaining main-game standards and visual verification. Return to ready.
+
+      Added title-menu Achievements pane using the shared registered badge browser, internal viewport scrolling and existing back controls. World scrapbook now shows collected gears and secret exits independently of normal clears. Added source wiring and twelve-plus achievement registry regression assertions. Branch worker/save-the-plumber-t-028-scrapbook-z8k2 head b3836722. Partial main-game scope; CI and visual acceptance pending.
   - id: t-029
     title: 'Save the Plumber achievement upgrade: 12 or more live achievements'
     status: done
@@ -547,17 +549,16 @@ tasks:
   - id: t-025
     milestone: m6
     title: "Gen-2 animation: pose-to-pose WAN sprite clips, atlases and animated cinematics"
-    status: review
-    owner: worker
-    claimed_by: 2026-11-23T104930Z-save-the-plumber-t025-sprites-p8h3
-    claimed_at: '2026-11-23T10:49:30Z'
-    updated: '2026-11-23T10:50:35Z'
+    status: ready
+    updated: '2026-11-24T23:57:00Z'
     passes: 0
     stakes: reversible
     note: |-
       GEN2-STANDARD.md sections 5-6. art/GEN2-CLIPS-1.yaml already animates the four cutscene stills as WAN first/last-frame loops (submitted 2026-10-22). Next: from the reviewed Pip key poses in GEN2-ROUND-1, queue WAN first/last clips between pose pairs (idle loop, run cycle, jump, skid, climb, hurt), matte the white, normalize pivots and pack an atlas (the zuzu-pinball T019 croc tool is the template), then wire the atlas into the engine with the code-drawn heroine as the fallback. Then the other seven roster heroines and the enemy families. Target 12 fps or better.
 
       2026-11-23 PT: Staged six WAN A14B first/last-image Pip animation source requests from reviewed Krea 2 ArtImages (idle, forward/reverse run, rise/fall, landing, climb) in art/GEN2-PIP-MOTION-1.yaml. Auto-submit is requested, but no new ArtJob IDs or delivered assets claimed. Pending render/curation, matte, pivot/atlas, runtime wiring and seven other heroines; keep t-025 in progress after the PR.
+
+      Verified conductor#7917 merged at 1db40172. GEN2-PIP-MOTION-1.yaml on main records all six WAN jobs 76836–76841 DONE with ArtImages 279510–279515. Render status is not curation or delivery. Return to ready for frame review, matte/pivot/atlas and runtime integration, plus remaining roster/enemies.
   - id: t-026
     title: "Save the Plumber: ship WAN opening cinematic and animated heroine in handheld title"
     status: ready
