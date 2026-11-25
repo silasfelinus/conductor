@@ -339,7 +339,7 @@ tasks:
   - id: t-011
     milestone: m4
     title: "Build lavish stage parallax, readable effects and character animation"
-    status: review
+    status: done
     depends_on: [t-002, t-007]
     passes: 0
     stakes: reversible
@@ -497,7 +497,11 @@ tasks:
       has four committed planes, each drifting faster than the one behind it. With that
       merged, every t-011 criterion is met in code. Silas's subjective visual sign-off belongs
       to t-042 (final creative approval), not this task. Close to done once #5830 merges.
-    updated: '2026-11-25T17:52:47Z'
+
+      PR silasfelinus/kind_robots#5830 merged as dfe3e290 after all 13 checks passed
+      (including TypeScript and Every Rainbow verifier). Every t-011 criterion is met and
+      pinned in tests. Silas's subjective visual sign-off continues under t-042.
+    updated: '2026-11-25T18:02:52Z'
     implementation_pr: 'silasfelinus/kind_robots#5830'
     owner: worker
     claimed_by: 2026-11-25T17:49:12Z-sched-nc0c6y
