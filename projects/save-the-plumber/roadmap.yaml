@@ -91,15 +91,12 @@ tasks:
       images asserted as live.
   - id: t-028
     title: 'Main-game standard: audit and close the gaps for Save the Plumber'
-    status: review
-    owner: worker
-    claimed_by: 20261124T235700Z-plumber-t028-scrapbook-z8k2
-    claimed_at: '2026-11-24T23:57:00Z'
+    status: ready
     milestone: m6
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-24T23:59:00Z'
+    updated: '2026-11-25T00:50:38Z'
     note: |-
       Silas 2026-11-11 PT, in session: "Our games should all have a base standard of quality ... We want our main games to have 12 plus achievements." Standard: docs/agents/main-game-standard.md; CONTROL.md global overview.
 
@@ -120,6 +117,8 @@ tasks:
       Merged kind_robots#5722 at 964816b after 12/12 exact-head workflows passed. Settings and contrast shipped; remaining main-game standards and visual verification. Return to ready.
 
       Added title-menu Achievements pane using the shared registered badge browser, internal viewport scrolling and existing back controls. World scrapbook now shows collected gears and secret exits independently of normal clears. Added source wiring and twelve-plus achievement registry regression assertions. Branch worker/save-the-plumber-t-028-scrapbook-z8k2 head b3836722. Partial main-game scope; CI and visual acceptance pending.
+
+      Verified kind_robots#5772 merged at 28bc1c7b; latest head d6110b2b has eight completed successful workflows and branch janitor queued. Achievement browser and independent scrapbook labels merged. Remaining separate New Game/Continue, endings and accessibility. Return to ready.
   - id: t-029
     title: 'Save the Plumber achievement upgrade: 12 or more live achievements'
     status: done

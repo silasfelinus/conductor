@@ -2995,11 +2995,8 @@ tasks:
   - id: t-182
     milestone: m12
     title: "Superkate Spectrum: original salon and six-region music themes, matching sound effects and accessible audio settings"
-    status: review
-    owner: worker
-    claimed_by: 2026-11-24T215642Z-spectrum-audio-79c4ad
-    claimed_at: '2026-11-24T21:56:42Z'
-    updated: '2026-11-24T22:00:00Z'
+    status: ready
+    updated: '2026-11-25T00:49:19Z'
     passes: 0
     stakes: reversible
     depends_on: []
@@ -3011,6 +3008,8 @@ tasks:
       2026-11-23 PT: reconciled previously merged Kind Robots #5624 (00e264dc667b9c212253c867247a0d6f42d3e7bc); final-head CI completed successfully. Existing synthesized music and SFX are implemented. Recorded/mastered tracks, playback and mobile audio QA remain; requeue, not done.
 
       2026-11-24 PT: expanded six regional scores to two contrasting phrases and added harmonies, extended finale percussion, rendered 14 original mastered WAV loops (six regions, six boss arrangements, Classic, menu) with deterministic offline synthesis. Committed all binary masters, runtime recorded paths with existing oscillator fallback, reproducible renderer and audio header/duration/peak/RMS regression tests. Generated audio measured peak at most 0.54 and RMS 0.109–0.145; CI and real playback, individual effects balance and mobile acceptance remain. Partial scope; no deployment.
+
+      2026-11-24 PT: Kind Robots #5758 merged bc26f621438992f5df1208e9052e310e00ba2310 after all 15 substantive check runs completed successfully on exact head 86b8df5a2f2f47f0a7369504a26ed973a0f5b45c; optional autofix skipped. Fourteen mastered original WAV loops and renderer regression checks landed. Requeue remaining mobile playback and SFX balance QA; no deployment initiated.
 
   - id: t-183
     milestone: m12
