@@ -91,7 +91,7 @@ tasks:
       images asserted as live.
   - id: t-028
     title: 'Main-game standard: audit and close the gaps for Save the Plumber'
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 20261125T005124Z-plumber-newgame-k7d3
     claimed_at: '2026-11-25T00:51:24Z'
@@ -99,7 +99,7 @@ tasks:
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-25T00:51:24Z'
+    updated: '2026-11-25T00:52:23Z'
     note: |-
       Silas 2026-11-11 PT, in session: "Our games should all have a base standard of quality ... We want our main games to have 12 plus achievements." Standard: docs/agents/main-game-standard.md; CONTROL.md global overview.
 
@@ -122,6 +122,8 @@ tasks:
       Added title-menu Achievements pane using the shared registered badge browser, internal viewport scrolling and existing back controls. World scrapbook now shows collected gears and secret exits independently of normal clears. Added source wiring and twelve-plus achievement registry regression assertions. Branch worker/save-the-plumber-t-028-scrapbook-z8k2 head b3836722. Partial main-game scope; CI and visual acceptance pending.
 
       Verified kind_robots#5772 merged at 28bc1c7b; latest head d6110b2b has eight completed successful workflows and branch janitor queued. Achievement browser and independent scrapbook labels merged. Remaining separate New Game/Continue, endings and accessibility. Return to ready.
+
+      Separated title New Game and Continue shortcuts using a scoped cabinet launch intent, safe eligible file selection, no erase in shortcut modes, and retained Files / Endless access. Added runtime regression scenarios for existing-slot isolation, stale Continue and choosing another saved file. Branch worker/save-the-plumber-t-028-newgame-k7d3 head 69c11cba. Partial main-game scope; full CI and rendered viewport acceptance pending.
   - id: t-029
     title: 'Save the Plumber achievement upgrade: 12 or more live achievements'
     status: done
