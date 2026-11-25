@@ -179,7 +179,7 @@ tasks:
   - id: t-005
     milestone: m2
     title: "Implement enemy interaction, held objects and powerup systems"
-    status: claimed
+    status: review
     depends_on: [t-003]
     passes: 0
     stakes: reversible
@@ -205,7 +205,9 @@ tasks:
       Implemented a new authored World 1-2 optional high route: a floor-level brass key at column 35, a seven-rung ladder at column 39, and a padlocked upper passage at column 42. The existing fast lower corridor remains unobstructed. Added real PlumberRun campaign replay assertions for key collection, climb-to-top, bolt unlock, key consumption and lower-route accessibility. Source branch worker/save-the-plumber-t-005-campaign-route-k4v2. Remaining scope includes slopes, carryable enemies, Gen-2 reserve/powers/companion, plus further campaign gadget placements; t-005 is not fully done.
 
       Verified kind_robots#5633 merged at 4c0f092b. Brass-key ladder route shipped; remaining slopes, carryables and powers. Return to ready.
-    updated: '2026-11-25T05:52:57.124Z'
+
+      Implemented one-way 45-degree walkable ramps, bounded grounded slope adhesion, flat transitions, slope landing, foe traversal, contrast edges, Maker palette and first World 1-1 ramp pair. Added bidirectional sprint replay assertions for height, contact, collision and momentum. App branch worker/save-the-plumber-t-005-slopes-q8m4 head 67d1d06e. Full CI pending; remaining powers, carryables and expanded slope placements remain.
+    updated: '2026-11-25T05:59:28.316Z'
     owner: worker
     claimed_by: 20261125T055257Z-plumber-slopes-q8m4
     claimed_at: '2026-11-25T05:52:57.124Z'

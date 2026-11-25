@@ -3028,7 +3028,7 @@ tasks:
   - id: t-183
     milestone: m12
     title: "Superkate Spectrum: endless, puzzle atelier, cooperative relay, achievements and ranked leaderboard fairness"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 2026-11-25T055800Z-spectrum-relay-d1a4c9
     claimed_at: '2026-11-25T05:58:00Z'
@@ -3045,7 +3045,9 @@ tasks:
       2026-11-24 PT: first playable Atelier mode adds six authored fixed-ammunition challenges with tap/controller selection, retry, back, isolated career and no ranked score or generic run completion. Standalone trajectory simulation cleared all six in 18 shots; actual engine regression coverage added for all six, exhaustion, retry and unchanged save. Head e6e54e98364da09a0e6e4e6f14eafc5573eb7969, CI pending. Remaining cooperative relay, deeper Atelier designs and competition QA; partial scope only.
 
       2026-11-24 PT: verified kind_robots #5796 merged b36773cbbd921bc36cff4d802b3d7a5112697b3f after nine successful workflows on exact latest head. Six introductory Atelier puzzles and actual trajectory regression tests confirmed in main. Remaining cooperative relay, advanced Atelier and competition QA.
-    updated: '2026-11-25T05:58:00Z'
+
+      2026-11-24 PT: implemented local pass-and-play relay over six existing Atelier boards, alternating players after shot settlement, shared combo score, round progression and retry checkpoints, without ranked or career mutations. Actual projectile regression cases cover full relay, turn alternation, score, retry and save isolation. Head 1b0020d46a155248b63220f98f6d6e692345cd04; CI pending. Distinct relay boards, independent ammunition, gifted specials, finale boss, persistent records and device QA remain. Partial scope; no deploy.
+    updated: '2026-11-25T06:01:00Z'
   - id: t-184
     milestone: m12
     title: "Superkate Spectrum: adversarial full campaign playthrough, mobile QA, save/retry/ending tests and visual acceptance"
