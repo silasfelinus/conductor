@@ -8,8 +8,10 @@ Agent-verified on every cabinet PR (kind_robots#5816). The full 30-stage campaig
 are beaten by real shots on three choice routes, reaching all three endings. A careless-play soak
 finds no hang or lost progress. The Co-op Relay (own orbs, gifted Prisms, duet boss, saved records)
 and all 12 Atelier puzzles are proven solvable. Rendered cabinet QA covers 390/768 touch and 1440
-keyboard/gamepad. What is left needs people: real-device audio (t-182), live two-device sign-in
-(t-185), Kate's likeness consent (portraits, t-188), and visual acceptance and shelf placement.
+keyboard/gamepad, covering the hub, settings (separate music and effects levels), the in-game save
+state, and two-device account sync (kind_robots#5823). Every build task is done. What is left needs
+people: Kate's consent for art showing the Superkate character (t-189), and visual acceptance and
+shelf placement (t-184).
 See [PLAYTEST-CHECKLIST.md](PLAYTEST-CHECKLIST.md).
 
 ## Promise
