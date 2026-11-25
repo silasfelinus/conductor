@@ -3006,8 +3006,8 @@ tasks:
   - id: t-181
     milestone: m12
     title: "Superkate Spectrum: touch aim, aim assist, colorblind/high-contrast modes, calm motion and full controller support"
-    status: review
-    updated: '2026-11-25T10:09:04Z'
+    status: done
+    updated: '2026-11-25T10:23:35Z'
     passes: 0
     stakes: reversible
     depends_on: [t-176]
@@ -3029,6 +3029,10 @@ tasks:
       verifySuperkateSpectrumCabinet.browser.test.mjs runs on every cabinet PR. Real-hardware
       feel is in projects/kr-arcade/superkate-spectrum/PLAYTEST-CHECKLIST.md, not an agent
       gate.
+
+      2026-11-25 PT: verified kind_robots#5816 merged 160baa8482ff7b091756af0a266ed50ecbe46490
+      after all 18 checks passed on exact head 59ebb60d (incl. TypeScript and the Spectrum
+      cabinet job). No deploy initiated.
     owner: worker
     claimed_by: 2026-11-25T094544Z-spectrum-qa-sbjq3s
     claimed_at: '2026-11-25T09:45:49Z'
