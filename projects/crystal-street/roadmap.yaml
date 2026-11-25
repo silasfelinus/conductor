@@ -569,14 +569,24 @@ tasks:
     implementation_pr: 'silasfelinus/kind_robots#4318'
   - id: t-026
     title: 'Add rendered phone/desktop accessibility and spoiler-regression coverage for each Crystal Street scrapbook tab'
-    status: claimed
+    status: done
     milestone: m3
     owner: worker
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-25T00:55:09Z'
+    updated: '2026-11-25T01:49:30Z'
     note: |-
       Kaizen from kind_robots#5240 (t-024 silhouette slice, merged 2026-11-16 PT). That PR's verification was unit-level only (discoveryProgress) plus Vue template compilation; no rendered check proves locked slots never leak a name, portrait src or alt text. Add a component/layout-contract test that mounts each scrapbook tab (weeks, nightmares, endings, friends, achievements) with an empty, partial and complete save and asserts: locked slots render only "???" and the generic aria-label, no catalog name/portrait path appears for undiscovered entries, and the X/N counts match. Run it at phone and desktop widths in the existing layout-contract harness.
+
+      2026-11-24 PT: kind_robots#5779 adds
+      utils/scripts/verifyCrystalStreetScrapbookRender.test.ts (Vite SSR render of every
+      scrapbook tab + endings wall + each locked nightmare selected, empty/partial/complete
+      saves; 7891 checks; mutation-checked; wired into crystal-street-gameplay.yml). Widths
+      not covered: scrapbook HTML has no viewport-conditional rendering; rendered overflow
+      stays with layout-contract/e2e. Next: merge #5779 when green, then done.
+
+      2026-11-24 PT: kind_robots#5779 merged (8e17dd2c) after a capture-group-guard fix;
+      crystal-street-gameplay contract green with the new render test.
     claimed_by: 2026-11-25T00:55:09Z-claude-gu9o1a
     claimed_at: '2026-11-25T00:55:09Z'
