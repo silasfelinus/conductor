@@ -91,12 +91,12 @@ tasks:
       images asserted as live.
   - id: t-028
     title: 'Main-game standard: audit and close the gaps for Save the Plumber'
-    status: review
+    status: ready
     milestone: m6
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-25T19:25:17Z'
+    updated: '2026-11-25T19:39:35Z'
     note: |-
       Silas 2026-11-11 PT, in session: "Our games should all have a base standard of quality ... We want our main games to have 12 plus achievements." Standard: docs/agents/main-game-standard.md; CONTROL.md global overview.
 
@@ -129,6 +129,10 @@ tasks:
       worker/save-the-plumber-t-028-endings-qk7. Plates finale-clockwork-gift and finale-open-
       tap queued in art-prompts.yaml (auto_submit). Remaining: customization, accessibility,
       rendered gallery screenshots.
+
+      Merged kind_robots#5832 at 5246ebfa after 17/17 exact-head checks passed. Three endings
+      live; plates queued. Remaining: customization, accessibility, rendered gallery
+      screenshots. Return to ready.
     implementation_pr: 'silasfelinus/kind_robots#5832'
   - id: t-029
     title: 'Save the Plumber achievement upgrade: 12 or more live achievements'
