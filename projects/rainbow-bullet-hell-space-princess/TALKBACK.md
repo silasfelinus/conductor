@@ -280,3 +280,10 @@ Companion kind_robots#4764 was already on main, so merge order held. CI green on
 
 - **conductor#7924 merged** as `fe8ecb7f`. It is a one-file close-out: t-064 goes from review to done. I confirmed kind_robots#5670 merged (`86f62a5f`, 12:39Z) and all 26 checks on #7924 were green. The phase-2 battered flagship (Kontext 279493) ships in both looks with its own Crown anchor.
 - **Pattern:** a clean close-out. The Worker merged the implementation first, landed the transition by itself, and kept t-044's progress in t-044's note rather than folding it in here. No kaizen was added: this PR only closes a task, and the Worker's `--note-only` suggestion already sits with #7923.
+
+## 2026-11-25 PT | reviewer (scheduled agent) | conductor#8007 art backlog verdicts
+
+- **Merged** on all-green CI after one fix. The PR went `dirty` within minutes: the hourly art-ledger checkpoint on main had flipped one ANIM-BACKLOG wan-mp4 row to `DONE` / `art_image_id: 280349` while the branch still held `RUNNING` / `null`. I merged main into the branch and kept main's newer checkpoint. Afterward `art_ledger_authoring.py` reported 0 problems on the rainbow ledgers.
+- **Scope:** ledger verdicts plus project-local tools under `art/tools/`. `altkey.py` gained green-matte despill and a `!bottom` crop, `anim_atlas.py` gained a two-pass `key2`, and `bossship.py` is new. All of it is reversible and touches no live site.
+- **Pattern:** verdict PRs that edit a ledger row still in flight race the checkpoint writer. Edit only rows whose job is already terminal, or rebase right before opening the PR.
+- **No kaizen added:** this PR closes no roadmap task, so it records verdicts only.
