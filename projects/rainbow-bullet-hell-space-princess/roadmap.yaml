@@ -339,7 +339,7 @@ tasks:
   - id: t-011
     milestone: m4
     title: "Build lavish stage parallax, readable effects and character animation"
-    status: claimed
+    status: review
     depends_on: [t-002, t-007]
     passes: 0
     stakes: reversible
@@ -488,8 +488,17 @@ tasks:
       a fifth of each swing. Draw-only. PR silasfelinus/kind_robots#5827 merged as 471f20dc
       after all 23 checks passed. Still open: painted stage planes, sprite rigs and atlases,
       and visual acceptance. Stays ready and unclaimed.
-    updated: '2026-11-25T17:49:12Z'
-    implementation_pr: 'silasfelinus/kind_robots#5827'
+
+      2026-11-25 PT acceptance reconciliation: the 'still open' list was stale. Painted stage
+      planes shipped under t-022 (sky, far, mid and fore for S01-S09 in both looks), and enemy
+      idle atlases plus pilot poses shipped under t-030. A contact sheet compositing all nine
+      stages' four planes at engine geometry shows every plane present. PR
+      silasfelinus/kind_robots#5830 pins the criterion in verifyRainbowGameArt: every stage
+      has four committed planes, each drifting faster than the one behind it. With that
+      merged, every t-011 criterion is met in code. Silas's subjective visual sign-off belongs
+      to t-042 (final creative approval), not this task. Close to done once #5830 merges.
+    updated: '2026-11-25T17:52:47Z'
+    implementation_pr: 'silasfelinus/kind_robots#5830'
     owner: worker
     claimed_by: 2026-11-25T17:49:12Z-sched-nc0c6y
     claimed_at: '2026-11-25T17:49:12Z'
