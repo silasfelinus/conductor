@@ -190,7 +190,7 @@ tasks:
   - id: t-005
     milestone: m2
     title: "Implement enemy interaction, held objects and powerup systems"
-    status: claimed
+    status: ready
     depends_on: [t-003]
     passes: 0
     stakes: reversible
@@ -220,10 +220,17 @@ tasks:
       Implemented one-way 45-degree walkable ramps, bounded grounded slope adhesion, flat transitions, slope landing, foe traversal, contrast edges, Maker palette and first World 1-1 ramp pair. Added bidirectional sprint replay assertions for height, contact, collision and momentum. App branch worker/save-the-plumber-t-005-slopes-q8m4 head 67d1d06e. Full CI pending; remaining powers, carryables and expanded slope placements remain.
 
       Merged kind_robots#5806 at 67315e6f after 11/11 latest-head workflows passed, including full contracts and Maker browser coverage. Ramps, slope adhesion, terrain rendering and first campaign hill delivered. Return to ready for carrying enemies, Gen-2 powers, reserve item and companion. Production deployment unverified.
-    updated: '2026-11-25T19:48:29Z'
+
+      2026-11-25 PT: SMW-style reserve box merged in kind_robots#5833 (2dcd1163) after all 19
+      checks passed. A power picked up while she carries one banks the old one; a hit that
+      costs her power drops the reserve from above, drifting toward her for 300 frames; heart
+      hits drop nothing, death keeps it, new game/file/Endless clear it; HUD frame under the
+      power badge. verifySavePlumberReserve.test.ts (banking, catch, steering, expiry, death,
+      seeded fuzz) is in test:arcade-engine. Remaining: carrying enemies, Gen-2 powers (glide,
+      suit, heavy form), map-usable inventory, ride companion. Return to ready.
+    updated: '2026-11-25T20:15:30Z'
     owner: worker
-    claimed_by: 2026-11-25T19:52:00Z-rripzi-stp
-    claimed_at: '2026-11-25T19:48:29Z'
+    implementation_pr: 'silasfelinus/kind_robots#5833'
   - id: t-006
     milestone: m3
     title: "Build World 1: four complete garden/pipeworks levels and boss"

@@ -287,3 +287,9 @@ Companion kind_robots#4764 was already on main, so merge order held. CI green on
 - **Scope:** ledger verdicts plus project-local tools under `art/tools/`. `altkey.py` gained green-matte despill and a `!bottom` crop, `anim_atlas.py` gained a two-pass `key2`, and `bossship.py` is new. All of it is reversible and touches no live site.
 - **Pattern:** verdict PRs that edit a ledger row still in flight race the checkpoint writer. Edit only rows whose job is already terminal, or rebase right before opening the PR.
 - **No kaizen added:** this PR closes no roadmap task, so it records verdicts only.
+
+## 2026-11-25 PT | reviewer (scheduled agent) | conductor#8020 closed as superseded
+
+- **Closed, not merged.** #8020 (t-011 route-marker close-out) sat red for ~4h. Its only failing checks were CodeQL SARIF uploads (infra), but by then main had already moved t-011 to `done` via kind_robots#5830 (fffbf83). Merging it would have regressed t-011 to `ready`. Its one unique fact, the kind_robots#5828 route-marker increment, was carried onto main's note in conductor#8025 (merged).
+- **Pattern:** a close-out PR left open after the implementation merges gets overtaken by a later session's close-out of the same task. Merge the close-out as soon as it is green; CodeQL upload failures are not a reason to wait.
+- **No kaizen added:** this decision closes no task.
