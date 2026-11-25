@@ -2959,8 +2959,8 @@ tasks:
   - id: t-179
     milestone: m12
     title: "Superkate Spectrum: six interactive bosses with telegraphed patterns and tested fair collision"
-    status: ready
-    updated: '2026-11-25T01:42:33Z'
+    status: claimed
+    updated: '2026-11-25T04:04:08Z'
     passes: 0
     stakes: reversible
     depends_on: [t-178]
@@ -2972,6 +2972,9 @@ tasks:
       2026-11-24 PT: committed five distinct visible shield patterns, retaining Neon Inspector bank-only cores, in Kind Robots head 285fa9e13e1bc63647efdfbb483f74be03eef5f0. Shared contact checks cover both aim preview and actual projectile collision. Standalone deterministic trajectory sweep found 21-99 legal sampled angles per core; expanded existing actual-game boss regressions to verify blocked shots consume one miss and never award stars. Await exact-head CI, illustration wiring and device QA; partial scope only.
 
       2026-11-24 PT: Kind Robots #5777 merged 957066de818ca26973ecd3466dd83b16080f2988 after exact head 285fa9e13e1bc63647efdfbb483f74be03eef5f0 passed all substantive checks. Six boss mechanics and all 25 core trajectories verified; illustration wiring and device QA remain. Requeue partial task, no deploy initiated.
+    owner: worker
+    claimed_by: 2026-11-25T040408Z-spectrum-boss-art-c71e9f
+    claimed_at: '2026-11-25T04:04:08Z'
   - id: t-180
     milestone: m12
     title: "Superkate Spectrum: story scenes, character dialogue, three meaningful choices and three endings"
@@ -3024,7 +3027,7 @@ tasks:
   - id: t-183
     milestone: m12
     title: "Superkate Spectrum: endless, puzzle atelier, cooperative relay, achievements and ranked leaderboard fairness"
-    status: review
+    status: ready
     passes: 0
     stakes: reversible
     depends_on: [t-178]
@@ -3032,10 +3035,9 @@ tasks:
       Silas, 2026-11-22 PT: Classic mode is now included in the first playable prototype; ranked Story and Classic scoreboards must be separately keyed before public competition, without erasing device-local best Classic score or Story stars.
 
       2026-11-24 PT: head 61fbc5b38577afe6be5b6b422ce2e7b01f1d5963 separates Story and Classic board keys using existing score storage and registry. Story late-stage replay is unranked, Classic remains ranked; cabinet selects and labels board, hall uses new Story bracket, legacy rows and career saves untouched. Pure helper verified for all 30 stages in both modes; engine and registry regression assertions added, CI pending. Remaining Atelier, cooperative relay and competition QA are not done.
-    owner: worker
-    claimed_by: 2026-11-25T033500Z-spectrum-rank-5d70bf
-    claimed_at: '2026-11-25T03:35:00Z'
-    updated: '2026-11-25T03:39:00Z'
+
+      2026-11-24 PT: verified Kind Robots #5791 merged 756371908893a1eceb54aa6c6c346ae99b2c0ff1. Story and Classic rank separation landed; Atelier, relay and competition QA remain. No deploy initiated.
+    updated: '2026-11-25T04:04:08Z'
   - id: t-184
     milestone: m12
     title: "Superkate Spectrum: adversarial full campaign playthrough, mobile QA, save/retry/ending tests and visual acceptance"
