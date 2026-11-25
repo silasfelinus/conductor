@@ -5,12 +5,15 @@ on:
     branches: [main]
     paths:
       - project-overrides.yaml
+      - project-progress-history.json
       - projects/**/roadmap.yaml
       - projects/images/**
       - pitches/**
       - scripts/sync_kind_robots_projection.py
       - scripts/sync_projects.py
       - .github/workflows/sync-kind-robots-projection.yml
+  schedule:
+    - cron: '30 20 * * *'
   workflow_dispatch:
 
 permissions:

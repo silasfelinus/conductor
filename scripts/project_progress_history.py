@@ -63,30 +63,42 @@ def history(root=ROOT, days=14, now=None, slugs=None):
         if path.parent.name != "_template" and (slugs is None or path.parent.name in slugs)
     }
     series = {slug: [] for slug in paths}
+    counts_by_blob = {}
+    source = git(root, "rev-parse", "HEAD")
     for day in dates:
         if day == now.date():
-            sha = git(root, "rev-parse", "HEAD")
+            sha = source
         else:
             cutoff = datetime.combine(day + timedelta(days=1), time.min, PT) - timedelta(seconds=1)
             sha = git(root, "rev-list", "--first-parent", "-1", f"--before={cutoff.isoformat()}", "HEAD")
+        blobs = {}
+        if sha and paths:
+            for line in git(root, "ls-tree", "-r", sha, "--", *paths.values()).splitlines():
+                metadata, path = line.split("\t", 1)
+                blobs[path] = metadata.split()[2]
         for slug, path in paths.items():
-            point = None
-            if sha:
-                # A missing file at a historical commit is a genuine gap.
-                result = subprocess.run(
-                    ["git", "show", f"{sha}:{path}"], cwd=root,
-                    capture_output=True, text=True,
+            blob = blobs.get(path)
+            if blob and blob not in counts_by_blob:
+                counts_by_blob[blob] = task_counts(
+                    yaml.safe_load(git(root, "cat-file", "blob", blob)) or {}
                 )
-                if result.returncode == 0:
-                    point = task_counts(yaml.safe_load(result.stdout) or {})
-            series[slug].append(point)
-    return {"dates": [day.isoformat() for day in dates], "series": series}
+            series[slug].append(counts_by_blob.get(blob))
+    return {"sourceCommitSha": source, "dates": [day.isoformat() for day in dates], "series": series}
 
 
-def digest_history(root=ROOT):
+def digest_history(root=ROOT, full=None):
     try:
         masters = open_game_masters(root)
-        payload = history(root, slugs=masters)
+        if full is None:
+            payload = history(root, slugs=masters)
+        else:
+            payload = {
+                "dates": full["dates"][-15:],
+                "series": {
+                    slug: points[-15:]
+                    for slug, points in full["series"].items() if slug in masters
+                },
+            }
         return {**payload, "masters": masters, "status": "ready"}
     except (OSError, ValueError, KeyError, RuntimeError, subprocess.CalledProcessError, yaml.YAMLError):
         return {"status": "unavailable", "dates": [], "series": {}, "masters": {}}

@@ -476,6 +476,7 @@ def project_progress_history_section(history: dict[str, Any] | None) -> str:
         'may need attention; scope additions can lower the percentage.</p>'
         '<div style="overflow-x:auto"><table cellpadding="3" style="border-collapse:collapse;width:100%">'
         f'<thead><tr>{header}</tr></thead><tbody>{"".join(lines)}</tbody></table></div>'
+        + '<p><a href="https://kindrobots.org/admin/project-progress">Explore project history and date ranges (admin)</a></p>'
         + archive
     )
 

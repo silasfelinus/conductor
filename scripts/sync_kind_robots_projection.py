@@ -89,7 +89,7 @@ def image_versions() -> dict[str, str]:
 
 
 def build_snapshot() -> dict[str, Any]:
-    return {
+    snapshot = {
         "version": 1,
         "sourceRepo": "silasfelinus/conductor",
         "sourceRef": "main",
@@ -100,6 +100,11 @@ def build_snapshot() -> dict[str, Any]:
         "pitches": text_map(ROOT / "pitches", "*.md"),
         "imageVersions": image_versions(),
     }
+    history_path = ROOT / "project-progress-history.json"
+    if history_path.exists():
+        snapshot["version"] = 2
+        snapshot["progressHistory"] = json.loads(read_text(history_path))
+    return snapshot
 
 
 def encoded_snapshot(snapshot: dict[str, Any]) -> bytes:
@@ -198,7 +203,17 @@ def main() -> int:
         print("KR_API_TOKEN is not set; skipping Kind Robots projection sync")
         return 0
 
-    result = post_snapshot(args.api_base, token, payload)
+    try:
+        result = post_snapshot(args.api_base, token, payload)
+    except RuntimeError as error:
+        # Older deployed receivers explicitly reject v2. Preserve the canonical
+        # coordination projection while the compatible receiver rolls out.
+        if snapshot["version"] != 2 or "HTTP 400" not in str(error) or "version must be 1" not in str(error):
+            raise
+        print("Receiver still uses projection v1; history waits for app deployment.")
+        legacy = {key: value for key, value in snapshot.items() if key != "progressHistory"}
+        legacy["version"] = 1
+        result = post_snapshot(args.api_base, token, encoded_snapshot(legacy))
     print(json.dumps({**summary, "result": result.get("data")}, indent=2))
     return 0
 
