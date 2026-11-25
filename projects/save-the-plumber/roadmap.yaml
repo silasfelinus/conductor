@@ -467,10 +467,10 @@ tasks:
   - id: t-020
     milestone: m6
     title: "Gen-2 level engine: sub-areas, vertical rooms, midpoints, secret exits, campaign-wide switches"
-    status: claimed
+    status: review
     passes: 0
     stakes: reversible
-    updated: '2026-11-25T09:17:08.821Z'
+    updated: '2026-11-25T10:43:20.297Z'
     note: |-
       GEN2-STANDARD.md section 2. Doors, pipes and ladders into sub-rooms with their own camera bounds; vertical shafts and climbs; a midpoint checkpoint per level; a second, hidden exit type that reports `secret` to the overworld (t-011); Valve Chapel switch state read by every level so pressed switches make outlined blocks solid campaign-wide; auto-scroll and haunted-maze (Hush House) exit logic. Deterministic replay tests for each: secret exit reachable, sub-room return position, switch persistence across levels and save/reload.
 
@@ -489,6 +489,8 @@ tasks:
       Added a playable Verdigris Chapel branch course and per-slot persistent solid switch blocks in Rainy Courtyard and Copper Greenhouses, using the existing normal-clear node memory without changing campaign indices or save format. Added map, goal-contact, reload and slot isolation regression assertions. Branch worker/save-the-plumber-t-020-valves-6f8c head b485c045. Partial engine scope; CI and further chapels/subrooms remain.
 
       Verified kind_robots#5769 merged 2026-11-24 PT. Verdigris Chapel and persistent switch blocks delivered; remaining chapels, subrooms and vertical stages. Return partial scope to ready.
+
+      Generalized optional chapel entry, respawn, completion and backdrop; authored Brass, Cobalt and Rose Chapel courses and persistent per-slot switch blocks in Worlds 3, 4 and 6. Added map, death-reload, clear, save and fresh-slot regression coverage. App branch worker/save-the-plumber-t-020-chapels-v5c1 head d1190ef3. Full CI pending. Subrooms, vertical traversal, auto-scroll and haunted mazes remain.
     owner: worker
     claimed_by: 20261125T091708Z-plumber-chapels-v5c1
     claimed_at: '2026-11-25T09:17:08.821Z'
