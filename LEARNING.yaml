@@ -19256,3 +19256,14 @@ records:
   failure_category: null
   lesson: When a small-resolution canvas HUD is unreadable on an upright phone, mirror its status as
     large DOM text in the empty space the touch layout already plans, rather than enlarging canvas type.
+- date: '2026-11-25'
+  project: rainbow-bullet-hell-space-princess
+  task: t-065
+  kind: software
+  stakes: reversible
+  passes: 0
+  outcome: done
+  failure_category: null
+  lesson: To add run-to-run variety to an authored shooter without breaking seeded tests, mirror whole
+    waves from one rng draw, and skip that draw entirely for the demo and scripted scenarios so their
+    rng streams stay byte-identical.
