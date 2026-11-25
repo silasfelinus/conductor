@@ -1108,11 +1108,11 @@ tasks:
     implementation_pr: 'silasfelinus/kind_robots#4105'
   - id: t-042
     title: "Rainbow Bullet Hell Space Princess — Master Roadmap to Final Creative Approval"
-    status: claimed
+    status: review
     stakes: reversible
     passes: 0
     source_issue: "silasfelinus/kind_robots#4146"
-    updated: '2026-11-25T18:47:42Z'
+    updated: '2026-11-25T19:07:17Z'
     note: |-
       FROM GITHUB ISSUE silasfelinus/kind_robots#4146 (https://github.com/silasfelinus/kind_robots/issues/4146), opened by @silasfelinus on 2026-10-25. Imported by scripts/sync_github_issues.py. Reference the canonical roadmap in implementation PRs with `Refs silasfelinus/kind_robots#4146`, never `Closes`. Keep #4146 open throughout finite build, art and QA work. Only the verified playtest handoff workflow may prefix `[FLAGGED FOR HUMAN TESTING]` and close the single master issue after Conductor lifecycle, priority, evidence and genuine `needs-human` subjective-acceptance gate are confirmed; closing the issue is not human approval or permission to publish.
 
@@ -1138,9 +1138,17 @@ tasks:
       Implemented byte-accurate Arcade save capacity and fail-closed serialization with Rainbow three-slot regression. Partial master roadmap scope; return to ready after merge.
 
       2026-11-24 PT intent audit: the increment's PR silasfelinus/kind_robots#5504 merged; the claim from 2026-11-21 was never released and the note says the wider scope is still partial. Returned to ready with the claim cleared so the next worker can pick it up. No scope change.
+
+      2026-11-25 PT P-01 batch: reviewed 30 finished idle-loop renders; 14 keeps (hammerhead,
+      guardian-courier, guardian-mirror, coral-v4, B01 p1-2, B03 p2-3, B05 p1-2, B06 p1-2, B08
+      p2-3) ship in kind_robots#5831; holds pearl-warden and B04 p1/p3 (off the sticker still,
+      need -v2 from shipped still); 13 rejects under the 2.7 motion floor. Verdicts in ANIM-
+      BACKLOG. Next: -v2 retakes for the holds/rejects, remaining ~40 pending loops, P-03
+      ending clips, B02 requeue (P-12). Return to ready after merge.
     owner: worker
     claimed_by: 2026-11-25T18:47:41Z-qechiq
     claimed_at: '2026-11-25T18:47:42Z'
+    implementation_pr: 'silasfelinus/kind_robots#5831'
   - id: t-043
     milestone: m4
     title: "Fever Dream look: review the doodle re-renders (DOODLE-SET-2) and ship the keepers"
