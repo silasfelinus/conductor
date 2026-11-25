@@ -85,7 +85,7 @@ Silas's decision; it stays as it is until he decides).
 | P-15 | minor | Leviathan's gem-open burst is an illegible clump | t-065 | fixed in #5737 (the two rings spawn 16 px and 28 px out along their spokes) |
 | P-16 | major | the stage uses about 27% of a 1920×1080 screen | t-067 | fixed in kind_robots#5720 (stage 1446x813 at 1920x1080, about 57%) |
 | P-17 | minor | the settings panel scrolls at 360×640 | t-067 | fixed in #5741 (one Settings pop-over on short screens) |
-| P-18 | minor | Seas on phone is text only; the route map is a 40 px strip | t-067 | open |
+| P-18 | minor | Seas on phone is text only; the route map is a 40 px strip | t-067 | fixed in kind_robots#5756 (a painted route-map band; Seas keeps its paintings in a sideways carousel) |
 | P-19 | minor | Solenne has no Fever Dream portrait | t-030 | fixed in #5767 (portrait and comms passed CAST-QA) |
 | P-20 | minor | the Fever Dream Acts blur together (violet plus a rainbow band) | t-067 | fixed in #5740 (a colour key and aurora per Act; the full rainbow opens and closes the flight) |
 | P-21 | minor | the HUD control legend stays up for the whole run | t-067 | fixed in kind_robots#5716 (legend in Act I only) |
