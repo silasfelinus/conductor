@@ -3051,7 +3051,7 @@ tasks:
   - id: t-183
     milestone: m12
     title: "Superkate Spectrum: endless, puzzle atelier, cooperative relay, achievements and ranked leaderboard fairness"
-    status: claimed
+    status: review
     passes: 0
     stakes: reversible
     depends_on: [t-178]
@@ -3069,10 +3069,19 @@ tasks:
       2026-11-24 PT: implemented local pass-and-play relay over six existing Atelier boards, alternating players after shot settlement, shared combo score, round progression and retry checkpoints, without ranked or career mutations. Actual projectile regression cases cover full relay, turn alternation, score, retry and save isolation. Head 1b0020d46a155248b63220f98f6d6e692345cd04; CI pending. Distinct relay boards, independent ammunition, gifted specials, finale boss, persistent records and device QA remain. Partial scope; no deploy.
 
       2026-11-24 PT: verified #5805 merged b7c6ff6d28779e91c06f3966c909787e4750f160. Local relay landed; dedicated cooperative puzzles, records and finale remain. Partial, no deploy.
-    updated: '2026-11-25T10:06:41Z'
+
+      2026-11-25 PT: kind_robots#5816 ships the finished Co-op Relay: six authored two-player
+      boards, each player's own orbs, turn after every shot, three-match gifted Prism, Palette
+      Keeper duet boss after round 6, best score + furthest round persisted (validated,
+      bounded, max-merged; legacy saves valid), unranked. Atelier gains six advanced row-drawn
+      puzzles (12 total). verifySpectrumCampaign plays the relay (6 rounds + boss, 42 shots)
+      and all 12 puzzles through the real update loop. Ranked Story/Classic separation landed
+      earlier (#5791).
+    updated: '2026-11-25T10:09:33Z'
     owner: worker
     claimed_by: 2026-11-25T094544Z-spectrum-qa-sbjq3s
     claimed_at: '2026-11-25T10:06:41Z'
+    implementation_pr: 'silasfelinus/kind_robots#5816'
   - id: t-184
     milestone: m12
     title: "Superkate Spectrum: adversarial full campaign playthrough, mobile QA, save/retry/ending tests and visual acceptance"
