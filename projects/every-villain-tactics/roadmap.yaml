@@ -502,10 +502,10 @@ tasks:
   - id: t-019
     milestone: m3
     title: "Deterministic post-battle points and earned scrapbook achievements"
-    status: ready
+    status: claimed
     depends_on: [t-006, t-016]
     passes: 0
-    updated: '2026-11-25T04:23:00Z'
+    updated: '2026-11-25T09:15:00Z'
     stakes: reversible
     note: |-
       Mission-end scored breakdown for flawless survival, zero damage, no knockouts, optional secrets, rescues and tactical bonuses, with explicit eligible conditions. Replay-safe recorded points, scrapbook heroes won with, villains beaten and authored route discoveries. Distinguish end-of-turn summaries from mission completion.
@@ -521,6 +521,9 @@ tasks:
       After reclaiming the stale t-019 claim and verifying session ownership, authored code for secret-trigger scoring, a new verified hidden-route medal and achievement, and visible 48-identity hero/villain/supported record in the Tactics scrapbook. Reversible scoped PR kind_robots#5470 is open at b0d27fb302e1fb93c536c25dbc0afa20b7049276 with regressions committed. CI pending: no local runtime execution in this connector-only session. Not done: 6-chapter full campaign scoring QA and broader secret-route audit.
 
       Reopen the remaining Scoring and scrapbook scope for independent production. No open matching implementation PR was found; preserve previously merged contributions and all acceptance requirements. Do not count partial implementation as done.
+    owner: worker
+    claimed_by: 20261125T091500Z-evt-score-integrity-a8e4
+    claimed_at: '2026-11-25T09:15:00Z'
   - id: t-020
     milestone: m3
     title: "48 canonical hero-villain foil pairings beyond generic story mode"
