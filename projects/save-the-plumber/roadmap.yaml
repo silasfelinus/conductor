@@ -91,12 +91,12 @@ tasks:
       images asserted as live.
   - id: t-028
     title: 'Main-game standard: audit and close the gaps for Save the Plumber'
-    status: claimed
+    status: review
     milestone: m6
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-26T14:51:59Z'
+    updated: '2026-11-26T15:08:22Z'
     note: |-
       Silas 2026-11-11 PT, in session: "Our games should all have a base standard of quality ... We want our main games to have 12 plus achievements." Standard: docs/agents/main-game-standard.md; CONTROL.md global overview.
 
@@ -174,7 +174,15 @@ tasks:
 
       Merged kind_robots#5896 at 76c1b47d after all 19 exact-head checks passed. Name entry
       live. Remaining: rendered finale + gallery screenshots. Return to ready.
-    implementation_pr: 'silasfelinus/kind_robots#5896'
+
+      2026-11-26 PT: repaired the two engine tests red on main. ropeX now scans the whole
+      ladder above her, so on 1-2's key ladder she hangs flush to the brick beside the upper
+      rungs instead of bumping her head (verifySavePlumberKeys). Boss autopilot hops the
+      slam's landing shockwave (3-4: 1 life lost, was 4) and leans into the gale's gust so it
+      reaches the recover window (5-4 now clears; this failure was hidden behind 3-4).
+      verifySavePlumberLevels passes. kind_robots#5901. Remaining: rendered finale + gallery
+      screenshots.
+    implementation_pr: 'silasfelinus/kind_robots#5901'
     owner: worker
     claimed_by: 2026-11-26T15:20:00Z-focused-johnson-kd6t8m
     claimed_at: '2026-11-26T14:51:59Z'
