@@ -232,7 +232,7 @@ tasks:
   - id: t-005
     milestone: m2
     title: "Implement enemy interaction, held objects and powerup systems"
-    status: review
+    status: ready
     depends_on: [t-003]
     passes: 0
     stakes: reversible
@@ -289,11 +289,17 @@ tasks:
       unverified. Partial scope; return to ready.
 
       Implemented sixth movement power Tidecoat, with direction-controlled swimming, dive, neutral buoyancy and surface breach, ordinary water lethality without the suit, campaign pickup in Floating Wharves, Maker glyph 6, HUD/reserve indicators and guide. Added custom pool input regression and campaign collectible checks. Extracted committed swimming method passed a dive/ascent probe (108px ascent). Branch worker/save-the-plumber-t-005-tidecoat-n3q8 head 9bad0388; full CI pending. Remaining map inventory, ride companion, painted prop and full campaign water course scope stay open.
-    updated: '2026-11-26T12:50:00Z'
+
+      Reviewed and merged kind_robots#5899 at baa1b62c after 18/18 latest-head checks passed
+      on fddc1e16. Tidecoat is the sixth movement power: Up/A swims and breaches, Down dives,
+      release floats, water stays lethal without the suit; pickup in Tideglass Marina 2-1,
+      Maker glyph 6, HUD/reserve labels, guide text and Maker/campaign regressions.
+      Conductor#8062 carries the private painted prop request; delivery unverified. Partial
+      scope; remaining map-usable inventory, ride companion, dedicated water courses and
+      painted Ballast/Tidecoat props. Production deployment unverified. Return to ready.
+    updated: '2026-11-26T13:46:58Z'
     owner: worker
-    implementation_pr: 'silasfelinus/kind_robots#5886'
-    claimed_by: 20261126T124800Z-plumber-tidecoat-n3q8
-    claimed_at: '2026-11-26T12:48:00Z'
+    implementation_pr: 'silasfelinus/kind_robots#5899'
   - id: t-006
     milestone: m3
     title: "Build World 1: four complete garden/pipeworks levels and boss"
