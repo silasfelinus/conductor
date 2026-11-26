@@ -158,8 +158,10 @@ def roadmap_has_claimable_task(roadmap: dict[str, Any]) -> bool:
     )
 
 
-def build_queue_summary() -> dict[str, Any]:
-    roadmaps = load_roadmaps()
+def build_queue_summary(roadmaps: list[dict[str, Any]] | None = None) -> dict[str, Any]:
+    # Reuse the selector's single read; an explicitly empty list is valid.
+    if roadmaps is None:
+        roadmaps = load_roadmaps()
     ready_tasks = list(islice(iter_ready_tasks(load_priority(), roadmaps), READY_TASKS_LIMIT))
     ready_task = ready_tasks[0] if ready_tasks else None
 
