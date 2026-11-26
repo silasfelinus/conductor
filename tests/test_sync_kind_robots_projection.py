@@ -171,8 +171,36 @@ def test_agent_entrypoints_name_the_authority_contract():
     assert "SOURCE_OF_TRUTH.md" in reconciliation
     assert "SOURCE_OF_TRUTH.md" in connector
     assert "SOURCE_OF_TRUTH.md" in claude_hook
-    assert 'overrides.get("overrides", [])' in claude_hook
-    assert "if proj not in active_projects" in claude_hook
+    # The hook no longer duplicates the selector's portfolio scan.
+    assert "select_role.py once" in claude_hook
+    assert "projects/*/roadmap.yaml" not in claude_hook
+
+
+def test_live_selector_excludes_inactive_projects(tmp_path, monkeypatch):
+    """Lifecycle filtering belongs to the actual queue, not hook source text."""
+    from scripts import run_worker
+
+    statuses = {"alpha": "active", "beta": "playtest", "gamma": "continuous",
+                "delta": "paused", "epsilon": "retired", "zeta": "finished"}
+    for slug in statuses:
+        directory = tmp_path / slug
+        directory.mkdir()
+        (directory / "roadmap.yaml").write_text(
+            f"project: {slug}\ntasks:\n- id: t-001\n  status: ready\n",
+            encoding="utf-8",
+        )
+    monkeypatch.setattr(run_worker, "PROJECTS_DIR", tmp_path)
+    monkeypatch.setattr(run_worker, "load_overrides", lambda: {
+        slug: {"status": status} for slug, status in statuses.items()
+    })
+    actual = run_worker.load_roadmaps()
+    assert {r["_project"]: r["_lifecycle"] for r in actual} == {
+        slug: status for slug, status in statuses.items()
+        if status in {"active", "playtest", "continuous"}
+    }
+    assert {t["project"] for t in run_worker.iter_ready_tasks(list(statuses), actual)} == {
+        "alpha", "beta", "gamma"
+    }
 
 
 def test_production_api_hosts_never_fall_back_to_retired_vercel(monkeypatch):

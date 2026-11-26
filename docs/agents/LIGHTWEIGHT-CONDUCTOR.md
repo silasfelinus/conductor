@@ -20,3 +20,41 @@ Six assignment types: developer (build/fix PRs), reviewer (review/merge/close), 
 ## Acceptance
 
 Canonical state remains Git, generated output is read-only/advisory, task ownership remains atomic/session-aware, all relevant current-head CI must pass before merge, and human gates remain unchanged. A failed/stale projection cannot authorize mutation. Full prior instructions remain available; current contract and current user direction override superseded procedures. Keep implementation changes small, tested and independently mergeable. Do not create extra finite roadmap tasks merely to document these phases.
+
+## Architecture at a glance (2026-11-26 PT)
+
+This is a review map, not a new agent startup requirement. Review the actual implementation and distinguish merged behavior from open PRs. The private repo is the only project-management authority.
+
+| Layer | Canonical or derived | Implementation |
+| --- | --- | --- |
+| Direction | canonical | CONTROL.md, project-overrides.yaml, projects/priority.yaml |
+| Tasks | canonical | projects/<slug>/roadmap.yaml |
+| Ownership and transitions | canonical | task-events/, scripts/claim_task.py, scripts/close_task.py, serialized Process task events |
+| Dispatch | live/advisory | scripts/select_role.py, scripts/run_worker.py, STATUS.md |
+| Scoped retrieval | derived | scripts/build_agent_context.py, ops/agent-context/<slug>.json, scripts/show_task.py, scripts/show_control.py |
+| Instructions | canonical | AGENTS.md once, one relevant docs/agents/roles/ card; optional procedures on demand |
+| Implementation and evidence | canonical in owning repo | worker branches, PRs, current-head CI, verified merge SHA |
+| Presentation | derived coordination, separate runtime authority | existing Kind Robots projection (SOURCE_OF_TRUTH.md) |
+
+Flow: owner direction + roadmap -> deterministic selection -> live claim -> scoped agent work -> review + CI -> merge -> task event -> reconciled main -> refreshed advisory views. Neither a locator nor a PR is a claim or proof of completion.
+
+### Rollout evidence
+
+- #8075 merged: shared contract and compact pickup hints; original instruction blobs archived, finite-scope review policy.
+- #8077 merged: scope global/project direction and daily creative; preserve original CONTROL and runbook.
+- #8078 merged: specialist cards and Git-native task locators. Real-repository CI generated 39 locators and found zero structural roadmap errors; the next status refresh must publish them before agents rely on them.
+- #8079: smaller SessionStart hook and single parsed queue snapshot. Check its live PR/CI status; don't assume it merged from this document.
+- Remaining: make specialist selection consistent across harnesses; audit maintenance ownership/cadence and consolidate exceptions; measure preparation/throughput; remove proven redundancy; then redesign individual roadmaps.
+
+### Questions for independent reviewers
+
+Review from the perspective of a low-token personal project manager, not a multi-tenant platform. Prefer deleting/reusing over adding.
+
+1. Which inputs must actually be read before the first useful action? Identify duplicated or irrelevant context, including scripts/hooks and injected prompts.
+2. Are there competing authorities or writers, stale views, unsafe claim/merge races, or completion loopholes? Suggest the smallest repair preserving the current safeguards.
+3. Which deterministic checks duplicate existing workflows? Which must remain live, and what triggers/cadence are needed for the rest?
+4. Are six assignment types sufficient? Can specialist selection reuse the existing selector rather than creating a second dispatcher?
+5. What would you remove, simplify, or test next? Rank concrete recommendations by token/latency impact, reliability, complexity and migration risk; cite exact paths or code. Distinguish observed defects from hypotheses.
+6. Are acceptance metrics measurable from real sessions rather than inferred from file length? Propose a minimal benchmark and stop condition.
+
+Do not propose additional services, public publication, project roadmap rewrites or new tasks by default. Read-only critique first; return concise findings with evidence, tradeoffs and a bounded change proposal.
