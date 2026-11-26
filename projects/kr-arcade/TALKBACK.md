@@ -216,3 +216,9 @@
 - **Fix applied:** seven new Superkate prompts ended in ", no writing." / ", no words." / "no readable words", and `test_pending_request_prompts_pass_contract` flagged them as text-exclusion. #7892 fixed the same mistake on three earlier Superkate prompts. They now use "every surface bare and unmarked" and "blank unmarked covers".
 - **Status:** t-176 stays in `review`. The playable code is kind_robots#5624, which is still open, and this conductor PR is docs, roadmap and art only.
 - **Pattern:** this is the second Superkate batch to hit the text-exclusion contract in one evening. Workers should reuse `scripts/intake.py` `NO_TEXT` instead of hand-writing a no-text clause.
+
+## 2026-11-26 PT | reviewer (scheduled agent) | t-190 Spectrum painted orbs conductor#8039
+
+- **Decision:** merged conductor#8039 as `59d0e49f`. All 27 latest-head checks passed, including the art-prompts contract guards. The diff is data only: 25 `priority: 1000` render requests and a new `ready` task, t-190. Generated art is pre-approved and reversible. Nothing was published or deployed.
+- **What worked:** the prompts use the "every surface bare and unmarked" phrasing, so the 2026-11-22 text-exclusion mistake did not recur. Each orb has a code-drawn fallback until its render is delivered.
+- **Kaizen:** added t-191, a per-cabinet audit of slots that are still code-drawn. This is the suggestion from both #8037 and #8039.

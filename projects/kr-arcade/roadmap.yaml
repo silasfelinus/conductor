@@ -3140,3 +3140,13 @@ tasks:
     updated: '2026-11-26T01:40:00Z'
     note: |-
       Silas, 2026-11-25 PT: "We should never be satisfied with [SVG] over painted. If we have [SVG], we need painted to replace. High priority with art." Spectrum's bubbles were canvas-drawn gradients. Queued 25 renders (superkate-spectrum-orb-<style>-<hue> for glass/candy/starlight/prismatic x six hues, plus superkate-spectrum-orb-launcher; priority 1000) to /images/arcade/superkate-spectrum/orbs/. The game draws each painted orb clipped to its circle with the colorblind emblem on a light halo above it, and falls back to the drawn gradient until delivered; high contrast keeps flat drawn orbs by design. Next: verify each delivered orb at 390/768/1440 and replace any that read poorly at 26px.
+  - id: t-191
+    milestone: m12
+    title: "Add a per-cabinet audit listing every rendered art slot that is still code-drawn, so painted replacements are queued systematically."
+    status: ready
+    passes: 0
+    stakes: reversible
+    depends_on: []
+    updated: '2026-11-26T01:50:00Z'
+    note: |-
+      Reviewer kaizen from conductor#8039 (and #8037): Silas, 2026-11-25 PT, wants painted art to replace every SVG/canvas-drawn slot. Build a small script or test that lists, per arcade cabinet, the visual slots still drawn in code with no painted request in projects/art-prompts.yaml, so the remaining replacements are found by a tool and not by hand.
