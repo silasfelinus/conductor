@@ -588,7 +588,7 @@ tasks:
   - id: t-021
     milestone: m6
     title: "Gen-2 World 1: re-author Bluebell Pipeworks as a full SMB3/SMW-class world"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 2026-11-26T233800Z-plumber-t021-cellar-a7f3
     claimed_at: '2026-11-26T23:38:00Z'
@@ -606,6 +606,8 @@ tasks:
       Implemented the first playable Sluicegate Steps dam climb (76 columns), rope, spring and elevated token routes, spillway checkpoint and exit gating the castle. Kept the legacy castle code 1-4 distinct from the dam runtime code 1-sluice and node 1-4, with regression coverage for map entry, input-driven climb, camera ascent, checkpoint respawn, clear and persistence. Geometry probe passed. App branch worker/save-the-plumber-t-021-sluice-s7m3, head 7e82d59f. Full gameplay and TypeScript CI pending; partial World 1 scope.
 
       PR kind_robots#5893 merged at 5903f437; all eleven implementation workflows and branch janitor passed on 8c786ef9. Sluicegate Steps baseline delivered. Remaining World 1 scope stays ready.
+
+      Authored Rainy Courtyard's first optional sealed pipe chamber, with a token trail, Springstep reward, bidirectional travel and camera framing. Added cabinet replay covering actual movement, both portals and no duplicate pickups. App branch worker/save-the-plumber-t-021-cellar-a7f3 head 9991e8fa. Partial World 1 scope; CI pending, further authored rooms and Foreman Flange remain.
   - id: t-022
     milestone: m6
     title: "Gen-2 Worlds 2-4: Tideglass Marina, Lantern Orchard, Clockwork Fair"
