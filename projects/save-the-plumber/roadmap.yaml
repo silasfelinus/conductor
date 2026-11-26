@@ -91,12 +91,12 @@ tasks:
       images asserted as live.
   - id: t-028
     title: 'Main-game standard: audit and close the gaps for Save the Plumber'
-    status: claimed
+    status: review
     milestone: m6
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-26T11:48:03Z'
+    updated: '2026-11-26T11:55:46Z'
     note: |-
       Silas 2026-11-11 PT, in session: "Our games should all have a base standard of quality ... We want our main games to have 12 plus achievements." Standard: docs/agents/main-game-standard.md; CONTROL.md global overview.
 
@@ -165,7 +165,13 @@ tasks:
       Merged kind_robots#5890 at 5ae6b7bd after 21/21 exact-head checks passed. Reading
       options live. Remaining: name entry, rendered finale + gallery screenshots. Return to
       ready.
-    implementation_pr: 'silasfelinus/kind_robots#5890'
+
+      2026-11-26 PT: name entry at heroine select. A new file opens an arcade letter wheel
+      prefilled with her roster name (up to 10 letters/hyphens, family filter); the name saves
+      on the file and drives story, HUD, file select, finale and the front-page crew card.
+      verifySavePlumberNameEntry in arcade-engine and cabinet-contracts CI. kind_robots#5896.
+      Remaining: rendered finale + gallery screenshots.
+    implementation_pr: 'silasfelinus/kind_robots#5896'
     owner: worker
     claimed_by: 2026-11-26T11:50:00Z-focused-johnson
     claimed_at: '2026-11-26T11:48:03Z'
