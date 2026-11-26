@@ -65,15 +65,23 @@ tasks:
   - id: t-003
     milestone: m2
     title: "Give each far region a signature mechanic and authored set-piece levels"
-    status: claimed
+    status: done
     passes: 0
     stakes: reversible
     note: >-
       Currently all regions share Gloom, Tangles and buddies with seeded layouts. Add one mechanic per tier-two region (for example Moonbeam fireflies that light a column, Carnival conveyor rows, Arcade portals, Lighthouse letters that drop like buddies), hand-author at least the four finales and the two fork levels, and keep npm run test:hopeful-hues proving every level winnable.
+
+      2026-11-25 PT: every world's second and third regions now carry a signature mechanic
+      (conveyor, portal or dispenser, rotated across the nine worlds; 60+ levels each in 5+
+      worlds), alongside the authored set pieces and finales from t-012; the bot still wins
+      all 495 levels without gifts. Verified kind_robots#5856 merged after all 13 checks
+      passed on exact head a7b2193b (incl. TypeScript and the new Hopeful Hues browser
+      playthrough). No deploy.
     owner: worker
     claimed_by: 2026-11-25T094544Z-spectrum-qa-sbjq3s
     claimed_at: '2026-11-25T23:50:45Z'
-    updated: '2026-11-25T23:50:45Z'
+    updated: '2026-11-26T00:44:55Z'
+    implementation_pr: 'silasfelinus/kind_robots#5856'
   - id: t-004
     milestone: m3
     title: "Compose region music and polish sound design"
