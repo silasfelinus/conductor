@@ -1,4 +1,9 @@
 # art-queue-health.yaml -- written by scripts/art_queue_health.py record at the
 # end of every Auto Art Generate run. Do not hand-edit: fix the cause (see
 # docs/agents/roles/art-medic.md) and the next run drops the entry.
-failures: []
+failures:
+- source: ledgers
+  target: projects/rainbow-bullet-hell-space-princess/art/ANIM-BACKLOG-2026-11-24.yaml
+  kind: error
+  detail: 1 cell(s) skipped, e.g. idle-comet-cadet-pod-v2 [wan-mp4]
+  first_seen: '2026-11-26'
