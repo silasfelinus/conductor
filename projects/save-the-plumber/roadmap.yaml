@@ -196,10 +196,7 @@ tasks:
   - id: t-005
     milestone: m2
     title: "Implement enemy interaction, held objects and powerup systems"
-    status: review
-    owner: worker
-    claimed_by: 20261125T233100Z-plumber-glide-h8q3
-    claimed_at: '2026-11-25T23:31:00Z'
+    status: ready
     depends_on: [t-003]
     passes: 0
     stakes: reversible
@@ -243,7 +240,9 @@ tasks:
       Reviewed and merged kind_robots#5840 at 69d3e262 after all 12 workflows on c6c1b6c6 completed successfully. Carry and throw stunned Rivet Rollers, blocked release and cleanup regressions shipped. Partial scope only; expanded powers, map inventory and ride companion remain. Production deployment unverified.
 
       Implemented fourth power Sailwing: ordinary jump height, 1.8 px/tick controlled descent and 0.99 neutral air drag while holding jump, instant release, pound compatibility, pickup in Ropeway Home 5-1 and Maker glyph 4, reserve/HUD feedback, tutorial and deterministic bilateral movement/collection regressions. App branch worker/save-the-plumber-t-005-sailwing-h8q3 head 17727401. Full CI pending; painted prop delivery and elemental suits, heavy form, map inventory and ride companion remain. Partial t-005 scope.
-    updated: '2026-11-25T23:31:00Z'
+
+      Verified kind_robots#5850 merged at 396726f6 after 12/12 exact-head workflows passed on 880ccb33. Sailwing is the fourth collectible movement power with campaign and Maker coverage. Conductor#8035 merged the private painted prop request; delivery remains unverified. Partial scope; remaining elemental suit, heavy form, inventory and ride companion. Production deployment unverified.
+    updated: '2026-11-26T00:06:50Z'
   - id: t-006
     milestone: m3
     title: "Build World 1: four complete garden/pipeworks levels and boss"
