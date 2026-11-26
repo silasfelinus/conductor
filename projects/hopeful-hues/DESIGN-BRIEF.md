@@ -5,6 +5,14 @@
 **Static game:** `kind_robots/public/hopeful-hues/` (vanilla JS, no build step)
 **Master issue:** [Kind Robots #5649](https://github.com/silasfelinus/kind_robots/issues/5649)
 
+## Status (2026-11-25 PT): ready for human playtests
+
+The finite roadmap is complete (t-001 to t-014). Nine worlds and 495 levels are all won by the bot.
+Conveyor, portal and dispenser region mechanics are in, and all 118 painted images are delivered.
+A Chromium playthrough runs in CI (kind_robots#5856). Lifecycle: `playtest`. See
+[PLAYTEST-CHECKLIST.md](PLAYTEST-CHECKLIST.md); promo card in `promo/` (not for posting without
+Silas).
+
 ## Direction (Silas, 2026-11-22 PT, verbatim)
 
 > New project, a desired clone of candy crush, but with a back button. Themed on superkate, kind
