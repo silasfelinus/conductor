@@ -1,4 +1,181 @@
 # art-queue-health.yaml -- written by scripts/art_queue_health.py record at the
 # end of every Auto Art Generate run. Do not hand-edit: fix the cause (see
 # docs/agents/roles/art-medic.md) and the next run drops the entry.
-failures: []
+failures:
+- source: requests
+  target: public/images/arcade/superkate-spectrum/orbs/candy-blue.webp
+  kind: contract-rejected
+  rules:
+  - frame-noun
+  detail: 'enqueue failed: HTTP 422 Art prompt rejected by the prompt contract (1 violation): [frame-noun]
+    "a glossy hard-candy sphere in sky blue with creamy pastel swirl stripes and a sugary shine, premium
+    2D western animation game sprite, vivid sa…'
+  first_seen: '2026-11-26'
+- source: requests
+  target: public/images/arcade/superkate-spectrum/orbs/candy-gold.webp
+  kind: contract-rejected
+  rules:
+  - frame-noun
+  detail: 'enqueue failed: HTTP 422 Art prompt rejected by the prompt contract (1 violation): [frame-noun]
+    "a glossy hard-candy sphere in sunny gold with creamy pastel swirl stripes and a sugary shine, premium
+    2D western animation game sprite, vivid …'
+  first_seen: '2026-11-26'
+- source: requests
+  target: public/images/arcade/superkate-spectrum/orbs/candy-lime.webp
+  kind: contract-rejected
+  rules:
+  - frame-noun
+  detail: 'enqueue failed: HTTP 422 Art prompt rejected by the prompt contract (1 violation): [frame-noun]
+    "a glossy hard-candy sphere in lime green with creamy pastel swirl stripes and a sugary shine, premium
+    2D western animation game sprite, vivid …'
+  first_seen: '2026-11-26'
+- source: requests
+  target: public/images/arcade/superkate-spectrum/orbs/candy-pink.webp
+  kind: contract-rejected
+  rules:
+  - frame-noun
+  detail: 'enqueue failed: HTTP 422 Art prompt rejected by the prompt contract (1 violation): [frame-noun]
+    "a glossy hard-candy sphere in hot pink with creamy pastel swirl stripes and a sugary shine, premium
+    2D western animation game sprite, vivid sa…'
+  first_seen: '2026-11-26'
+- source: requests
+  target: public/images/arcade/superkate-spectrum/orbs/candy-teal.webp
+  kind: contract-rejected
+  rules:
+  - frame-noun
+  detail: 'enqueue failed: HTTP 422 Art prompt rejected by the prompt contract (1 violation): [frame-noun]
+    "a glossy hard-candy sphere in bright teal with creamy pastel swirl stripes and a sugary shine, premium
+    2D western animation game sprite, vivid…'
+  first_seen: '2026-11-26'
+- source: requests
+  target: public/images/arcade/superkate-spectrum/orbs/candy-violet.webp
+  kind: contract-rejected
+  rules:
+  - frame-noun
+  detail: 'enqueue failed: HTTP 422 Art prompt rejected by the prompt contract (1 violation): [frame-noun]
+    "a glossy hard-candy sphere in violet purple with creamy pastel swirl stripes and a sugary shine,
+    premium 2D western animation game sprite, viv…'
+  first_seen: '2026-11-26'
+- source: requests
+  target: public/images/arcade/superkate-spectrum/orbs/glass-gold.webp
+  kind: timeout
+  detail: job 77382 timed out after 300s (still queued/running)
+  first_seen: '2026-11-26'
+- source: requests
+  target: public/images/arcade/superkate-spectrum/orbs/glass-pink.webp
+  kind: timeout
+  detail: job 77380 timed out after 300s (still queued/running)
+  first_seen: '2026-11-26'
+- source: requests
+  target: public/images/arcade/superkate-spectrum/orbs/glass-teal.webp
+  kind: timeout
+  detail: job 77381 timed out after 300s (still queued/running)
+  first_seen: '2026-11-26'
+- source: requests
+  target: public/images/arcade/superkate-spectrum/orbs/prismatic-blue.webp
+  kind: contract-rejected
+  rules:
+  - frame-noun
+  detail: 'enqueue failed: HTTP 422 Art prompt rejected by the prompt contract (1 violation): [frame-noun]
+    "an iridescent crystal orb tinted sky blue, refracting rainbow light through faceted prisms with a
+    thin gold rim, premium 2D western animation …'
+  first_seen: '2026-11-26'
+- source: requests
+  target: public/images/arcade/superkate-spectrum/orbs/prismatic-gold.webp
+  kind: contract-rejected
+  rules:
+  - frame-noun
+  detail: 'enqueue failed: HTTP 422 Art prompt rejected by the prompt contract (1 violation): [frame-noun]
+    "an iridescent crystal orb tinted sunny gold, refracting rainbow light through faceted prisms with
+    a thin gold rim, premium 2D western animatio…'
+  first_seen: '2026-11-26'
+- source: requests
+  target: public/images/arcade/superkate-spectrum/orbs/prismatic-lime.webp
+  kind: contract-rejected
+  rules:
+  - frame-noun
+  detail: 'enqueue failed: HTTP 422 Art prompt rejected by the prompt contract (1 violation): [frame-noun]
+    "an iridescent crystal orb tinted lime green, refracting rainbow light through faceted prisms with
+    a thin gold rim, premium 2D western animatio…'
+  first_seen: '2026-11-26'
+- source: requests
+  target: public/images/arcade/superkate-spectrum/orbs/prismatic-pink.webp
+  kind: contract-rejected
+  rules:
+  - frame-noun
+  detail: 'enqueue failed: HTTP 422 Art prompt rejected by the prompt contract (1 violation): [frame-noun]
+    "an iridescent crystal orb tinted hot pink, refracting rainbow light through faceted prisms with a
+    thin gold rim, premium 2D western animation …'
+  first_seen: '2026-11-26'
+- source: requests
+  target: public/images/arcade/superkate-spectrum/orbs/prismatic-teal.webp
+  kind: contract-rejected
+  rules:
+  - frame-noun
+  detail: 'enqueue failed: HTTP 422 Art prompt rejected by the prompt contract (1 violation): [frame-noun]
+    "an iridescent crystal orb tinted bright teal, refracting rainbow light through faceted prisms with
+    a thin gold rim, premium 2D western animati…'
+  first_seen: '2026-11-26'
+- source: requests
+  target: public/images/arcade/superkate-spectrum/orbs/prismatic-violet.webp
+  kind: contract-rejected
+  rules:
+  - frame-noun
+  detail: 'enqueue failed: HTTP 422 Art prompt rejected by the prompt contract (1 violation): [frame-noun]
+    "an iridescent crystal orb tinted violet purple, refracting rainbow light through faceted prisms with
+    a thin gold rim, premium 2D western anima…'
+  first_seen: '2026-11-26'
+- source: requests
+  target: public/images/arcade/superkate-spectrum/orbs/starlight-blue.webp
+  kind: contract-rejected
+  rules:
+  - frame-noun
+  detail: 'enqueue failed: HTTP 422 Art prompt rejected by the prompt contract (1 violation): [frame-noun]
+    "a glowing sky blue orb filled with tiny twinkling stars and soft sparkles, gently radiant, premium
+    2D western animation game sprite, vivid sat…'
+  first_seen: '2026-11-26'
+- source: requests
+  target: public/images/arcade/superkate-spectrum/orbs/starlight-gold.webp
+  kind: contract-rejected
+  rules:
+  - frame-noun
+  detail: 'enqueue failed: HTTP 422 Art prompt rejected by the prompt contract (1 violation): [frame-noun]
+    "a glowing sunny gold orb filled with tiny twinkling stars and soft sparkles, gently radiant, premium
+    2D western animation game sprite, vivid s…'
+  first_seen: '2026-11-26'
+- source: requests
+  target: public/images/arcade/superkate-spectrum/orbs/starlight-lime.webp
+  kind: contract-rejected
+  rules:
+  - frame-noun
+  detail: 'enqueue failed: HTTP 422 Art prompt rejected by the prompt contract (1 violation): [frame-noun]
+    "a glowing lime green orb filled with tiny twinkling stars and soft sparkles, gently radiant, premium
+    2D western animation game sprite, vivid s…'
+  first_seen: '2026-11-26'
+- source: requests
+  target: public/images/arcade/superkate-spectrum/orbs/starlight-pink.webp
+  kind: contract-rejected
+  rules:
+  - frame-noun
+  detail: 'enqueue failed: HTTP 422 Art prompt rejected by the prompt contract (1 violation): [frame-noun]
+    "a glowing hot pink orb filled with tiny twinkling stars and soft sparkles, gently radiant, premium
+    2D western animation game sprite, vivid sat…'
+  first_seen: '2026-11-26'
+- source: requests
+  target: public/images/arcade/superkate-spectrum/orbs/starlight-teal.webp
+  kind: contract-rejected
+  rules:
+  - frame-noun
+  detail: 'enqueue failed: HTTP 422 Art prompt rejected by the prompt contract (1 violation): [frame-noun]
+    "a glowing bright teal orb filled with tiny twinkling stars and soft sparkles, gently radiant, premium
+    2D western animation game sprite, vivid …'
+  first_seen: '2026-11-26'
+- source: requests
+  target: public/images/arcade/superkate-spectrum/orbs/starlight-violet.webp
+  kind: contract-rejected
+  rules:
+  - frame-noun
+  detail: 'enqueue failed: HTTP 422 Art prompt rejected by the prompt contract (1 violation): [frame-noun]
+    "a glowing violet purple orb filled with tiny twinkling stars and soft sparkles, gently radiant, premium
+    2D western animation game sprite, vivi…'
+  first_seen: '2026-11-26'
