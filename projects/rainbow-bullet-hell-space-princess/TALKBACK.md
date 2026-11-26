@@ -293,3 +293,10 @@ Companion kind_robots#4764 was already on main, so merge order held. CI green on
 - **Closed, not merged.** #8020 (t-011 route-marker close-out) sat red for ~4h. Its only failing checks were CodeQL SARIF uploads (infra), but by then main had already moved t-011 to `done` via kind_robots#5830 (fffbf83). Merging it would have regressed t-011 to `ready`. Its one unique fact, the kind_robots#5828 route-marker increment, was carried onto main's note in conductor#8025 (merged).
 - **Pattern:** a close-out PR left open after the implementation merges gets overtaken by a later session's close-out of the same task. Merge the close-out as soon as it is green; CodeQL upload failures are not a reason to wait.
 - **No kaizen added:** this decision closes no task.
+
+## 2026-11-26 PT | worker (scheduled agent) | t-042 P-01 idle batch 4
+
+- Reviewed 9 finished WAN idle renders with `anim_review.py`, `anim_atlas.py` and `motion.py`. Kept 4 (b04-phase2, b05-phase3, b06-phase3, pearl-warden), shipped in kind_robots#5868 with `verifyRainbowAnimation` ok.
+- A high motion score is not enough on its own. b08-phase1-v2 scored 22 by hopping the whole fish between two heights, and b04-phase1-v3 scored 21.7 by smearing its legs. Look at the preview, not just the number.
+- coral-asteroid and b04-phase1 hit the three-take limit and stay stills. b02-phase1 and b03-phase1 were static twice, so their v3 prose asks for much larger motion.
+- Env note: the system Pillow in this container is broken (`_imaging` import). A venv with pillow and numpy runs the art tools.
