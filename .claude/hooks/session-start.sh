@@ -32,7 +32,7 @@ message = (
     f"{checkout} Use AGENTS.md once. For explicit work, load only the selected role "
     "and project/task. Otherwise run scripts/select_role.py once for live priorities "
     "and open PRs; investigate only actionable exceptions. STATUS.md is advisory. "
-    "Read the current task and verify ownership before writes. "
+    "Read SOURCE_OF_TRUTH.md before cross-repo writes. Verify live task ownership. "
     "Run targeted session_sweep.py checks only for stale or failed signals."
 )
 print(json.dumps({"message": message}))

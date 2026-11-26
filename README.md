@@ -1,17 +1,19 @@
 # Conductor
 
-Conductor is a project management repo built around AI agents doing real work. A session-driven Worker picks up tasks, does them on a branch, and opens a PR. A Reviewer looks at the PR and either merges it or flags it for Silas. Silas steers things by editing roadmap files and approving gates — he stays out of the routine loop unless something actually needs him.
+Conductor is a private, single-owner, Git-native project manager for Silas's projects. Agents deliver work; deterministic scripts and GitHub Actions coordinate it. Git is the authoritative task ledger. Kind Robots owns runtime/presentation and reads the existing commit-stamped projection; no new Conductor API, service or database is required.
 
-The repo itself does not call model-provider APIs from GitHub Actions. Agent judgment and implementation happen from interactive assistant sessions using GitHub tools/connectors. Actions are for deterministic checks, digest generation, and safe plumbing.
-
-The whole thing runs on plain YAML files checked into git. No database, no dashboard to maintain. Git is the source of truth; rollback is just `git revert`.
+**Architecture and critique entrypoint:** [Lightweight Conductor](docs/agents/LIGHTWEIGHT-CONDUCTOR.md). Read it for the design, current rollout, invariants and review questions, not as a second mandatory agent prompt.
 
 ## The basic loop
 
-1. **Worker session** reads `AGENTS.md`, `CONTROL.md`, and the project roadmaps, claims the top available task, does the work on a branch, and opens a PR.
-2. **Reviewer session** fires when a PR lands. It merges straightforward software work automatically. Anything involving content, proposals, or outward-facing changes gets escalated to `needs-human` for Silas to look at.
-3. **Actions healthcheck** validates the queue, dependency resolver, and digest plumbing without calling a model-provider API.
-4. **Digest** goes out daily — a summary of what's progressing, what merged, and what needs Silas's attention or vote.
+1. **Assignment:** read [AGENTS.md](AGENTS.md) once. Accept a direct assignment or use the live selector / generated [STATUS.md](STATUS.md) pickup hints. Load only the assigned role, project direction and task.
+2. **Execution:** claim canonical work using the session-aware protocol, implement and test a narrow scope, transition to review and open a PR.
+3. **Verification:** check latest-head CI, fix failures, merge reversible ungated work and reconcile completion. Human approvals remain separate.
+4. **Maintenance:** Actions handle deterministic checks, task events, dependencies, generated views and digest plumbing. Agents diagnose exceptions, not duplicate every scan.
+
+Six specialist assignments are developer, reviewer, content, art, QA and daily creative. Existing medic roles handle exceptions. No routine model-provider API calls from Actions.
+
+See [SOURCE_OF_TRUTH.md](SOURCE_OF_TRUTH.md) for ownership, [CONTROL.md](CONTROL.md) for current direction, and the [connector protocol](docs/github-connector-worker.md) for live claims and transitions.
 
 ## Action secrets
 
