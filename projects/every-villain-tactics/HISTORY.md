@@ -167,6 +167,16 @@ Live today: 0 Achievement record(s) with this game's triggerCode prefix (checked
 Achievement upgrade merged in kind_robots#5037 (aff3ebd), all checks green: 17 live achievements awarded from one scrapbook diff in recordMoments() on live saves only (never on load), plus the stage-studio award in saveDraft(). Catalog seed workflow run 43138740407 succeeded. Contract test verifyEveryVillainAchievements.
 <!-- note:end t-026 -->
 
+## t-027 — Record the post-merge media-proof run's per-image aspect/blank/bytes outcome on the t-018 art ledger
+
+<!-- note:begin t-027 -->
+Kaizen from reviewer of conductor#7820 (2026-11-22). After the prom-tactics-media-proof workflow runs on main, record each Tactics telegraph ArtImage's actual result (downloaded bytes, aspect match, blank check) against its ledger receipt, so receipt-only rows stop counting as delivery. Never publish private art or switch is_public.
+
+Scoped art QA implementation: authenticated private byte length, decoded image dimensions, blank and aspect check, pixel checksum and safe per-image media_proof metadata on the twelve t-018 receipts. CI workflow checkpoints only metadata with exact ArtJob/ArtImage identities and preserves the original private images and is_public=false. Branch worker/every-villain-tactics-t027-private-media-evidence-20261122-k5r8; pending full CI, merge and production API-run evidence before completion.
+
+Verified completed finite QA scope: Conductor #7837 merged at 957cfd62e13375439a666c4c45f7e06cc2f00640 with four successful latest-head workflows. Main ledger records twelve matching ArtJobs 74393–74404 / ArtImages 277786–277797, all VERIFIED with nonzero downloaded bytes, decoded dimensions, aspect_match true, blank_check PASS and pixel hashes. Production proof run 45118667491 job 137507202611 completed successfully, including Tactics gameplay media and private access. Artistic approval and remaining gameplay work are separate.
+<!-- note:end t-027 -->
+
 ## t-028 — Generate the tactical arena receipt map from verified ledger keys so fallback paintings drop out once an original venue render is proven
 
 <!-- note:begin t-028 -->

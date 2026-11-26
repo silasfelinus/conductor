@@ -394,55 +394,10 @@ tasks:
     passes: 0
     stakes: reversible
     updated: '2026-11-25T23:31:00Z'
-    note: |-
-      Reviewer kaizen after kind_robots#3564: add deterministic input replays asserting coyote time, buffered jumps, landing/camera bounds and respawn; exercise real shared ArcadeCabinet keyboard/gamepad/touch controls and visible Admin help at phone/tablet/desktop widths. Use browser fixtures with actual consumers rather than source-field matches. Keep public registry and score exclusions. Initial isolated engine pixels are not shared-cabinet/auth integration or full campaign acceptance.
+    note: >-
+      Reviewer kaizen after kind_robots#3564: add deterministic input replays asserting coyote time, buffered jumps, landing/camera bounds and respawn; exercise real shared ArcadeCabinet keyboard/gamepad/touch controls and visible Admin help at phone/tablet/desktop widths.
 
-      2026-11-02 PT: Input-guide slice on worker/save-the-plumber-t-015-input-guide-84c7: dedicated keyboard shortcuts, controller/keyboard help, menu labeling and regression assertions. Movement replay and cross-width browser fixtures remain on this task after the PR lands; do not close as done yet.
-
-      2026-11-02 PT: Merged user-reported controller and keyboard control guide fixes in kind_robots#4689 (merge 42b3e2ba68cf8063021c6820f18b3a74cec94467). All nine GitHub CI workflows passed, including TypeScript, Arcade viewport, Chromium cabinet browser contract, lint/format and contract test shards. Remaining t-015 scope is deterministic coyote-time, buffered-jump, landing/camera, and respawn replay plus real shared-cabinet keyboard/gamepad/ touch cross-width fixture coverage; do not mark this larger task done.
-
-      2026-11-05 PT, game-sprint adversarial slice: Added kind_robots
-      utils/scripts/verifySavePlumberMovementReplay.test.ts, wired into test:arcade-engine.
-      Deterministic lab-stage replays pin coyote time (7 frames), the jump buffer (5 frames
-      before touchdown), variable jump height, landing snap, edge and camera bounds, and
-      checkpoint respawn through game over. Across all 32 stages it checks that every start
-      and checkpoint respawn is open and solidly floored, and a vault battery shows no heroine
-      with Springstep can cross a closed valve gate or leave a locked boss arena. A seeded
-      581k-frame fuzz (8 heroines x 4 power states) asserts finite physics, in-bounds hero and
-      camera, no wall clipping, sane hearts and lives, and that deaths always resolve. The
-      fuzz found and fixed a real clip in 12 stages: jumping or being hit while crouched under
-      a one-tile gap (e.g. the 1-1 slide-under pillar) stood her up inside the block. She now
-      stays crouched in the air under a solid tile. Patch base kind_robots 02a1a83; the
-      coordinator applies it and opens the kind_robots PR. The Levels, Gears, Endless, Maker
-      and Overworld suites pass. verifySavePlumberPreview.test.ts was already red on main
-      (stale Screen regex). Remaining on t-015, do not mark done: real shared-ArcadeCabinet
-      keyboard/gamepad/touch browser fixtures and visible Admin help at 390/768/1440.
-
-      2026-11-04 PT: movement replay battery and crouch-jump ceiling-clip fix merged as
-      kind_robots #4775 (squash 89bba84); also repaired the stale verifySavePlumberPreview
-      Screen regex and an unused-var lint regression. Back to ready for the browser half:
-      shared-cabinet keyboard/gamepad/touch fixtures and Admin help at 390/768/1440. Pre-
-      existing: verifyArcadeEngine zuzu-pinball 2D-draw assertion still fails on main.
-
-      Partial movement-feel slice: sharpened opposite-direction ground braking while preserving running momentum, with deterministic reversal replay. Implementation branch worker/save-the-plumber-t-015-turn-response-m7q4. Remaining t-015 shared-cabinet cross-width/browser acceptance; do not mark done.
-
-      PR silasfelinus/kind_robots#5627 merged at 2026-11-23T03:46:24Z. The responsive-ground-turnaround movement replay slice shipped; the shared-cabinet real-device and camera-look-ahead acceptance remains, so return this nonrecurring task to ready rather than marking it done.
-
-      Added velocity-aware, bounded, smoothed bidirectional camera look-ahead with neutral centering, arena clamp, stage-start and pipe-teleport resets in worker/save-the-plumber-t-015-camera-lead-k7p9. Extended deterministic movement replays to prove visibility lead in both directions, smooth reversals, bounds, collision safety and restart reset. This is an incremental movement slice; real shared-cabinet keyboard/gamepad/touch and viewport browser fixtures remain required before the full t-015 task is done.
-
-      PR #5632 (bidirectional camera look-ahead) was verified merged at 2026-11-23T04:57:58Z and no Save the Plumber implementation PR remains open. Restoring the nonrecurring movement-lab task to ready for remaining shared-cabinet/browser verification and responsiveness tuning; no human gate.
-
-      Implemented immediate landing-tick buffered jumps in worker/save-the-plumber-t-015-landing-buffer-j6m8, preserving spring priority, eliminating redundant landing audio, and adding deterministic replay cases for 0-5 frame buffers and held-button nonrepeat. CI pending; shared-cabinet keyboard/gamepad/touch cross-width browser verification remains on t-015.
-
-      Merged kind_robots#5680 at c97fb087 after all eleven exact-head workflows passed, including the actual Chromium cabinet keyboard, gamepad and touch test (run 45275834533). Landing-tick jump buffering and replay regressions shipped. Remaining scope includes visible tutorial/help verification at all three widths and further movement acceptance; keep ready rather than claiming complete.
-
-      Implemented neutral-air momentum retention without changing ground or ice braking, speed caps or directional steering. Deterministic two-direction sprint-jump replay asserts retained speed, two-tile travel, reversal and collision safety. Branch worker/save-the-plumber-t-015-airflow-v4n9, head 7c839cf2. CI pending; task remains partial.
-
-      Verified kind_robots#5695 merged at efec50ae. Neutral-air momentum shipped; remaining movement and cross-width verification. Return to ready.
-
-      Independent movement-tuning slice: Springstep preserves momentum during held descent with normal drag restored on release, and deterministic bilateral comparison and counter-steering regressions. App branch worker/save-the-plumber-t-015-air-steering-p7m4 head 45a6a53d; full CI pending. Distinct Gen-2 glide power remains t-005 scope; shared-cabinet browser acceptance remains t-015 scope.
-
-      Verified kind_robots#5846 merged at 3273d5b3 after all 12 pre-merge exact-head workflows passed on 8d345d5b, including real cabinet Chromium run 45721357740 and movement replay contract run 45721357777. Deterministic movement, camera, respawn, keyboard/gamepad/touch and rendered tutorial at 390/768/1440 are complete for this task; physical-device and campaign acceptance remain t-013. Branch janitor in progress; production deployment unverified.
+      Full history: projects/save-the-plumber/HISTORY.md#t-015
 
   - id: t-016
     milestone: m4

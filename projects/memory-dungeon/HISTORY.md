@@ -493,6 +493,23 @@ in the PR comment and retry_context.
 2026-11-12 PT review: merged conductor#7326 at head d7008837 (squash 18438ab7) after the retry fixed the workflow YAML. All 26 checks green including Validate roadmap YAML and Python test suite; guard and smoke also run locally. The roadmap-validation job now runs check_memory_dungeon_acceptance.py and a seeded bad/good smoke. Kaizen: t-071.
 <!-- note:end t-070 -->
 
+## t-071 — Parse every .github/workflows/*.yml from a workflow other than ci.yml so an unparseable CI file shows as a red check
+
+<!-- note:begin t-071 -->
+Kaizen from the t-070 review (conductor#7326). Head 0bff092 made .github/workflows/ci.yml unparseable; GitHub then ran none of its jobs and the PR showed 16 green checks instead of 26, so nothing was red. Add a step to the Static checks workflow (or any workflow that is not ci.yml) that yaml.safe_loads every file under .github/workflows/ and fails on the first parse error, with a pytest that seeds one bad file. Reversible, CI-only; lives in this roadmap because the conductor project is finished and takes no new tasks.
+
+2026-11-20 PT: stale claim/review released to ready (Silas, in session: "you are likely
+the only agent working on this project currently, so any claimed roadmap items are
+likely stale"). Playtest-ready means the complete twelve-world game; see
+ASSESSMENT-2026-11-20.md for this task's gap.
+
+2026-11-24 PT: done. scripts/check_workflow_yaml.py yaml.safe_loads every
+.github/workflows/*.yml|*.yaml and fails on a parse error, a non-mapping root or a
+missing `jobs` mapping. It runs as the "Every workflow file parses" step of the Static
+checks job in security-audit.yml (not ci.yml). tests/test_check_workflow_yaml.py seeds
+a mis-indented ci.yml and asserts exit 1; all 72 current workflow files parse.
+<!-- note:end t-071 -->
+
 ## t-072 — Add a .github/pull_request_template.md that mirrors the AGENTS.md Worker handoff headings so connector-opened worker PRs start from the template
 
 <!-- note:begin t-072 -->

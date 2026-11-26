@@ -326,3 +326,13 @@ Shared source/game/private media proof helper with evidence checkpoint per ledge
 
 Merged shared authenticated private-art media proof helper and per-ledger checkpointing in conductor#7863 at 5bdedd4ded2494f221d0dc55c4f2854fbfa27c11. Four latest-head CI workflows completed successfully, including Python tests, security audit, and Worker PR CI. This closes helper implementation only, not visual approval, artwork delivery, or final private URL checks for individual paintings.
 <!-- note:end t-048 -->
+
+## t-050 — Summarize post-merge Prom LEDGER_MEDIA_PROOF results per ArtImage into the ledger without re-enqueueing failures
+
+<!-- note:begin t-050 -->
+Kaizen from reviewer of conductor#7871 (2026-11-22 PT). Many proof workflows now checkpoint per-ledger evidence, but no single report says which ArtImage ids failed source, game-route or privacy checks. Add a read-only summarizer that consumes the checkpointed evidence and lists failures per ArtImage, with tests. Never re-enqueue, approve or publish.
+
+Independent private media proof evidence implementation: add read-only checkpointed ArtJob/ArtImage ledger plus current Actions log summarizer, exact-key and image-id reconciliation, fail-closed unknown runtime and privacy status, and six focused tests. Extend the Prom and Tactics proof workflow to tee each stage's sanitized output and write the per-ArtImage source/game-url/privacy failure report to its Actions summary even if an earlier stage fails. No re-enqueue, art publishing or curator approval. Code handoff for CI review; source receipts do not certify visual QA.
+
+Verified completed finite report scope: Conductor #7882 merged at e425043eb667aa69ce3466c8589f21b9c6e69e1b with four successful latest-head workflows. Production proof run 45118667491 job 137507202611 completed successfully, including the per-ArtImage source/runtime/visibility summarizer; actual log reports SOURCE_VERIFIED=236 and RUNTIME_VERIFIED=236. No re-enqueue or artistic approval. Remaining curation and game attachment stay open.
+<!-- note:end t-050 -->

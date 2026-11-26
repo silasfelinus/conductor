@@ -1213,12 +1213,10 @@ tasks:
     passes: 0
     stakes: reversible
     updated: '2026-11-24T23:55:00Z'
-    note: |-
-      Kaizen from reviewer of conductor#7871 (2026-11-22 PT). Many proof workflows now checkpoint per-ledger evidence, but no single report says which ArtImage ids failed source, game-route or privacy checks. Add a read-only summarizer that consumes the checkpointed evidence and lists failures per ArtImage, with tests. Never re-enqueue, approve or publish.
+    note: >-
+      Kaizen from reviewer of conductor#7871 (2026-11-22 PT).
 
-      Independent private media proof evidence implementation: add read-only checkpointed ArtJob/ArtImage ledger plus current Actions log summarizer, exact-key and image-id reconciliation, fail-closed unknown runtime and privacy status, and six focused tests. Extend the Prom and Tactics proof workflow to tee each stage's sanitized output and write the per-ArtImage source/game-url/privacy failure report to its Actions summary even if an earlier stage fails. No re-enqueue, art publishing or curator approval. Code handoff for CI review; source receipts do not certify visual QA.
-
-      Verified completed finite report scope: Conductor #7882 merged at e425043eb667aa69ce3466c8589f21b9c6e69e1b with four successful latest-head workflows. Production proof run 45118667491 job 137507202611 completed successfully, including the per-ArtImage source/runtime/visibility summarizer; actual log reports SOURCE_VERIFIED=236 and RUNTIME_VERIFIED=236. No re-enqueue or artistic approval. Remaining curation and game attachment stay open.
+      Full history: projects/comet-city-academy/HISTORY.md#t-050
   - id: t-051
     milestone: m4
     title: "Review and attach 12 verified private one-hit crew telegraph renders to the shared Prom cast atlas"

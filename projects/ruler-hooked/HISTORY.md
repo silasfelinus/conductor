@@ -693,6 +693,16 @@ verification was CI-only (no preview); post-deploy visual/device QA remains with
 t-047/t-061.
 <!-- note:end t-059 -->
 
+## t-060 — Grow the Town Crier: more daily proclamations, a few tied to fish runs and the reign
+
+<!-- note:begin t-060 -->
+dailyEvents.ts ships 10 proclamations, so a long reign repeats within a couple of weeks of in-game days. Add 15-20 more in the cast's voices, let a few nudge species odds for that day, and sour their tone with a failing reign (t-054's Broadside: blunter edicts). Hold the pillar: nothing expires, nothing gates a fish, card or ending, so console.selftest.ts's "nudges, not gates" check keeps passing.
+
+Implemented an 18-event Town Crier expansion (28 total), decline-sensitive dialogue, and persisted day-scoped boosts to eligible fish encounter weights; code and regression assertions committed to kind_robots worker/ruler-hooked-t-060-20261122-q7m2 at 810a25b. CI and live verification pending; master issue #4144 remains open.
+
+2026-11-24 PT reconciliation: kind_robots#5590 merged at 193aefb450a3ab36a5697f021d72e0de1519b782. Verified current main has 28 proclamations, decline-aware text and day-scoped 1.5x boosts only for already eligible fish. Exact-head Ruler Hooked run 45067668250, Contract Tests run 45067668181 (four shards and verifiers), TypeScript and formatting passed. Device rendering remains tracked under t-061/t-050; no live browser QA claimed.
+<!-- note:end t-060 -->
+
 ## t-062 — Mandarin animal-only fishing quiz and post-answer illustrated word reference
 
 <!-- note:begin t-062 -->

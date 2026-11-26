@@ -343,170 +343,10 @@ tasks:
     depends_on: [t-002, t-007]
     passes: 0
     stakes: reversible
-    note: |-
-      At least four separately moving planes per stage, rich painted underwater-cosmos scenery, sprite rigs or atlases, telegraphed boss tells, particles, lens/bloom budget and cinematic explosions. Set projectile outlines and luminance contrast independent of backgrounds; performance budgets, colorblind-safe and reduced-motion modes.
-      Progress 2026-10-17 PT: explosions as sparks within a 160-spark budget (bosses and guardians burst bigger with a shockwave), calm motion (the arcade's still-camera choice, which follows reduced motion: no full-screen flashes or shockwaves, fewer sparks, scenery at 30% drift) with a cabinet Motion switch that applies mid-game, and a dark halo under every solid hostile pellet merged in kind_robots#3802. After Silas's first Act I playtest: hit flash on damaged craft, craft shockwaves, pickup collect bursts and bobbing pickups, ship banking (#3805). Open: painted scenery planes per stage, sprite rigs, lens/bloom.
-      2026-11-01 PT claim-staleness assessment (Silas: stale claims are more likely finished- but-unrecorded than abandoned): partial work merged (#3802, #3805); open items per the 10-17 progress note: painted scenery planes per stage, sprite rigs, lens/bloom. Claim released.
+    note: >-
+      At least four separately moving planes per stage, rich painted underwater-cosmos scenery, sprite rigs or atlases, telegraphed boss tells, particles, lens/bloom budget and cinematic explosions.
 
-      Added a separate slow-moving atmospheric ocean scenery plane in a scoped Kind Robots branch. Further painted art, atlases and effects remain open.
-
-      PR silasfelinus/kind_robots#5351 merged as 27dae5faad78467b2af7bb39ad8264e241150603 after nine GitHub Actions workflows completed successfully, including TypeScript, Rainbow Cabinet Browser Contract, viewport matrix, Contract Tests and formatting. Added slow-moving bioluminescent ocean atmosphere. Task remains incomplete: painted stage planes, sprite atlases, lens/bloom and visual acceptance are outstanding.
-
-      Scoped ambient-motion fix: the sky's star twinkles and doodle pulses/rotation now honor calm-motion drift; full painted art and atlas scope remains outstanding.
-
-      Recovered stale review after PR #5355 was merged as ce8717b1; painted scenery, sprite atlases, visual effects and verification remain. No matching open Rainbow PR or task branch found. Return to ready, preserving shipped work.
-
-      Added two distant painted parallax depths to every main Act using its integrated reviewed scenery strips, with subdued alpha, independent scroll speeds, calm-motion scaling and regression assertions. Implementation commit 0a4553aa7b8040b8b523521fc03971750edf7364; broader original painted scenery and sprite-artist scope remains.
-
-      Additional scoped visual-effects increment in silasfelinus/kind_robots#5428: two-frame-budgeted localized boss glow, capped alpha and radius, under hostile bullet halos, suppressed entirely in calm mode; regression coverage for budgets and draw order. PR and latest-head CI pending; full t-011 art and atlas scope remains unfinished. Do not mark done until delivered assets and visual QA.
-
-      2026-11-24 PT intent audit: the increment's PR silasfelinus/kind_robots#5428 merged; the claim from 2026-11-20 was never released and the note says the wider scope is still partial. Returned to ready with the claim cleared so the next worker can pick it up. No scope change.
-
-      2026-11-24 PT lens/bloom increment: each budgeted boss flare (max 2) now draws one thin anamorphic lens streak, fainter than its glow. High-contrast shots (t-044) skip the bloom and streak entirely, so no screen-blend wash lifts scenery behind pellet halos. Calm motion still draws nothing. PR silasfelinus/kind_robots#5745 merged as 5e62f57e after 22 checks passed. Still open: painted stage planes, sprite rigs/atlases and visual acceptance. Stays ready and unclaimed.
-
-      2026-11-24 PT character-animation increment: a craft a shot just hurt now flinches,
-      squashing up to 14% and springing back over its six white-flash frames. Calm motion
-      keeps the flash only. New pure helper rainbowHitFlinch, with assertions in
-      verifyRainbowEffects. PR silasfelinus/kind_robots#5746. Still open: painted stage
-      planes, sprite rigs and atlases, and visual acceptance.
-
-      PR silasfelinus/kind_robots#5746 merged as 0d7a9d09 after 23 checks passed. The hurt-
-      craft flinch is live on main. Still open: painted stage planes, sprite rigs and atlases,
-      and visual acceptance. Stays ready and unclaimed.
-
-      2026-11-24 PT surge-lean increment: the pilot craft now stretches when surging forward
-      and squats when backing off, on top of the bank, via the pure helper rainbowShipPose
-      (draw-only, hitbox unmoved). Calm motion now damps the bank too. PR
-      silasfelinus/kind_robots#5747, CI pending. Still open: painted stage planes, sprite rigs
-      and atlases, and visual acceptance.
-
-      PR silasfelinus/kind_robots#5747 merged as b21837fb after 22 checks passed. The surge
-      lean and calm-damped bank are live on main. Still open: painted stage planes, sprite
-      rigs and atlases, and visual acceptance. Stays ready and unclaimed.
-
-      2026-11-24 PT boss-windup increment: B01 Pearl Seahorse now draws back and swells across
-      its 36-frame warning, deepest just before the volley, so the body telegraphs the beat
-      with the glow ring. Pure draw-only helper rainbowBossWindup (hitbox unmoved; calm keeps
-      a fifth), shared BOSS_TELEGRAPH_FRAMES. PR silasfelinus/kind_robots#5748 merged as
-      3e8c39c6 after 21 checks passed. Still open: painted stage planes, sprite rigs and
-      atlases, and visual acceptance. Stays ready and unclaimed.
-
-      2026-11-24 PT eel/ray windup increment: B07 Glass Eel (true body only) and B06 Lantern
-      Ray now wind up across their own warning lengths with the shared rainbowBossWindup;
-      nurseries, beacon, outline and rings stay on the hitbox. New exports
-      glassEelWarningFrames/lanternRayWarningFrames, assertions in verifyRainbowEffects. PR
-      silasfelinus/kind_robots#5752, CI pending. Branch-medic in the same run opened
-      kind_robots#5749-5751 to land the three round-1 critic reports. Still open: painted
-      stage planes, sprite rigs and atlases, and visual acceptance.
-
-      PR silasfelinus/kind_robots#5752 merged as 2492afc8. The B07/B06 windup is live on main.
-      Still open: painted stage planes, sprite rigs and atlases, and visual acceptance. Stays
-      ready and unclaimed.
-
-      2026-11-24 PT B04/B08 windup increment: B04 Delphion twins and B08 Prism Leviathan's
-      painted body now wind up across their own warning lengths with the shared
-      rainbowBossWindup (new delphionWarningFrames/prismLeviathanWarningFrames exports).
-      Coupling, link core, spire locks, gem and cue rings stay on the hitboxes; calm keeps a
-      fifth. PR silasfelinus/kind_robots#5753 merged as 20cbf17f after 21 checks passed. Still
-      open: painted stage planes, sprite rigs and atlases, and visual acceptance. Stays ready
-      and unclaimed.
-
-      2026-11-24 PT B05/B03 windup increment: B05 Sawtooth Regent and B03 Clawburst body
-      sprites now wind up across their own warning lengths with the shared rainbowBossWindup
-      (new sawtoothWarningFrames/clawburstWarningFrames exports). The Regent holds still mid-
-      charge; ring, jaw and cannon stay on the hitboxes; calm keeps a fifth. PR
-      silasfelinus/kind_robots#5754 merged as 706d0d36 after CI passed. Still open: painted
-      stage planes, sprite rigs and atlases, and visual acceptance. Stays ready and unclaimed.
-
-      2026-11-24 PT B02/guardian windup increment: B02 Aurelia Array (the last boss without a
-      body tell) and every act guardian now wind up across their 36-frame cues with the shared
-      rainbowBossWindup (new MOONJELLY_WARNING_FRAMES export; a leaving guardian rests).
-      Rings, lanes, HP bars and hitboxes stay put; calm keeps a fifth. PR
-      silasfelinus/kind_robots#5755, CI pending. Still open: painted stage planes, sprite rigs
-      and atlases, and visual acceptance.
-
-      PR silasfelinus/kind_robots#5755 merged as a743a411 after all checks passed. B02 and
-      guardian windups are live on main; every boss and guardian now telegraphs with its body.
-      Still open: painted stage planes, sprite rigs and atlases, and visual acceptance. Stays
-      ready and unclaimed.
-
-      2026-11-24 PT boss-recoil increment: every boss body (B01-B08, moon colony) and guardian
-      now rocks back about 2.5px and squashes slightly when a shot lands, then settles over 8
-      frames. The recoil is added on top of the windup via the pure helpers
-      rainbowBossRecoil/stackRainbowBossPose. It only changes drawing: hitboxes stay put, and
-      calm motion keeps the body still. Hit times are kept in a WeakMap, so no boss type
-      changed. PR silasfelinus/kind_robots#5763 merged as c3c41e43 after 23 checks passed.
-      Still open: painted stage planes, sprite rigs and atlases, and visual acceptance. Stays
-      ready and unclaimed.
-
-      2026-11-25 PT craft-windup increment: charging small craft (squid, harbinger, turret,
-      hammerhead, brood) now tense their bodies across their own charge warnings with
-      rainbowCraftWindup (the boss windup at half strength; CRAFT_WINDUP_FRAMES). Draw-only;
-      calm keeps a fifth; truce craft never tense. PR silasfelinus/kind_robots#5793 merged as
-      ae5461fd after all 21 checks passed. Still open: painted stage planes, sprite rigs and
-      atlases, and visual acceptance. Stays ready and unclaimed.
-
-      2026-11-24 PT pilot hit-jolt increment: a landed hit now knocks the pilot's craft back,
-      twists and squashes it over 10 frames (rainbowShipJolt, SHIP_JOLT_FRAMES), recorded in a
-      WeakMap at hitShip so the Ship type is unchanged. Draw-only; calm keeps it still. PR
-      silasfelinus/kind_robots#5802 (head a3a13163), CI pending. Note: #5797 (idle loops for
-      courier, cutter, clawstrike, dolphin) also merged since the last note. Still open:
-      painted stage planes, sprite rigs and atlases, and visual acceptance.
-
-      PR silasfelinus/kind_robots#5802 merged as 8a2f599c after all 23 checks passed. Pilot
-      hit-jolt is live on main. Still open: painted stage planes, sprite rigs and atlases, and
-      visual acceptance. Stays ready and unclaimed.
-
-      2026-11-24 PT idle-hover increment: a parked pilot craft now hovers (~1px bob, slight
-      sway, offset per seat) and fades into the flight pose as she banks or surges
-      (rainbowShipHover); the hull alone moves, so the hitbox core marker stays put. Maribel's
-      barrel roll now honours calm motion (rainbowBarrelRoll: shallow squash, no full flip).
-      PR silasfelinus/kind_robots#5807, CI pending. Still open: painted stage planes, sprite
-      rigs and atlases, and visual acceptance.
-
-      PR silasfelinus/kind_robots#5807 merged as 4769f260 after all 23 checks passed. Idle
-      hover and calm barrel roll are live on main. Still open: painted stage planes, sprite
-      rigs and atlases, and visual acceptance. Stays ready and unclaimed.
-
-      2026-11-25 PT pickup-bob increment: loose pickups' bob, ring pulse and glow moved into
-      the pure helper rainbowPickupBob; calm motion now keeps a fifth (it previously ignored
-      calm), and the no-sprite fallback badge and letter ride the same bob instead of sitting
-      still under the ring. PR silasfelinus/kind_robots#5809 merged as 73244d1c after all 23
-      checks passed. Still open: painted stage planes, sprite rigs and atlases, and visual
-      acceptance. Stays ready and unclaimed.
-
-      2026-11-25 PT current-crackle increment: the live eel barrier's alpha flicker and link
-      jitter and the Prism Beam's width throb (the fastest flickers on screen, and the last
-      ones ignoring calm) moved into the pure helper rainbowCurrentCrackle; calm keeps a fifth
-      of each. Draw-only. PR silasfelinus/kind_robots#5826 merged as 37e5a38d after all 22 run
-      checks passed. Still open: painted stage planes, sprite rigs and atlases, and visual
-      acceptance. Stays ready and unclaimed.
-
-      2026-11-25 PT signal-pulse increment: the last fast signal-light flickers that ignored
-      calm motion (the captive's collar, a glowing prism pylon's core, a relay pylon's lamp, a
-      staggered dolphin's daze ring) moved into the pure helper rainbowSignalPulse; calm keeps
-      a fifth of each swing. Draw-only. PR silasfelinus/kind_robots#5827 merged as 471f20dc
-      after all 23 checks passed. Still open: painted stage planes, sprite rigs and atlases,
-      and visual acceptance. Stays ready and unclaimed.
-
-      2026-11-25 PT route-marker increment: the dashed route-fork lines (trench, wreckyard,
-      crown reef) and the lighthouse next-lamp lane marker, the last 8-frame flickers that
-      ignored calm motion, now use rainbowSignalPulse, so calm keeps a fifth of the swing.
-      Draw-only. PR silasfelinus/kind_robots#5828 merged as afad99e8 after all 22 run checks
-      passed (recorded from superseded conductor#8020).
-
-      2026-11-25 PT acceptance reconciliation: the 'still open' list was stale. Painted stage
-      planes shipped under t-022 (sky, far, mid and fore for S01-S09 in both looks), and enemy
-      idle atlases plus pilot poses shipped under t-030. A contact sheet compositing all nine
-      stages' four planes at engine geometry shows every plane present. PR
-      silasfelinus/kind_robots#5830 pins the criterion in verifyRainbowGameArt: every stage
-      has four committed planes, each drifting faster than the one behind it. With that
-      merged, every t-011 criterion is met in code. Silas's subjective visual sign-off belongs
-      to t-042 (final creative approval), not this task. Close to done once #5830 merges.
-
-      PR silasfelinus/kind_robots#5830 merged as dfe3e290 after all 13 checks passed
-      (including TypeScript and Every Rainbow verifier). Every t-011 criterion is met and
-      pinned in tests. Silas's subjective visual sign-off continues under t-042.
+      Full history: projects/rainbow-bullet-hell-space-princess/HISTORY.md#t-011
     updated: '2026-11-25T18:02:52Z'
     implementation_pr: 'silasfelinus/kind_robots#5830'
     owner: worker
@@ -1496,29 +1336,9 @@ tasks:
     source: independent-review-round-1-2026-11-23
     updated: '2026-11-25T17:38:12Z'
     note: >-
-      From the independent gameplay critic (REVIEW-ROUND-1-2026-11-23.md, D1-D3, D5-D9, P-15): super on a short B tap only (hold stays focus); cut the kill refund, a radius wipe, boss damage as a share of max HP; co-op boss HP about 2.5 + 2(n-1); per-kind guardian movement, HP tier by Act, aimed fans that close the aimed line, varied arrival; Crown spoke and ring jitter or an aimed spoke so no ray is safe; Act-specific launchers; boss returns to the start of its phase on continue (D8 default, owner may override); optional seeded variations. Extend verifyRainbowBossCamping to every boss and the persona matrix as regression evidence.
+      From the independent gameplay critic (REVIEW-ROUND-1-2026-11-23.md, D1-D3, D5-D9, P-15): super on a short B tap only (hold stays focus); cut the kill refund, a radius wipe, boss damage as a share of max HP; co-op boss HP about 2.5 + 2(n-1); per-kind guardian movement, HP tier by .
 
-      2026-11-24 PT: kind_robots#5713 (merged 5b589b7b) ships D1 (B hold focus, tap super
-      within 12 frames), D2 (kill refund 4, was 12; supers take 3.5%/5% of a boss hull; whole-
-      screen wipe kept because the cut-in covers the comms band), D3 (2 base shares per extra
-      pilot, was 4: 3.4x solo hull at four pilots), D5 (per-kind guardian motion; alternate
-      aimed-fan volleys close the open lane with one slow pellet; a per-Act hull tier was
-      tried and dropped because late guardians escaped), D6 (alternate Crown volleys aim a
-      spoke; phase-2 pair closes on alternate volleys; verifyRainbowBossCamping covers Crown
-      phase 1). D8 was tried (boss back to its phase start on continue) and reverted: it made
-      B01 unbeatable for the solo test bot within its budget, so it stays Silas's call.
-      Remaining: D7 Act-specific launchers, D9 seeded variation (optional), P-15 Leviathan
-      burst, and the camping audit's other flagged phases (Delphion 2, Lantern Ray, Glass Eel,
-      Leviathan 3) to confirm in-engine.
-
-      2026-11-24 PT: D7 (eight Act-specific mortar shells) and P-15 (the Leviathan burst
-      spawns as two rings) fixed in kind_robots#5737. Left: D9 (optional seed variation).
-
-      2026-11-25 PT: D9 fixed in kind_robots#5829 (merged 6285d33d): a run's seed mirrors
-      whole authored waves across the lane band, wave by wave; same seed replays exactly; the
-      attract demo and scripted scenarios keep authored lanes and draw nothing extra from the
-      rng. verifyRainbowWaveVariation added. Round-1 gameplay critic closed except D8 (owner
-      call, unchanged).
+      Full history: projects/rainbow-bullet-hell-space-princess/HISTORY.md#t-065
     implementation_pr: 'silasfelinus/kind_robots#5829'
     owner: worker
     claimed_by: 01L5NKxcAxU381qnNnpPoNR1
@@ -1533,27 +1353,9 @@ tasks:
     source: independent-review-round-1-2026-11-23
     updated: '2026-11-25T17:38:15Z'
     note: >-
-      From the independent story critic (REVIEW-ROUND-1-2026-11-23.md, S3-S11, S15-S17, S20, S21; the blockers S1/S2 and S12-S14, S18, S19, S22 shipped in kind_robots#5709): give each final choice its own escape beat, Lilt resolution and crew line; an A09.PLEA scene and stand-down variants (TURN, AFTER, credits, archive); rewrite the 15 combination lines as 2-3 line exchanges with planted setup and spread speakers; role-true lines by pilot identity, not seat; at least one pilot-keyed line per present pilot per Act carrying her arc, and a third-voice slot for middle seats; one consequential act for Lilt-7 per road; one rescue tally everywhere; continue/defeat lines; speaker-only comms headers; in-world archive copy and a stand-down entry; branch the cadet epilogue on cadetsHome.
+      From the independent story critic (REVIEW-ROUND-1-2026-11-23.md, S3-S11, S15-S17, S20, S21; the blockers S1/S2 and S12-S14, S18, S19, S22 shipped in kind_robots#5709): give each final choice its own escape beat, Lilt resolution and crew line; an A09.PLEA scene and stand-down vari
 
-      2026-11-24 PT: kind_robots#5721 (merged 74c93633) ships S4: A09.PLEA plays across the
-      Crown's 7 s plea (the Crown asks, Lilt names the turn, the lead answers), and a stood-
-      down crew hears the turn in A09.TURN, Lilt's resolution and the credits (THE ROAD:
-      TURNED AT THE CROWN). Remaining: S3, S5-S11, S15-S17, S20, S21.
-
-      2026-11-24 PT: S5, S6, S17, S20, S21 fixed and S9 partly fixed in kind_robots#5737 (crew
-      exchanges, speaker-only comms header, in-world scrapbook plus a stood-down page). S3 and
-      S10 (choice-shaped escape and resolution; Lilt acts) are in kind_robots#5738. Left: S8
-      (pilot-keyed Act beats), S9 in Act scenes, S11 (road- and crew-aware ending plates, with
-      P-03).
-
-      2026-11-24 PT: story critic round 1 is closed out except owner calls. Fixed: S3, S10
-      (kind_robots#5738); S8, S9 (#5740); S7, S15 (#5742); S11 (#5741). Earlier: S5, S6, S17,
-      S20, S21 (#5737); S1, S2, S4, S12-S14, S16, S18, S19, S22 (#5709-#5729).
-
-      2026-11-25 PT reconciliation: every t-066 row in REVIEW-ROUND-1-2026-11-23.md is fixed
-      and merged (S3-S11, S15-S17, S20, S21 via kind_robots#5709-#5742); the task stayed ready
-      after its 11-24 close-out note. Closed done; round-2 story review will raise anything
-      new.
+      Full history: projects/rainbow-bullet-hell-space-princess/HISTORY.md#t-066
     implementation_pr: 'silasfelinus/kind_robots#5737'
   - id: t-067
     milestone: m5
@@ -1565,37 +1367,9 @@ tasks:
     source: independent-review-round-1-2026-11-23
     updated: '2026-11-25T00:22:35Z'
     note: >-
-      From the independent presentation critic and the gameplay critic (REVIEW-ROUND-1-2026-11-23.md, D4, P-05, P-06, P-08 to P-11, P-13, P-16 to P-18, P-20 to P-23): move the 2-4p status panel off the playfield (top bar or bottom edge) and never over the boss bar; keep touch pads out of the stage (gutters, or no four touch seats on one tablet); a portrait-tuned HUD or rotate prompt and corner chips off the canvas on phones; size the stage from content height on large screens; collapse the switches on short screens; ambient bubbles never bullet-sized in the play band; a hostile pellet hue no scene uses (or bold by default); painted Act V wreck frames; per-Act colour keys; fade the control legend after Act I; seat tags off the hull; Seas cards keep art on phones and the route map is a real map. Verify in the real cabinet at 360x640, 390x844, 768x1024, 1024x768, 844x390, 1440x900 and 1920x1080, 1-4 seats.
+      From the independent presentation critic and the gameplay critic (REVIEW-ROUND-1-2026-11-23.md, D4, P-05, P-06, P-08 to P-11, P-13, P-16 to P-18, P-20 to P-23): move the 2-4p status panel off the playfield (top bar or bottom edge) and never over the boss bar; keep touch pads out .
 
-      2026-11-24 PT: kind_robots#5716 (merged af529b34) puts every pilot's status inside the
-      29 px HUD bar (D4/P-08: no panel over the playfield or the boss bar), shows the button
-      legend in Act I only (P-21), firms the default pellet halo with a faint ring (P-11) and
-      moves seat numbers behind the hull (P-22). kind_robots#5719 (open) makes the Act V
-      cranes solid (P-13) and Classic's motes faint (P-10). Remaining: touch pads over the
-      stage (P-05/P-06), phone portrait and short-landscape layout (P-09/P-23/P-17), large-
-      screen stage size (P-16), per-Act colour keys (P-20), Seas on phone (P-18).
-
-      2026-11-24 PT: kind_robots#5719 (merged a5ec888c) makes the Act V cranes solid
-      silhouettes (P-13) and Classic's ambient motes faint far-plane dots (P-10);
-      kind_robots#5720 (merged 7b917371) lifts the Arcade-wide 64rem cap on the Rainbow page
-      only, so the stage is 1446x813 (about 57%) at 1920x1080 instead of 994x559 (27%),
-      measured on the real page with no page scroll (P-16). Remaining: P-05/P-06 touch pads
-      over the stage, P-09/P-23/P-17 phone and short-landscape layout, P-20 per-Act colour
-      keys, P-18 Seas on phone.
-
-      2026-11-24 PT: presentation layout findings fixed: P-05, P-06, P-17, P-23 and the in-
-      scope part of P-09 (kind_robots#5741; the portrait HUD stays open); P-18 Seas on phone
-      (#5756); P-20 per-Act colour keys (#5740).
-
-      2026-11-24 PT: P-09 portrait HUD: on an upright phone a large-type status readout (Act,
-      score, shoals and novas, each pilot's lives, shields, power, charge and ready moves)
-      fills the empty gap between the chips and the controls, above the turn-sideways prompt.
-      kind_robots#5768, CI pending. With this, every t-067 finding from presentation critic
-      round 1 has a fix.
-
-      kind_robots#5768 merged as 2b8f24fe after 23 checks passed. Every t-067 finding from
-      presentation critic round 1 is fixed and covered by the browser layout tests at the
-      listed viewports and seat counts.
+      Full history: projects/rainbow-bullet-hell-space-princess/HISTORY.md#t-067
     implementation_pr: 'silasfelinus/kind_robots#5768'
     owner: worker
     claimed_by: 2026-11-24T23:45:57Z-g8g9vm
