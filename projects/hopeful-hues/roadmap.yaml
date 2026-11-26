@@ -125,12 +125,22 @@ tasks:
   - id: t-006
     milestone: m4
     title: "Browser playthrough harness, accessibility pass and device QA"
-    status: waiting
+    status: done
     depends_on: [t-002, t-003, t-004, t-005]
     passes: 0
     stakes: reversible
     note: >-
       Add a Chromium playthrough test that plays real levels through visible input, takes a fork, reaches an ending, uses Back, claims a quest, exports and imports a save, and checks 390/768/1440 layouts, keyboard play, reduced motion and the audio gesture policy. Run it in CI.
+
+      2026-11-25 PT: verifyHopefulHuesBrowser runs in the new hopeful-hues-browser workflow:
+      real game in Chromium at 390/768 touch and 1440 mouse+keyboard; audio waits for a
+      gesture, tutorial, level 1 won by pointer drags, Back exact, keyboard swaps, quest
+      claimed, world fork, save export/import, calm motion, a finale to its ending, layouts
+      without sideways scroll. Found and fixed unnamed Quests/Worlds buttons on phones.
+      Verified kind_robots#5856 merged after all 13 checks passed on exact head a7b2193b
+      (incl. TypeScript and the new Hopeful Hues browser playthrough). No deploy.
+    updated: '2026-11-26T00:45:05Z'
+    implementation_pr: 'silasfelinus/kind_robots#5856'
   - id: t-007
     milestone: m4
     title: "Finish the finite roadmap and hand off for human playtest"
