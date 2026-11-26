@@ -32,3 +32,10 @@ compile/build, missing prisma generate output, duplicate admin tab icon) and
 kind_robots#5433 merged green. Additive-only migration audited (CREATE TABLE x2, ADD
 CONSTRAINT); production deploy follows the normal migration process.
 <!-- note:end t-003 -->
+
+## t-010 — Add a contract test that every Kind Robots tarot card oracleId resolves to a canonical Kind Oracle spec identity
+
+<!-- note:begin t-010 -->
+Reviewer kaizen from t-001 (#7670): enforce the DESIGN-BRIEF data-ownership boundary so all 78 seeded cards keep canonical Kind Oracle ids (Wands->Sparks, Cups->Currents, Swords->Breezes, Pentacles->Cogs, court ranks mapped) and art records never fork reading identity.
+2026-11-25 PT: verifyTarotStudio now asserts all 78 catalog oracleIds equal the canonical Kind Oracle set from projects/kind-oracle/docs/spec.md (majors by ordinal; Wands/Cups/Swords/Pentacles -> Sparks/Currents/Breezes/Cogs; Page/Knight/Queen/King -> Apprentice/Wanderer/Keeper/Elder) and every seeded deck keeps each card's id; wired into contract-tests.yml (it never ran in CI before). Merged kind_robots#5879 green.
+<!-- note:end t-010 -->

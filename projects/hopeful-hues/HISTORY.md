@@ -20,6 +20,20 @@ levels, 130 won without gifts'. Roadmap registered via conductor #7903 (4c46115)
 issue kind_robots#5649. Next: t-002 art, t-003 region mechanics.
 <!-- note:end t-001 -->
 
+## t-002 — Deliver painted art for the Play page, home highlight and Play link, then the in-game art
+
+<!-- note:begin t-002 -->
+Silas 2026-11-22 PT asked for art for the page, the highlight entry and the Play link. Interim code-rendered art ships at kind_robots public/hopeful-hues/front/{splash,highlight,link-preview,tutorial,icon}.webp (rendered from front/keyart.html). Painted requests are queued in projects/art-prompts.yaml (hopeful-hues-t002-*), targeting public/images/hopeful-hues/. Once ArtJobs deliver, verify each image, then point the Play tab image, home highlight, title-screen backdrop and header icon at the painted files, regenerating the share card under 250 KB. Then add region backdrops and hero portraits for the map, hero select and scrapbook, keeping the SVG art as fallback.
+2026-11-25 PT: every painted slot is delivered and wired: front-door art (ArtJobs 76826-76829) plus all 118 in-game images (heroes, world keys, regions, maps, story beats, endings) checked live (HTTP 200, real WebP) and rendered through the existing loaders at 390/768/1440. Verified kind_robots#5856 merged after all 13 checks passed on exact head a7b2193b (incl. TypeScript and the new Hopeful Hues browser playthrough). No deploy.
+<!-- note:end t-002 -->
+
+## t-003 — Give each far region a signature mechanic and authored set-piece levels
+
+<!-- note:begin t-003 -->
+Currently all regions share Gloom, Tangles and buddies with seeded layouts. Add one mechanic per tier-two region (for example Moonbeam fireflies that light a column, Carnival conveyor rows, Arcade portals, Lighthouse letters that drop like buddies), hand-author at least the four finales and the two fork levels, and keep npm run test:hopeful-hues proving every level winnable.
+2026-11-25 PT: every world's second and third regions now carry a signature mechanic (conveyor, portal or dispenser, rotated across the nine worlds; 60+ levels each in 5+ worlds), alongside the authored set pieces and finales from t-012; the bot still wins all 495 levels without gifts. Verified kind_robots#5856 merged after all 13 checks passed on exact head a7b2193b (incl. TypeScript and the new Hopeful Hues browser playthrough). No deploy.
+<!-- note:end t-003 -->
+
 ## t-004 — Compose region music and polish sound design
 
 <!-- note:begin t-004 -->
@@ -30,12 +44,48 @@ Authored nine world motifs with three region arrangements each, separate title a
 Original world and region music, title/ending themes, and gesture-safe playback merged; all six CI workflows green. Live audio acceptance is explicitly tracked in t-006. Implementation PR silasfelinus/kind_robots#5682.
 <!-- note:end t-004 -->
 
+## t-005 — Illustrate the five endings and the story-beat scrapbook pages
+
+<!-- note:begin t-005 -->
+Ending screens and scrapbook polaroids use code-drawn motifs. Add original illustrated plates for the five endings and the 25 story beats, with the current SVG as fallback.
+2026-11-25 PT: the illustrated endings (10, incl. the secret ending) and 54 story-beat plates are delivered and render in the ending screens and scrapbook (verified with the live art; the browser harness plays a finale to its painted ending). Verified kind_robots#5856 merged after all 13 checks passed on exact head a7b2193b (incl. TypeScript and the new Hopeful Hues browser playthrough). No deploy.
+<!-- note:end t-005 -->
+
+## t-006 — Browser playthrough harness, accessibility pass and device QA
+
+<!-- note:begin t-006 -->
+Add a Chromium playthrough test that plays real levels through visible input, takes a fork, reaches an ending, uses Back, claims a quest, exports and imports a save, and checks 390/768/1440 layouts, keyboard play, reduced motion and the audio gesture policy. Run it in CI.
+2026-11-25 PT: verifyHopefulHuesBrowser runs in the new hopeful-hues-browser workflow: real game in Chromium at 390/768 touch and 1440 mouse+keyboard; audio waits for a gesture, tutorial, level 1 won by pointer drags, Back exact, keyboard swaps, quest claimed, world fork, save export/import, calm motion, a finale to its ending, layouts without sideways scroll. Found and fixed unnamed Quests/Worlds buttons on phones. Verified kind_robots#5856 merged after all 13 checks passed on exact head a7b2193b (incl. TypeScript and the new Hopeful Hues browser playthrough). No deploy.
+<!-- note:end t-006 -->
+
 ## t-008 — Move Hopeful Hues to a standalone Play front page with a home highlight and Play link, each with art
 
 <!-- note:begin t-008 -->
 Silas 2026-11-22 PT: not an Arcade game; a front-end page with a highlight entry and a Play link, art for each. Moved /admin/hopeful-hues to /play/hopeful-hues, added the public Play channel tab with splash and tutorial art, a home highlight entry, a share card and a header icon, all rendered from the game's own SVG art in public/hopeful-hues/front/. No Arcade cabinet or advert poster.
 2026-11-23 PT done: kind_robots #5653 merged 2fce484 with all 14 checks complete (13 success, 1 skipped). /play/hopeful-hues front page, Play tab with splash and tutorial art, home highlight, share card and header icon are on main. Painted replacements remain t-002.
 <!-- note:end t-008 -->
+
+## t-009 — Genre-parity blockers: spreading Gloom, ribbon locks, 3-5 layer Tangles, rain-cloud countdowns, conveyors, portals and buddy dispensers
+
+<!-- note:begin t-009 -->
+Parity audit 2026-11-23 PT. The engine has only static Gloom (1-2 layers), static Tangles (1-2 hp) and randomly spawned buddies. Genre-standard match-three boards also use a spreading blocker that grows each move nothing clears it, locks that pin a tile until matched, thick multi-layer blockers, countdown tiles, conveyor rows, portals and fixed dispensers. Build these as engine features with hopecore framing (the countdown tile should drizzle Gloom, never end the level), introduce each through the t-002 tip system, assign them across regions together with t-003, and keep the bot proving all 130 levels winnable.
+
+First advanced-blocker slice adds ribbon locks, capped deterministic spreading Gloom, countdown rain clouds, and three/five-layer Tangles to late chapter boards, with tips, countdown display and replay regression tests. Conveyors, portals and fixed dispensers remain for a subsequent slice. CI pending.
+
+2026-11-24 PT (pr-medic): slice 1 (ribbon locks, spreading Gloom, countdown clouds,
+3/5-layer Tangles) merged as kind_robots#5691 -> 13bcffba after fixing a cross-realm
+deepStrictEqual test artifact and merging main (#5688 boosters): resolved engine/test
+conflicts, and useTool('swap') now refuses ribbon-pinned jewels (contract test added).
+All 12 checks green; local Chromium load clean. Back to ready for remaining scope:
+conveyor rows, portals, fixed buddy dispensers.
+
+2026-11-25 PT: remaining genre blockers shipped: conveyor rows (slide after each move,
+free matches), portals (entry bottom to exit top in gravity) and buddy dispensers
+(buddies only down their columns), validated at load, with markers, first-time tips and
+portal drop-in animation. Verified kind_robots#5856 merged after all 13 checks passed on
+exact head a7b2193b (incl. TypeScript and the new Hopeful Hues browser playthrough). No
+deploy.
+<!-- note:end t-009 -->
 
 ## t-010 — Order goals and end-of-level Kindness Overflow that fires specials
 
