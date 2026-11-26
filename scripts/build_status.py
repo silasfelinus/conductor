@@ -12,14 +12,23 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 try:
+    from daily_gate import already_recorded_today
+    from next_ready_task import task_is_unblocked
+    from roadmap_claims import task_is_claimable
+except ModuleNotFoundError:
+    from scripts.daily_gate import already_recorded_today
+    from scripts.next_ready_task import task_is_unblocked
+    from scripts.roadmap_claims import task_is_claimable
+
+try:
     from playtest_readiness import pending_agent_owned_task_ids
 except ModuleNotFoundError:
     from scripts.playtest_readiness import pending_agent_owned_task_ids
 
 try:
-    from project_lifecycle import PROJECT_LIFECYCLE_STATUSES, lifecycle_status, load_project_overrides
+    from project_lifecycle import PROJECT_LIFECYCLE_STATUSES, lifecycle_status, load_project_overrides, ordered_workable_slugs
 except ModuleNotFoundError:  # imported as scripts.build_status in pytest
-    from scripts.project_lifecycle import PROJECT_LIFECYCLE_STATUSES, lifecycle_status, load_project_overrides
+    from scripts.project_lifecycle import PROJECT_LIFECYCLE_STATUSES, lifecycle_status, load_project_overrides, ordered_workable_slugs
 
 REPO_ROOT = Path(__file__).parent.parent
 PROJECTS_DIR = REPO_ROOT / "projects"
@@ -107,10 +116,47 @@ def get_pitches_pending() -> list[tuple[str, str, str]]:
     return results
 
 
+def pickup_rows(project_tasks: dict, overrides: dict, order: list[str], *, now: datetime) -> list[str]:
+    """Small read-only index, never a claim or proof that a review is complete."""
+    rows = []
+    for slug in ordered_workable_slugs(order, overrides):
+        tasks = project_tasks.get(slug, [])
+        by_id = {str(task["id"]): task for task in tasks if task.get("id")}
+        ready = [
+            str(task["id"])
+            for task in tasks
+            if task.get("id")
+            and task.get("status") == "ready"
+            and task_is_claimable(task, tasks_by_id=by_id, now=now)
+            and task_is_unblocked(task, by_id)
+            and not already_recorded_today(task, now=now)
+        ]
+        review = [
+            str(task["id"]) for task in tasks
+            if task.get("id") and task.get("status") == "review"
+        ]
+
+        def short(ids: list[str], limit: int) -> str:
+            if not ids:
+                return "—"
+            return ", ".join(ids[:limit]) + (
+                f" (+{len(ids) - limit} more)" if len(ids) > limit else ""
+            )
+
+        if ready or review:
+            rows.append(
+                f"| {slug} | {lifecycle_status(overrides, slug)} "
+                f"| {short(review, 6)} | {short(ready, 3)} |"
+            )
+    return rows
+
+
 def build_status():
-    now = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    generated_at = datetime.now(timezone.utc)
+    now = generated_at.strftime("%Y-%m-%dT%H:%M:%SZ")
 
     project_rows = []
+    project_tasks = {}
     global_counts = {s: 0 for s in STATUS_COLS}
     workable_needs_human = 0
     archival_needs_human = 0
@@ -128,6 +174,7 @@ def build_status():
         lifecycle_counts[lifecycle] += 1
         milestones = roadmap.get("milestones") or []
         tasks = roadmap.get("tasks") or []
+        project_tasks[project_dir.name] = [task for task in tasks if isinstance(task, dict)]
         kind = roadmap.get("kind", "software")
         progress = compute_progress(milestones, tasks)
         counts = count_tasks(tasks)
@@ -144,6 +191,11 @@ def build_status():
             f"| {project_dir.name} | {lifecycle} | {kind} | {progress}% "
             f"| {counts['ready']} | {counts['done']} | {counts['blocked']} |"
         )
+
+    priority_path = PROJECTS_DIR / "priority.yaml"
+    priority_data = yaml.safe_load(priority_path.read_text(encoding="utf-8")) if priority_path.exists() else {}
+    order = (priority_data or {}).get("order", [])
+    pickup = pickup_rows(project_tasks, overrides, order, now=generated_at)
 
     pitches = get_pitches_pending()
     pitch_rows = [f"| {t} | {d} | {p} |" for t, d, p in pitches]
@@ -173,6 +225,17 @@ def build_status():
         f"| Needs human (archival projects) | {archival_needs_human} |",
         f"| Blocked | {global_counts['blocked']} |",
         f"| Pitches pending | {len(pitches)} |",
+        "",
+        "## Agent pickup hints",
+        "",
+        "> Advisory snapshot, ordered by lifecycle and priority. Review IDs first; "
+        "verify PRs, live task state, CONTROL.md and ownership before acting. "
+        "Ready hints exclude blocked, resting and already-run daily tasks. "
+        "Expired claims are handled by Process task events. Missing rows are not proof of no work.",
+        "",
+        "| Project | Lifecycle | Review IDs | Ready candidates (up to 3) |",
+        "|---|---|---|---|",
+        *(pickup if pickup else ["| (none) | — | — | — |"]),
         "",
         "## Projects",
         "",
