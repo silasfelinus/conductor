@@ -751,6 +751,6 @@ tasks:
     updated: '2026-11-26T13:50:00Z'
     passes: 0
     stakes: reversible
-    depends_on: [t-005]
+    depends_on: []
     note: |-
       Kaizen from the t-005 Tidecoat review (kind_robots#5899, merged baa1b62c). The Maker regression only swims the default heroine on one custom pool. Build one shared pool fixture in test:arcade-engine that runs all eight heroines (each Y special, hitbox and float) and the autopilot/speed-route pilot through dive, buoyancy, surface breach and water exit, and asserts no death, no stuck-in-tile and that unsuited heroines still die in water. Reversible test-only change unless it uncovers a defect.
