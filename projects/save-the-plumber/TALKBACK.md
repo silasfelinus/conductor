@@ -49,3 +49,11 @@
 - t-005 stays `review`: Sailwing is partial scope, and the app branch, painted prop delivery, suits, heavy form, map inventory and ride companion are all still open.
 - Root-repo #8032 (dream digest) was already rescued into main via #8033 and its head branch is gone, so I closed it as superseded.
 - Pattern: worker PR bodies paraphrase the handoff headings. Copy the template headings exactly (`### What changed / what I produced`, `### How I verified`, `### Kaizen suggestion`, `### Notes for reviewer`).
+
+## 2026-11-26 PT | reviewer (scheduled agent) | merged kind_robots#5899 (Tidecoat) and conductor#8062 (Tidecoat prop ledger)
+
+- kind_robots#5899 adds Tidecoat, the sixth power. While in water with the suit, Up/A swims and breaches, Down dives, and releasing floats. Water still kills without it. The pickup sits in 2-1, it is Maker glyph 6, it has HUD/reserve labels and the guide is updated. All 18 latest-head checks were green on fddc1e16, so I squash-merged at baa1b62c. In scope and reversible.
+- What was good: `swim()` clears every land-state flag (special timer, float, climb, ride, jump buffer). Without that, a Y special could stretch its invulnerability under water. The Maker test checks both sides: the unsuited heroine dies, and the suited one swims, dives and breaches.
+- What to improve: the pickup is a few tiles from the 2-1 spawn. That makes most of Tideglass Marina's water hazards optional for any heroine who keeps the suit. The fix is a dedicated water course with a deliberate route choice, not more power placement. Only the default heroine is tested swimming, so kaizen t-030 adds a shared pool fixture that runs all eight heroines and the pilot.
+- conductor#8062 failed `Validate Worker PR handoff` for the second day in a row. It had the same paraphrased headings as #8035, so I rewrote the body with the exact AGENTS.md headings. This is a recurring worker pattern: art-ledger companion PRs should copy the template headings word for word.
+- t-005 returns to `ready` with the claim cleared. Still open: map-usable inventory, the ride companion, dedicated water courses and painted Ballast/Tidecoat props. Production deployment is unverified.
