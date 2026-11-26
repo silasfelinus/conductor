@@ -224,3 +224,23 @@ def test_worker_queue_does_not_steal_live_claim():
         )
     ]
     assert run_worker.find_ready_task(["kr-arcade"], roadmaps, now=now) is None
+
+
+def test_live_worker_rejects_unsatisfied_dependencies_and_matches_role_hints():
+    tasks = [
+        {"id": "t-001", "status": "done", "gate_human": True},
+        {"id": "t-002", "status": "ready", "depends_on": "t-001"},
+        {"id": "t-003", "status": "ready", "depends_on": "t-missing"},
+        {"id": "t-004", "status": "ready", "lane": "art"},
+        {"id": "t-005", "status": "ready", "lane": "qa"},
+    ]
+    item = roadmap("alpha", tasks)
+    ranked = list(run_worker.iter_ready_tasks(["alpha"], [item]))
+    assert [(r["task_id"], r["role_hint"]) for r in ranked] == [
+        ("t-004", "art"), ("t-005", "qa")
+    ]
+    assert not run_worker.roadmap_has_claimable_task(roadmap("alpha", tasks[:3]))
+    tasks[0]["approved_by_human"] = True
+    assert run_worker.find_ready_task(["alpha"], [item])["task_id"] == "t-002"
+    item["kind"] = "content"
+    assert run_worker.find_ready_task(["alpha"], [item])["role_hint"] == "content"

@@ -77,6 +77,22 @@ def lane_of(task: dict) -> str | None:
     return "build"
 
 
+def role_hint(task: dict, kind: str) -> str:
+    """An advisory specialization, never a gate or authorization decision."""
+    if task.get("status") == "review":
+        return "reviewer"
+    if task.get("daily_commitment"):
+        return "daily-creative"
+    lane = lane_of(task)
+    if lane == "art":
+        return "art"
+    if lane == "qa":
+        return "qa"
+    if kind in ("content", "proposal"):
+        return "content"
+    return "developer"
+
+
 def active_projects() -> list[dict]:
     data = yaml.safe_load((ROOT / "project-overrides.yaml").read_text()) or {}
     return [o for o in data.get("overrides", []) if o.get("status") in ("active", "playtest", "continuous")]

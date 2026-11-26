@@ -1752,3 +1752,15 @@ def test_unrecorded_art_routes_to_art_medic():
     assert result["unrecorded_art"]
     assert "unrecorded-art" in result["reason"] and "RECOVERED" in result["reason"]
     assert result["playbook"] == "docs/agents/roles/art-medic.md"
+
+
+def test_specialist_playbooks_preserve_dispatch_and_exception_priority():
+    for hint in ("developer", "content", "art", "qa", "daily-creative"):
+        queue = dict(SOME_READY_TASK, ready_task=dict(SOME_READY_TASK["ready_task"], role_hint=hint))
+        with _apply(_patched(queue_summary=queue)):
+            result = select_role.select_role(github_token="fake-token")
+        assert result["role"] == "worker"
+        assert result["playbook"] == f"docs/agents/roles/{hint}.md"
+    assert select_role.assigned_playbook("daily-creative") == "docs/agents/roles/daily-creative.md"
+    assert select_role.assigned_playbook("reviewer-uncertain", {"role_hint": "art"}) == "docs/agents/roles/reviewer.md"
+    assert select_role.assigned_playbook("worker", {"role_hint": "unknown"}) == "docs/agents/roles/worker.md"
