@@ -31,7 +31,7 @@ TERMINAL = {"done", "cancelled", "superseded", "dropped", "closed", "wontfix", "
 
 
 def git_blob(raw: bytes) -> str:
-    return hashlib.sha1(b"blob " + str(len(raw)).encode() + b"\0" + raw).hexdigest()
+    return hashlib.sha1(b"blob " + str(len(raw)).encode() + b"\0" + raw, usedforsecurity=False).hexdigest()
 
 
 def control_ranges(text: str) -> tuple[list[int] | None, dict[str, list[int]]]:
@@ -71,7 +71,7 @@ def task_ranges(text: str) -> dict[str, list[int]]:
         # Block mapping end is normally the next task/key or EOF on a new line.
         # EOF without a newline instead ends on the final value's own line.
         mark = node.end_mark
-        last = mark.line + (1 if mark.index == len(text) and mark.column else 0)
+        last = mark.line + (1 if mark.column and (node.flow_style or mark.index == len(text)) else 0)
         ranges[task_id] = [first, max(first, last)]
     return ranges
 

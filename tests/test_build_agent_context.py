@@ -17,6 +17,8 @@ def test_ranges_preserve_exact_task_without_neighbor():
     for tid, (start, end) in ranges.items():
         assert yaml.safe_load("\n".join(text.splitlines()[start-1:end]))[0]["id"] == tid
     assert task_ranges(text.rstrip()) == ranges
+    # Flow mapping includes its closing brace rather than dropping the last line.
+    assert task_ranges("tasks:\n- {id: a,\n   status: ready}\n- id: b\n  status: ready\n") == {"a": [2, 3], "b": [4, 5]}
     # Root-level task sequence and another top-level field.
     assert task_ranges("tasks:\n- id: a\n  status: ready\nnotes: yes\n") == {"a": [2, 3]}
 
