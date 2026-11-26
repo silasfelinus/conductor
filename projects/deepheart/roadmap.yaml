@@ -188,10 +188,8 @@ tasks:
   - id: t-012
     milestone: m4
     title: "Every picture rendered, delivered, URL-verified and wired (set src / RENDERED_ART)"
-    status: review
+    status: ready
     owner: worker
-    claimed_by: 2026-11-26T124500Z-deepheart-t012-e3a6f4b9
-    claimed_at: '2026-11-26T12:45:00Z'
     depends_on: t-011
     passes: 0
     stakes: reversible
@@ -231,7 +229,14 @@ tasks:
       Kind Robots #5895 merged at 101a403e after all seven latest-head CI workflows passed, including Playbook Kit 45815098940 and Contract Tests 45815099056. All twenty completed Krea 2 achievement badge ArtJobs 69637–69656 are now mapped. Live delivery remains unverified. Return ready for remaining visual coverage.
 
       App commit 114273d2 connects existing boss and Mimic art to combat targets, boss doors and boss stage; shows each existing layer landscape while choosing doors. Existing image access and fallback preserved. Added mapping assertions. CI and actual media delivery/geometry pending; return ready after scoped merge.
-    updated: '2026-11-26T12:47:00Z'
+
+      2026-11-26 PT pr-medic: #5897 sat red 3h on TypeScript (TS2345 x3 in
+      verifyDeepheart.test.ts, destructured pairs widened under noUncheckedIndexedAccess).
+      Rescued as kind_robots#5902 (as const fix), merged 2478093b after all checks passed;
+      #5897 closed. Boss/Mimic portraits in combat and layer art live on main. Remaining: full
+      bestiary and dedicated boss plates. Return to ready.
+    updated: '2026-11-26T16:10:21Z'
+    implementation_pr: 'silasfelinus/kind_robots#5902'
   - id: t-013
     milestone: m4
     title: "Adversarial seeded playthroughs and 390/768/1440 px checks"
