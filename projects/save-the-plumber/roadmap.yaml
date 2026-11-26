@@ -91,12 +91,12 @@ tasks:
       images asserted as live.
   - id: t-028
     title: 'Main-game standard: audit and close the gaps for Save the Plumber'
-    status: claimed
+    status: ready
     milestone: m6
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-26T06:49:36Z'
+    updated: '2026-11-26T07:46:06Z'
     note: |-
       Silas 2026-11-11 PT, in session: "Our games should all have a base standard of quality ... We want our main games to have 12 plus achievements." Standard: docs/agents/main-game-standard.md; CONTROL.md global overview.
 
@@ -145,10 +145,17 @@ tasks:
       checks passed. Remaining: name entry, boss taunts, text size, rendered finale + gallery
       screenshots. Note: verifySavePlumberFrontPage.test.ts fails on main (console
       ArcadeCabinet assertion), pre-existing. Return to ready.
-    implementation_pr: 'silasfelinus/kind_robots#5883'
+
+      2026-11-26 PT: boss taunts. Each of the eight bosses has four original lines (gate
+      closes, first two hits, defeat) on a HUD speech plate; verifySavePlumberBossTaunts
+      covers data, cueing, fade and drawing. Repaired the stale front-page contract test
+      (failing on main) and put both in Arcade Cabinet Browser Contracts on PRs. Merged
+      kind_robots#5884 at 782e9dda after 19/19 exact-head checks. Pre-existing on main,
+      outside PR CI: verifySavePlumberLevels ('3-4 is cleared losing 4 lives') and
+      verifySavePlumberKeys ('the top rung releases the heroine'). Remaining: name entry, text
+      size, rendered finale + gallery screenshots. Return to ready.
+    implementation_pr: 'silasfelinus/kind_robots#5884'
     owner: worker
-    claimed_by: 2026-11-26T06:50:00Z-focused-johnson
-    claimed_at: '2026-11-26T06:49:36Z'
   - id: t-029
     title: 'Save the Plumber achievement upgrade: 12 or more live achievements'
     status: done
