@@ -131,10 +131,7 @@ tasks:
   - id: t-008
     milestone: m3
     title: "Room variety and balance from seeded sims"
-    status: review
-    owner: worker
-    claimed_by: 2026-11-26T012253Z-deepheart-t008-b7f18c
-    claimed_at: '2026-11-26T01:22:53Z'
+    status: ready
     depends_on: t-005
     passes: 0
     stakes: reversible
@@ -155,7 +152,9 @@ tasks:
       Kind Robots #5845 merged e7893e29 after seven completed successful checks, including Playbook Kit 45719267042 and Contract Tests 45719266906. Gilded requires a greedy narrative choice and 600 gold; non-holy Redemption gate covered. Remaining scope is quantitative survival calibration by party size and class.
 
       Previous Playbook Kit log 45730520383 proves 49/60 survival and all nine endings reachable. New app commit 1cee445b expands the suite with 300 seeded delves across all fifty presets, three party sizes and two trials per combination, reporting party size, hero role and joint rates. Retains the existing baseline. Await actual CI measurements and tune only if indicated; task not complete yet.
-    updated: '2026-11-26T01:22:53Z'
+
+      App PR #5864 merged 52d531ea; all seven CI workflows and branch janitor passed. Matrix survival 77/65/95 percent for party sizes 2/3/4. Return ready for remaining scaling calibration.
+    updated: '2026-11-26T02:11:00Z'
   - id: t-009
     milestone: m3
     title: "Account-backed save for signed-in players with local fallback"

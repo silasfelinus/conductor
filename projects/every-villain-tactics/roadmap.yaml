@@ -236,8 +236,8 @@ tasks:
   - id: t-007
     milestone: m3
     title: "Write and implement all six distinctive tactical story missions"
-    status: review
-    updated: '2026-11-26T01:40:33.150Z'
+    status: done
+    updated: '2026-11-26T02:18:00Z'
     depends_on: [t-003, t-005, t-006]
     passes: 0
     stakes: reversible
@@ -301,13 +301,14 @@ tasks:
       Verified #5860 merged at 95834809244ee8949b0fa75d9363f374e8e02b0f, nine latest-head workflows successful including branch janitor. Chapter retry preserves deterministic campaign opening and prior support. Full adversarial campaign acceptance remains open.
 
       Finite six-mission acceptance audit: 976 assertions passed across 72 paths using extracted actual First Bell and five authored script/scene engine implementations, with synthetic combat events. Permanent regression committed in kind_robots cb2228a68b32b5fc17761fc597702c9ee0bf8360. Existing linked campaign, objective, carryover and retry checks are present; dedicated latest-head CI must pass before closing t-007. Broader all-identity adversarial gameplay and rendered QA remain t-013, personal routes t-008/t-009 and original art t-012. No claim of full live playthrough.
-    owner: worker
+
+      Finite six-mission scope verified and merged in kind_robots#5867, squash 2b1f4bc7148f957c7d314190ccfc71658f35ce52. Latest head 39c50c60b836a5e20cd63cbbde73e4de754a9c20: all seven workflows completed successfully, including dedicated Tactics run 45738017537 and all four contract shards in 45738017440. Reviewed the 72 narrative path regression, both perspectives, branching choices and victory/defeat closure; existing objective, linked chapter and save/retry tests also passed. Full adversarial gameplay and device QA remain t-013; personal routes t-008/t-009 and art t-012. No production deployment or human approval claimed.
     claimed_by: 20261126T014000Z-evt-acceptance-2fd8
     claimed_at: '2026-11-26T01:39:03.199Z'
   - id: t-008
     milestone: m3
     title: "Author 48 hero and villain playable arcs with distinct supporting cast"
-    status: waiting
+    status: ready
     depends_on: t-007
     owner: null
     passes: 0
@@ -336,7 +337,7 @@ tasks:
   - id: t-010
     milestone: m3
     title: "Henchmen, lackeys, guests and smart tactical enemy behavior"
-    status: waiting
+    status: ready
     depends_on: t-007
     owner: null
     passes: 0
@@ -512,10 +513,10 @@ tasks:
   - id: t-019
     milestone: m3
     title: "Deterministic post-battle points and earned scrapbook achievements"
-    status: review
+    status: ready
     depends_on: [t-006, t-016]
     passes: 0
-    updated: '2026-11-26T01:26:54.239Z'
+    updated: '2026-11-26T02:19:00Z'
     stakes: reversible
     note: |-
       Mission-end scored breakdown for flawless survival, zero damage, no knockouts, optional secrets, rescues and tactical bonuses, with explicit eligible conditions. Replay-safe recorded points, scrapbook heroes won with, villains beaten and authored route discoveries. Distinguish end-of-turn summaries from mission completion.
@@ -545,9 +546,8 @@ tasks:
       Verified PR #5849 merged at 9d1c4b2516b6437d56ada9324d28a92277212493. Cumulative scoring and replay-safe checkpoint totals delivered. Remaining secret-route audit and adversarial campaign scoring QA remain open; release for further work.
 
       Evidence scoring repair committed to Kind Robots 037906bcf8a1905f428593aa808730e847e3dba0. Four authored tactical evidence choices now grant 25 points and victory medal, stage-specific flags only; unchanged legacy score identities. Dedicated score regression tests added. Full CI and remaining secret-route/whole-campaign acceptance pending.
-    owner: worker
-    claimed_by: 20261126T004600Z-evt-evidence-score-b72c
-    claimed_at: '2026-11-26T00:45:25.168Z'
+
+      Verified and merged kind_robots#5866 at 43161967c9787864812dfb544a3655a152a674e6. All seven latest-head workflows completed successfully at 037906bcf8a1905f428593aa808730e847e3dba0, including Tactics run 45737097078 and contract run 45737097048. Authored evidence choices in four stages now earn 25 points, duplicate and wrong-stage flags cannot inflate points, defeat cannot earn the medal. Partial: historical scores remain unchanged; secret-route scoring audit remains open. Release for finite acceptance without duplicating t-013 QA.
   - id: t-020
     milestone: m3
     title: "48 canonical hero-villain foil pairings beyond generic story mode"
