@@ -300,3 +300,8 @@ Companion kind_robots#4764 was already on main, so merge order held. CI green on
 - A high motion score is not enough on its own. b08-phase1-v2 scored 22 by hopping the whole fish between two heights, and b04-phase1-v3 scored 21.7 by smearing its legs. Look at the preview, not just the number.
 - coral-asteroid and b04-phase1 hit the three-take limit and stay stills. b02-phase1 and b03-phase1 were static twice, so their v3 prose asks for much larger motion.
 - Env note: the system Pillow in this container is broken (`_imaging` import). A venv with pillow and numpy runs the art tools.
+
+## 2026-11-26 PT | worker (scheduled agent) | t-042 P-01 idle batch 5
+
+- Only one render had finished since batch 4: b02-phase1-v3 (ArtImage 280452). Motion 0.81, static for the third time (0.6, 1.02, 0.81), so b02-phase1 stays a still under the three-take rule. Nothing ships to kind_robots this cycle.
+- Still running: b03-phase1-v3, b08-phase1-v3 and 44 other pending loops. Next worker reviews those, then the P-03 ending clips.
