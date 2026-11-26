@@ -263,16 +263,18 @@ tasks:
   - id: t-015
     milestone: m3
     title: "Expand enemy roster to 40 distinct types and recalibrate seeded encounter variety"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 2026-11-26T220708Z-deepheart-t-015-6f19ac
     claimed_at: '2026-11-26T22:07:08Z'
-    updated: '2026-11-26T22:07:08Z'
+    updated: '2026-11-26T22:09:00Z'
     depends_on: t-008
     passes: 0
     stakes: reversible
     note: |-
       Silas 2026-11-26 PT: double enemy variety so runs are not repetitive. Target twelve ordinary enemies per layer, three existing bosses and Mimic (40 total). Give newcomers distinctive names, silhouettes, traits and balanced stats. Prove each type is reachable in seeded combat, keep nonviolent routes and all nine endings, repeat the existing survival calibration. Preserve fixed-seed determinism.
+
+      App commit 72fd0bcd expands the three live encounter pools to twelve ordinary enemies each, preserves the three bosses and Mimic, and adds seeded door reachability tests for all 36 ordinary enemies. Existing survival and ending tests remain unchanged; CI results pending.
   - id: t-016
     milestone: m4
     title: "Paint and integrate the full bestiary and three boss encounter plates"
