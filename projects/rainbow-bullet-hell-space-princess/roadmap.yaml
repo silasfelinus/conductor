@@ -959,7 +959,7 @@ tasks:
     passes: 0
     source_issue: "silasfelinus/kind_robots#4146"
     updated: '2026-11-26T19:52:22Z'
-    note: |-
+    note: >-
       FROM GITHUB ISSUE silasfelinus/kind_robots#4146 (https://github.com/silasfelinus/kind_robots/issues/4146), opened by @silasfelinus on 2026-10-25. Imported by scripts/sync_github_issues.py. Reference the canonical roadmap in implementation PRs with `Refs silasfelinus/kind_robots#4146`, never `Closes`. Keep #4146 open throughout finite build, art and QA work. Only the verified playtest handoff workflow may prefix `[FLAGGED FOR HUMAN TESTING]` and close the single master issue after Conductor lifecycle, priority, evidence and genuine `needs-human` subjective-acceptance gate are confirmed; closing the issue is not human approval or permission to publish.
 
       # Rainbow Bullet Hell Space Princess | Master production, adversarial testing and final-approval roadmap
@@ -972,54 +972,9 @@ tasks:
 
       Deliver a complete, original, lavish **2D side-scrolling space-shooter campaign** that can credibly stand beside the *design depth and player delight* of classic Gradius, Darius, R-Type and Star Fox 64, without copying IP. It must feel like a polished console game rather than a survival-wave web demo: substantial authored stages, memorable animated foes, four truly different princess starfighters, fluid controls, discovery, persistent progress, consequential plot branches, dramatic audiovisual storytelling, and excellent 1–4-player play.
 
-      The current Conductor roadmap calls eight main Acts and some engine tasks done, while **online co-op, Gen-2 save/map progression and alternate Acts, painted art and full animation, narrative/cinematics and adversarial acceptance are not all finished**. Task status ≠ quality acceptance. Audit the actual *main-branch build* and close gaps with evidence. Keep internal iteration and reversible, green PRs moving until the entire issue is met.
+      The current Conductor roadmap calls eight main Acts and some engine tasks done, while **online co-op, Gen-2 save/map progression and alternate Acts, painted art and full animation, narrative/cinematics and adversarial acceptance are not all finished**. Task status ≠ quality acceptance. Audit the actual *main-branch build* and close gaps with evidence. [...]
 
-      ## 1. Reconcile canon, inventory and playable scope
-      - [ ] Audit main branch against all 41 existing Conductor tasks, active/review/blocked PRs, stage and ending inventories, current art ledgers, and the actual cabinet. Create one evidence-backed gap matrix (feature/content → source → runtime → test → art/animation → status), not a second disconnected backlog.
-      - [ ] Preserve canon: Maribel/Biscuit, Azure/Comet, Solenne/Butter and Vivi/Glitch form **C.A.T.S. (Cute And Tough Starfighters)**; distinctive people and mechanics from CAST-BIBLE, no identity erasure. Visually: a talented kid's 1980s neon-rainbow airbrushed school-folder doodles, glitter/heart/star motifs, with disciplined screen readability.
-      - [ ] **DOGS, dog commanders, King Rufus, bone/tennis-ball attack
-
-      [... truncated; read the full issue at https://github.com/silasfelinus/kind_robots/issues/4146]
-
-      Implemented byte-accurate Arcade save capacity and fail-closed serialization with Rainbow three-slot regression. Partial master roadmap scope; return to ready after merge.
-
-      2026-11-24 PT intent audit: the increment's PR silasfelinus/kind_robots#5504 merged; the claim from 2026-11-21 was never released and the note says the wider scope is still partial. Returned to ready with the claim cleared so the next worker can pick it up. No scope change.
-
-      2026-11-25 PT P-01 batch: reviewed 30 finished idle-loop renders; 14 keeps (hammerhead,
-      guardian-courier, guardian-mirror, coral-v4, B01 p1-2, B03 p2-3, B05 p1-2, B06 p1-2, B08
-      p2-3) ship in kind_robots#5831; holds pearl-warden and B04 p1/p3 (off the sticker still,
-      need -v2 from shipped still); 13 rejects under the 2.7 motion floor. Verdicts in ANIM-
-      BACKLOG. Next: -v2 retakes for the holds/rejects, remaining ~40 pending loops, P-03
-      ending clips, B02 requeue (P-12). Return to ready after merge.
-
-      Merged kind_robots#5831 (14 idle loops) after all exact-head checks passed. Queued 13
-      -v2 retakes (jobs 77268-77280) for the holds and static rejects. Partial master-roadmap
-      scope; return to ready.
-
-      2026-11-25 PT P-01 batch 2: reviewed 6 finished idle renders. Shipped captive (motion
-      9.5) and guardian-herald (2.80) in kind_robots#5834 (merged green). Rejected coral-
-      asteroid (melts mid-loop), pearl-warden-v2 (seam pop, green fringe), b04-phase1/3-v2
-      (under 2.7 floor); verdicts in conductor#8027, retakes queued as jobs 77283-77286. Next:
-      review those retakes and the ~45 pending loops, P-03 ending clips. Partial master-
-      roadmap scope; return to ready.
-
-      2026-11-25 PT P-01 batch 3: reviewed 3 finished idle renders. Shipped guardian-shoal-koi
-      (motion 3.79) in kind_robots#5835 (merged green). Rejected guardian-kelp-warden-v2
-      (render squashed ~16% vertically vs the still, green fringe) and b01-phase3-v2 (motion
-      1.44 under the 2.7 floor); verdicts in conductor#8029, retakes queued as jobs
-      77287-77288. Next: review b02-phase1-v2 (running), the pending loops and retakes, P-03
-      ending clips. Partial master-roadmap scope; return to ready.
-
-      2026-11-26 PT P-01 batch 4: reviewed 9 finished idle renders. Shipping b04-phase2
-      (motion 6.33), b05-phase3 (14.16), b06-phase3 (7.05) and guardian-pearl-warden (21.5) in
-      kind_robots#5868. Rejected b02-phase1-v2 and b03-phase1-v2 (static, 1.02 and 1.59), plus
-      b08-phase1-v2, which hops between two heights. v3 retakes are appended to ANIM-BACKLOG
-      for auto-submit. coral-asteroid and b04-phase1 stay stills after three failed takes.
-      Next: review the v3 retakes and the ~40 pending loops, then the P-03 ending clips.
-      Partial master-roadmap scope; return to ready after merge.
-
-      Merged kind_robots#5868 (4 idle loops) and conductor#8041 (verdicts and v3 retakes)
-      after all checks passed. Partial master-roadmap scope; returned to ready.
+      [Earlier history (4,123 chars) archived verbatim to projects/rainbow-bullet-hell-space-princess/T042-HISTORY.md -- read it there only when you need a specific past cycle. Append new cycles below, one short paragraph each.]
 
       2026-11-26 PT P-01 batch 5: only b02-phase1-v3 had finished; motion 0.81 (third static
       take), so b02-phase1 stays a still. 46 loops still rendering (incl. b03/b08 v3). Next:
@@ -1064,7 +1019,7 @@ tasks:
       take, so the battered phase 2 stays a still. ~36 loops pending plus kelp-
       frond/charge/power/shield v3 retakes. Partial master-roadmap scope; return to ready.
     owner: worker
-    implementation_pr: 'silasfelinus/kind_robots#5904'
+    implementation_pr: 'silasfelinus/kind_robots#5905'
   - id: t-043
     milestone: m4
     title: "Fever Dream look: review the doodle re-renders (DOODLE-SET-2) and ship the keepers"
