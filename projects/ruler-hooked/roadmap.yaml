@@ -863,10 +863,7 @@ tasks:
 - id: t-045
   milestone: m4
   title: Deepen kingdom quest arcs and connect decisions to fishing spots and species
-  status: review
-  owner: worker
-  claimed_by: 20261126T000600Z-ruler-hooked-t045-b3d9
-  claimed_at: '2026-11-26T00:06:00Z'
+  status: ready
   stakes: reversible
   passes: 0
   depends_on:
@@ -906,7 +903,9 @@ tasks:
     Verified kind_robots#5844 merged at fd7bb029 and all eight exact-head PR workflows passed, including gameplay 45719210928. Shared petition accounting and quiet-cast finale offers landed. Return to ready for seeded ending integrity work; remaining narrative and device/art QA are not certified.
 
     Added full-reign deterministic policy witnesses for every authored ending, using actual per-cast seed derivation, daily proclamations, offered choices and legal finale dismissal/acceptance. Replays through JSON round-trips and prints exact actions for each successful witness. App branch worker/ruler-hooked-t045-ending-witnesses-b3d9 at 9d1c77ed; CI must establish reachability, not yet claimed. Partial preflight for later t-049; no interactive fishing, rendered QA or art claim.
-  updated: '2026-11-26T00:07:00Z'
+
+    Verified kind_robots#5855 merged at 7682f108, eight green latest-head workflows and successful branch janitor. Actual gameplay logs 45726592525/job/139598068573 prove all four endings at 35/35/36/36 casts using the first policy seed, with complete deterministic JSON replay. Full interactive, art and narrative QA remain. Return to ready for remaining quest scope.
+  updated: '2026-11-26T00:48:00Z'
 
 - id: t-046
   milestone: m6
@@ -1173,20 +1172,18 @@ tasks:
 - id: t-061
   milestone: m6
   title: 'Post-deploy visual QA of the console at phone, tablet and desktop widths'
-  status: claimed
+  status: review
   gate_human: false
   owner: worker
   claimed_by: 20261126T004633Z-ruler-hooked-t061-8a2e
   claimed_at: '2026-11-26T00:46:33Z'
   stakes: reversible
   passes: 0
-  note: >-
-    After kind_robots#4828 and #4834 reach kindrobots.org (Force Update), screenshot every screen
-    at 390, 820 and 1440 widths: title, coronation, crier, lake idle/fight/reveal, court
-    petition/ending, map, gear, fishopedia and chronicle. Confirm the art loads through the
-    /images media fallback, and fix spills or crushed panels. Repeat after t-054's restyle, and
-    attach the shots for Silas's t-032 acceptance.
-  updated: '2026-11-26T00:46:33Z'
+  note: |-
+    After kind_robots#4828 and #4834 reach kindrobots.org (Force Update), screenshot every screen at 390, 820 and 1440 widths: title, coronation, crier, lake idle/fight/reveal, court petition/ending, map, gear, fishopedia and chronicle. Confirm the art loads through the /images media fallback, and fix spills or crushed panels. Repeat after t-054's restyle, and attach the shots for Silas's t-032 acceptance.
+
+    Added the canonical /play/ruler-hooked route to the production responsive audit, with guest-only title/settings/scrapbook/achievements/coronation/crier/lake/fishing navigation and per-stage rendered geometry and screenshots at phone, tablet portrait, tablet landscape and desktop. App branch worker/ruler-hooked-t061-rendered-audit-8a2e at 6d385a50. Local HTTPS attempt failed DNS resolution; no rendered pass or completed art inspection claimed. Remaining catch/court/finale/map/gear/fishopedia/chronicle device coverage is not done. CI and actual scheduled live audit required.
+  updated: '2026-11-26T00:48:00Z'
 
 - id: t-062
   milestone: m6

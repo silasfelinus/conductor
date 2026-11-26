@@ -508,10 +508,10 @@ tasks:
   - id: t-019
     milestone: m3
     title: "Deterministic post-battle points and earned scrapbook achievements"
-    status: ready
+    status: claimed
     depends_on: [t-006, t-016]
     passes: 0
-    updated: '2026-11-26T00:35:20.580Z'
+    updated: '2026-11-26T00:45:25.168Z'
     stakes: reversible
     note: |-
       Mission-end scored breakdown for flawless survival, zero damage, no knockouts, optional secrets, rescues and tactical bonuses, with explicit eligible conditions. Replay-safe recorded points, scrapbook heroes won with, villains beaten and authored route discoveries. Distinguish end-of-turn summaries from mission completion.
@@ -539,6 +539,9 @@ tasks:
       Cumulative Crossfire scoring and aftermath display implemented in Kind Robots afc89fbb3fed1f13af41ea89908e10709cbc338f. Validated journal only, active victory counts once, no defeat credit, stable on advancement and reload. Six chapter regression coverage committed; CI and rendered QA pending. Full adversarial campaign and secret audit remain open.
 
       Verified PR #5849 merged at 9d1c4b2516b6437d56ada9324d28a92277212493. Cumulative scoring and replay-safe checkpoint totals delivered. Remaining secret-route audit and adversarial campaign scoring QA remain open; release for further work.
+    owner: worker
+    claimed_by: 20261126T004600Z-evt-evidence-score-b72c
+    claimed_at: '2026-11-26T00:45:25.168Z'
   - id: t-020
     milestone: m3
     title: "48 canonical hero-villain foil pairings beyond generic story mode"

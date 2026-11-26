@@ -506,13 +506,13 @@ tasks:
   - id: t-020
     milestone: m6
     title: "Gen-2 level engine: sub-areas, vertical rooms, midpoints, secret exits, campaign-wide switches"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 20261126T000650Z-plumber-rooms-x4n8
     claimed_at: '2026-11-26T00:06:50Z'
     passes: 0
     stakes: reversible
-    updated: '2026-11-26T00:06:50Z'
+    updated: '2026-11-26T00:47:00Z'
     note: |-
       GEN2-STANDARD.md section 2. Doors, pipes and ladders into sub-rooms with their own camera bounds; vertical shafts and climbs; a midpoint checkpoint per level; a second, hidden exit type that reports `secret` to the overworld (t-011); Valve Chapel switch state read by every level so pressed switches make outlined blocks solid campaign-wide; auto-scroll and haunted-maze (Hush House) exit logic. Deterministic replay tests for each: secret exit reachable, sub-room return position, switch persistence across levels and save/reload.
 
@@ -535,6 +535,8 @@ tasks:
       Generalized optional chapel entry, respawn, completion and backdrop; authored Brass, Cobalt and Rose Chapel courses and persistent per-slot switch blocks in Worlds 3, 4 and 6. Added map, death-reload, clear, save and fresh-slot regression coverage. App branch worker/save-the-plumber-t-020-chapels-v5c1 head d1190ef3. Full CI pending. Subrooms, vertical traversal, auto-scroll and haunted mazes remain.
 
       Verified kind_robots#5821 merged at cdd5acb4. All four Valve Chapels are implemented with persistent per-slot switches. Return partial engine scope to ready: subrooms, vertical routes, auto-scroll and haunted mazes remain.
+
+      Implemented sealed pipe chamber detection, independently bounded camera framing, exterior masking and pipe transition cleanup across all eight existing late-world chambers. Added replay coverage for entry, camera lock, collection and return. App branch worker/save-the-plumber-t-020-rooms-x4n8 head e617951d. Partial engine scope; new vertical courses, auto-scroll and haunted mazes remain. Full CI and rendered acceptance pending.
   - id: t-021
     milestone: m6
     title: "Gen-2 World 1: re-author Bluebell Pipeworks as a full SMB3/SMW-class world"
