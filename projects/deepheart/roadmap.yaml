@@ -131,7 +131,7 @@ tasks:
   - id: t-008
     milestone: m3
     title: "Room variety and balance from seeded sims"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 2026-11-26T021300Z-deepheart-t008-4e89c1
     claimed_at: '2026-11-26T02:18:30Z'
@@ -157,7 +157,9 @@ tasks:
       Previous Playbook Kit log 45730520383 proves 49/60 survival and all nine endings reachable. New app commit 1cee445b expands the suite with 300 seeded delves across all fifty presets, three party sizes and two trials per combination, reporting party size, hero role and joint rates. Retains the existing baseline. Await actual CI measurements and tune only if indicated; task not complete yet.
 
       App PR #5864 merged 52d531ea; all seven CI workflows and branch janitor passed. Matrix survival 77/65/95 percent for party sizes 2/3/4. Return ready for remaining scaling calibration.
-    updated: '2026-11-26T02:18:30Z'
+
+      App commit 6e75e609 adjusts enemy HP and attack by original party size, preserves duo values, and adds a 300-run independent validation sample plus strict 75-85 percent acceptance on the original matrix. Await actual CI results, including all nine endings; do not close until verified.
+    updated: '2026-11-26T02:19:00Z'
   - id: t-009
     milestone: m3
     title: "Account-backed save for signed-in players with local fallback"
