@@ -235,8 +235,8 @@ tasks:
   - id: t-013
     milestone: m4
     title: "Adversarial seeded playthroughs and 390/768/1440 px checks"
-    status: ready
-    depends_on: t-006
+    status: waiting
+    depends_on: [t-006, t-015, t-016, t-017, t-018, t-012]
     owner: null
     passes: 0
     stakes: reversible
@@ -247,7 +247,7 @@ tasks:
     milestone: m4
     title: "Playtest graduation: readiness gate, status playtest at normal priority, flag the hub"
     status: waiting
-    depends_on: [t-007, t-008, t-009, t-010, t-012, t-013]
+    depends_on: [t-007, t-008, t-009, t-010, t-012, t-013, t-015, t-016, t-017, t-018]
     owner: null
     passes: 0
     stakes: reversible
@@ -255,3 +255,39 @@ tasks:
       Silas, 2026-11-16 PT: once complete including art, mark ready for human testing and
       swap to playtest with normal priority. Follow docs/agents/hourly-playtest-advancement.md
       "Graduation". Public /play release stays a separate human gate.
+  - id: t-015
+    milestone: m3
+    title: "Expand enemy roster to 40 distinct types and recalibrate seeded encounter variety"
+    status: ready
+    depends_on: t-008
+    passes: 0
+    stakes: reversible
+    note: |-
+      Silas 2026-11-26 PT: double enemy variety so runs are not repetitive. Target twelve ordinary enemies per layer, three existing bosses and Mimic (40 total). Give newcomers distinctive names, silhouettes, traits and balanced stats. Prove each type is reachable in seeded combat, keep nonviolent routes and all nine endings, repeat the existing survival calibration. Preserve fixed-seed determinism.
+  - id: t-016
+    milestone: m4
+    title: "Paint and integrate the full bestiary and three boss encounter plates"
+    status: waiting
+    depends_on: t-015
+    passes: 0
+    stakes: reversible
+    note: |-
+      Every one of the forty enemy types has unique Krea 2 artwork in target cards, including the three bosses and Mimic; reuse canon-compatible delivered assets. Each guardian also has an appropriate full-width battle plate. Record ArtJob and ArtImage IDs and verify final authenticated media URLs. No skull/crown glyphs as final combatants. Keep targeting, HP and statuses readable.
+  - id: t-017
+    milestone: m4
+    title: "Distinct painted environments and significant encounters in live gameplay"
+    status: ready
+    depends_on: t-006
+    passes: 0
+    stakes: reversible
+    note: |-
+      Show recognizable Ossuary Gate, Drowned Halls and Ember Deep landscapes during exploration and appropriate backgrounds during combat and room choices. Illustrate merchants, communities and significant authored non-court encounters, not merely six generic room types. Reuse canon-compatible existing artwork and queue only missing Krea 2 briefs; verify delivered URLs and responsive gameplay.
+  - id: t-018
+    milestone: m4
+    title: "Complete canon-consistent scrapbook, support scenes and relationship art"
+    status: ready
+    depends_on: t-007
+    passes: 0
+    stakes: reversible
+    note: |-
+      Audit every authored scrapbook moment and ending, including all support pairs, romance and artifacts. Replace incompatible humanoid art with approved anthro canon where needed. Preserve earned-only discovery and existing maturity gates. Verify distinct delivered artwork on every required scrapbook entry. No publication or new subjective gate.
