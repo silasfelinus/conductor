@@ -1964,8 +1964,8 @@ subjects:
       status: DONE
       art_image_id: 280751
 - key: idle-lighthouse-lamp
-  verdict: 'reject: 2026-11-26 PT review, on model but static; the beam never sweeps and the bulb glow barely
-    shifts (motion 0.69, under the 2.7 floor); retake idle-lighthouse-lamp-v2'
+  verdict: 'reject: 2026-11-26 PT review, on model but static; the beam never sweeps and the bulb glow barely shifts
+    (motion 0.69, under the 2.7 floor); retake idle-lighthouse-lamp-v2'
   lane: wan-mp4
   entity: sprite-animation
   title: lighthouse-lamp idle loop
@@ -1988,8 +1988,8 @@ subjects:
       art_image_id: 280752
 - key: idle-brood-v2
   verdict: 'reject: 2026-11-26 PT review, the first and last cells match the still but mid-loop the spore melts
-    into a flat blurry magenta blob, its white highlights, dark tendril edges and crisp points gone; retake
-    idle-brood-v3 (a third failure leaves the brood a still)'
+    into a flat blurry magenta blob, its white highlights, dark tendril edges and crisp points gone; retake idle-brood-v3
+    (a third failure leaves the brood a still)'
   lane: wan-mp4
   entity: sprite-animation
   title: brood idle loop
@@ -3419,9 +3419,11 @@ subjects:
   source_margin: 0.2
   duration: 2
   loop: true
-  prompt_prose: The little purple lantern swings gently side to side on its ring and bobs up and back down, its golden
-    bulb flaring bright white then dimming to amber, rays of warm light pulsing out around the glass. Locked view,
-    exact lantern outline and colours, flat lime-green backdrop all around, shiny airbrushed doodle.
+  prompt_prose: The little purple lantern swings gently side to side on its ring and bobs up and back down, its
+    golden bulb flaring bright white then dimming to amber, rays of warm light pulsing out around the glass. Locked
+    view, exact lantern outline and colours, flat lime-green backdrop all around, shiny airbrushed doodle.
+  jobs:
+    wan-mp4: 77446
 - key: idle-brood-v3
   lane: wan-mp4
   entity: sprite-animation
@@ -3435,7 +3437,9 @@ subjects:
   source_margin: 0.2
   duration: 2
   loop: true
-  prompt_prose: The spiky magenta star spore stays crisp and sharp as it rocks a little left and right and bobs up
-    and down, its long spiky points twitching and its white core streaks flickering, the orange drip below swaying.
+  prompt_prose: The spiky magenta star spore stays crisp and sharp as it rocks a little left and right and bobs
+    up and down, its long spiky points twitching and its white core streaks flickering, the orange drip below swaying.
     Locked view, sharp dark outline and exact colours in every frame, never blurry, flat lime-green backdrop all
     around, glossy airbrushed doodle.
+  jobs:
+    wan-mp4: 77447
