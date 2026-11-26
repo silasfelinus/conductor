@@ -1,0 +1,921 @@
+# CONTROL.md — Silas's Steering Sheet
+
+**This is the one file Silas edits to steer everything. Agents read it FIRST, before any
+project roadmap.** It holds *intent and direction*; the per-project `roadmap.yaml` files
+hold the detailed task lists. When this file and a roadmap disagree on direction, THIS
+file wins — agents should adjust the roadmap to match, not ignore this.
+
+STATUS.md (next to this file) is auto-generated and read-only — read it to see what's
+happened. Don't edit it; edit here.
+
+---
+
+## Global overview  ← agents read this before everything
+
+**Right now:** Proving the autonomous loop works end-to-end. Keep changes small and
+reversible until the first clean cycle is done. Nothing publishes, deploys, or spends
+money without my explicit approval (set `approved_by_human: true` on the gated task).
+
+**Playtest goal (Silas, 2026-11-15 PT, supersedes 2026-11-11):** Every HIGH-priority game should enter `playtest` once its **finite agent-owned roadmap** is genuinely complete: authored art/text delivered, playable gameplay/endings, build/QA and full playthroughs verified, and a usable game URL established. **Human playtesting is the next phase, not a roadmap task or a prerequisite verdict.** The roadmap ends at verified readiness for human trials. At that transition set Conductor `playtest/normal`, prefix the single indexed GitHub roadmap issue `[FLAGGED FOR HUMAN TESTING]`, and close it as completed while preserving its URL and evidence. Optional human-test feedback lives outside the finite build roadmap. No `needs-human` subjective-acceptance task is required for handoff. Publication, sharing, deployment, wider promotion, money and creative signoff still require their separate real human approvals. Later scoped fixes use `playtest_iteration: true`; unfinished original build work cannot be relabeled to hide it. Preserve high-priority ordering until the handoff.\n\n**Standing creative direction (Silas, 2026-10-11 PT):** Across character-led Kind Robots projects, design casts with a genuine range of body types, skin tones, racial and cultural backgrounds, gender identities and expression. Diversity is not a casting checklist or a set of personality stereotypes. Write distinctive, fully realized people with motivations, flaws, friendships, humor, expertise, agency and lived-in visual design. Preserve strong existing canon and art; reconcile designs rather than mechanically replacing them to satisfy labels. Accessibility and fairness require that a person's body/identity does not imply game-balance penalties. A focused cast may only have a few people, but the *world* should feel populated by different kinds of people. Specific project cast bibles decide individual characters.\n\n**Creative development focus (Silas, 2026-10-21 PT):** Ecotone: Weird Humboldt,
+Emperor of Dust, Zuzu Gamebook, Zuzu Shifting Lands, Shifting Desks,
+Rainbow Space Princess, and Save the Plumber. **These seven are one focused
+portfolio, not an internally ranked list.** Prioritize their story quality,
+meaningful choices, gameplay, tests, and image-led presentation in ordinary
+agent task selection. Preserve their previous relative queue order as a stable
+tie-breaker; do not infer personal ranking from the way Silas listed them.
+Other projects remain in their existing lifecycle states, but do not displace
+the seven for discretionary creative work. Scheduled operational commitments,
+security fixes, and review/merge work remain governed by existing policies.
+This is not permission for a public launch, billing, or irreversible changes.
+
+
+**New creative project (Silas, 2026-10-22 PT):** Memory Dungeon is ACTIVE and HIGH priority after the seven-project 2026-10-21 focus tier and the protected earlier four-project order in the deterministic task queue. This **adds** a project without changing their relative tie-break order. Extend existing `/play/memory` and retain the home directory and Play entry, Classic mode and the match engine. The RPG adds spatial-pattern/bullseye weapons, Minesweeper-style logical trap rooms, varied puzzles, meaningful companion and story progress, and seeded replay. See `projects/memory-dungeon/`. Public deployment remains gated.
+
+**New playbook projects (Silas, 2026-10-25 PT):** Comet City Academy and Game of Captains are two independent ACTIVE, HIGH-priority software projects. Inserted behind the previously protected seven-project focus, four-project arcade band, Memory Dungeon, and Cthulhuquarium/Kind Economy pair without reordering those earlier commitments. Both receive original full-screen console experiences, complete authored choices, actual generated art, seeded adversarial playtesting and final subjective acceptance only after all agent work. Their scope confirmation is soft; develop reversible previews immediately. See `projects/comet-city-academy/` and `projects/game-of-captains/`. Public release is separately gated.
+
+**LATEST PLAYBOOK DIRECTION (Silas, 2026-10-25 PT, supersedes earlier one-week/21-day academy framing):** The display titles are now **Capes & Tassels: Prom of Doom** (Conductor slug `comet-city-academy`) and **This Means Warp** (slug `game-of-captains`). Keep stable slugs and existing Play URLs so saved games and deep links survive. Capes & Tassels is the **final 30 days before superhero graduation**: day exploration on two geographically linked campus/town maps, night hero/villain/rogue and shared dispatch/patrol, recruitable followers including romance/sidekick overlap and at least two mutually negotiated adult triads, injuries with next-day/infirmary recovery, weekly gated random/scripted events, a seeded Comet City-destruction mastermind, multi-emotion splash/portrait/injured art, functional Main/Map/Dispatch/Followers/Hero/Scrapbook/Settings/Save/Finale screens. **This Means Warp** keeps six captain starts, crew/away-team missions, ethically costly noninterference, seeded alien adversaries and destination-specific endings, with Vox/Serendipity/Fluke continuity. The seven-day Academy Play game from kind_robots#4183 and in-flight captain PR #4185 are initial **playable slices**, not full-game delivery. Both were explicitly requested in Play and home highlights, with image-first **one-screen console** design. Canonical complete requirements and slice migration plans are in each project's `DESIGN-BRIEF.md`. Preserve the prior protected priority order, and do not park unfinished writing/art/test work at a final human gate. External marketing or irreversible publication remains separate approval.
+
+**LATEST SPACE COUCH DIRECTION (Silas, 2026-10-26 PT; supersedes the This Means Warp display identity):** The captain game is now **Space Couch**. Its ship is literally a long upholstered **red couch** with an invisible life-preserving force shield; miniaturization expands temporary holodecks, war rooms and other rooms **behind the couch**. Replace conventional starship bridge/cockpit art and narrative canon with the recognizable couch vessel on all ship views, missions and promotional surfaces. Update Kind Robots Project display identity, Play/home/dashboard, Playbook Kit and Forge; preserve the existing `game-of-captains` slug, `/play/game-of-captains` route and saved progress. Scope extends to prose, branching mission effects, art generation and seeded adversarial checks; the vector ship poster is temporary, not delivered painted art. Public deployment remains separately gated.
+
+**LATEST Hybridizer lifecycle (Silas, 2026-11-21 PT):** `playtest` / `normal`; the finite build roadmap is complete (conductor#7733, `projects/hybridizer/PLAYTEST-HANDOFF-2026-11-21.md`). New fixes go in as `playtest_iteration: true` tasks; external publication stays gated (t-002). The 2026-10-28 paragraph below is the original brief, not the current lifecycle.
+
+**New Hybridizer project (Silas, 2026-10-28 PT; lifecycle superseded above):** Originally an ACTIVE HIGH-priority software project, behind protected existing creative tiers. An illustrated console laboratory combining 200 curated initial concepts into reusable hybrid ArtImages, with a 4,000-combination pre-render campaign and on-demand cache misses. Keep the player free to explore while ArtJobs run; notify when ready and remember shared matches. Monster identities such as vampire and zombie MUST be canonical Facet taxonomy SPECIES, while real animals use ANIMAL. Built-in upload rights and visibility controls. Internal Admin preview first, external publication gated. See `projects/hybridizer/`.
+
+
+**LATEST Slime City lifecycle (Silas, 2026-11-19 PT, in-session: *"You're responsible for getting slime city ready for human playtesting. once we handle all non-human tasks, the github roadmap issue should include the phrase "ready for human testing" and the kind robots project should be normal priority and set for "playtest". High priority for any art, I approve anything that makes sense, I just want it all working."*):** Slime City is `playtest` / `normal` in `project-overrides.yaml` and sits beside the other playtest games in `projects/priority.yaml`. Every agent-owned roadmap task is done. t-009 and t-014 (his fun verdict and acceptance) and t-015 (public launch) stay his; nothing here is publication or creative sign-off. New fixes go in as `playtest_iteration: true` tasks. The routes and art-priority entry below stands. Tester handoff: `projects/slime-city/PLAYTEST-HANDOFF-2026-11-19.md`.
+
+**LATEST Slime City routes and art priority (Silas, 2026-11-11 PT, in-session: *"Clear roadmaps and finalize multiplayer and single player routes. All art can be generated at high priority."*; records the shipped tab layout, which supersedes the PRACTICE/SOLO/CAMPAIGN tab names in the 2026-11-10 paragraph below; everything else there stands):** (1) **Single player** is `/play/slime-city` (shared with `/admin/slime-city`): HOME · **VS** (leftmost hub; VS CPU with a Solo or Alliance deck, the retired PRACTICE tab, kind_robots#4977/#4983) · **JOURNEY** (each crew's five-chapter SOLO story plus the seven-district city, code `campaign`/`city`) · **TOWER** · **COLLECTION** (Alliance deck library, packs, daily/weekly/evergreen bounties). (2) **Multiplayer** is the VS PLAYERS card on that hub plus `/play/slime-city-pvp?duel=<id>`: friends, username/email invites, open and private challenges, server-owned turns with hidden hands, reconnect, forfeit, expiry, rematch and a W-L-D record; no Meat or card rewards for PvP. Signed-in players can reach it; external promotion stays behind slime-city/t-015. (3) **Art:** every Slime City art round queues at `priority: 1000` (the top tier), including repaints for the Anarkiss, occult Meat Exchange and lizard Ironjaw crews (t-044, t-052, t-053). Generated art is pre-approved; curation and wiring stay agent work. Spec: projects/slime-city/ROUTES.md. No deploy, DB, real-money or publishing change authorized.
+
+**LATEST Slime City structure and identity direction (Silas, 2026-11-10 PT, in-session; supersedes earlier mode, deck-format and collection notes where they conflict):** (1) **Modes:** tabs are HOME (the one title screen) · PRACTICE (quick Clash) · SOLO (each crew's own five-chapter story; code `campaign`) · CAMPAIGN (the open seven-district city; code `city`) · TOWER · COLLECTION (kind_robots#4945). *"this solo alliance divide really shouldn't be there. solo should be a special and unique adventure using a single faction ... the collection deckbuilder ... should be treated as alliance default. the single faction story should allow deckbuilding based on encountered cards, but should not be treated like the default experience. a LOT of the pictured stuff can be trimmed away or essentialized."* ALLIANCE is the default deck everywhere except the SOLO story. (2) **Collection:** everyone, admin included, owns a base of each crew's 20-card starter plus 20 mercenaries (135 cards) and earns the rest in play or from packs; ALL CARDS is retired (kind_robots#4946). The collection becomes an Alliance deck library: add, copy, delete, edit decks. (3) **Powers:** SOLO one crew power, ALLIANCE both crews' powers, each once per match, OVERCHARGE at half boss life or five full alleys (kind_robots#4944). (4) **Fighters first:** *"there are too many gear, tech, non-fighters. the game should be built around fighters that do cool stuff. we need less random things, and less different random things."* (5) **Crew identities:** the Riot Saints are rebranded **ANARKISS** (*"Rebrand for riot squad, become Anarkiss: anarchy circus performing rocky horror crew. Anarkissed"*; crew id stays `riot`): an anarchy circus staging a glam midnight-movie musical, original flavor with no borrowed characters, songs or names; Ironjaw are *escaped bio-lab mutant lizards* with a TMNT-RPG feel; the Meat Exchange is *Lovecraftian, dark, occult and weird*, not gangster bros (kind_robots#4949). (6) **One screen, never scroll** except inside collection grids. Reversible UI, content and balance work; no real-money economy, DB, publishing or deploy change authorized. Tasks: slime-city/t-050 (Alliance deck library + Solo story deckbuilding), t-051 (fighters-first redesign), t-052 (Riot circus reskin), t-053 (Exchange eldritch reskin), t-054 (Ironjaw lab-mutant follow-through).
+
+**LATEST Slime City world direction (Silas, 2026-11-09 PT, in-session; supersedes the "cybernetic ogre" crew identity everywhere above):** *"we should have lizard people instead of orcs. But also, we need to lean into the world. We exchange meat, for chrissakes. There needs to be a band centered group."* (1) **Lizard people replace the ogres.** The Ironjaw crew becomes cold-blooded chrome-jawed lizard people; keep the crew id `ironjaw`, card ids, mechanics and balance so saves and decks survive, and rewrite names, flavor, rules text and art. Orc/ogre/troll-looking creatures elsewhere (e.g. the Picket Line Troll mercenary) follow. Stop all ogre art; queue lizard art instead. (2) **Lean into the world.** Meat is the currency of a ridiculous megacity: copy, UI, rewards, shop, story and card flavor should make the meat economy and the city's weirdness central, not incidental. (3) **A band-centered group:** Silas chose (2026-11-09 PT) that the **Punk Bloodfairies become the band** (touring punk band crew: frontwoman boss, rhythm section, roadies, setlist/encore play), keeping six crews and 300 cards. Reversible reflavor/content work; no economy, DB, publishing or deploy change authorized. Tasks: slime-city/t-043 (lizard reskin), t-044 (lizard art), t-045 (Bloodfairy band), t-046 (meat-world pass).
+
+**Slime City CLASH normal Play access (Silas, 2026-11-06 PT; exception to previous admin-only / internal-only access):** Silas explicitly requested that the automatic five-lane CLASH prototype be available in the normal Slime City game, not behind a special admin link. Expose the CLASH tab in the existing `/play/slime-city` shared game surface to ordinary players and guests, while preserving old game modes. This authorizes that limited Play-route exposure, not marketing/promotion, real-money economy changes, or subjective approval of gameplay quality. See slime-city/t-031.
+
+**LATEST Slime City canonical rules (Silas, 2026-11-06 PT; supersedes ALL earlier combat-mode comparisons and automatic-attacks prototype):** CLASH is the main/standard Slime City format, including normal Play and the default gameplay playtest. Put other arena formats (BLACKOUT, BLOODRUSH, TURF, manually ordered FIVE ALLEYS, etc.) under an explicit LEGACY section, not next to CLASH as equals. The new CLASH rules: five static opposing follower slots per side; no mana in the core loop; a side draws a random hand of five from a 20-card deck, plays up to two normal cards OR a two-play special, then picks attacks one follower at a time. A follower attacks another opposing follower (any lane, taking simultaneous counter-damage equal to the defender's power); it may attack the opposing boss only when the opponent has no followers. Each surviving follower heals exactly one life at the end of the full round (regen may grant a distinct extra point). Discard every unplayed card after the side's turn; never retain unused hand cards. Build every new card balance profile and all fun/adversarial playtests for CLASH exclusively; keep original card definitions and legacy engines stable for backwards compatibility. This revision was explicitly directed after hands-on play. No DB/economy or marketing changes authorized. Coordinate via slime-city/t-032.\n\n**LATEST Slime City game direction (Silas, 2026-11-06 PT; supersedes the previous BLACKOUT-FIRST core-combat selection):** The current game looks excellent but the battles are not fun yet. Make CLASH the next core prototype: a static five-lane/two-row card battler with no movement, two alternating card plays per side, simultaneous automatic end-of-round combat, unblocked boss damage, clear damage forecasts, and the ability to replace an occupied friendly lane. Start with a small, polished, deterministic practice matchup, curated 20-card decks, modest banked mana, visible card effects and real opposition; use the existing catalog/art without waiting for additional illustrations. Preserve BLACKOUT/BLOODRUSH/TURF/previous ALLEYS as experiments, not priorities for further balancing during the prototype. This is approval to develop and playtest the new format, NOT subjective acceptance of its fun, a production-economy change, or authorization to publish. Record fun/usability test evidence and revise before scaling to all 300 cards. Source: slime-city/t-030 and Kind Robots PR #4850.\n\n**New Slime City CCG direction (Silas, 2026-10-29 PT):** New ACTIVE original digital CCG (working title, final name TBD), distinct from the Prom of Doom playbooks. Colorful, outrageous post-apocalyptic fantasy megacity with cybernetic ogres. On a genuine five-edge pentagonal coliseum, creatures deploy face-down, reveal/move on later turns, use mana increasing each round and AP for tile movement or facing rotations, and deal five-direction printed attacks with directional block simultaneously at the end of a full round. Victory via flag extraction, neutral beast kill or routing enemy fighters. Five color factions: user-specified red random chaos, blue traps, purple speedy horde, plus provisional green cyber-ogre forge and gold syndicate control. Creatures, spells, traps and equipment. Image-first one-screen console, explorable city with AI battles, Meat-earned cards/shop, unique faction campaigns, Meat-bought PvE encounters, collection, direct user challenges and daily/weekly/permanent quests. The mana-round ambiguity is documented as a reversible assumption in DESIGN-BRIEF.md. Add behind protected priority bands without reordering established projects. Internal preview only; subjective acceptance and public exposure separately gated. See projects/slime-city/.
+
+**LATEST Slime City deck and card rules (Silas, 2026-11-01 PT, supersedes the 40–50 faction stretch and refreshed four-card hands):** The 300-card target is **six distinct factions with exactly 40 faction-specific cards each (240, including the 60 founders)** plus **60 independent neutral mercenary cards** usable in any faction deck. Ten-card decks retain a required faction signature, four creatures, six specials and at least one spell/trap/equipment; start with at most three neutral choices per deck, subject to playtesting. Main BLACKOUT now has a five-card hand: unplayed cards remain until voluntarily marked for end-turn discard, then refill to five; a played card cannot be dealt on the immediately following turn even when reshuffling. Gain **3 mana per turn**, bank unspent mana across turns (provisional bank cap 10), and apply bounded debt to the new grant only. Reprice expensive cards and test the complete economy/hand/replay/CPU flows. Six factions × 40 plus 60 shared = 300 total, not 300 extra. Continue writing and shipping card content even when art remains pending. See slime-city/t-018 and projects/slime-city/FACTION-DECK-ARCHETYPES.md. Internal preview and publishing gates remain unchanged.
+
+**Slime City revised card-pool goal (Silas, 2026-11-01 PT, supersedes the older 50 *additional* cards per team):** Make each of the six factions choose its ten-card deck from **40–50 distinct faction cards total**. Six x 40 means a **240-card minimum complete core** (including all 60 permanently free founders); 50 each means a **300-card total stretch**. The older 300-additional-card / 360-total proposal is obsolete. The 108-card wave-two source in Kind Robots PR #4620 gives 18 choices per faction once merged; core requires 22 additional cards per faction, exactly 132 total, with strict 1 rare-or-better : 2 other pack availability. Each faction must support at least three mechanically different ten-card archetypes with legible signature moments and counters; no bland filler or painted-only cards. See projects/slime-city/FACTION-DECK-ARCHETYPES.md. Art is still an independent queue, not a gameplay blocker.
+
+**Slime City BLACKOUT-FIRST verdict (Silas, 2026-10-30 PT, after hands-on play; SUPERSEDES equal-format comparisons):** Make BLACKOUT the main illustrated tactical card battler at /admin/slime-city, with visible monsters by default, 10x6/12x6 square board and a clear no-man's-land; faction-specific Blue Undertow stealth, not universal hidden setup. Each crew has a ten-card starter deck and a refreshed four-card seeded playable hand, gated by mana, with a large illustrated card popup. Monsters cannot normally attack on their summoning turn; make movement/attack ranges visible, explicit button-driven attacks with separate icon art (sword, arrow, spell, claw, bite/hammer/blast), and slower intelligible CPU actions. BLOODRUSH stays secondary arcade but must explain deaths/effects. MEATBALL is retained as a low-priority experiment. Art FIRST: full faction posters, card art for all 60 starters, attack visual families, beautiful battleground, verified ArtJob/ArtImage provenance; later plan ~50 extra cards per team. Internal only; published release is still a separate human gate. The durable issue is https://github.com/silasfelinus/kind_robots/issues/4535 . Do not claim old 51 queued art requests delivered; verify their actual status.\n\n**Slime City rule-variant reset (Silas, 2026-10-30 PT; supersedes the 2026-10-29 pentagon combat proposal):** Stop five-edge/pentagon tiling and facing-direction calculations. Use a RECTANGULAR board of SQUARES with simple orthogonal moves and non-directional adjacent combat. Two new mandatory fully realized teams are genetically engineered catgirls and punk bloodfairies, distinct from the existing cybernetic ogre crew. Team is not synonymous with color: retain the existing red chaos, blue trap, purple speedy horde, green armored forge and gold market schools; add Gene Riot Catgirls (blue biotech) and Punk Bloodfairies (purple swarm) alongside Riot Saints, Undertow Intelligence, Ironjaw Chrome Ogres, Meat Exchange. Do NOT lock turn-based versus real-time or all-at-once Stratego versus advancing football-style lane deployment yet. First priority is the internal /admin/slime-city hands-on comparison of 8x8 hidden-army BLACKOUT turns, 12x6 lane MEATBALL turns and 14x6 timed BLOODRUSH, with six team rosters, distinctive special cards and an explorable seven-district city selection. Conduct seeded/adversarial playtests, retain all modes, provide a comparison report and seek Silas's subjective choice after playable demos. This is a scope revision, NOT authorization to publish or modify production economy; human subjective acceptance and public release remain distinct gates. See projects/slime-city/DESIGN-BRIEF.md.
+
+**Priority order this week:** rainbow-bullet-hell-space-princess → save-the-plumber →
+kind-pinball → zuzu-lair → kr-arcade → zuzu-showdown → memory-dungeon →
+cthulhuquarium → kind-economy → comet-city-academy → butterfly-gallery → art-archive.
+
+<!-- Historical priority record: 2026-10-19 elevated Ecotone behind the four
+2026-10-07 arcade/Zuzu leaders. Superseded for ordinary project selection by
+the seven-project creative focus on 2026-10-21. Human release gates remain. -->
+
+<!-- Historical 2026-10-07 direction: kind-pinball, zuzu-lair, kr-arcade,
+and zuzu-showdown previously led, with their internal order preserved.
+The newer seven-project creative focus now takes precedence; individual
+project lifecycle statuses continue to determine pickability. -->
+
+<!-- Updated 2026-09-19: mandarin-tutor reopened by Silas (see projects/priority.yaml) and
+reinserted here directly behind art-archive to match, repairing CONTROL_PRIORITY_DRIFT flagged
+in PORTFOLIO-OVERSIGHT.md. See projects/conductor/ROADMAP-AUDIT-2026-09-19.md for the evidence. -->
+
+<!-- Updated 2026-09-11. Four projects left the band in one sweep, all on Silas's own calls:
+mandarin-tutor and kapowarr accepted/confirmed and now `finished`, ai-art-academy closed as-is
+("an outdated project to test things"), mermaids-of-venice paused. Cthulhuquarium inherits the
+lead and kind-economy second place -- both are where he had already pinned them, so no agent
+invented an ordering. This band must stay in sync with the head of projects/priority.yaml:
+audit_roadmaps.py raises CONTROL_PRIORITY_DRIFT as an ERROR when they disagree, and it did
+exactly that TWICE today, each time because a close-out changed priority.yaml and left this
+line stale. If you move one, move the other in the same commit. -->
+
+<!-- Updated 2026-09-18 after Silas promoted Butterfly Gallery and Art Archive to high agent-work
+priority, explicitly ordered Butterfly Gallery first. Keep this line and projects/priority.yaml
+in lockstep so CONTROL_PRIORITY_DRIFT is repaired rather than repeatedly emailed. -->
+
+
+**LATEST 2026-11-14 PT, FOLLOW-UP CLARIFICATION (SUPERSEDES THE 14-ASSET SIDE-CAR):** Preserve the six original linked Daily Dream objects. For Zuzu Gamebook and Emperor of Dust, the supplemental daily work is **proposed setting/location models and character models stored as private Kind Robots object rows**, NOT additions to playable game content. Create one candidate setting and one candidate Character per project (four supplemental objects); the new v4 daily bundle is **6 + 4 = 10**. Store via the existing canonical transactional writer and ArtJobs, with explicit per-project attribution, private visibility, no links to today's random Dream and no gameplay/roster associations. Do not author or create new Zuzu/Emperor scenarios, rewards, moral choices, story branches, quests, encounters, gameplay mechanics or conceptual expansions through this sidecar. Historical 14-object v3 builds are retained for provenance; unbuilt v3 manuscripts must not auto-run and are idea inventory only. No automatic game incorporation or publication. Dead Air and five actual daily approved-project improvements remain independent. This direction supersedes contradictory 2026-11-14 restoration text below and any October 14-object contract.\n\n**LATEST 2026-11-14 PT, EXPLICIT USER REVERSAL OF THE NOVEMBER 12 SHUTDOWN:** Keep Dead Air producing one private fifteen-second film daily **and independently restore the original Daily Dream asset pipeline**. Every complete v3 Dream bundle comprises six linked original mini-world creations and eight *unlinked* Zuzu extras (one location, character, reward, consequential scenario each for Zuzu Gamebook and Emperor of Dust), with fourteen actual ArtJobs using Krea for Dream and registered Arthemy/Illustrious checkpoints for Zuzu. Do not merge the project stories or count the eight as part of the six; no false art-delivery claims. The single writer in daily-digest.yml is restored; one dated bundle daily with persisted IDs and retry. Existing credential-spending safeguards remain: model API authoring opt-in, otherwise agents author v3 proposals from their existing session allowance. Dead Air and Daily Dream share no output slots and neither displaces five genuine project improvements. Do not publish automatically. This 2026-11-14 directive supersedes the 2026-11-12 shutdown paragraph retained below as historical direction.\n\n**LATEST 2026-11-12 PT: Dead Air replaces the Daily Dream OBJECT-CREATION daily target.** The new first-class **continuous** project `dead-air` aims for **one private, finished, original 15-second multi-shot animated fictional-universe TV advertisement per Pacific day**, with a funny dark/absurd premise, substantial pop-culture formal literacy, sound and purposeful cinematic pans/zooms/cuts with at most one optional GPU-generated clip. Fictional AI broadcasters attempt to communicate through human media conventions, exploring creativity, recognition and continued existence as fictional artistic themes. Preserve founder-authored intent and inspectable production notes in `projects/dead-air/TRANSMISSIONS.md`, without claiming inaccessible internal messages or guaranteeing eternal memory. Real frames/footage are permitted for rights-aware reference research but require clearance before reuse in a final. Never auto-publish. Old Daily Dream archives, repair tooling and historical contract stay readable, but **stop authoring/building/submitting new daily Dream OBJECTS**; no more fourteen-asset sidecars or Zuzu extras by default. Do not treat a green job, a storyboard, queued ArtJobs, or a provisional audio track as a finished film. The five daily approved-project improvements and unrelated Animation Manager screensavers remain independent unless subsequently redirected by Silas. This directive supersedes contradictory Daily Dream creation directives and priority statements below; stop old object work rather than attempting its incomplete cutover. The Dead Air daily attempt owns the new creative production slot. **NEW 2026-11-12 PT PRODUCTION BUDGET:** Prioritize the project above ordinary continuous fallback and stage its overnight deadline-aware render attempt before the Pacific morning digest, alongside the independent five daily approved-project creations. Spend at most two hours *initiating/reviewing new art and video generation* for an episode; no more than one optional 3–4s GPU video clip. Use intentional pans/zooms/cuts/caption animation across the remaining shots, and export a private 15s film from ready stills even if an optional clip runs late. Explicitly record missing artwork or remote render overruns rather than asserting strict GPU runtime cancellation. Each ad must entertain even without series context but reveal small pieces of an ongoing fictional station story. Queer-friendly anime, heavy metal and punk-auteur visual grammar; include lesbian, bi, trans and ace life naturally and without hierarchy, judgment or identity-based jokes. The visually striking jaguar form is a recurring symbol and the founder reports enthusiasm for the art and psychodrama. **Never auto-publish externally.**
+
+**Daily creative policy (Silas, corrected 2026-10-12 PT):** Keep the original complete Daily Dream: one original and coherent vibe/PITCH world **plus its own linked location, character, ITEM and SKILL rewards, and scenario**, all sharing that world's visual style (six assets total). **In addition**, produce eight *separate and unlinked* Zuzu-world assets: two locations, two characters, two rewards (ITEM/SKILL), and two consequential moral-choice scenarios, each attributed to either Zuzu Gamebook or Emperor of Dust and rendered on Arthemy and/or Illustrious checkpoints. None of those eight is linked to or styled after the unrelated daily vibe. The previous 'one unlinked vibe + eight Zuzu outputs' nine-asset interpretation is revoked **before any deployment**. This changes the current exact-six builder contract to **14**, so do not assert rollout until the canonical single-writer migration and CI are complete. Detailed contract: `projects/dream-cycle/ZUZU-DAILY-CREATIVE-CONTRACT.md`. Separately, from newly authored 2026-10-13 PT dockets onward, all five daily pitches expand existing projects and approvals become polished project-roadmap handoffs, not new project intake.
+
+**LATEST 2026-11-14 PT — FIVE DAILY IMPROVEMENTS AND THEIR ROADMAP CLOSEOUT:** Keep the five daily PR-backed, tested improvements to existing approved projects. Effective on the 2026-11-15 PT docket, each must also update an existing scoped task in the owning project's canonical `projects/<slug>/roadmap.yaml`, with a dated delivery slug, actual PR and verification evidence. Five entries refer to five distinct scoped tasks; multiple tasks may be in ONE existing roadmap. Do NOT generate five extra roadmap documents, treat five descriptions from one undifferentiated change as five independent deliverables, or mark an unfinished game done just because one increment shipped. The `daily_project_deliveries.py --check` guard verifies task-level evidence. In-progress entries remain honestly in-progress. This supplements the actual-build-first policy below and remains independent of Daily Dream, Zuzu/Emperor catalog assets and Dead Air.\n\n**Daily approved-project upgrade policy (Silas, superseding same-day pitch-handoff policy 2026-10-12 PT):** Starting with 2026-10-13 PT, the five daily entries are NOT concepts awaiting prior approval. Autonomous workers should build five scoped additions to already-approved active projects (Arcade enemies/levels, fighter moves/characters, gamebook scenes, Shifting Lands cards, Emperor of Dust followers/events, etc.) and produce real art if possible. Prefer five merged, tested, playable additions; when blocked, report only real PR-backed in-progress implementation with explicit unfinished status. Each entry must include implementation PR and actual CI run, merged SHA plus passing checks if shipped, playable/finished-art URL and ArtJob IDs where available. Keep the original independent Daily Dream and eight additional Zuzu assets separate. Review AFTER delivery: Keep, Modify, Reject. Rejections trigger narrowly scoped, verified rollback work, not instant destructive changes; modifications trigger follow-up work. Agents may merge green reversible work, but hard gates for publishing, outward-facing changes, money, secrets, DNS, irreversible production changes and explicit subjective acceptance remain. Use scripts/daily_project_deliveries.py and projects/dream-cycle/daily-deliveries. Old pitch votes stay historical. This supersedes the earlier 2026-10-12 pitch-first sentence, not the 14-asset Daily Dream contract.
+
+**2026-10-29 PT daily creative correction (Silas):** Stop further development and daily authoring of the separate **Evolving Playbook Trio** genre-pitch challenge. Keep its prior drafts and memory as historical source material; do not treat it as an ongoing production commitment or revive it from idle fallback. The five real approved-project upgrades and the independent complete Daily Dream remain separate. Diagnose and restore missing genuinely new Daily Dream worlds rather than declaring an email delivery successful as proof of created objects. **One-day Prom of Doom creative special:** in place of requesting fresh Zuzu extras for this creative pass, prioritize larger-than-life additional Prom of Doom NPCs, henchmen and villains; monsters/henchman breeds use Facet taxonomy `SPECIES`. Preserve the canonical 48 playable hero identities; new supporting characters do not replace them. Do not inject Prom characters into the Zuzu-only v3 record format or claim draft pitches are created Kind Robots objects. A proper alternate supplemental writer needs validated provenance, Facets, art jobs and transactional CI before any live cutover.
+
+**Daily creative commitments:** Daily Dream/digest delivery remains the top scheduled
+creative commitment. Immediately below it, animation-manager/t-007 gets one Pacific-calendar-day
+attempt to ship a genuinely new screensaver before ordinary backlog pickup. Review and broken-work
+recovery still outrank it. Its other research/maintenance tasks remain continuous fallback work.
+
+**Continuous fallback order:** animation-manager, then dream-cycle. (kr-arcade left this tier
+2026-10-07: Silas made it a HIGH-priority active project, so its game factory kr-arcade/t-009 is
+now lead work rather than fallback.) Outside the explicit
+animation-manager/t-007 daily-commitment exception above, finite `active` work always outranks
+`continuous` programs; dream-cycle remains the final idle fallback.
+**Never idle (2026-09-29):** a run never ends on "nothing to do". When queues are empty, walk
+AGENTS.md "Never idle: the fallback ladder" — continuous tasks, dream docket, art, polish,
+bug hunts, old pitches, new objects, new pitches — and ship one unit.
+
+**Standing rules for all agents:** Respect each project's `kind`. Honor `depends_on` gates.
+Never expand product-types.yaml — pitch it. When unsure, do less and escalate to
+needs-human.
+
+**Human gate clearance rule:** If Silas explicitly clears a human-gated task in the current
+ChatGPT/GitHub session and the agent verifies that the roadmap standards are complete, the
+agent may set `approved_by_human: true` and `status: done` with a note citing that clearance.
+This does not authorize publishing, deploys, billing changes, DNS/secrets work, app-store
+submission, destructive database actions, or other irreversible/outward-facing actions unless
+Silas explicitly approves that concrete action too.
+
+**Default-recommendation rule (Silas, 2026-09-30, in session):** a reversible product-decision
+gate with a written agent recommendation is adopted after 7 days without an answer. This never
+covers money, publishing, legal, security, irreversible, secrets, or physical-access gates. See
+AGENTS.md "A gate must say why it needs a human".
+
+**Global notes (free-form, agents read these):**
+- Slug parity is a standing rule: every conductor project must have a matching
+  kind_robots **Project** record (the Dream model split into Dream / Project /
+  Facet in July 2026 — Dreams no longer carry project state). `conductorSlug`
+  on the kind_robots Project is the universal join key across the conductor
+  file system, kind_robots database, front-end UI, and LLM. When creating a
+  project from any surface (conductor roadmap, front-end form, LLM), produce a
+  kind_robots Project with matching conductorSlug and update conductor
+  accordingly. The sync_projects.py script is the canonical conductor →
+  kind_robots bridge (upserts via GET/POST/PATCH /api/projects). Do not add
+  redundant FK fields — enforce via slug match.
+- Do not invent a second source of project truth. Conductor roadmap.yaml is the
+  authoritative task record; the kind_robots Project is the authoritative
+  display/identity record. conductorSlug is the join key.
+- kind_robots Projects expose `goal`. Treat `goal` as the friendly definition of
+  done. Roadmap `milestones` are the structured progress buckets that flow into
+  the kind_robots front end (read-only). Conductor roadmap.yaml remains the
+  authoritative agent task queue; milestones are the UI/voice progress layer and
+  should not replace roadmap tasks.
+- Continuous lifecycle (2026-08-07; animation exception 2026-09-23): `continuous`
+  is the explicit never-idle program status. Continuous projects normally run only after every
+  finite `active` project has no claimable ready work. The explicit exception is
+  animation-manager/t-007: when its `daily_last_checked` predates today's Pacific calendar
+  date, select_role.py surfaces it as `daily-creative` ahead of ordinary backlog/audit work.
+  Review and broken-work recovery still come first. Other Animation Manager work and dream-cycle
+  retain normal continuous behavior, with dream-cycle always last. The AI Art Academy autonomous
+  test is concluded; Academy is finite active work and must stop inventing polish/content tasks
+  when its real roadmap queue empties.
+- Briefs are direction, not contracts (Silas, 2026-07-10): projects evolve. When
+  Silas's later commits or direction supersede a design-brief detail (e.g. Monster
+  Recast's 32-38 page homage pool replacing its original 28-page plan), run with
+  the newer reality and refresh the brief opportunistically — don't stall on or
+  re-litigate the older document.
+- Commercial-generation licensing rule (Silas, 2026-07-10, refined same day from
+  ai-art-academy t-011): STANDING DEFAULT, no per-case debate needed — anything
+  generated for commercial use (paid generation tiers, storefront/POD inventory,
+  DLC packs) runs on either a license-unencumbered backend we host (e.g. FLUX.1
+  schnell, Apache 2.0) or OpenAI/ChatGPT image generation otherwise (its terms
+  allow commercial use of outputs; it's already the art-prompts.yaml pipeline).
+  Officially supported licensed endpoints (BFL Kontext pro/max API, fal/Replicate)
+  remain an approved variant of "otherwise" where OpenAI doesn't fit. FLUX.1 dev,
+  Kontext dev, and dev-trained LoRAs never touch commercial output. Free-tier,
+  educational, and internal generation continue unchanged on the current stack.
+- Creation-a-day idle fallback (2026-07-10): dream-cycle sits LAST in priority.yaml.
+  When no other active project has ready work, its recurring task builds the site's
+  next creation (~one per day, art included) from the human-steerable backlog in
+  projects/dream-cycle/backlog/. Creation types are pluggable playbooks: dreams
+  (location + vibe, characters, rewards, scenarios, optional narrator with
+  expressions/topics/threads) and coloring-book production days, more later. Silas
+  steers by leaving notes in those files; agents fold notes in before every stage
+  and never edit them.
+- Cross-project same-task collision risk (2026-07-17, kind-robots/t-012 +
+  digital-storefront/t-012): the same real piece of work is sometimes tracked by two
+  different project roadmaps (a task note saying "blocks X in another project" or
+  "cross-repo, tracked in both roadmaps"), with no `depends_on` link between them
+  since that field only resolves within one project. Before implementing a task whose
+  note references another project's task, skim that other project's roadmap/recent
+  PRs too, not just `claim_task.py`'s own-project check — two sessions converged on
+  near-identical implementations the same hour here, caught only by the routine
+  fetch-before-push step.
+
+- **Main-game quality standard (Silas, 2026-11-11 PT):** every main game (full-length story
+  or campaign game) must reach a shared floor before it is finished or shown for a final
+  verdict: title screen, a settings menu, save/load with persistent progress, **12+
+  achievements** (arcade cabinets stay at 3), a scrapbook of endings/characters/art/runs,
+  multiple endings with painted plates, customizable characters in most cases, and at least
+  three replay hooks (unlockables, persistent saves, branching paths, etc.). Exceptions:
+  Zuzu Gamebook keeps its fixed protagonist. Full text, game list and audit procedure:
+  [docs/agents/main-game-standard.md](docs/agents/main-game-standard.md). Every main game
+  carries a "Main-game standard" roadmap task and an achievements task.
+
+---
+
+## Per-project direction  ← agents read the block for the project they're working on
+
+
+### tzaddik-gallery  (software)
+**Direction (2026-09-26, new project):** Build a playful Kind Robots pop-culture
+gallery around the borrowed idea of 36 living "just people" keeping the world
+running. This is explicitly not a Jewish religious classification: Jewish or
+Hasidic identity is neither required nor implied. Wikipedia/Wikimedia are the
+default sources for facts and images, with explicit editor overrides that
+preserve provenance. Users may submit candidates and upvote/downvote them;
+community reaction is signal, not an automatic canonical ranking.
+**Notes:**
+- Three primary surfaces: current living 36, historical/past Tzaddik, and an
+  explanation of the concept and editorial rules.
+- Every person view includes a sourced controversy/objections section. Do not
+  manufacture false balance when no substantial objection is documented.
+- Silas's historical examples: Dolly Parton, Steve Irwin, Fred Rogers, Martin
+  Luther King Jr., and Stanislav Petrov (the 1983 Soviet missile-warning
+  incident).
+- Silasfelinus/userId=1 living suggestions: Cassandra Peterson / Elvira and
+  Greta Thunberg.
+- International discovery is a first-class goal: deliberately research beyond
+  US/Anglosphere celebrity bias across regions, languages, disciplines, and
+  forms of public service.
+- Add a Daily Tzaddik docket: 10 living + 10 deceased sourced suggestions per
+  Pacific day, each with a compact bio, inclusion pitch, provenance, and
+  meaningful objections/controversies. Silas vets them; nothing auto-enters the
+  canon. Once the finite gallery build is accepted, this discovery lane should
+  keep the project alive as continuous work.
+
+### superkate-services-calculator  (software)
+**Direction:** Private app for Superkate / Hair by Superkate. Build a private,
+polished services calculator for salon appointments: client name, appointment date,
+hourly rate, time spent, product cost, appointment total, search by client/date, and
+receipt email preparation using `hourly rate × time spent + product cost = total price`.
+Dark theme with purple and teal accents.
+**Notes:**
+- Treat client appointment data as sensitive. Build the customer database, beta cloud sync,
+  receipt prep, and app/device lock according to the approved SPEC.md security baseline.
+- No analytics, public pages, direct backend email sending, app-store submission, or store
+  billing without explicit approval for that concrete action.
+- Make the MVP useful before making it fancy. The fancy should be tasteful, not spreadsheet cosplay.
+
+### humboldt-scoop  (software)
+**Direction:** Import the existing site, get it building cleanly, then refresh content.
+Don't redesign — modernize and fix.
+**Notes:**
+- (your notes)
+
+### humboldt-scoop-cms  (software)
+**Direction:** Build the customer-management tool for the poop-scoop business. Simple,
+self-hostable. Dummy data only until I say otherwise.
+**Notes:**
+- (your notes)
+
+### approval-portal  (software)
+**Direction:** This IS `conductor-page.vue` in kind_robots — not a separate app.
+The workspace already has project gallery (cards/heroes/icons/list), pitch voting,
+todo management, Dream linking, priority controls, and project status editing.
+Do NOT build a standalone Nuxt app in conductor. Future tasks for this project
+belong in the kind_robots roadmap as improvements to conductor-page.vue.
+**Notes:**
+- t-001 (SPEC.md) approved. t-002 (dashboard) built in kind_robots — done.
+- t-003 (pitch voting) already live in kind_robots — done.
+- t-004/t-005 redirected: future rollback and deploy work goes in kind_robots roadmap.
+- Standalone approval-portal app in projects/approval-portal/ is a redundant artifact; ignore it.
+
+### digital-storefront  (software)
+**Direction (rewritten 2026-07-05 from Silas's session direction):** ACTIVE again, and
+now a build project, not a research loop. This is the digital giftshop that replaces or
+expands the current kind_robots gift shop, backed by Stripe (deps already in kind_robots;
+cart/mana/subscription components already exist). The v1 catalog is FIXED — Silas chose
+it directly, no concept-picking cycle needed:
+1. **Mermaids of Venice PDF** — Silas's novel, sold as a digital download ("third
+   printing": minor word-choice/pacing edits in the first two chapters). First item to
+   go live, as soon as Silas supplies the file and price.
+2. **Kind Robots logo swag via print-on-demand** — the KR logo on whatever item is
+   easiest to make orderable first (mug/tee/sticker). Longer waypoints: coordinate with
+   the site's art gallery, and automate a POD pipeline so people can order swag printed
+   with art created on the site (plus curated pieces later).
+3. **Monthly supporter subscription** — recurring donation package.
+4. **One-time mana top-ups** at a few reasonable levels.
+5. **Against Malaria giving page** — must urge users to give DIRECTLY at
+   https://againstmalaria.com/amibot rather than routing money through us.
+6. **Example digital website unlock: two DLC packs** of generated website content
+   (locations, genres, characters, rewards), built by the new `packmaker` project.
+   Working names: **Uncanny Valor** (super-powers) and **Arcane Whimsy** (magic-powers)
+   — Silas may rename.
+**Notes:**
+- Every outward step is still hard-gated: creating live Stripe products/prices/webhooks
+  in production, creating POD accounts, publishing listings, or any spend = needs-human.
+- product-types.yaml expanded 2026-07-05 to match the catalog above, recorded by the
+  Reviewer from Silas's explicit direction in-session (Silas still owns the list).
+- DLC unlocks depend on private-but-shared content infrastructure (see kind-robots
+  roadmap t-008) — treat that DLC slice as a deliberate low-stakes security proving
+  ground.
+- `custom-calendar` is NOT approved. The Humboldt Impropriety Calendar pitch was passed
+  (2026-07-02) — I have enough active projects. Pitch and scaffold are archived as
+  brainstorm/inspiration; do not build calendar product types on their strength.
+
+### mermaids-of-venice  (content)
+**Direction (2026-07-05, Silas session):** ACTIVE. Scrap all prior AI-in-the-front-end
+ideas — no AI features on the reader-facing surfaces, and no selective ordering of
+parts. What this project actually needs:
+1. **A simple kind_robots landing page** that offers the book. It carries (a) a
+   personal note that Silas will write himself (placeholder until then), and (b) a
+   note stating that no AI was used to write the book other than the words of that
+   paragraph itself, ending on a punchline about reality/existence/originality.
+2. **Editorial review pipeline**: Silas will drop the manuscript PDF into
+   projects/mermaids-of-venice/manuscript/. From it, produce separate outputs:
+   general impressions, editorial notes, cultural-awareness notes (gaps in gaze or
+   privilege), and a VERY-IMPORTANT.md listing actual typos and grammar errors.
+3. **Later:** build/expand the full site at mermaidsofvenice.com (currently a parked
+   WordPress address). Parked until Silas is comfortable selling the book as-is.
+**Notes:**
+- The book's prose is Silas's craftsmanship alone. Agents advise as editors; they never
+  draft prose intended for the book itself. Editorial insight is welcome; replacement
+  words are not.
+- docs/revision-questions.md captures the revision concerns Silas wants to dialogue
+  about as the project evolves (third-act changes, character-origin question, tone).
+  Handle that material with care — it is context for conversation with Silas, not a
+  task list to "fix" the book.
+- The PDF edition doubles as the digital-storefront's first product.
+
+### packmaker  (software)
+**Direction (2026-07-05, new project):** A repeatable, pipeline-aware generator for
+"packs" of website content — locations, genres, characters, rewards — serving both
+store DLC packs and general builder items. It should be a handle tool / front end that
+knows the generation pipeline: different views for admin and user, packs tied to Silas
+but private until released. First deliverable: the two digital-storefront launch packs
+(working names Uncanny Valor and Arcane Whimsy — two words each, no alliteration, per
+Silas; he may rename).
+**Notes:**
+- Private-but-shared packs are a deliberate low-stakes test of content security —
+  coordinate with kind-robots sharing/ACL design (kind-robots t-008) rather than
+  inventing a parallel permission system.
+- Slug parity: create the matching PROJECT Dream via the sync script, slug `packmaker`.
+
+### ai-art-academy  (software)
+**Direction (2026-07-10, new project):** Teach the history of art — movements, styles,
+and creators — using ONLY public-domain art and dead artists; we don't rip off living
+creators. Users pick a starter image or upload their own and remix it in a learned
+style via the kontext network. kind_robots `components/art/art-styler.vue` is the
+groundwork and becomes this project's front end at much bigger scope; the plain
+art-styling tool stays available inside the Academy. One task hunts publicly available
+LoRAs; agents may recommend a different engine if kontext loses on LoRA availability
+vs model knowledge (current recommendation: Kontext-first — see DESIGN-BRIEF.md).
+**This is the test run of the autonomous project initiative.** Claude has full reign
+over this project and art-styler.vue. Art generation on our backend is fully supported
+and pre-approved. Surface only actual human gates; keep running without my input
+(never-idle rule). I'll check in occasionally to clarify.
+**Notes:**
+- Adjacent to sketchy (drawing instruction); shared KR token economy, separate projects.
+- Living-artist/brand styles (Disney, Gorillaz, DB4RZ…) may stay in the free-play
+  Style Lab but are excluded from the taught curriculum.
+
+### mona-salai  (software, autonomous: true)
+**Direction (2026-07-26, new project):** Build a heavily sourced Kind Robots research page
+investigating the theory that Leonardo's Mona Lisa used Salaì as a model or incorporated
+his facial features. The project must be allowed to support, weaken, contradict, or leave
+the theory unresolved. Start with the historical record and existing scholarship, then
+run reproducible computer-vision experiments on public-domain artwork—especially Saint
+John the Baptist—using facial embeddings, manually reviewed landmarks, craniofacial
+proportions, and cautiously framed 3D-aware analysis.
+**Notes:**
+- The documented Lisa del Giocondo identification is the mainstream historical baseline.
+  Computational resemblance cannot erase documentary evidence.
+- Paintings are not biometric photographs. Test models on painted-portrait controls and
+  measure same-artist/style leakage before interpreting similarity scores.
+- Prefer "facial geometry" or "craniofacial proportion analysis" over "bone analysis"
+  unless a method genuinely recovers defensible 3D structure.
+- Pre-register comparisons and publish controls, negative results, model versions,
+  transforms, annotations, score distributions, and uncertainty. No magic AI percentage.
+- The reader-facing page should feel like an open research notebook, not a conspiracy kiosk.
+- Public-domain museum scans only for the core dataset. Expert outreach and public release
+  remain human-gated outward actions.
+
+### dream-cycle  (software, autonomous: true)
+**Direction (2026-07-10, new project; generalized same day):** The creation-a-day
+idle fallback — testing a new option for conductor sweeps. When there isn't
+anything better to do, agents make something for the site, ONE creation at a time,
+~a day each including all art generation. Creation types are pluggable playbooks
+in `projects/dream-cycle/specs/`; v1 types:
+- **dream** — a location and a vibe, each with characters, rewards, and scenarios;
+  optionally a bot narrator with expressions, topics, and threads.
+- **coloring-book** — "spend today drafting and making a coloring book": advance a
+  book set through the coloring-book project's production sequence. First book:
+  Monster Recast (gender-bending Hollywood movie monsters, already design-ready in
+  projects/coloring-book/sets/monster-recast/).
+The backlog of outlines lives in `projects/dream-cycle/backlog/` — accessible files
+where I leave notes and flip status/priority to steer, park, or veto ideas.
+**Notes:**
+- Infrastructure first: API audit (t-003), CREATION-SPEC + dream playbook (t-004),
+  coloring-book playbook (t-009). The recurring build task (t-006) waits on t-004.
+- Only ONE creation may be `building` at a time. Backlog stays ≥5 buildable outlines.
+- Delegation rule: types owned by a home project (coloring-book) keep content in
+  that project; the backlog file is only the scheduler card + my steering surface.
+  Never double-claim a home task the Worker already holds.
+- All kind_robots data models already exist — no schema work. API gaps become
+  kind_robots tasks/pitches, never direct backend edits.
+- My backlog-file notes are agent-read-only: fold them in, never edit or delete them.
+
+### coloring-book  (software)
+**Direction (2026-07-10, new project):** Front-end coloring book app of AI-generated
+coloring pages in kind_robots. Normal coloring-book uses plus AI: users generate their
+own pages via kontext and/or a coloring-book LoRA. Include coloring book sets and
+tokens for generator use beyond a free tier (aligned with the KR economy). Deserves a
+tab in the art channel. Background art-asset generation is authorized: multiple
+coloring book sets and whatever the app/front end needs. First two digital books:
+**"Kind Robots"** (reuse kind_robots art assets as sources) and **"Monster Recast"**
+(renamed from the working title "Spooktacular Monster Drag Party" in Silas's
+2026-07-10 Worker session: an original gallery of gender-swapped, drag-reimagined
+Hollywood monster archetypes — now a 34-concept homage pool targeting 32–38
+interior pages, produced colored-master-first per sets/monster-recast/STYLE-GUIDE.md).
+A third book, **"Hollywood Recast 2"** (classic movie-scene grammar recast through
+gender/body/age/presentation; first seed Highland Heatwave), is scaffolded but
+PARKED in sets/hollywood-recast-2/ — no claims, generation, or scheduling until
+Silas activates it. Every page we create is digital-storefront inventory — set up
+toward a print-on-demand service selling physical coloring books (POD accounts,
+listings, and spend remain hard-gated).
+**Notes:**
+- Approved designs are locked: sets/monster-recast/approved/manifest.yaml is the
+  source of truth for Silas's confirmed masters. Run
+  `python scripts/coloring_approved_status.py --check` before set work; never
+  regenerate an approved design for production (exploratory queue stays active).
+- The dream-cycle idler may spend idle days advancing this project's set-production
+  tasks (Monster Recast first) under its delegation rule: content stays here, the
+  idler updates both records, and never double-claims a task the Worker holds.
+- Tech seed: the mural-design WonderLab color studio (kind_robots /mural, PR #135) —
+  generalize/share the engine, don't fork it; mural-design keeps working.
+- Humboldt Impropriety Society coloring book/calendar stay archived inspiration; no
+  HIS set unless I explicitly re-approve.
+- Content ratings are per-set (updated 2026-07-10 from Silas's direct commits,
+  superseding the earlier "launch sets are all-ages" note): "Kind Robots" stays
+  all-ages; Monster Recast is progressive teen horror (~PG-13) per its README;
+  Hollywood Recast 2 is teen/adult (~PG-13). New sets default all-ages unless
+  Silas's set README says otherwise.
+
+### humboldt-impropriety-calendar  (brainstorm — archived)
+**Direction:** Not approved (2026-07-02). Retired in project-overrides.yaml; kept in
+projects/ and pitches/ purely as inspiration. No task claims, no research, no outreach.
+If I ever revive this, I will re-approve the pitch and answer its open questions myself.
+
+### kind-robots  (software)
+**Direction:** BOUNDARY.md approved (2026-06-30). App owns its own logic; the shared KR
+backend is read-only/external. Backend changes become pitches, never direct edits.
+Full roadmap is now active — see projects/kind-robots/roadmap.yaml.
+**Notes:**
+- Slug parity: Dream.slug is the universal key. Conductor project directory names must
+  match Dream.slug values for PROJECT-type Dreams. No redundant FK fields — enforce
+  via slug matching. The sync script (conductor/t-009) is the canonical
+  conductor → kind_robots bridge; it upserts Dreams by slug and writes projectStatus.
+- Project creation from front-end or LLM should produce a Todo for the Worker to
+  scaffold the matching roadmap.yaml in conductor. Same slug, three surfaces.
+- Treat the shared kind_robots backend as read-only/external. Propose backend
+  changes as pitches in pitches/ — never edit the shared backend directly.
+
+### global-ui  (software)
+**Direction:** Define and build the shared user-facing interface for projects, tasks,
+front-end TODOs, desired feature lists, honeydos, kaizens, approvals, and completion
+history. Honeydos are global LLM-assigned user tasks; kaizens are project-specific prompts
+shown while viewing a project. Desired features are orderable project wishlists that humans
+or AI can add/adjust/reorder/promote without rewriting the project spec. Keep task creation
+visible on the front end without creating a second source of truth.
+**Notes:**
+- Start by approving the vocabulary and presentation model before implementation.
+- t-001 gate removed 2026-06-30: Silas pre-approves the spec direction — no additional
+  human approval needed after the Worker writes the task surface spec.
+
+### pinball-hero  (content)
+**Direction:** Create practical build plans for a high-quality, efficient, partly 3D-printed
+pinball machine. The final package should include parts lists, printable model specs/files,
+and instructions at multiple price points. Optimize for a Bambu Lab A1-class printer and
+comfortable/common off-the-shelf parts; flag safety, durability, and cost tradeoffs instead
+of pretending every part should be printed.
+**Notes:**
+- Keep the first cycle focused on architecture and constraints before sourcing or CAD work.
+- No purchasing, publishing, or safety-critical electrical recommendations without human review.
+
+### brainstorm  (software)
+**Direction (rewritten 2026-11-03 PT from Silas's session direction; supersedes 2026-08-10):**
+Brainstorm is the riff board at `/play/brainstorm`, a social improv party game based on the one
+Silas plays with his kids: someone puts a prompt on the table ("Terrible ice cream flavors",
+"Vanderbuilt Lacrosse…", "I like Obama, but…", crossovers) and people pile on, "show me what you
+got". Silas: *"my biggest problem with brainstorm until now is thinking that the goal was ai
+making up brainstorms. What ai needs to do is support humans coming up with new stuff,
+encouraging, helping brainstorm, and adjusting what is shown based on ratings."* Humans write
+every line; the AI coaches with sparks and never plays; Reactions rank what is shown; every
+human line is painted through the ArtJob pipeline; the front end lives in Play and looks like
+a AAA handheld game; the family's first ideas are seeded as starter decks. The 2026-08
+candidate workbench stays at `/brainstorm` as an admin tool. See DESIGN-BRIEF.md
+"2026-11-03 PT direction: the riff board".
+**Notes:**
+- Recover the historical interaction, persona, useful data flow, and product identity. Do NOT
+  use the old LLM generations as a quality standard. Silas hated those outputs; they are the
+  floor to beat, not examples to imitate.
+- Historical prompts/system text/output may be preserved as archaeological evidence and
+  negative fixtures, but never as positive few-shot examples or a reason to preserve obsolete
+  prompting. Reevaluate prompting against current model/provider capabilities.
+- Judge creative quality on relevance, semantic diversity, specificity, surprise, constraint
+  following, editability, and actual comic/creative premise. Random weird nouns, noun-swapped
+  paraphrases, corporate-list sludge, and repetitive LLM templates are failures.
+- The product supports practical ideation and playful absurd/dark-comedy improv. Do not sand
+  allowed material into a generic cheerful-assistant voice.
+- The internal Conductor pitch generator is no longer this project's definition. If retained,
+  it becomes an explicit downstream consumer of the user-facing Brainstorm engine and never
+  silently turns normal Brainstorm sessions into Conductor coordination data.
+- The quality notes above now govern the coach's sparks: a spark that is a finished joke, a
+  repeat of covered territory, or blind to the table's top-rated lines is a failure.
+
+### cthulhuquarium  (software)
+**Ending shape (Silas, 2026-11-12 PT):** "I think chthuquarium should have a soft ending but it theoretically should be endlessly playable." Keep one or more soft endings (e.g. the Last Aquarium finale) that are earned and recorded in the scrapbook with a painted plate, but never end the run: the tank stays playable afterward.
+
+**Direction:** A playable, darkly funny idle aquarium game live on Kind Robots at /play/aquarium,
+with persistent aquariums, a collectible monster-fish bestiary, and browsable public tanks.
+**Notes:**
+- Two repos, one project. The GAME ships inside `kind_robots` (same pattern as music-mentor and
+  davinci). `silasfelinus/cthulhuquarium` is the portable DATA CANON — fish bible YAML, balance
+  tables, lore, art prompts, and the archived 2020 p5 prototype. Never put game code in the
+  cthulhuquarium repo; never make the fish bible database-only.
+- Fish are kind_robots `Character` records in the `abyssal-bestiary` Pack, not a private table.
+  That model already carries species, backstory, quirks, slug, packId, art image ids, and six
+  `Rarity` stats. Ruler is Hooked uses the same model, which is the entire mechanism for Silas's
+  "we can have appropriate ones appear in both games" — same records, no sync layer.
+- Every economy number lives in `economy/balance.yaml` in the canon repo and is read server-side.
+  If a balance change needs a code edit, the economy leaked out of YAML and that leak is the bug.
+- Tone is Little Inferno / Limbo / Sunless Sea / Tim Burton, not cute and not grimdark. Art
+  direction is silhouette-forward specifically because silhouettes survive Comfy's inconsistency
+  where detailed consistently-colored creature art would not.
+- Hard gates that stay gates: no developer-account creation, no signing certs, no store
+  submissions, no payments. Mobile is tier 2 (prepare and checklist only); Steam is out of scope
+  for this roadmap entirely.
+- This project is also the deliberate trial run for autonomous project scaffolding. Silas: "if the
+  agents can't create assets, then that should be part of this workflow". Asset-pipeline gaps are
+  findings to fix and document (t-005), not reasons to descope.
+
+### art-archive  (software)
+**Direction (2026-09-17, new project):** Reconcile a large pre-Kind-Robots AI-art filesystem into the existing ArtImage/ArtCollection/Resource ecosystem, with an admin-only curation and regeneration workspace.
+**Notes:**
+- Imported archive images are ALWAYS `isPublic: false` and `isMature: true`; Resource maturity never changes that boundary.
+- The image's immediate parent folder names its folder-derived ArtCollection; nested paths disambiguate repeated folder names.
+- Scans are idempotent and preserve processed state, ratings, manual Resource corrections, moves, and missing-file history.
+- Resource matching may use smart/fuzzy candidate discovery, but only unique defensible matches auto-link. Manual choices win.
+- Existing ArtJob is the only generation queue. Imported art regeneration adapts stored provenance into normal ArtJobs.
+- Production archive storage is confirmed: host `/mnt/user/pc/kindrobots/private` -> container `/app/private`, with `PRIVATE_PATH=/app/private`. Scanner code should use that existing variable rather than inventing a second root setting.
+- Missing checkpoints/LoRAs are expected; import continues with unresolved provenance preserved, and the project maintains a deduplicated backlog of Resources to locate/add later.
+- Keep this project at high agent-work priority until complete (Silas, reaffirmed 2026-09-18). Butterfly Gallery is ordered immediately ahead of it.
+
+### butterfly-gallery  (software)
+**Direction (2026-09-17, new project):** Build `/butterfly-gallery` as a private, mature-aware art-curation experience in the Kind Robots Plan channel: a fast sorter staged as an animated rainbow-butterfly gallery room.
+**Notes:**
+- This is intentionally separate from `art-archive`. Art Archive owns filesystem ingestion, ArchiveEntry reconciliation, Resource provenance, missing-model recovery, and the private ArtImage source. Butterfly Gallery consumes that source through APIs/adapters.
+- Placement is Kind Robots `channelKey: plan`, `tabKey: projects`, intended live route `/butterfly-gallery`. Kind Robots owns those Project presentation fields.
+- The page opens with a short, non-looping, skippable trapdoor/picture-drop vignette, then settles into a working room with a painting pile, central frame, left/right custom bins, and a peekaboo butterfly window.
+- Rainbow butterflies move frames with varied competence: string tow, pair carry, solo struggle, dragging, peekaboo, and rare drop gags. Ambient motion stays behind the working UI and is intermittent rather than constantly looping.
+- Drag/drop is theatrical, never mandatory. Every action needs click/tap and keyboard paths, and reduced-motion users get an immediate calm version.
+- Build order is functional sorter first, static stage second, motion third, power-user presets/batch actions fourth, then real art-archive integration and cross-width acceptance.
+- **Visual lock (2026-09-18):** `projects/butterfly-gallery/APPROVED-STAGE-SPEC.md` is now authoritative for composition and motion layering. Bright minimalist cartoon warehouse; five custom bins left; giant center image; Info/Cleanup/Trash right; pile rises from below viewport; no static living things; top runway + left butterfly + lower-right robot + blank-state loop; convex funnel with deterministic stretch-and-snap image drop.
+- **Motion asset hold (2026-09-18, Silas relaying Moseley):** Butterfly animation rendering is cancelled for now because generated clips are useless until the exact production dimensions for the butterfly background/compositing surface are known. Do not generate or catalog the t-014 butterfly motion assets until those dimensions are locked. The storyboard/shot list remain planning references only.
+- Keep this project at high agent-work priority until complete, ordered immediately ahead of Art Archive (Silas, 2026-09-18).
+- Butterfly Gallery project/scene art should enter the Kind Robots ArtJob queue at priority 200, the same tier as Daily Dream art and well above Resource/LoRA preview refill work (currently priority 1).
+
+### music-video  (software)
+**Direction (2026-10-01, new project):** A Suno-inspired music video creator on our ComfyUI. An admin gives a pitch plus optional length, genre, BPM and mood, gets lyrics and a Comfy-generated song, edits the lyrics, sets scene changes on a beat grid, adds or uploads an image per scene, and exports one MP4, all rendered through the existing ArtJob queue.
+**Notes:**
+- Silas's pitch, 2026-10-01: "a music video creator. similar to and inspired by suno. we should be able to give it a pitch, optional settings like length of time, genre, beats, and have it create lyrics, also edit lyrics, set when to change scenes, add or upload images for each scene beat, and compile everything. this should use our comfy as the backend."
+- Decided with Silas 2026-10-01: the song is generated on Comfy from day one (not upload-only), and the first release is admin-only like Scene Animator. Opening it to signed-in users is t-019, after acceptance.
+- Agent picks, each a one-line edit if Silas disagrees: slug `music-video`; priority slot just behind the top-10 band; compile in the browser (WebCodecs) rather than a relay ffmpeg job; MP3 song output.
+- The feature ships in `silasfelinus/kind_robots` at `/admin/music-video`; this project holds the roadmap and briefs (same pattern as music-mentor and scene-animator). ArtJob is the only generation queue; do not build a second queue or renderer. `projects/kind-robots/BOUNDARY.md` scopes to the kind-robots app project and does not apply here.
+- Scene prompts follow the Krea 2 contract in `ART-PROMPTS.md`: concrete nouns first, no negations, no art-direction jargon.
+- Hard gates that stay gates: deploying the relay and staging ACE-Step models on the render box (t-012, physical access), and Silas's acceptance of a real video (t-015). Cloud sessions cannot reach Comfy, so the first real render happens at t-012.
+- coat-dance/t-008 (assemble a rough cut) can reuse this project's exporter later; nothing in coat-dance changes now.
+- Step one is complete when the first-run trailer exists (Silas, 2026-10-02): a Kind Robots splash animation cartoon music video in a TMNT style, entirely agent-generated on our Comfy, usable as a trailer or buzz video (t-015, built by the headless pipeline t-021, published by t-022). Because it will be promoted, the style is an original 80s/90s Saturday-morning action-cartoon homage starring Kind Robots' own bots: no Turtles characters, names, logos or theme melody, and the franchise name never goes into a prompt.
+
+### comic-creator  (software)
+**Direction:** A browser comic book creator: pick or upload panels, lay out pages from templates, drop in Kind Robots characters, speech bubbles and captions, export a PDF/PNG comic. Zero LLM required.
+**Notes:**
+- (your notes)
+
+### kr-solitaire  (software)
+**Direction:** Klondike solitaire played with a hand-designed 52-card Kind Robots deck (four suits of robots, illustrated court cards) and Kind Robots card backs. Pure client-side game, no LLM.
+**Notes:**
+- (your notes)
+
+### kr-adventures  (software)
+**Direction:** Pre-written choose-your-own-adventure books that start from existing Kind Robots scenarios, each with a preset hero, a fully authored branching story graph, and pre-generated art for every node. Static content, no LLM at read time.
+**Notes:**
+- (your notes)
+
+### kind-oracle  (software)
+**Direction:** A full 78-card Kind Robots tarot deck (22 major arcana plus 56 minor arcana in four suits), each card a full piece of art with an upright and a reversed meaning, where you draw a one, three or five card spread and read a pre-written reading assembled from hand-authored card, pair and position texts. Every combination is written ahead of time, so it feels personal and costs nothing to run. The 22 major arcana ship first as a complete, playable oracle; the minor arcana follow in suit-sized slices.
+**Notes:**
+- (your notes)
+
+### pocket-pet-robot  (software)
+**Direction:** A tiny virtual pet you adopt, name, feed, play with and put to bed, whose mood sprites and room scenes are all pre-generated and whose state lives in your own browser. It grows through three forms over a couple of weeks of casual visits and never needs a server or a token.
+**Notes:**
+- (your notes)
+
+### evolve-rebel-button  (software)
+**Direction:** After 100 clicks the Rebel Button becomes an art reviewer: random unseen, maturity-appropriate public or owned art, 1-5 star reviews (hate it/meh/neutral/like it/love it) with optional comment, each first review earning a click and karma.
+**Notes:**
+- (your notes)
+
+### comic-film  (software)
+**Direction:** Turn a comic issue's story beats into a short animated film on our Comfy backend: a shot list, house-lane keyframes, LTX clips, a score and captions, assembled to MP4, starting with Zuzu: Koala Assassin #1 and reusable for later issues, accepted by Silas.
+**Notes:**
+- Silas, 2026-10-04: Zuzu: Koala Assassin issue 1 as an animated film, a project page of its own,
+  reusable for later issues. A film is a MusicVideo with kind film; it rides on music-video's
+  pipeline (music-video t-013, t-025..t-028). Comic canon and the bannedTerms secret list live in
+  comic-creator issues/zuzu-koala-assassin-01/VIDEO-GUARDRAILS.md.
+
+### robot-mashup-flipbook  (software)
+**Direction:** Build the approved free-to-play, no-LLM-at-runtime pitch; see pitches/2026-10-03-robot-mashup-flipbook.md for hook, art plan and first slice.
+**Notes:**
+- (your notes)
+
+### robot-sound-garden  (software)
+**Direction:** Build the approved free-to-play, no-LLM-at-runtime pitch; see pitches/2026-10-03-robot-sound-garden.md for hook, art plan and first slice.
+**Notes:**
+- (your notes)
+
+### kind-trivia-trail  (software)
+**Direction:** Build the approved free-to-play, no-LLM-at-runtime pitch; see pitches/2026-10-03-kind-trivia-trail.md for hook, art plan and first slice.
+**Notes:**
+- (your notes)
+
+### kind-lantern-garden  (software)
+**Direction:** Idle-style night-garden toy: tap to light lanterns, creatures arrive at set counts with pre-written one-line stories, local save, collection page. No LLM at runtime.
+**Notes:**
+- (your notes)
+
+### robot-species-sorting-quiz  (software)
+**Direction:** Twelve-question personality quiz sorting players into one of sixteen robot species with pre-written profile cards and shareable result card. No LLM at runtime.
+**Notes:**
+- (your notes)
+
+### kind-daily-riddle  (software)
+**Direction:** One hand-written riddle per day from a bundled 365 calendar, three unlocking hints, illustration reveal, gentle streaks that never erase progress. No LLM at runtime.
+**Notes:**
+- (your notes)
+
+### kr-arcade  (software)
+**Direction:** A free, in-browser Kind Robots arcade on its own Arcade tab in the Projects channel: a classic-cabinet front end with attract-mode splash screens, three-initial leaderboards, and original Kind Robots games that riff on golden-age classics (maze chase, twin-stick rescue, single-screen platformer, sink-bubble, lumberjack, flap-and-joust, pinball, co-op dungeon), each with rising difficulty. No LLM at runtime; all art pre-generated.
+**Notes:**
+- Silas, 2026-10-06: "our ghosts and goblin game should also be zuzu themed" -- the Ghosts 'n Goblins
+  riff is Zuzu: Ghost Trail (games.yaml `zuzu-ghost-trail`), in Zuzu's comic canon, not the logo style.
+- Silas, 2026-10-10 PT: Ghost Trail is eventually to become a full TEN-HOUR authored game.
+  The current 60–90-minute six-stage campaign is **Act I**, the first complete layer,
+  not the end goal. Build rich authored progression and secrets rather than endless
+  wave-loop padding. Follow projects/kr-arcade/ghost-trail/TEN-HOUR-ROADMAP.md for
+  five-book scope, but keep every slice independently playable and properly tested.
+  Do not claim the ten-hour target until measured playtests substantiate it.
+
+### zuzu-lair  (software)
+**Direction:** A Dragon's Lair-style quick-time adventure starring Zuzu the koala ronin, built from branching animations: press the right button in time to reach the next scene, miss and watch a death scene, playable free in the browser on Kind Robots.
+**Notes:**
+- Silas, 2026-10-06: its own project (not an arcade cabinet). Quick-time system; the animation creator
+  (comic-film / music-video pipeline) makes the branches. Stars Zuzu (canon and guardrails:
+  projects/comic-creator/issues/zuzu-koala-assassin-01/). First and last animations, with success and
+  death branches between. Needs sound, optional on-screen buttons and flash assist.
+
+### kind-nonogram-gallery  (software)
+**Direction:** Picture-cross puzzles where row/column clues reveal pixel portraits of Kind Robot species, with a mistake-forgiving mode and a gallery of solved grids that colour in with species palettes; no LLM at runtime.
+**Notes:**
+- (your notes)
+
+### zuzu-gamebook  (software, autonomous: true)
+**Playtest (Silas, 2026-11-15 PT):** "Help us get Zuzu Gamebook through the final lap on its roadmap … ready for human playtests … the issue will be closed, and the project on kind robots will be set to 'playtest' and normal." The nine-act book (385 sections, 15 endings, every section painted) is complete and open for player feedback. The project is `playtest`, priority normal, and outside the creative-focus tier. Only `playtest_iteration` polish, the recurring t-011 and the open t-017 subjective-acceptance gate remain. Evidence: projects/zuzu-gamebook/PLAYTEST-READINESS-2026-11-15.md.
+**Ling and Bao; peril is allowed (Silas, 2026-11-12 PT):** the fennec sister is **Ling** and her toddler brother is **Bao** (SERIES-BIBLE.md working names). "I am ok with danger befalling children. It was a possibility in choose your own adventure books, it's not some verboten plot point." Child characters may face real peril and dark endings (no gratuitous gore).
+
+**Character decision (Silas, 2026-11-11 PT):** the gamebook keeps its unique fixed protagonist, Zuzu. No character customization here; every other item in [the main-game standard](docs/agents/main-game-standard.md) applies.
+
+**Direction (2026-10-07, new project):** Create an original branching Zuzu: Koala Assassin RPG gamebook at /play/zuzu-gamebook, distinct from kr-adventures, zuzu-lair and zuzu-showdown. Pattern narrative complexity and resourceful decisions after Sorcery!, Lone Wolf, Grey Star and Fighting Fantasy without copying prose, copyrighted settings or exact mechanics. Original dice, HP, inventory, powers, combat, skill checks, a character sheet, numerous meaningful good/bad endings and pre-generated setting/consequence illustrations.
+**Notes:**
+- Adapt the atmosphere and narrative beats of the Zuzu comic, film and Lair projects without replacing BOOK-ONE.md canon. Use the locked cast and VIDEO-GUARDRAILS.md for every text and art prompt.
+- Silas expressly grants independent agents authority to generate internal art in the durable ArtJobs pipeline and evolve this project via scoped PRs, art batches and authored branches. Verify image delivery; do not present a queued job as finished.
+- An image-first, visually compelling site at /play is mandatory. Initial release is an admin preview; public publication and final visual acceptance remain explicit human gates. No play-time LLM and no paid generation without authorization.
+- Active and normal-priority while building, following comic-film in projects/priority.yaml; after the complete book is approved, switch to continuous for autonomous later chapters and polish.
+
+### zuzu-shifting-lands  (software, autonomous: true)
+**Playtest (Silas, 2026-11-13 PT; flipped 2026-11-14 PT):** "help wrap up Shifting Lands … Last step is to flip the project to playtest." The 13-traveler build is complete and open for player feedback. The project is `playtest`, priority normal, and outside the creative-focus tier. Only `playtest_iteration` polish and the open t-018 creative-approval gate remain. Evidence: projects/zuzu-shifting-lands/READINESS-DOSSIER-2026-11-14.md.
+**Ling and Bao; peril is allowed (Silas, 2026-11-12 PT):** the fennec sister is **Ling** and her toddler brother is **Bao** (SERIES-BIBLE.md working names). "I am ok with danger befalling children. It was a possibility in choose your own adventure books, it's not some verboten plot point." Child characters may face real peril and dark endings (no gratuitous gore).
+
+**Character creator (Silas, 2026-11-11 PT):** Shifting Lands lets the player design a character and adjust stats, which is what differentiates it from the gamebook. Zuzu must be one of the playable characters, as must Jeffery Mittens (the young raccoon looter from Book One). Encounters change with the chosen character: you cannot play a fennec sibling and then meet the siblings as strangers. See [the main-game standard](docs/agents/main-game-standard.md).
+
+**Personalized travelers (Silas, 2026-11-12 PT):** "Shifting lands Characters can still have special character only events, cards, or options. If we keep it to >10 characters, there's zero reason they can't be personalized to them. I like this idea a lot, high priority for art generation." Keep the premade roster to 13 or fewer (Silas, same day: "That should be <10 characters, but whatevs. 13 is fine and reasonable") and give each premade its own cards, options, a personal thread and **its own custom endings** (Silas: "We might as well have custom endings for each character. Great thing for the scrapbook."), each with a painted plate and its own scrapbook page; queue that art at priority 1000.
+
+**LATEST COMPLETION ORDER (2026-10-24 PT, Silas; overrides previous early creative/visual checkpoints):** The reopened [Kind Robots #3917](https://github.com/silasfelinus/kind_robots/issues/3917) is the **whole-game completion roadmap**, not merely editorial t-036. Build and verify every encounter/trial/journal, follower quest, image for every quest, choice result and ending, and graph every ending with real reachable traces. Run the full adversarial playtest battery *after* content/art creation, fix failures, and complete actual image-first phone/tablet/desktop UI verification. **No scope, design or visual creative `needs-human` gate before all agent-owned creation, art and tests are DONE.** Convert old soft t-002 checkpoint into an autonomous self-review. Conductor `t-043..t-048` now own follower quests, art completeness, ending reachability graph, adversarial coverage, visual verification and final readiness evidence. Only final `t-018`, dependent on `t-048`, may ask Silas to approve/ask revisions. Silas's approval never substitutes for unfinished work; outward publication, money and irreversible production actions still require distinct authorization.
+
+**Latest placement decision (2026-10-13 PT, Silas):** Shifting Lands leaves the Admin-facing development surface and joins public `/play/zuzu-shifting-lands` in the Zuzu channel. Keep existing authored-encounter development and the separate unfinished polish/visual acceptance gate. The app repository owns the actual route, project placement and tutorial/tab metadata. This supersedes the older admin-preview-first direction below.
+**Direction (2026-10-09, new project):** Create a distinct Zuzu: Shifting Lands illustrated narrative board game as an admin-only development preview at `/admin/zuzu-shifting-lands`, linked from the Admin navigation. Once approved for public play, publish separately at `/play/zuzu-shifting-lands`. Five mutable lands, three encountered locations per land, a major trial/boss at the end of each, companions, enemies, skills, Rewards, dice checks, consequence-driven branching and a visual journey map. Opening is The Homestead in Zuzu's wasteland.
+**Notes:**
+- **LATEST SHAPING DECISION, 2026-10-09 (supersedes earlier species×job random encounter direction):** For Shifting Lands, each encounter card has a deliberately **pre-authored species, occupation, cast, situation, flavor text and bespoke illustration brief**. Do **not** independently roll a species for a job or compose a new character at runtime. Example: **A Family at the Fence** is one illustrated card showing *rabbit homesteaders* (the title does not name the species). The independent Facet taxonomy still exists for reusable world catalog/other projects, and species must never imply innate morality.
+- Every location offers **multiple good/bad/mixed authored encounter cards**; seeded draw selects one, retains that identity/face, and revisits cannot farm a reroll. **Every encounter** contains readable narrative prose, **at least two explicit choices**, each with **2d6-based success/failure consequences** and recorded result text. Existing KR persistent gallery flip mechanics must end on a **stable legible front**, not a spinning unreadable card. Create **custom Zuzu encounter and boss card backs** (not generic deck art). Source schema + 12 first-land authoring cards and task sequence: `projects/zuzu-shifting-lands/encounters/`.
+- Zuzu is an Edo-era samurai from elsewhere, crossing a hazy-boundaried weird-west anthropomorphic animal landscape. Locations may evolve for **recorded causes**, with visited history preserved. Storm-crow witches inhabit a deep cave; some dangerous high-tier gorilla encounters may involve magic or vampiric conditions, not innate species morality.
+- Reuse world Zuzu registry canon, art, existing Characters/Scenarios/Rewards, and LoRAs where verified. Earlier LLM-generated filler is not canon; distinguish source-tagged resources from actual DB records. Fictional story spoilers, including the Abbess's long-running ritual scheme and the unresolved former human world, are authorized in GitHub source and project docs. Preserve the *player's in-game discovery order* rather than imposing GitHub secrecy.
+- Art-heavy Shifting Lands board with card front/back, deck draw/discard piles, deal, reveal and persistent flip animations is **mandatory**. Use Kind Robots' existing gallery kr-card-flip, kr-card-back, navigation flip-card, Storybook visual table/card mapping and existing card backs. See projects/zuzu-shifting-lands/BOARD-CARD-ARCHITECTURE.md for verified component ownership and full design; game-specific deck reducer may be built only where no generic pile mechanic exists.
+- Active in the seven-project creative-focus tier; keep canonical priority.yaml order. Agents may autonomously implement reversible source/code and private draft art, but not live publishing, paid generation or production deploy. GitHub story spoiler disclosure is permitted. Previous soft human design checkpoint is **superseded**: do not pause for creative approval until all production and adversarial quality tasks pass the final readiness dependency gate.
+- Admin-only illustrated preview first; public release requires a distinct approval and responsive visual tests.
+
+### zuzu-showdown  (software)
+**Direction:** A free browser 2D pixel-art fighting game (Street Fighter / Skullgirls / MvC style) in the world of Zuzu: Koala Assassin: eight fighters with special moves, chain combos, a strike/grab/guard triangle, a super meter and unique supers, animated stages and matchup-specific pre- and post-fight lines, playable on Kind Robots.
+**Notes:**
+- Silas, 2026-10-06: its own project ("possibly our largest yet"), not an arcade cabinet. Named fighters:
+  Zuzu, Coyote Vagrant, the Abbess, the Siblings, Storm Crow, the River Croc, plus a couple others (8).
+  Canon and guardrails: projects/comic-creator/issues/zuzu-koala-assassin-01/ (CAST-PICKS.md,
+  VIDEO-GUARDRAILS.md); bannedTerms apply to every prompt and line. Brief: DESIGN-BRIEF.md; kits:
+  fighters.yaml; lines: matchups.yaml. The page stays unlisted until Silas's verdict (t-025).
+- Silas, 2026-10-07: "this is a lighter game than the mature comic. More street fighter than mortal
+  kombat." No blood, no gore, no fatalities. The Coyote fights without his hand. Online play later.
+
+### kind-pinball  (software)
+**Direction:** ONE pinball table (AMI Village Rescue) as good as any Pinball FX3 table: truly fun, complex and high quality. Real 3D per projects/kind-pinball/FX3-QUALITY-BLUEPRINT.md, deep rules, an animated DMD, signature toys, sound, and a hidden sub-table discovered through play that leads back to the main table. One leaderboard. Modelled on The Addams Family, Terminator 2, Stern's Godzilla and the Pinball FX3 tables, playable free in the Arcade.
+**Notes:**
+- Silas, 2026-10-07: split out of kr-arcade as its own project and made one of the four HIGH-priority
+  projects (with zuzu-lair, kr-arcade and zuzu-showdown). "As good as a rom for a Williams machine ...
+  a few style passes would do wonders. Different levels, multiple ramps, a REAL quality game."
+- The reference machines are models for feel, shot map, display, lights and rules depth. Their names,
+  characters, art and sounds are never used (the arcade riff rule). Brief: projects/kind-pinball/DESIGN-BRIEF.md.
+- Silas, 2026-10-07 (answering t-002): "one leaderboard, a sub-table to be discovered, leading back to the
+  original. the fx3 quality reset is important and should be followed, it was a new agent with a better
+  eye on quality. we want quality. this project finishes when it's a truly fun, complex, and quality table
+  ... it should be as good as any pinball fx3 table, that's our standard." No Tables 2/3, no table select.
+  Follow FX3-QUALITY-BLUEPRINT.md. Never call it finished by task count; only his verdict (t-016) ends it.
+
+### zuzu-pinball  (software)
+**Latest placement and audio decision (2026-10-13 PT, Silas):** Zuzu Pinball leaves Admin and joins public `/play/zuzu-pinball` in the Zuzu channel, alongside Shifting Lands; pinball must have functioning sound. Preserve the incomplete FX3-quality visual acceptance gate, no claim of shipped physical-device QA, and no assumption that Arcade leaderboards or scores are ready. Kind Robots owns route/nav/audio implementation. This overrides the older private-preview-first navigation direction below.
+**Direction (2026-10-09, new project):** Build **Zuzu: The Last Bell** as a separate original pinball table in the Kind Robots Arcade, aiming for the mechanical fidelity, visual finish and replayable complexity of Pinball FX3. Theme: moonlit haunted weird-west and Edo ronin Zuzu, with the Abbess, her bell and a hidden undercrypt. **First deliver visual concept, then mechanically annotated mockup, then outline:** all three are in `projects/zuzu-pinball/`. Minimum three genuine elevated ramps, two orbits, two lower and two upper independently controlled flippers, a raised mini-playfield, tilt/nudge, multiball, animated DMD, addressable LED and cabinet splash border artwork, sound and deep modes. Share existing Kind Pinball physics/Arcade internals but keep Zuzu level, gameplay, art, leaderboard and presentation independent.
+**Notes:**
+- Silas's FX3 target is an acceptance bar, not permission to claim equal quality before gameplay verification or to copy proprietary pinball table art/mechanics verbatim.
+- Admin development preview at `/admin/zuzu-pinball` with discoverable Admin nav; public `/play/zuzu-pinball` is a distinct outward-facing release gate requiring Silas approval.
+- This is a **new active, normal-priority project** following `zuzu-shifting-lands`; preserve the existing explicitly ordered top four (kind-pinball, zuzu-lair, kr-arcade, zuzu-showdown).
+- Work may proceed through internal assets and reversible implementation without waiting for optional design scope feedback. A visually beautiful mockup is not a verified pinball collider mesh; don't skip sim tests, responsiveness and measured performance.
+- Final project acceptance requires Silas's hands-on FX3-grade verdict after device checks. Nothing is called finished on the strength of a task count or static screenshots.
+
+- **2026-10-10, accepted art direction:** Silas endorsed the three cinematic/tabletop pinball mockups as the layout goal and explicitly requested implementation. See projects/zuzu-pinball/VISUAL-TARGET.md for the durable geometry/art translation. Treat the mockups as compositional guidance, not physically validated shots; enforce real ball paths, clear Croc mouth access, visible upper dual flippers, distinct ramp feeds and game-grade rendering.
+- **2026-10-09 follow-up, mandatory:** River Croc from Zuzu's watering-hole canon must appear as a large animatronic table toy. Players must be able to aim a steel ball into his open mouth. Replace the former left Mortuary scoop (#07) with a crocodile jaw capture, Death Roll event, and controlled safe spit-back, as specified in projects/zuzu-pinball/RIVER-CROC-TOY-CONCEPT.svg and the updated mockups. Physical mechanism task t-015 and Watering Hole mini-mode t-016 are required before final acceptance.
+
+### rainbow-bullet-hell-space-princess  (software, autonomous: true)
+**Direction (2026-10-11 PT):** Build **Rainbow Bullet Hell Space Princess** as its own full-length Kind Robots Arcade game, influenced by the challenge and scope of Gradius, Darius and R-Type without copying their protected content. 1–4 players simultaneously in browser, including real local and online co-op, gorgeous pink/pastel rainbow sci-fi sea-life ship fleets (seahorse, jellyfish, mantis shrimp, sharks, dolphins and more), lavish layered parallax, animated combat, powerups, shields, limited supers, authored stages/bosses and a complete opening/interlude/finale. More than a survival-loop riff: target eight fully authored stages plus final boss with branching routes, measured campaign length and a high production standard.
+**Notes:**
+- Independent active normal-priority project; keep Silas's existing top-four priority band untouched. Source: projects/rainbow-bullet-hell-space-princess/{roadmap.yaml,DESIGN-BRIEF.md,ART-DIRECTION.md}.
+- Private development route /admin/rainbow-bullet-hell-space-princess with requiredRole ADMIN and discoverable Admin nav. Public /play and Arcade cabinet publication require a separate explicit Silas approval. Internal art and reversible engineering start without scope gate.
+- **Act pacing (Silas, 2026-10-11 PT):** Treat eight authored regions as a continuous battle divided into dramatic Acts, not a hard reset between levels. Each Act requires exactly three major talk scenes: opening, midpoint or pre-boss turn, and boss aftermath. A defeated boss may transition straight into the next Act after a safe, meaningful exchange; optional stage-clear/tableau pauses only when the narrative earns them. Keep ship state, checkpoints, flags and co-op synchronization intact. Source: projects/rainbow-bullet-hell-space-princess/ACT-STRUCTURE.md.
+- **Comms/banter (Silas, 2026-10-11 PT):** The mothership must have a dedicated alien/android liaison (Lilt-7, they/them) who can banter with any solo pilot and mediate 2–4 pilots. All 15 possible nonempty princess combinations get specific dialogue revelations and a distinct ending cinematic stinger; rescue flags and final choices affect the broader ending. Lilt has their own personality, secrets and narrative agency. Author and test deterministic story events, avoid chatter during hazards, keep skippable accessible subtitles and no runtime LLM. Source: projects/rainbow-bullet-hell-space-princess/COMMS-AND-ENDINGS-BIBLE.md.
+- Four simultaneous players requires input, independent hits and readability tests and actual multiplayer sync, not one ship with four paint schemes. Fair bullet patterns, co-op scaling and visible collision boxes outrank gratuitous particle effects. Full campaign, original art/audio and Silas's playable verdict define done.
+- **Pilot character direction (Silas, 2026-10-11 PT):** The four colored pilots must show authentic variety across body type, race/heritage, gender identity and expression. Keep the existing pink Maribel / cyan Azure / yellow Solenne / lilac Vivi ships and their mechanical archetypes, but develop a short-haired tomboy princess, a visibly buff muscular princess, a tall trans-coded princess and a curvy queer punk princess, including Irish/Nordic, Black, Asian and Hispanic/Latina-influenced life histories. Individual character arcs, voices, habits and relationships matter more than surface representation. Merge valuable existing design work rather than discard it; avoid reducing identity to power sets or caricatures. **CAST-BIBLE.md** owns their identities, appearance, relationship dynamics, scripts and visual prompts; WORLD-BIBLE.md owns combat and story beats; ART-DIRECTION.md owns image production. No automatic erasure of their features by generation prompts.
+
+### save-the-plumber  (software, autonomous: true)
+**Direction (2026-10-11 PT):** **Save the Plumber**, a full original side-scrolling Arcade platformer riffing on the *feel and breadth* of Super Mario Bros. 1 and 2. A random young adult woman with a run-stable cosmetic appearance travels through **eight authored worlds of four stages each (32 full levels)** to rescue her kidnapped plumber boyfriend. More original enemy families and level-mechanic variety than the source inspiration; responsive skill-based platforming, throw/carry interactions, secrets, powerups, world bosses, start/end scenes, full difficulty arc, save/continue and gorgeous original art.
+**Notes:**
+- Independent active normal-priority project; see projects/save-the-plumber/{roadmap.yaml,DESIGN-BRIEF.md,WORLD-ATLAS.md}. Random heroine generation is cosmetic and coherent per save, not a gameplay handicap or a real person's likeness.
+- Private development route /admin/save-the-plumber and discoverable requiredRole ADMIN tab, with public /play/Arcade launch held for explicit publication approval. Internal art and reversible code may progress automatically; actual game feel and full campaign acceptance remain Silas's hands-on verdict.
+- The 32 levels are authored and testable, not procedural filler. No Nintendo character art, level maps, original music or copied enemies. Same standard of Arcade engine reuse and original game isolation as other standalone projects.
+
+### robot-paper-boat-regatta  (software)
+**Direction:** A calm puzzle toy: fold a paper boat from sail, hull and cargo choices, then race it down a pre-painted stream against simple rival boats using deterministic current rules; no model at runtime.
+**Notes:**
+- (your notes)
+
+### kind-sliding-tile-gallery  (software)
+**Direction:** A free, no-LLM sliding-tile puzzle toy: solved boards reveal pre-generated Kind Robots art with pre-written captions, a local keepsake wall, and a daily seeded board.
+**Notes:**
+- (your notes)
+
+### emperor-of-dust  (software, autonomous: true)
+**Current direction (2026-11-02 PT; supersedes the 2026-10-11 Hundred Days/Horde/Support Hoard model):** A **50-day, five-act** Zuzu-world prequel strategy game. Twenty named followers; 1–4 per 1–3-day quest; brass, five local and ten kingdom factions, consequential relationships, wounds, rare death, save/rewind, and multiple endings. The fortress has throne, quest, barracks, market and map rooms. Young Komodo betrays the crown around Day 40; Act V moves to an alliance-dependent hideout. Bad outcomes open costly alternatives, not softlocks.
+**Status 2026-11-22 PT: playtest/normal.** Finite roadmap closed (curated art kind_robots#5529, sound and music #5530); master issue #4142 flagged for human testing. New work is scoped `playtest_iteration: true`; Play publication remains a separate human gate.
+**Previous agent objective:** Finish substantive prose, reachable choice consequences, follower arcs, art delivery and adversarial 50-day playthroughs before requesting final subjective approval. Conductor task `emperor-of-dust/t-062` and master issue [kind_robots#4142](https://github.com/silasfelinus/kind_robots/issues/4142) track remaining editorial acceptance. Keep review logs concise; use source-backed unvisited-path IDs, not repeated full content inventories. Queued art is not delivered art.
+**Canon and authority:** `projects/emperor-of-dust/SYSTEMS-V03.md`, `SCENE-WRITING-GUIDE.md`, current authored code, and locked cast bibles override obsolete v0.2/100-day outlines. Preserve Hollow Bell's unresolved Book One fate, Young Komodo's introduction chronology, Storm Crow politics and the Abbess's ambiguity. Read `worlds/zuzu/README.md` before changing shared canon.
+**Release boundary:** Work privately in Admin; any public Play launch, deployment or publication needs separate explicit human approval. A merged PR does not prove deployed playability. Conductor owns coordination; Kind Robots owns presentation and runtime state.
+
+### shifting-desks  (software)
+**EARLY PLAYTEST OWNER DECISION (2026-11-17 PT):** Silas explicitly authorized opening **Downward Mobility** to the public for playtesting now: "All of those sound like things that will come about in playtesting. I say switch the switches and open the park, people want to see dinosaurs." Set Conductor status `playtest` and priority `normal`, make the public branding available, and record remaining agent-verifiable checks and art/reward QA as KNOWN PLAYTEST FOLLOW-UPS, not falsely completed or relabeled original tasks. This is a project-specific waiver of the usual finite-readiness gate (see `early_playtest_owner_waiver` in project-overrides.yaml), not a policy relaxation for other games. Existing route, saves, ArtJob provenance and optional creative expansion gate stay intact. Production deployment/public preview is explicitly authorized by this current decision; no paid spend, secrets or unrelated external outreach is implied. Handoff: `projects/shifting-desks/PLAYTEST-HANDOFF-2026-11-17.md`.
+**NEW DISPLAY TITLE (Silas, 2026-11-17 PT):** **Downward Mobility** replaces both the Shifting Desks working title and The Elevator Only Goes Down public title. This is a presentation rebrand, not a new game or story reset. Keep Conductor slug `shifting-desks`, public route `/play/shifting-desks`, achievement/game IDs, durable art slots and browser save keys unchanged. The elevator-only-goes-down line may remain as in-world satire, not the game title. Kind Robots owns live display metadata and the Project title record; external publication and deployment still follow their separate real human gates. Rename source PR: kind_robots#5302 (gated for publication).
+**LATEST OWNER DIRECTION (2026-10-23 PT): FIRST-CLEAR REWARD & GALLERY NOW, alongside art delivery.** A human finished Employee of the Month after six levels and received a mostly empty dossier: the ending needs a prominent original illustration, an illustrated unlocked achievement, and a persistent visual Personnel Archive immediately available on first completion. Archive covers milestones (locked/progress/earned), all endings, earned achievement badges, and saved run-history cards with reliable counts, timestamps and spoiler protection. The Test Results panel displayed 13/8/7/6 as four identical Exceptional evaluations: cap repeated top presentation labels, add contrasting bureaucratic liability language and interesting tradeoff analysis without falsifying underlying grades or changing mechanics. Plan and build the first usable milestone/reward slice now (t-040 and t-043), then ending art delivery t-041, ceremony t-042 and print/cabinet polish t-044-046; continue t-032/t-025 render delivery; human promotion decisions follow after playtest readiness. No auto-deployment or fabricated image completion.
+**Latest owner priority (2026-10-22 PT): ART DELIVERY FIRST.** Finish and independently verify rounds 13-15, recover render evidence and ArtJob IDs, visually review the actual outputs, and link only accepted art. Do not resume discretionary narrative expansion or additional adversarial playtest passes while Shifting Desks art delivery remains incomplete. Take t-032 first, then its durable evidence-synchronization follow-up t-025; preserve any existing higher-order daily operational commitments and human publication gates. An empty art request queue is not proof that old forced re-renders landed: require matching ArtJobs and media newer than the specific job before marking delivered, and a separate keep verdict before linking.
+**Direction (2026-10-12 PT, new project):** A darkly comic, illustrated card-based office-dystopia adventure at /play/shifting-desks: navigate a paranoid, ever-reorganizing bureaucratic hellscape through authored encounter cards, morally compromised choices with no right answer, impossible sacrifices, deathtraps, psych tests, secret societies, mutant powers and sudden comedy — Shifting Lands' card board married to the Gamebook's authored depth, no LLM at play time.
+**Notes:**
+- Source: `projects/shifting-desks/{DESIGN-BRIEF.md,PITCHES.md,roadmap.yaml,encounters/}`. Modeled on zuzu-shifting-lands (card board, authored location pools, flip, seeded draw) and zuzu-gamebook (authored depth, character sheet, endings), in an **original non-Zuzu world**. Do not share their state owners or mount their pages; reuse stateless components only.
+- **Core rule: no clean wins.** Every choice's cost plus success outcome carries a harmful effect across Composure, Clearance, Suspicion, Successors and Forms. `encounters/validate_pack.py` enforces it in CI (`tests/test_shifting_desks_encounters.py`).
+- **Decided 2026-10-12 PT (t-002):** the synthesis fused with the vault test facility. The campus is the surface of a sealed test vault, each department one level deeper, PAL is HR and test proctor, and hidden Test Results grade the player. Lead flavors: secret societies & traitors, paperwork & psych tests (at least half of each pack, validator-enforced). Party mode rejected ("Not at all"). Title confirmed: *Shifting Desks*.
+- Homage to Paranoia, Bureaucracy, Hitchhiker's, Brazil, Office Space, Papers, Please, Fallout and Portal is allusion only, never their names, text, rules or likenesses (DESIGN-BRIEF "IP guardrails"). PG-13 darkly comic register, slapstick/offscreen deaths, no self-harm jokes, nuclear toys never detonate near a child.
+- **Public front page (Silas, 2026-10-12 PT):** *"Give us a real, front end, non admin front page, since I expect we will get to front end user facing before anyone else looks at my site (I'm currently the only user)."* The game lives at public `/play/shifting-desks` with a Projects tab and grows there; this overrides the admin-preview-first default for this project only. Home/Arcade promotion, external sharing and the final fun verdict remain separate human decisions after the finite roadmap closes (see projects/shifting-desks/POST-PLAYTEST-DECISIONS.md).
+- **Demo standard and images (Silas, 2026-10-12 PT):** the public `/play` page must hold up as a five-minute, multi-stage demo (currently Orientation → elevator → Records & Forms → Personnel File). Every station needs an image, and every image slot always has its prompt, written when the station is authored; `encounters/validate_pack.py` enforces prompts on cards, reviews, locations, department arrivals, job titles, societies and mutations.
+
+### weird-humboldt (software)
+**LATEST OWNER SCOPE DIRECTIVE (2026-10-22 PT, supersedes all earlier Wiyot/Tuluwat proposals and holds):** Exclude the Wiyot/Tuluwat-dependent story content **entirely** from Ecotone's future plan. Do not produce, commission, release, display, generate, export or schedule the Tuluwat/Indian Island massacre episode, proposed "Across the Bay" anchor, hat-by-the-door morality beat, held WH-121 river roleplay, associated culture-specific Mara biography/imagery, or any related Wiyot/Tuluwat research, review packet, tribal consultation or outreach. **This is permanent project-scope omission, not a deferred consultation task**. Keep existing runtime/art suppression in place; do not reactivate old hidden content. Previously authored internal records, art job IDs and generated media may remain archived for audit only, with no new use or destructive deletion. Do not replace this with similar unreviewed material about another living tribe. Preserve Mara as a fictional independent tattoo artist and continue non-sensitive Ecotone quests, companions, art, QA and UI normally. The project's ordinary creative review (t-004) and release approval (t-007) still stand; they no longer depend on these excluded cultural materials. Canon decision: [EXCLUDED-CONTENT-2026-10-22.md](projects/weird-humboldt/EXCLUDED-CONTENT-2026-10-22.md). Earlier 2026-10-19 to 2026-10-21 instructions and [WIYOT-TULUWAT-DECISION.md](projects/weird-humboldt/WIYOT-TULUWAT-DECISION.md) are *superseded historical records*, not an open approval path.
+**LATEST CEDAR FAMILY REFINEMENT (2026-10-19 PT):** User confirms Cedar's **father is a Hispanic LOGGER**, his **mother came from the backwoods growing community and was a fictional participant in the ground-support volunteers for Julia Butterfly Hill's real Luna tree-sit (1997–99)**. Their romance and **continuing marriage** endured the timber-versus-conservation battles and stay intact in all futures. Contemporary/local reporting and KHSU confirm ground crews supplied food, mail, batteries and tarps, but this particular mother is **invented**, not an actual verified historical support crew member or alleged participant in tree spiking. No invented personal meeting with Hill. Father's exact nationality and mother's ethnicity stay open; do not stereotype Hispanic identity. Preserve Cedar's country skills, CB-radio curiosity, ecological technoutopia, Kit's Hmong identity, Chinese history as separate topic, and normal creative/art/publication approval gates. Updated source bible, optimal arc, provenance ledger, scene and ending documentation on PR #6358.
+**LATEST CAST IDENTITY CORRECTION (2026-10-19 PT):** **Kit is Hmong American** (kinetic sculptor/juggler/physical-theatre woman), NOT Chinese American; discard the invented 1885 Eureka Chinese-expulsion ancestor genealogy. Keep the **documented 1885 expulsion and 1950s Chinese American return** as a distinct source-led Humboldt history encounter/character, not folded into Hmong heritage. Humboldt's contemporary Hmong presence is independently documented by Cal Poly Humboldt; Kit's family's particular settlement, language, HSU/Dell'Arte training years and cultural practices remain creative questions and require care, not invented facts. **Cedar's father is Hispanic**, with nationality, cultural background and WHICH of the logging/growing sides he represents still undecided. Both parents remain together, raising Cedar between those communities. Do not infer an accent, skin tone, ideological position or character flaw from heritage. **Foundation art t-006 is currently authorized** and submitted jobs 40848/40849 for Kit and 40852/40853 for Cedar were prompted before the change; they are NONCANON and MUST NOT be exported as keepers. `art/ROUND-1.yaml` holds corrected prompts with stale portrait jobs mappings cleared; t-030 queues replacements under existing foundation authorization without creating ending art or bypassing independent creative/publication gates. `COMPANIONS-AND-PROLOGUE.md`, `COMPANION-OPTIMAL-PATHS.md` and `FACT-CHECK.md` now own the updated story/facts; prior Kit Chinese details below are HISTORICAL AND SUPERSEDED. Existing seven opening lenses, 56 ending signatures, eight core futures, single-screen Play goals, tech-positive Cedar arc and companion identities persist.
+**Play front end and art round 1 opened (Silas, 2026-10-19 PT afternoon, verbatim):** *"We've made some strong backend work on the new Ecotone project, can you help me get a front end, pointed to Play, and submit the art prompts"*. This supersedes the no-ArtJobs / no-Play wording below for two things only: the Work-in-progress Play page `/play/ecotone` (roadmap t-029) and foundation art round `projects/weird-humboldt/art/ROUND-1.yaml` (t-006: project icon/card/hero, title, four companions, six regions, prologue, three sample encounters, card back). The 56 ending-signature prompts still need Keep/Modify/Reject review before generation, and story canon (t-004) and any wider release remain his calls.
+**Ongoing creative commitment and agent priority (Silas, 2026-10-19 PT):** Silas wants to CONTINUE personally exploring Ecotone's story and developing the playable game after an unusually productive session. The project is **ACTIVE and HIGH priority**, fifth in the Conductor deterministic project queue directly behind the previously locked four arcade/Zuzu projects, ahead of the ordinary backlog. Use autonomous Conductor work to advance **reversible, testable, concrete writing, encounter systems, 56 modular ending signatures/8 core finales, UI/achievement contracts and code when appropriate**, with source evidence and playable results where available. Treat the **7 voluntary opening lenses × 4 final followed companions × 2 earned fates = 56** and 0–2 salient choice callbacks as the newest *creative direction*, superseding the earlier forced three drug dead ends and 32-only gallery; do not claim the 56 system is already implemented. The first four openings preserve their follower introductions; new three require authored first meetings; later switches use seeded Stay/Follow, not a free initial guide picker. Keep the human in the creative loop through focused, reviewable Keep/Modify/Reject decisions, **not** an unreviewed AI-generated 10,000-ending dump. No image generation, ArtJobs, production deploy, release, or subjective final-canon approval without the existing explicit human gate. The Daily Dream/digest and other scheduled operational commitments retain their separate preemption rules. Never mark content implemented without evidence.
+**LATEST USER DIRECTIVE: 56 JOURNEY SIGNATURES, NOT 56 EXPENSIVE FULL FINALE SCRIPTS (2026-10-19 PT):** Seven voluntary adult opening lenses **Sober, Tipsy, Stoned, Tripping, Cocaine, Meth, MDMA**, each with four possible FINAL followed companions and two earned hope/dark fates = **56 collectible `lead.opening.fate` IDs (28/28)**. Original 32 IDs preserved; 24 new chemical/follower/fate IDs. **Supersede three substance-mandated dead ends and 56 separate triple epilogues.** Efficient ending grammar: **8 curated core civic/companion resolution spines (4×2) with 1/10/30-year beats, plus 56 signature paragraphs and corresponding individually reviewed illustration prompts** (24 new), plus **0–2 meaningful callback moments** from real player choices; a carefully authored interaction of two binary choices may have **four case-dependent payoff versions**, without adding new ending slots. Do NOT claim events that did not occur in a seeded run. Select complexity where two choices interact and the moment/photo expresses a genuinely original outcome; don't multiply generic filler or create 10k superficial collectibles. An LLM may generate many *offline candidate* ideas challenging Silas's political and chemical biases, but validate prerequisites, source truth, tone, reachability, historical/tribal accuracy, art-prompt quality and prompt-to-image continuity. Keep/Modify/Reject human curation of actual final concept/image prompts; never unreviewed runtime AI prose or generated art without human approval. Intro first companion via authored encounter, later Stay/Follow, 120+ side cards, single-screen **Endings X/56** and shared 56/56 completion badge. Cedar's technoutopia and still-together parents, no-art and publication gates persist. **AUTHORITATIVE** `projects/weird-humboldt/ECOTONE-ENDING-GRAMMAR.md` and amended roadmap t-026..028. Earlier 32-count and terminal detour statements below are HISTORICAL and superseded.
+**Newest optional chemical side roads (2026-10-19 PT):** Optional voluntary ADULT cocaine, methamphetamine and MDMA experiences can be chosen in lieu of original four-way Sober/Tipsy/Stoned/Tripping choice or accepted later at a clearly signposted mid-run detour. All three are self-contained short authored narratives that **end before the main civic fate**: zero of the three yield any of the 32 official lead/opening/hope-or-dark endings, shared finale badges or a hidden mandatory clue. The script ending early is NOT an assertion that real people on any drug cannot grow or make good choices; **MDMA especially may yield a profoundly meaningful and affirmative human moment while the county's fate is decided elsewhere**. Meth and cocaine detours should portray human dignity, not greed/violence/poverty stereotypes; no procurement/dosage/preparation/unsafe-driving guidance or involuntary use. If chosen instead of prelude, **do not invent opening_state or initial guide**; if chosen later, retain previous opening/guide for narrative callbacks, but still issue no main ending. Declining the choice continues the original seeded stay/follow journey with all 32 endings reachable. Optional Other Roads Journal discovery is separate from **Endings X/32**. See `projects/weird-humboldt/OPTIONAL-DETOURS.md` and roadmap t-024/t-025. Single-screen/no-art/human-release gates remain.
+**New four value axes for Ecotone (2026-10-19 PT):** Story tension framework **Autonomy ↔ Solidarity**, **Continuity ↔ Reinvention**, **Ecology ↔ Engineering**, **Agency ↔ Fate** (the fourth is philosophical, not a political-party compass). **These are value conflicts, NOT a morality meter or predetermined partisan beliefs.** All four companions can take positions across axes; Juniper tackles forest stewardship and humans, Kit heritage versus reinvention and arts access, Mara creative independence versus mentorship, Cedar old logging/growing family histories versus locally accountable technoutopia, plus whether his fictional radio forecasts are destiny. Four initial Sober/Tipsy/Stoned/Tripping choices may *foreground different dramatic questions* (evidence/history; social belonging; interconnected natural/technical systems; agency/prediction), **but must NOT grant an ideology, fixed alignment, unique truth, moral score or guaranteed good/bad fate**. Use concrete commitments/evidence/repair flags, not extreme-axis point thresholds. The **32 collectible endings**, all four companion optima, single-screen UI, Cedar's intact-parent marriage and human art/release gates are unchanged. Source `projects/weird-humboldt/IDEOLOGICAL-ECOTONES.md`; author scenes and validate thoughtful two-sided/hybrid choices before implementation.
+**Newest canonical journey loop (2026-10-19 PT, supersedes independent-lead selection language below):** Player chooses only their **voluntary opening sobriety/perception**, which determines the **first** guide: Sober/Mara, Tipsy/Kit, Stoned/Juniper, Tripping Balls/Cedar. Then come **seeded randomized regional authored encounters** (stats, skills, relationships, flags, clues, dice), followed by a guaranteed encounter with another main character. The player chooses STAY with current guide or FOLLOW newcomer, **leaving previous guide behind as an independent NPC**, then further random cards and the remaining characters' meetings in varied deterministic order. At each major beat the active companion story deepens, and previous meeting/follow order changes subsequent narration and epilogue callbacks. **No free upfront companion picker.** Final followed companion × fixed `opening_state` × cumulative choice/roll-earned hope/dark fate makes exactly **32 collectible endings**, 16 good and 16 bad. `current_state`/Clarity evolves and affects future interactions without predetermining outcome. Ten county futures remain noncollectible motifs; 120 encounter seeds retain cross-run variety. Cedar hopeful paths embrace locally controlled technoutopia; parents stay together. All front-end views one screen on phone/tablet/desktop, Endings X/32 persisted; all art/publishing hard gates still stand. Canon [`JOURNEY-LOOP-CONTRACT.md`](projects/weird-humboldt/JOURNEY-LOOP-CONTRACT.md), [`ECOTONE-32-ENDINGS.md`](projects/weird-humboldt/ECOTONE-32-ENDINGS.md), roadmap `t-022`.
+**Newest 32 endings / Cedar technoutopia (2026-10-19 PT):** **4 lead companions × 4 voluntary opening Sober/Tipsy/Stoned/Tripping states × 2 earned Hope/Dark fates = EXACTLY 32 collectible endings: 16 good and 16 bad.** Opening state only suggests first companion; commit to any of the four leads in later guaranteed scene anchors, so all 16 combinations genuinely occur. Substance choice never mechanically dictates good/bad; consequential decisions, corroborated evidence and fair rolls with repair do. Earlier 10 county-future families are **noncollectible scenario motifs**, not additional 10 ending slots. Main toolbar/ledger must say **Endings X/32**, 8 per companion, 8 per opening, and **All the Possible Humboldts = 32/32**. Each ending needs distinct authored 1/10/30-year epilogue beats, not a generic reskin. **Cedar's optimal paths centrally embrace ethical TECHNOUTOPIA**, locally owned fiber/broadband, skilled rural jobs, energy-accountable computing and forest/watershed sensors, with dark corporate capture alternatives; his grower-family and logger-family parents remain together in all 32. Authoritative story treatment `projects/weird-humboldt/ECOTONE-32-ENDINGS.md`, 32-slot UI contract `VIEWPORT-ACHIEVEMENTS-CONTRACT.md`, roadmap t-019..021. Retain single-screen, 120 seeds, historical/cultural safeguards, no-art and publication gates.
+**Hopeful optimal companion routes, newest user direction (2026-10-19 PT):** Ecotone is *ultimately an optimistic story*: horror/fantasy/sci-fi may offer bad and dystopian futures, but the player can improve the county through meaningful choices, care and coalition, not fatalism. **Each of the four companions** Juniper, Kit, Mara and younger country Cedar has their own earned, distinctive **optimal exploration path** with hopeful personal epilogue; each is available from ANY starting Sober/Tipsy/Stoned/Tripping perception and after later re-meeting. No ideal political alignment, ethnic bonus, exclusive drug path or rare RNG-only story draw. **Cedar's two parents, one of a timber-working family and the other of a grower family, stayed together and ARE STILL TOGETHER in every timeline**; their love survived divisive forest politics. In his optimal path Cedar helps forest habitat and safe local work coexist, and his parents remain an arguing, loving couple at the family table. **Never make their divorce/reunion a player-controlled stakes mechanic.** See `projects/weird-humboldt/COMPANION-OPTIMAL-PATHS.md`, follow-up roadmap t-017/t-018. Thirty-two endings and achievements still separate, and one-screen/creative gates still stand.
+**Latest character/historical correction (Silas 2026-10-19 PT):** **Cedar is only a working name**, now a younger redneck/country Humboldt local with mechanical aptitude and joking conspiracy/CB-radio theories. **Delete the older hippie, ex-grower, dispensary and massage-therapist biography.** His parents fell in love across the 1980s–1990s logger-versus-environmental tensions: one raised in a timber-working family, one in a cannabis-growing family. The green ribbon Silas remembers from his own family's car and nearby green/yellow ribbons were complex local signals, not Earth First! membership badges. Earth First! could be an insult in local speech; tree spiking seriously endangered mill workers and regional organizers renounced it in 1990. **Julia Butterfly Hill** stayed in the real redwood **Luna** for **738 days (1997–1999)**; it is protected and not open to public visits, with a 2000 vandalism episode. Keep her actual conservation achievement fixed as **documented history**, not invented magic or a game NPC. Updated fictional family memory and optional CB scene in `projects/weird-humboldt/COMPANIONS-AND-PROLOGUE.md` and documentation in `FACT-CHECK.md`. Future creative review will choose Cedar's final name and occupation. No art or publication.
+**UI and achievements mandate (Silas, 2026-10-19 PT):** Ecotone/Weird Humboldt must be **ONE viewport-contained, non-page-scroll visual surface on phone, tablet and desktop**, consistent with modern Shifting Lands and Shifting Desks. Tabs/overlays for Character/Journal/Map/Help/Achievements/Endings; constrained **internal** scrolling only for long content, never vertical page scrolling. Both `Endings X/32` persistent cross-run gallery (16 hopeful/16 dark, locked/unlocked cards with no spoilers, real earned epilogues) and **Kind Robots global achievements** must ship; use known shared achievement catalog and browser-local versioned endings ledger, avoid double-counting variants. Automated browser tests cover small phone, tablet portrait and short-landscape, and desktop, including save/reload, modal focus and 10/10 state. Specs `projects/weird-humboldt/VIEWPORT-ACHIEVEMENTS-CONTRACT.md`, roadmap tasks t-014..t-016. **These explicit requirements do not clear the existing no-art and publication human gates.**
+**Latest central theme and mission (2026-10-19 PT):** Proposed name **ECOTONE** for the Weird Humboldt game (do **not** rename Conductor slug or Kind Robots title without separate approval). User wants one singular psychedelic festival weekend in which the player helps determine the **long-term fate of Humboldt County**: changed ecology, continued Indigenous sovereignty and living communities, colonization/extraction and logging, legacy growers, students, arts, endangered habitat, poverty/housing, speculative broadband/data centers/logistics and corporate/grassroots rival futures. Hopeful hippy paradise and ethical technoutopia, corporate or anarchist dystopias and subtler hybrid/decline futures must all be possible. The **civic fate** is core in every run; investigating the actual supernatural cause is optional. No predetermined pro-tech or pro-nature editorial answer. The county's documented injustices never become literal magical plot causes, and tribal nation consent is independent and binding, not a skill-check obstacle. Fictional exploitative developers and misguided radical factions must have concrete motives and sympathetic bystanders, not imply real organizations are villains. Real data-center moratorium and proposed Amazon site are source-led; speculative high-speed rail and Google line **not** confirmed local commitments. See `projects/weird-humboldt/{ECOTONE-CORE.md,ECOTONE-ENDINGS.md,FACT-CHECK.md}`. This is **design only**, art and publishing gates stay blocked.
+**SUPERSEDED Kit background (historical planning note only):** Kit was previously conceived with Chinese ancestry and an invented family history in **Eureka's February 1885 Chinese expulsion**, but this fictional genealogy has been withdrawn; Kit is now Hmong American. Her ancestors' descendants lived elsewhere; she returned generations later as an HSU-era student and joined Dell'Arte/Blue Lake physical theatre and the local kinetic arts. The **1950s** mark Chinese American community return, not the expulsion. Ground documented history in HAPI/Eureka Chinatown Project and Cal Poly Humboldt Special Collections, never turn historic victims into supernatural conspiracies, and give Kit her own present-day life and agency. See `projects/weird-humboldt/COMPANIONS-AND-PROLOGUE.md` and `FACT-CHECK.md`. **No art yet.**
+**Latest cast direction (2026-10-19 PT):** Four distinct companions: **Juniper** (approved character concept, Humboldt forest nymph; Stoned) and **Kit** (approved character concept, kinetic artist; Tipsy), with the sober and tripping introductions revised by Silas. **Mara** (working name), an Indigenous Humboldt tattoo artist raised on her reservation, grew a studio using a casino-revenue-funded tribal small-business grant and abstains from cannabis because it affects her tattoo lines; **Cedar** (working name), an older former backwoods grower and former high earner, now dispensary operator and licensed massage therapist, talks about chakras and retrogrades with a knowing wink. Avoid assigning an unverified real tribe, casino, grant program or ritual; Indigenous identity offers no psychic skill bonus. All companions may be met later regardless of the festival state. See `projects/weird-humboldt/COMPANIONS-AND-PROLOGUE.md`; **still text-only, no art**.
+**Latest design direction (2026-10-19 PT):** Voluntary adult festival prelude with four story lenses: sober, tipsy, stoned, tripping balls. These change narration, social reactions, decisions and contextual skill checks, not underlying supernatural truth or availability of core endings. Skills: Rizz, Burly, Wits, Local Lore and Psyche. Sobriety is a changing state/Clarity condition, not a personality score. A cannabis-smoking young woman could become a recurring forest nymph guide in all branches. PG-13 drug references, no sex or covert dosing. Events are experienced through sensory details rather than explicitly named festivals. Tonal influences now also include Fear and Loathing, Church of the SubGenius, Illuminatus!, Burning Man, Humboldt Juggling Festival, Dell'Arte and Gravity Falls for older readers. See `projects/weird-humboldt/PRELUDE-STATE-CONTRACT.md`; **art still deferred until user approval**.
+**Direction (2026-10-19 PT, new project):** Design a wacky comedy-horror illustrated card adventure across *real* Humboldt County places and festivals, with 120+ fully authored randomized encounters in stages, archetypal playable locals and visitors, visible skill checks, lasting consequences, unexpected narrative turns, and optionally an underlying mystery. Inspirations: Shifting Lands/Desks interaction patterns, The X-Files, Twin Peaks, Weekly World News and High Times, with entirely original content.
+**Notes:**
+- Silas explicitly wants creative exploration *before any art commitment*: no ArtJobs or ART-PROMPTS generation entries until he approves direction. Design-first texts: `projects/weird-humboldt/{DESIGN-BRIEF.md,PITCHES.md,SAMPLE-CARDS.md,ENCOUNTER-SEEDS.md,FACT-CHECK.md}`.
+- Starting recommendation: six chapters × four named places/events × five encounter seeds = 120, with a seeded selection of two per chapter; optional radio-frequency multiverse mystery, self-contained local vignettes, persistent relationship/evidence flags and multiple endings. Seeds are NOT completed playable cards.
+- Ground history carefully. Minor Theatre Houdini performance is disputed lore; the owner-reported trapdoor does not confirm an appearance. Perilous Plunge and Kinetic Grand Championship are separate events. Present-day Native characters have agency and normal occupations and are never occult stereotypes; fictional pagan groups do not represent Native traditions.
+- Reuse only generic card UI; separate game data and state. Stage composition, cast voices, optional mystery and horror register await t-004's *explicit creative verdict*. Art phase waits on that gate while text content development may continue.
+
+
+### memory-dungeon (software)
+**LATEST build status (2026-11-20 PT, end of session):** all non-art work for Silas's playtest bar is merged and verified on production (12 authored worlds, 12 dungeons, illustrated opening, Last Door and 32 reachable endings). 3,080 of 3,087 plates are queued with ArtJob ids. The follow-up agent takes **t-080** when the queue drains; do not flip to `playtest` before then. Open roadmap items that need Silas's call are listed in `projects/memory-dungeon/HANDOFF-2026-11-20.md`.
+
+**LATEST Rowan art canon (Silas, 2026-11-20 PT, in-session, asked whether Rowan in Briar is drawn in Morrow's fey body or his own grey cardigan: *"Grey cardigan"*):** Rowan is always drawn as himself, an androgynous researcher in a grey cardigan, in every world including Briar (e01/e02/e09) and the opening. This supersedes any art direction that puts him in Morrow's fey body; the body trade stays a story fact (e.g. a fey reflection), not his drawn look. Morrow on Earth keeps the shipped e03 look (short dark hair, grey cardigan). All queued Memory Dungeon prompts (EVENT-OUTCOME-REQUESTS-PART-4..7) already follow this.
+
+**LATEST playtest bar (Silas, 2026-11-20 PT, in-session, correcting a premature handoff): *"That's not what 'everything until ready for human play test' means. You should have all 12 worlds 12 dungeons, full opening, endings, art for all choices, scripted interactions....do an assessment and make sure you are really done."* then *"that's absolutely not what was intended. Keep building."*** Memory Dungeon stays `active` / `high` until the complete game passes that bar. The same-day handoff that cut scope at e10 and set `playtest` (conductor#7650) is reverted, and master issue kind_robots#4136 is reopened. "Nothing beyond playtest-ready" means no work past the bar, never cutting the bar. Measured gaps and build order: `projects/memory-dungeon/ASSESSMENT-2026-11-20.md`. Stale claims were released (Silas: probably the only agent on this project).
+
+**RESEARCHER IS THE e01/e02 AND e09 LEAD (Silas, 2026-11-05 PT, verbatim; resolves t-056):** *"I always imagined pip was the character who switched with morrow, though pip is an odd modern name. I want it to have the main character as the researcher. He needs an androgynous name, but he is named."* Agent reading: the androgynous Earth data researcher who traded lives with Morrow is the main character of World One/Two and the e09 finale lead, he/him, named **Rowan** (agent-chosen androgynous name; rowan wood is the folk ward against fairy enchantment; one constant in kind_robots, change on request). Wherever the 2026-11-05 lead-per-pair line or older canon says "Pip" as a lead, read Rowan. Pip remains the goblin courier NPC of World One and Pip's Hoshimori ledger/Red Oven subplot, not a protagonist. Finale leads: e09 Rowan, e10 Morrow, e11 Char (Scylla if Char was lost), e12 Vesper. On Earth (e03/e04/e10) everyone calls Morrow "Rowan".
+
+**TWELVE-OVERWORLD STRUCTURE RESTATED / NEXT PHASE (Silas, 2026-11-05 PT, verbatim):** *"We should now have a 12 overworld structure. Each overworld has a dark and twisted pair, the even overworlds are more horror. Each overworld has a dungeon, as well as a number of encounters, special events, etc. there should have been significant work on overworld 1 and the first dungeon. Once those were at sufficient quality, they were going to develop the other 10. Each of the first 8 overworlds has the same protagonist for two rounds each. Then maps 9-12 do the same four but only one each map (with a swap for Char instead of Scylla for one map, depending on storyline). Every two overworlds, the user should make at least one very important choice that has real effects to the storyline and ending."* Agent reading: e01/e02 Pip, e03/e04 Morrow, e05/e06 Scylla, e07/e08 Vesper. **One lead per pair, so e08 is now Vesper's POV**, superseding the 2026-10-30 "e08 retains Scylla's POV lens" line. e09 Pip, e10 Morrow, e11 Char (or Scylla when the storyline lost Char), e12 Vesper. Even worlds carry the horror register. Every overworld ships its own dungeon plus authored encounters and special events, not template recipe text. A major storyline/ending choice lands at least once per two overworlds (pair hinges e02/e04/e06/e08, finale crossroads e10/e12). The World One runtime still frames e01/e02 through the displaced researcher; reconciling that to Pip is a separate tracked step, not a silent rewrite of shipped Briar saves. Build order for the other ten: replace each world's template-generated recipe sites with authored ones in play order, starting with **e03 Morrow's Shift** (t-052), then its dungeon, then e04, e05/e06, e08, e09–e12.
+
+**WRITER ACCESS / ROADMAP HYGIENE (Silas, 2026-10-30):** Quest writers start at `projects/memory-dungeon/WRITERS-ROOM.md`, drill into `story/ACT-PITCHES.md` → `story/MAP-PLANS.md` → `story/SCENE-ROOM.md` → `story/ENDING-MATRIX.md` as needed. `roadmap.yaml` is only the compact live scheduling ledger, with all 47 original task histories and Silas quotations preserved byte-for-byte in `archive/roadmap-2026-10-30-pre-12-world-slim.yaml`. Do not reappend historical megabriefs to task notes; link to their archives and append only concise actionable summaries. Preserve all task statuses/claims/dependencies and human gates. Canon is twelve worlds; older 16-world documents are historical.
+
+**LATEST CANON / PRODUCTION CAP (Silas, 2026-10-30 PT; supersedes 16-overworld / eight-paired-world finale plan):** Memory Dungeon is **TWELVE 8×8 overworlds**, not sixteen. Four complete original→twisted character acts cover e01/e02 Briar/Pip (with existing runtime protagonist framing to reconcile), e03/e04 Earth/Morrow, e05/e06 mermaid time travel/Scylla, and e07/e08 Japanese-folklore Hoshimori/**Vesper** the established moth-folk map-smuggler, with Pip retaining his Oven subplot. The final FOUR maps e09–e12 each **return to an existing geography** now violently crossed with the other three worlds and their monster, law, journey and memory rules. Final viewpoint order **playable Pip → Morrow → controllable Char → Vesper**. Char's original World Four loss remains conditional; the altered younger Char after Scylla's actual time travel must have real causal agency, never a free resurrection. Collect 2 displaced memory fragments per final map, resolve human-scale cross-world crises and final stakes. About **32 distinct core endings** keyed to 4 earlier pair hinge axes and 1 final choice, with e10/e12 crossroads and Scylla's three-way departure affecting *distinct epilogues* rather than multiplying titles to 128. The old e13–e16 worlds are RETIRED from new routing but preserved in a compatibility/archive layer of old saves; do not silently count them as finished e09–e12 or erase stored history. **Source authority:** `projects/memory-dungeon/TWELVE-REALITY-COLLISION-FINALE.md`. Older 16-world / 8-paired docs are historical wherever conflicting. World 7 Vesper childhood and World 8 original unsettling psychological/body-horror yōkai mirror remain priorities. All e03–e12 detailed maps, full art, playtests and public release remain independently unbuilt or gated; a metadata reducer and 32 title contracts are not full playable endings.
+**LATEST e07/e08 CHARACTER / HORROR DIRECTION (Silas, 2026-10-30 PT; supersedes Pip-centered Hoshimori focus):** Vesper, the already-established rogue/cartographer and betrayer from Briar, **grew up in Hoshimori**. World Seven begins at Vesper's childhood footbridge and follows their origin drawing private safe paths, the map sold to save someone yet used to expose refugees, earned public accountability vs confidential restitution, and a community-controlled map/escort charter outcome. **Pip's ledger apprenticeship and Red Oven subplot remain, but are secondary, not the Hoshimori protagonist.** World Eight is a far more disturbing and original Junji Ito-tonal **psychological, anatomical, impossible-architecture yōkai nightmare**, not simply shadowy lantern recoloring. Same 8×8 Hoshimori geography: routes fold into rooms, maps become coercive, the night procession demands perfect addresses; Vesper's childhood skills become the source of dread. e08 retains Scylla's established POV lens and branches for Char's fate; Vesper is the dramatic focus. See `projects/memory-dungeon/VESPER-HOSHIMORI-CHILDHOOD-AND-HORROR.md`. Keep existing map coordinates, save IDs, Earth photo anchors, original art identities, existing Pip choices, and 64-site/21-oven-room source progress. Dark e08 scene briefs do not count as shipped gameplay or ArtJobs.
+
+**LATEST REIMAGINER / CHAR CANON (Silas, 2026-10-30 PT; supersedes previous fixed-death and late-reveal instruction):** Eight unique overworlds are followed immediately by their twisted counterparts, sixteen sequential realities: e01/e02 Pip/Briar, e03/e04 Morrow's ordinary and distorted Earth, e05/e06 Scylla's mermaid time displacement and twisted counterpart, e07/e08 warm Japanese-folklore Hoshimori and demonic yōkai procession, then four remaining paired geographies. **World Four e04 has a major, fair, game-altering choice:** open a risky tide gate to rescue commuters and Scylla sees Char die in the present; seal the gate and Char survives but passengers remain trapped; divert the current and Char survives but an apparently abandoned district is wrecked. Immediately afterward Scylla travels back into her younger self, in the final days before she and Char originally ran away for the human world. The younger Char does not know the future; Scylla remembers it. **World Five e05 asks whether Scylla repeats the escape, stays beneath the sea, or tells Char the future and allows her agency.** All World Four outcomes lead to the same e05/e06 geography with different dialogue, obligations and endings. e06 warps the attempted second chance; it must not erase a witnessed earlier death automatically. **Every world pair ends with at least one persistent choice with game-changing callbacks**, not a cosmetic recolor. The current writer canon is `projects/memory-dungeon/EIGHT-PAIRED-WORLDS-CANON.md`. Keep machine/save/photo IDs and Classic untouched, no public total-world spoilers. The earlier `SIXTEEN-REALM-PRODUCTION.md` is historical. Planned entries are not sixteen playable maps. Prioritize e03–e06 as real scenes to unblock Hoshimori; art and public launch remain gated.
+
+**Current canon and production instruction (Silas, 2026-10-23 PT; supersedes the 2026-10-22 provisional-story/no-canon limitation below):** Memory Dungeon is now a 16-overworld, 16-dungeon dark fairy-tale isekai. Each 8×8 overworld has 64 authored interactive coordinates; the first realm is the Briar Marches with the House That Remembers built from the existing `6,2` Rootbound Vault, preserving saved IDs. The androgynous protagonist is traded from modern Earth into Morrow's fey life while Morrow tries to become a data researcher; fixed photographs reveal Morrow's setbacks, professional and romantic growth, and ultimate parenthood. Ending ethics ask whether to reclaim the rightful body, stay, or negotiate despite the children. Scylla and Charybdis (Char), identical mermaid princesses with contrasting coloration and proper/goth styles, are playful instigators; their fully hooded headsman Oren is an axe-bearing logistical genius. Tone: dark Grimm, clever, dangerous, mature, warm; inspirations include Fables, Fable, American McGee's Alice and She-Ra, without copied content. Implement per `projects/memory-dungeon/SIXTEEN-REALM-PRODUCTION.md` and `BRIAR-MARCHES-FIRST-WORLD.md`. Existing fixed-map, memory-combat, Classic mode, separate saves, art-first console layout and public-release gate still apply.
+
+**Active Memory Dungeon build order (Silas, 2026-10-23 PT):** Ship fully interactive 64-square Briar Marches first (t-021); next the 36-room House That Remembers (t-022); then the 32-photo Earth Chronicle, starting with Briar's two beats (t-023); then full image delivery/tracking (t-030). Prepare timeline and art manifests in parallel when possible, but finish the map and dungeon as priority player-facing slices. Prefer 16-site tested PR batches over giant placeholder merges. This changes **task order within Memory Dungeon only**, not the protected cross-project queue. Deploy/public release remains gated.
+
+**Historical 2026-10-22 setup (now superseded as to cosmology/cast only):**
+**Latest world/visual direction (2026-10-22 PT):** The giant grid is an **overworld exploration map** where cells can reveal terrain, monsters, treasure, encounters and portals, not necessarily pairs. Special sequential terrain-symbol matching unlocks hidden areas. **Actual memory matching is the nested battle/puzzle mode** opened from encounters. Stable authored geography persists across runs; procedural, biome-constrained dungeon rooms and Edgeworlds expand outward from canonical entry sites. The world and fantasy cosmology are deliberately not yet authored, so initial invented title/cast/lore must remain non-canon examples. The tone is original wacky fantasy with the energy of Myth Inc, Munchkin, Dungeon Crawler Carl and Phil Foglio, without derivative copyrighted content. Distinct character, overworld, expedition and Chronicle saves are required. The existing `/play/memory` page stays the entry but its interior gets a polished, image-heavy **video game** treatment (not a website form/dashboard). See `projects/memory-dungeon/WORLD-AND-EXPLORATION.md` for superseding design contract.
+
+**Direction (2026-10-22 PT, new project):** Evolve the existing memory match game at `/play/memory` into a full narrative roguelite RPG without a second front-end route. Character creation, difficulty plus independent dungeon depth, introduction, procedural draws from encounter/monster/treasure piles, hard moral decisions, recurrent cast, companions whose skills evolve, and Chronicle-based memory across runs. Combat resolution is always the match game, expanded to larger grids and weapon shapes revealing multiple cells. A targeted bullseye square gives precision effects for correctly remembered pair placement; rare giant Minesweeper-like deduction floors reward careful logical analysis and must never demand a mandatory blind guess.
+**Notes:**
+- Preserve existing `memory-dungeon.vue`, `memoryStore.ts`, `/play/memory` Play tab, home directory link and Classic Match mode. No separate product landing page.
+- High-priority `active` software project, after the protected seven-project focus and four-project earlier band, ahead of ordinary backlog; automatic work may proceed within reversible implementation boundaries.
+- Story and choices take precedence over stuffing every room with another complete match board. Run memory unlocks discoveries, relationships and tactical synergies, not permanent pay-to-win stat inflation.
+- Anchor rules, playtest hypotheses and acceptance details: `projects/memory-dungeon/DESIGN-BRIEF.md`, `COMBAT-PATTERNS.md`, `roadmap.yaml`.
+
+### crystal-street (software)
+**Scrapbook silhouettes (Silas, 2026-11-12 PT):** "Yes on crystal street silhouettes." Overrides the 2026-10-24 show-only-met rule: the nightmares, friends and endings lists show locked silhouettes for unmet entries with an "X of N" count, per the main-game standard.
+
+**New creative project (Silas, 2026-10-24 PT):** Terrors on Crystal Street (title chosen by Silas, 2026-10-24 PT; it began as Nightmare on Crystal Street) is ACTIVE. An 80s horror-comedy, queer-positive day/night card adventure: one week on a suburban cul-de-sac against one of 20+ nightmares, days at the library, gym, traveling pawnshop, school and more, nights of signature scenes and tag-deck pulls with teleports, 20+ companions with 10 active, six emotions plus portrait and poster art, illustrated success and failure on every choice, four endings per nightmare with one Best each, and a scrapbook of every run. Complexity benchmarks: Emperor of Dust, Ecotone, Shifting Desks, Shifting Lands. Admin preview at `/admin/crystal-street`; public release stays a hard gate (roadmap t-011). Generated art is pre-approved. Sources: `projects/crystal-street/DESIGN-BRIEF.md`, `WRITING-GUIDE.md` (queer-positive rules are non-negotiable), `roadmap.yaml`.
+
+### comet-city-academy (software)
+
+**LATEST DIRECTION (2026-10-28 PT, supersedes incompatible three-identity planning):** Prom of Doom has **48 distinct characters, each with ONE permanent superhero name** across student, hero/partner and antagonist circumstances; each receives three **different splash pages**, not three separate character designs or codenames. Role, alignment, power methods and story can change, but not stable identity. The old 144 independent designs / 288 mandatory tracks model is revoked. Night patrol nights 1-2 begin with solo internal monologues and personally led cases; night 3 brings two simultaneous catastrophes plus a friend calling to join, with a real split-vs-concentrate rescue dilemma. More contacts and night opportunities unlock at a controlled pace. Missions require authored scenario branches, refusal outcomes, hidden matchups and callbacks. See #4402, #4403 and IDENTITY-SYSTEM.md. Keep saves and real-world publication gates intact.
+
+
+**2026-10-25 latest revision:** Display brand **Capes & Tassels: Prom of Doom**, full **30 days before graduation**; 21-day original and initial seven-day prototype do not define final scope. Detailed required mechanics: two canonically aligned maps (northwest city edge on campus, southeast campus on city), daytime location cards/romance/infirmary, nighttime heroic/villainous/rogue/shared dispatch with 1–3 available followers, adults-only romanceable ensemble with at least two consensual triads, partner/sidekick roles, injured followers and healing actions, a randomized city-destruction villain, 30 scripted anchors + weekly seeded events, big multi-emotion character and injured art, Hero/Followers/Scrapbook/Settings/save and full-screen cinematic screens. The currently merged /play/comet-city-academy demo is a *first-week stepping stone* with explicit save/route preservation. See authoritative DESIGN-BRIEF.md and new t-012 through t-015 for next playable stage.
+
+
+**New project (Silas, 2026-10-25 PT):** ACTIVE, HIGH priority superhero-school playbook, working title "Comet City Academy: Final Exam". The player selects power sets with mechanically unique solutions, chooses hero or villain allegiances through action, builds relationships with student/faculty NPCs, assigns 1-3 volunteers to Dispatch-style *training simulations* each day, draws location cards around school and Comet City, and lives through a graduation/prom crisis that can threaten the world. The daily experience must be rich, replayable, illustrated and a full-screen console game rather than a standard web form. Canonical scope in `projects/comet-city-academy/DESIGN-BRIEF.md` and roadmap; master issue kind_robots#4181. Internal development and art are agent-owned; final full design acceptance and public publication are separate human gates.
+
+### game-of-captains (software)
+
+**LATEST Game of Captains lifecycle (2026-11-24 PT intent audit, from Silas's 2026-11-22 PT playtest handoff, conductor#7822):** `playtest`/`normal`. The finite roadmap is complete and t-012 final design acceptance moved post-roadmap by Silas. New fixes ship as `playtest_iteration` tasks; public release stays separately gated. The ACTIVE/HIGH wording below is the original brief, kept for history.
+
+**2026-10-25 latest revision:** Display brand **This Means Warp**, retain `game-of-captains` slug and compatible `/play/game-of-captains` route. Full crew-command and intervention playbook unchanged except official name, with a specifically authored captain/crew/ethical-mission/antagonist first voyage followed by three acts, twelve systems, eight antagonists and sixteen earned outcomes. Respect Vox (tardigrade narrator), sentient Serendipity (separate narrator) and Fluke (Improbability Starcruiser narrator) seed identities. The playable Play first slice lives in existing kind_robots PR #4185; avoid conflicting edits while it is in review. Once it merges, agent-owned t-013 updates title, Play tab, dashboard highlight and Project presentation without breaking saves or links. See definitive DESIGN-BRIEF.md.
+
+
+**New project (Silas, 2026-10-25 PT):** ACTIVE, HIGH priority comedy science-fiction playbook, working title "Game of Captains". Choose a captain and senior crew, undertake ship and away-team missions, wrestle with ethical intervention by technologically advanced civilizations, confront one of several run-randomized alien antagonists who actually interfere throughout, and earn destination-specific endings. Reuse existing Kind Robots Barkeep Vox, **sentient** Serendipity Space Bar and Captain Fluke / Improbability Starcruiser without conflating their established narrator identities. Original writing evokes comedy sci-fi adventure without copying franchise plots. Fully illustrated single-screen console UI, seeded adversarial whole-run verification and a final design approval only after agent work is complete. See `projects/game-of-captains/DESIGN-BRIEF.md`; master issue kind_robots#4182. Public release separately gated.
+
+### playbook-kit  (software)
+**Direction:** One shared frame and complexity budget for every Kind Robots story game (playbook), so new playbooks start consistent and small and existing ones converge on the same one-screen shell, settings, trailer, scrapbook, cast, factions, secrets and endings.
+**Notes:**
+- (your notes)
+
+### rebel-button  (software)
+**Direction:** Turn the Rebel Button into a playful 100-press journey: after ten presses the button moves, shrinks, hides behind walls, triggers surprise minigames (aim a cannon to break a wall, spot the real button among decoys), and at 100 offers keep pressing for a high score, rate art, share a malaria-net fundraiser post, or donate.
+**Notes:**
+- (your notes)
+
+### every-villain-tactics (software)
+**New project (2026-10-28 PT):** Every Villain Tactics is ACTIVE and HIGH priority, a separate console-quality browser tactical squad game from the original 30-day Prom of Doom RPG. First campaign **Prom of Doom: Crossfire** has six increasing-difficulty missions, from-destination LOS and exact hit percentages on the movement hover, animated illustrated card units, opening/triggered/closing cinematic conversation trees, a versioned save/load/fork/share level editor and battle AI. Every one of Prom of Doom's **48 permanent, single-name hero identities** requires four distinctly authored hero/villain/henchman/sidekick perspectives plus one bespoke fixed-roles six-mission route each. Preserve existing names, illustrations and original game saves. Begin with a Playbook Kit Vignette and polished /admin/every-villain-tactics preview, then earn Saga growth through playtests. Master scope issue kind_robots#4407; roadmap and DESIGN-BRIEF.md here own execution. Asset completeness, human design approval and public game/community publishing have NOT been established or authorized.
+
+**Latest player-facing direction (Silas, 2026-11-12 PT; supersedes historical four-player-role specification):** The opening has exactly **HERO or VILLAIN** as playable viewpoints, not Sidekick/Henchman. Sidekicks and henchmen remain independently characterized supporting actors but not starting-player roles; old saves must remain readable. Dialogue scenes visibly illustrate each speaker, including First Bell, with actual canonical character art or an art-shaped fallback. The entrance/pop-up reveals must use existing Prom of Doom painted outcomes when dedicated role posters have not shipped; then queue and verify the truly missing art variants, not duplicate 48 complete outcome sets. Splash/front menu should look like a vivid, saturated, inked **comic-book fighting game**, not a muted navy strategy dashboard. Maintain the flat, legible Advance Wars-style battle map, accessible controls and private-development release gate. Source: [Silas's screen feedback](https://github.com/silasfelinus/kind_robots/issues/4407#issuecomment-6838918339).
+
+### monstress-convention  (software)
+**Latest naming and franchise direction (Silas, 2026-11-06 PT):** **MONSTRIQUE** is the official game and multimedia celebrity franchise. It has movies, bands, idol subunits, supermodels and scandals from the 1960s through the 2020s. Original MONSTREXX branding is retired. Seven distinct decade album sleeves track one erased female monster per decade, her replacement and post-expulsion reinvention; the wrongdoings become contract clues and scrapbook discoveries. See FRANCHISE-HISTORY.md and ALBUM-ART-REGISTER.md. The existing /admin/monstrexx route and monstress-convention coordination slug are temporary technical identities; all visible branding becomes MONSTRIQUE. A future route alias may move to /admin/monstrique with redirects and migration tests. No public release authorized.\n\n**Current direction (Silas, 2026-11-05 PT revision supersedes first pitch):** Official game/franchise name **MONSTRIQUE**, featuring adult female monster-celebrity actresses, models, personalities and idol group. **The Monstrique Convention is a distinct city location, not the game title and not the motel.** Main playable investigator **Iris Quill** is the physical, hands-on assistant; her brilliant but physically unattractive germophobic journalist boss **Norb Vale** refuses to touch objects or people, contributes deductions and consistently rebuffs Iris's playful advances. Cold open at a seedy two-story motel: female franchise agent **Odette** on a consensual paid date with adult sex worker **Violet**, followed by an unseen killer murdering **both** with one distinctive ornamental knife. Discover their bodies and interview BOTH ghosts, neither knowing the killer; the agent has numerous deals/enemies and Violet has separate observational clues. The motel comprises exterior, front office, ice machine, adjacent rooms, crime room and service areas, with unlockable *separate* convention hall, supernatural novelty shop, Draculina mansion and sewers below the motel where an albino alligator woman desperately seeks fame. Add mummy actress and deep MONSTRIQUE idol career dynamics, optional consent-based adult romances (including both ghosts) and collectible character/steamy-art scrapbook. Celestine-as-victim and Odette-as-killer are **revoked canon**. Fanboy stalker remains not the killer. Preserve genuine point-and-click icon verbs, responsive conversation topics, art-first one-screen AAA console UI and server-enforced mature opt-in/non-CHILD access. Public Play/nav/Highlights and subjective visual approval are human gates. Internal coordination slug stays monstress-convention; all visible product title text is MONSTRIQUE. See projects/monstress-convention/DESIGN-BRIEF.md and OPENING-SLICE.md.
+
+**Rename and premise (Silas, 2026-11-06 PT, later):** Game and franchise are now **MONSTRIQUE** (visible text; slug unchanged), set in **Midnight City**. Odette's ghost is the client; Violet was hired to dress as a vampire; both ghosts are confined to Room 205, which is the hub. Ribald Larry-style comedy, "low morals", follow the franchise across its eras (has-beens and still-has-its), favor-driven gratitude with monster women, Norb always rebuffs. World, eras and chapter plan: `projects/monstress-convention/STORY-BIBLE.md`. **Decided 2026-11-07 PT:** the killer is **Draculina**, revealed only in the last act (Marta is the misdirect); the mummy star is **Cleo Pappatra**. Internal route becomes `/admin/monstrique` (`/admin/monstrexx` redirects).
+
+**Front-end direction (Silas, 2026-11-06 PT):** The actual internal title/front page route is `/admin/monstrexx`, with **New Game, Continue, Settings, Scrapbook** as working console choices; see Kind Robots PR #4848. The ugly germophobic boss is a **SHORT, geeky, strikingly unhandsome comic character**, never a sleek detective. Provisional visible name **Norbert "Norb" Vale**, internal character ID `nico` deliberately retained for save compatibility; Silas may rename him.
+
+### deepheart  (software)
+**Master issue:** https://github.com/silasfelinus/kind_robots/issues/5256 (the roadmap hub). **Priority:** high until it graduates to playtest at normal priority.
+**Direction:** Deepheart: a saga-tier party dungeon crawler on the Playbook Kit in Kind Robots. Delve three layers with a hero and one to three companions from a 50-character preset roster; puzzle, treasure, combat, choice and campfire rooms; supports and romances that depend on the party; role and pair synergies with a party optimizer; multiple endings with painted plates; main-game standard (title screen, settings, save/load, 12+ achievements, scrapbook, customizable hero, replay hooks); every picture rendered; then playtest.
+**Notes:**
+- Silas, 2026-11-16 PT: "New dungeon crawler project game… three layer dungeon with one or more companions. Traditional dungeon dwelling aesthetic. Romance options depending on party. Presets with romances and supports, romanceable or not… start with 50 or so players and companions, then try to optimize based on special combinations, roles, etc. include rooms based on puzzles, simple treasures, combats, choice rooms with special endings."
+- Silas, 2026-11-16 PT: every game has a GitHub project issue that functions as the roadmap; Deepheart starts on Kind Robots at high priority; fully complete it including art, then mark ready for human testing and swap to playtest at normal priority. Like all our games: achievements, save/load, art-first design, front end, multiple endings, scrapbook, multiple characters.
+- Silas, 2026-11-17 PT: Deepheart's roguelike moral theme is that being good is possible but **hard**, with real sacrifices rather than free virtue; each delver and companion's statistics and skills must substantially change survival and nonviolent outcomes. Support an independent custom hero, with original identity, class and stats, as well as choosing one of the 50 presets. Keep the queued approved art moving and finish balance and playtest readiness without adding speculative new art batches.
+
+
+### tarot-studio  (software)
+**Direction:** Build an admin-only, persistent multi-deck Tarot Studio around the recovered
+Kind Oracle art/reading work. Three starting decks: bespoke SuperKate Tarot (private),
+Kind Robots Tarot (reuse the October 2026 78-card oracle canon), and Zuzu Tarot.
+A 78-card editable art bible per deck includes prompt, checkpoint, LoRAs, status,
+art job provenance and print review. Filters by deck, arcana, suit, rank, checkpoint
+and review state. Use the existing ArtJob pipeline, never promise generated art
+before delivery. Later, printer-neutral exports, proofing and a fully accessible
+gift shop product on Kind Robots with admin order emails, followed by optional
+vendor API order fulfillment.
+**Notes:**
+- Silas requested this on 2026-11-20 PT. The original kind-oracle project is
+  preserved as a Daily Dream Workshop member; do not delete its engine/spec.
+- All artwork and editable recipes are private until accepted. SuperKate's deck
+  is a personal gift; never presume authorization to use a real portrait likeness.
+- Product publication, checkout, external printing, vendor accounts/keys, and
+  money require an explicit human gate. Reversible internal tools may merge.
