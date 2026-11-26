@@ -191,10 +191,7 @@ tasks:
   - id: t-012
     milestone: m4
     title: "Every picture rendered, delivered, URL-verified and wired (set src / RENDERED_ART)"
-    status: review
-    owner: worker
-    claimed_by: 2026-11-26T003408Z-deepheart-t012-e7bd91
-    claimed_at: '2026-11-26T00:34:08Z'
+    status: ready
     depends_on: t-011
     passes: 0
     stakes: reversible
@@ -222,7 +219,9 @@ tasks:
       2026-11-25 PT reconciliation: #5646 merged 81107cf8 and #5665 merged b9b24fef; discovery and art bible increments landed, but full rendered/delivered/wired art coverage is not verified. Release abandoned review ownership.
 
       App commit 9440f855 connects all twelve existing approved court ArtImage references to the playable cast and choice-room art, with catalog regression assertions. CI, authenticated rendering, and the complete delivery audit remain outstanding; return ready after scoped merge.
-    updated: '2026-11-26T00:34:08Z'
+
+      Kind Robots #5857 merged d8d0e15d after all seven successful CI runs; all twelve court ArtImages wired to cast and live encounter component. Actual authenticated delivery/visual audit remains outstanding. Return to ready.
+    updated: '2026-11-26T01:22:53Z'
   - id: t-013
     milestone: m4
     title: "Adversarial seeded playthroughs and 390/768/1440 px checks"
