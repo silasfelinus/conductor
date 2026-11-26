@@ -138,7 +138,10 @@ tasks:
   - id: t-009
     milestone: m3
     title: "Account-backed save for signed-in players with local fallback"
-    status: ready
+    status: claimed
+    owner: worker
+    claimed_by: 2026-11-26T111500Z-deepheart-t009-7c5d29a1
+    claimed_at: '2026-11-26T11:15:00Z'
     depends_on: t-006
     passes: 0
     stakes: reversible
@@ -148,7 +151,7 @@ tasks:
       App commit 1c38b4db implements explicit account backup/restore of autosave, three slots, and chronicle via a private revision-checked archive, retaining local saves. Added round-trip and invalid payload regressions; CI and authenticated live verification pending. No schema migration.
 
       Kind Robots #5878 merged 90e8d8ae after all ten completed successful CI workflows, including Playbook Kit 45749360796 and Contract Tests 45749360778. Explicit revisioned account backup/restore of run slots and chronicle landed. Return ready for scrapbook/settings integration and live two-device verification.
-    updated: '2026-11-26T09:09:18Z'
+    updated: '2026-11-26T11:15:00Z'
   - id: t-010
     milestone: m3
     title: "Sound and music behind the kit sound setting"
