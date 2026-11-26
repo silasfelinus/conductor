@@ -244,9 +244,7 @@ tasks:
   - id: t-005
     milestone: m2
     title: "Implement enemy interaction, held objects and powerup systems"
-    status: review
-    claimed_by: 2026-11-26T222400Z-plumber-t005-inventory-31c9
-    claimed_at: '2026-11-26T22:24:00Z'
+    status: ready
     depends_on: [t-003]
     passes: 0
     stakes: reversible
@@ -313,9 +311,9 @@ tasks:
       painted Ballast/Tidecoat props. Production deployment unverified. Return to ready.
 
       Added validated equipped power and reserve save fields, slot isolation, map Y equip/swap with immediate persistence, and a shared cabinet regression suite. App branch worker/save-the-plumber-t-005-inventory-31c9 head 1ae51f90. Partial scope; full CI pending and ride companion, water courses and painted prop delivery remain.
-    updated: '2026-11-26T22:24:00Z'
-    owner: worker
-    implementation_pr: 'silasfelinus/kind_robots#5899'
+
+      2026-11-26 PT: kind_robots#5910 merged at 835f9aca. Map inventory and save-slot isolation shipped; 11 implementation workflows and janitor passed. Remaining ride companion, water courses and prop delivery. Partial scope; production deployment unverified.
+    updated: '2026-11-26T23:38:00Z'
   - id: t-006
     milestone: m3
     title: "Build World 1: four complete garden/pipeworks levels and boss"
@@ -707,11 +705,8 @@ tasks:
       Related: PR #4080, issue #4062, conductor/save-the-plumber t-025.
   - id: t-027
     title: "Save the Plumber Maker: playable level editor, saves, sharing, ratings, Mario Maker and Geometry Dash parity"
-    status: review
-    owner: worker
-    claimed_by: 2026-11-26T223300Z-plumber-t027-scroll-9c4f
-    claimed_at: '2026-11-26T22:33:00Z'
-    updated: '2026-11-26T22:33:00Z'
+    status: ready
+    updated: '2026-11-26T23:38:00Z'
     stakes: reversible
     passes: 0
     source_issue: "silasfelinus/kind_robots#4347"
@@ -768,6 +763,8 @@ tasks:
       PR kind_robots#5894 merged at 9cdc0317; all ten implementation workflows and branch janitor passed on 8b0c3c2e. Pipe-mouth validation and portal replay shipped. Remaining advanced Maker scope stays ready.
 
       Added optional forced-scroll ranges and speed to Maker validation, serialization, settings, undo snapshots, and real runtime stage conversion. Added roundtrip, invalid input, and moving-camera gameplay regressions. App branch worker/save-the-plumber-t-027-scroll-9c4f head 01d86abb. Partial scope; CI pending, further advanced editing and community lifecycle remain.
+
+      2026-11-26 PT: kind_robots#5911 merged at 464db144. Forced-scroll Maker settings, serialization and runtime replay shipped; all 11 implementation workflows passed. Remaining advanced editor and community lifecycle. Partial scope; production deployment unverified.
   - id: t-030
     milestone: m2
     title: "Add one water-traversal fixture that runs every heroine and the speed-route pilot through Tidecoat swimming"
