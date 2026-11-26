@@ -236,8 +236,8 @@ tasks:
   - id: t-007
     milestone: m3
     title: "Write and implement all six distinctive tactical story missions"
-    status: claimed
-    updated: '2026-11-26T00:35:25.481Z'
+    status: review
+    updated: '2026-11-26T00:36:36.447Z'
     depends_on: [t-003, t-005, t-006]
     passes: 0
     stakes: reversible
@@ -295,6 +295,8 @@ tasks:
       Crossfire finale now uses shared tactical support thresholds, preserving both rescue and evidence earned on First Bell and rejecting a defeated prior chapter. Rescue ending takes precedence if both thresholds are reached. Kind Robots 3045a23e8983a1f34d9aa1c40cd77a7d16939496; six isolated finale cases passed with stubbed helpers, real-save regression committed for CI. Partial umbrella; full campaign QA remains open.
 
       2026-11-25 PT review reconciliation: Verified #5841 merged ad094b84643b; six chapter continuity fix landed, full campaign acceptance remains. Release partial scope for independent continuation. No open matching implementation PR or worker branch found in either repository.
+
+      Campaign replay repair committed to Kind Robots 411c831ca9d1999540f941e6985daa03ce7ebd57: retries reconstruct deterministic chapter opening from verified history, preserving prior injuries and guard/intel/finale support, persisting retry checkpoint and rejecting finished journal replay. Six real-save chapter retry regressions committed. Full CI and adversarial playthrough acceptance pending.
     owner: worker
     claimed_by: 20261126T003500Z-evt-campaign-qa-6d2e
     claimed_at: '2026-11-26T00:35:25.481Z'
