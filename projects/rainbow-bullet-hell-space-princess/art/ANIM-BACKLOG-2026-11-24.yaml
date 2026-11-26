@@ -1918,6 +1918,8 @@ subjects:
       status: DONE
       art_image_id: 280736
 - key: idle-comet-cadet-pod
+  verdict: 'reject: 2026-11-26 PT review, the pod and window sit almost frozen with no bob or blink (motion 0.80, under the
+    2.7 floor); retake idle-comet-cadet-pod-v2'
   lane: wan-mp4
   entity: sprite-animation
   title: comet-cadet-pod idle loop
@@ -3061,6 +3063,9 @@ subjects:
       status: PENDING
       art_image_id: null
 - key: idle-flagship-v2
+  verdict: 'keep: 2026-11-26 PT review, the hull rolls and heaves on the swell with turrets and stern glow moving, on model
+    with a clean key (motion 8.96); eight cells keyed and sized to the 420x222 still, shipped as doodle/anim/flagship-idle
+    for phase 1 (phase 2 stays the battered still)'
   lane: wan-mp4
   entity: sprite-animation
   title: flagship idle loop
@@ -3211,3 +3216,19 @@ subjects:
     wan-mp4:
       status: PENDING
       art_image_id: null
+- key: idle-comet-cadet-pod-v2
+  lane: wan-mp4
+  entity: sprite-animation
+  title: comet-cadet-pod idle loop
+  asset: rainbow-princess-art/doodle/anim/comet-cadet-pod-idle
+  size: 832x688
+  seed: 1125613
+  source_url: /rainbow-princess-art/doodle/pickups/comet-cadet-pod.webp
+  last_image_id: /rainbow-princess-art/doodle/pickups/comet-cadet-pod.webp
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: The little rescue pod bobs up and drops back, tilting nose up then nose down, while its round window
+    light blinks bright and dim, the tiny gold cadets inside bounce, and its pink tail fins flap. Locked view, exact
+    pod outline, flat lime-green backdrop all around, shiny airbrushed doodle.
