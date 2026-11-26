@@ -954,11 +954,11 @@ tasks:
     implementation_pr: 'silasfelinus/kind_robots#4105'
   - id: t-042
     title: "Rainbow Bullet Hell Space Princess — Master Roadmap to Final Creative Approval"
-    status: claimed
+    status: ready
     stakes: reversible
     passes: 0
     source_issue: "silasfelinus/kind_robots#4146"
-    updated: '2026-11-26T17:49:28Z'
+    updated: '2026-11-26T17:49:57Z'
     note: |-
       FROM GITHUB ISSUE silasfelinus/kind_robots#4146 (https://github.com/silasfelinus/kind_robots/issues/4146), opened by @silasfelinus on 2026-10-25. Imported by scripts/sync_github_issues.py. Reference the canonical roadmap in implementation PRs with `Refs silasfelinus/kind_robots#4146`, never `Closes`. Keep #4146 open throughout finite build, art and QA work. Only the verified playtest handoff workflow may prefix `[FLAGGED FOR HUMAN TESTING]` and close the single master issue after Conductor lifecycle, priority, evidence and genuine `needs-human` subjective-acceptance gate are confirmed; closing the issue is not human approval or permission to publish.
 
@@ -1043,10 +1043,15 @@ tasks:
       flagship draw through drawSpriteOrFrame so it actually animates. Rejected comet-cadet-
       pod (0.80, static); -v2 retake appended for auto-submit. ~38 loops still pending plus
       the loyal-sever ending retake. Partial master-roadmap scope; return to ready.
+
+      2026-11-26 PT P-01 batch 9: three loops had finished, all rejected. flagship-phase2-v2
+      (craters wander across the hull, lime smoke flecks past the outline), kelp-frond-v2
+      (static, 0.71) and charge-v2 (loses the still's tilt and pink rim, green fringe). -v3
+      retakes appended to ANIM-BACKLOG for auto-submit; a third failure leaves each a still.
+      ~35 loops pending plus the loyal-sever ending retake. Partial master-roadmap scope;
+      return to ready.
     owner: worker
     implementation_pr: 'silasfelinus/kind_robots#5868'
-    claimed_by: 2026-11-26-claude-sched-b9
-    claimed_at: '2026-11-26T17:49:28Z'
   - id: t-043
     milestone: m4
     title: "Fever Dream look: review the doodle re-renders (DOODLE-SET-2) and ship the keepers"
