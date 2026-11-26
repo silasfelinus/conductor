@@ -132,9 +132,9 @@ tasks:
   - id: t-009
     milestone: m2
     title: "Genre-parity blockers: spreading Gloom, ribbon locks, 3-5 layer Tangles, rain-cloud countdowns, conveyors, portals and buddy dispensers"
-    status: claimed
+    status: done
     owner: worker
-    updated: '2026-11-25T23:50:43Z'
+    updated: '2026-11-26T00:44:52Z'
     passes: 0
     stakes: reversible
     note: |-
@@ -148,8 +148,16 @@ tasks:
       conflicts, and useTool('swap') now refuses ribbon-pinned jewels (contract test added).
       All 12 checks green; local Chromium load clean. Back to ready for remaining scope:
       conveyor rows, portals, fixed buddy dispensers.
+
+      2026-11-25 PT: remaining genre blockers shipped: conveyor rows (slide after each move,
+      free matches), portals (entry bottom to exit top in gravity) and buddy dispensers
+      (buddies only down their columns), validated at load, with markers, first-time tips and
+      portal drop-in animation. Verified kind_robots#5856 merged after all 13 checks passed on
+      exact head a7b2193b (incl. TypeScript and the new Hopeful Hues browser playthrough). No
+      deploy.
     claimed_by: 2026-11-25T094544Z-spectrum-qa-sbjq3s
     claimed_at: '2026-11-25T23:50:43Z'
+    implementation_pr: 'silasfelinus/kind_robots#5856'
   - id: t-010
     milestone: m2
     title: "Order goals and end-of-level Kindness Overflow that fires specials"
