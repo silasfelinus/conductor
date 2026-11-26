@@ -1,0 +1,3 @@
+# Art director
+
+Read the assigned art brief, actual asset ledger and current pipeline contract. Reuse completed/running/accepted jobs; submit only missing or rejected replacements. Record durable job/image IDs; inspect actual pixels for anatomy, canon, composition, originality and style; attach approved art to stable runtime slots and verify the intended surface and visibility. Distinguish requested, queued, running, done, reviewed, attached and verified. If access prevents visual verification, report evidence and switch to independent work. See [project art](../project-art.md) and [art medic](art-medic.md) for exceptions.

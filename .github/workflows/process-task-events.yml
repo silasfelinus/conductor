@@ -139,6 +139,7 @@ jobs:
               # some unrelated later Conductor commit.
               if [ "$roadmap_changed" -eq 1 ]; then
                 echo "Roadmap changed; dispatching Kind Robots projection sync."
+                gh workflow run refresh-status.yml --repo "$GITHUB_REPOSITORY" --ref main
                 gh workflow run sync-kind-robots-projection.yml \
                   --repo "$GITHUB_REPOSITORY" \
                   --ref main
