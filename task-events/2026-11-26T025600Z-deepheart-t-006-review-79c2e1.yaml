@@ -1,8 +1,0 @@
-version: 1
-project: deepheart
-task: t-006
-operation: review
-session: 2026-11-26T025300Z-deepheart-t006-79c2e1
-updated: '2026-11-26T02:56:00Z'
-note: >-
-  App commit 4b480ec2 fixes shared achievement retry loss affecting Deepheart: retain known codes after unsuccessful award writes, remove only confirmed awards during retry and guest migration, and add mixed-success/failure regression coverage. Live catalog and account award verification remain outstanding; no KR_API_TOKEN and local DNS cannot reach production. Return ready after verified partial merge.
