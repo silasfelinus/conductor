@@ -670,9 +670,9 @@ tasks:
       Related: PR #4080, issue #4062, conductor/save-the-plumber t-025.
   - id: t-027
     title: "Save the Plumber Maker: playable level editor, saves, sharing, ratings, Mario Maker and Geometry Dash parity"
-    status: claimed
+    status: review
     owner: worker
-    updated: '2026-11-26T11:34:00Z'
+    updated: '2026-11-26T11:35:00Z'
     stakes: reversible
     passes: 0
     source_issue: "silasfelinus/kind_robots#4347"
@@ -723,5 +723,7 @@ tasks:
       Maker course edits now invalidate pending review fetch generations and clear stale loading state; regression contracts added. Partial Maker scope; PR pending CI.
 
       Verified kind_robots#5677 merged at e1668063. Maker review loading fix shipped; remaining advanced Maker scope. Return to ready.
+
+      Corrected Maker validation to use the same pipe-mouth pairing rule as the runtime parser instead of counting every painted pipe-body tile. Added unequal-height paired pipe share roundtrip and real bidirectional portal input regression plus rejection of equal cell counts with unequal mouth counts. Branch worker/save-the-plumber-t-027-pipes-p8n4 head d7160b0c. Full CI pending; partial t-027 scope.
     claimed_by: 20261126T113400Z-plumber-maker-p8n4
     claimed_at: '2026-11-26T11:34:00Z'
