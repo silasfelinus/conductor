@@ -23,7 +23,8 @@ Promo card (not for posting until Silas approves sharing): `promo/hopeful-hues-p
   - a world finale played to its ending
   - no sideways scroll at any width
 - **Art.** All 118 painted in-game images are delivered and render: heroes, world keys, regions, maps,
-  54 story beats and 10 endings.
+  54 story beats and 10 endings. All 90 board tiles are painted too (six jewels, rainbow, buddy, knot
+  and Gloom mist per world), checked in play at 390 and 1440 with the colorblind symbols on top.
 
 ## Please play and tell us
 
@@ -42,7 +43,8 @@ Promo card (not for posting until Silas approves sharing): `promo/hopeful-hues-p
    volumes comfortable?
 7. **Quests and rewards.** Do the daily and weekly quests and the Sparkles feel rewarding without being
    pushy? (No lives, timers or purchases, by design.)
-8. **Look and feel.** Anything that looks unfinished or hard to read?
+8. **Look and feel.** Anything that looks unfinished or hard to read? On a phone, can you tell every
+   painted jewel in a world apart at a glance (try Circus and Dust and Neon, which had look-alikes fixed)?
 
 ## Decisions only Silas can make
 

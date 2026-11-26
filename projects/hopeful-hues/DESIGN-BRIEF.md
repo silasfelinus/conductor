@@ -5,15 +5,18 @@
 **Static game:** `kind_robots/public/hopeful-hues/` (vanilla JS, no build step)
 **Master issue:** [Kind Robots #5649](https://github.com/silasfelinus/kind_robots/issues/5649)
 
-## Status (2026-11-25 PT): painted tile set in progress (high priority)
+## Status (2026-11-26 PT): ready for human playtest
 
 Built and verified: nine worlds and 495 levels, all won by the bot. Conveyor, portal and dispenser
 region mechanics are in, all 118 painted scene images are delivered, and a Chromium playthrough runs
 in CI (kind_robots#5856).
 
-Silas, 2026-11-25 PT: painted art must replace every code-drawn tile. 90 painted tiles are queued
-(t-013): six jewels plus rainbow, buddy, knot and Gloom for each world. The playtest handoff (t-007:
-[PLAYTEST-CHECKLIST.md](PLAYTEST-CHECKLIST.md), promo card in `promo/`) waits for them.
+Painted tiles (t-013, Silas 2026-11-25 PT: painted art must replace every code-drawn tile): all 90
+are delivered and verified in play at 390 and 1440 (six jewels plus rainbow, buddy, knot and Gloom
+mist for each world), with the colorblind symbol badge and special markers drawn over them. Two
+jewels were re-rendered so no two in a world share a shape. Handoff (t-007):
+[PLAYTEST-CHECKLIST.md](PLAYTEST-CHECKLIST.md), promo card in `promo/` (not for posting without
+Silas). Nothing is deployed; it ships with the next Force Update.
 
 ## Direction (Silas, 2026-11-22 PT, verbatim)
 
