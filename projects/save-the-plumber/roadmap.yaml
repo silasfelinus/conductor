@@ -759,7 +759,7 @@ tasks:
   - id: t-030
     milestone: m2
     title: "Add one water-traversal fixture that runs every heroine and the speed-route pilot through Tidecoat swimming"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 2026-11-26T221008Z-save-the-plumber-t-030-8f19c2
     claimed_at: '2026-11-26T22:10:08Z'
@@ -769,3 +769,5 @@ tasks:
     depends_on: []
     note: |-
       Kaizen from the t-005 Tidecoat review (kind_robots#5899, merged baa1b62c). The Maker regression only swims the default heroine on one custom pool. Build one shared pool fixture in test:arcade-engine that runs all eight heroines (each Y special, hitbox and float) and the autopilot/speed-route pilot through dive, buoyancy, surface breach and water exit, and asserts no death, no stuck-in-tile and that unsuited heroines still die in water. Reversible test-only change unless it uncovers a defect.
+
+      Tidecoat shared pool fixture exercises every heroine, both predictive pilots, collision clearance, unsuited death, and swim exit. Fixed pilot swimming steering and surface stroke in kind_robots commit f98adccc on worker/save-the-plumber-t-030-tidecoat-8f19c2. Exact-head CI required before done.
