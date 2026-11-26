@@ -236,8 +236,8 @@ tasks:
   - id: t-007
     milestone: m3
     title: "Write and implement all six distinctive tactical story missions"
-    status: claimed
-    updated: '2026-11-26T01:39:03.199Z'
+    status: review
+    updated: '2026-11-26T01:40:33.150Z'
     depends_on: [t-003, t-005, t-006]
     passes: 0
     stakes: reversible
@@ -299,6 +299,8 @@ tasks:
       Campaign replay repair committed to Kind Robots 411c831ca9d1999540f941e6985daa03ce7ebd57: retries reconstruct deterministic chapter opening from verified history, preserving prior injuries and guard/intel/finale support, persisting retry checkpoint and rejecting finished journal replay. Six real-save chapter retry regressions committed. Full CI and adversarial playthrough acceptance pending.
 
       Verified #5860 merged at 95834809244ee8949b0fa75d9363f374e8e02b0f, nine latest-head workflows successful including branch janitor. Chapter retry preserves deterministic campaign opening and prior support. Full adversarial campaign acceptance remains open.
+
+      Finite six-mission acceptance audit: 976 assertions passed across 72 paths using extracted actual First Bell and five authored script/scene engine implementations, with synthetic combat events. Permanent regression committed in kind_robots cb2228a68b32b5fc17761fc597702c9ee0bf8360. Existing linked campaign, objective, carryover and retry checks are present; dedicated latest-head CI must pass before closing t-007. Broader all-identity adversarial gameplay and rendered QA remain t-013, personal routes t-008/t-009 and original art t-012. No claim of full live playthrough.
     owner: worker
     claimed_by: 20261126T014000Z-evt-acceptance-2fd8
     claimed_at: '2026-11-26T01:39:03.199Z'
