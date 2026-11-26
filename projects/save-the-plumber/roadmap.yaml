@@ -461,10 +461,10 @@ tasks:
   - id: t-020
     milestone: m6
     title: "Gen-2 level engine: sub-areas, vertical rooms, midpoints, secret exits, campaign-wide switches"
-    status: review
+    status: claimed
     passes: 0
     stakes: reversible
-    updated: '2026-11-26T03:06:00Z'
+    updated: '2026-11-26T05:05:01Z'
     note: |-
       GEN2-STANDARD.md section 2. Doors, pipes and ladders into sub-rooms with their own camera bounds; vertical shafts and climbs; a midpoint checkpoint per level; a second, hidden exit type that reports `secret` to the overworld (t-011); Valve Chapel switch state read by every level so pressed switches make outlined blocks solid campaign-wide; auto-scroll and haunted-maze (Hush House) exit logic. Deterministic replay tests for each: secret exit reachable, sub-room return position, switch persistence across levels and save/reload.
 
@@ -501,9 +501,11 @@ tasks:
       Verified kind_robots#5872 merged at 7e886a9 despite failed Maker Gameplay Contract run 45744757369: movement replay line 1097 fails on ladder descent. Reopen for urgent repair before haunted maze. The 18px heroine overlaps the ledges immediately adjacent to the 16px ladder, blocking descent. Branch janitor succeeded; production unverified.
 
       Fixed merged vertical shaft regression by opening tiles either side of rope so the 18px heroine does not land on adjacent ledges during descent. Extracted actual updateClimb/moveY/ladder methods reproduced original failure and passed repaired descent to y=224 and ascent to y=96 (76/75 ticks). Kept full replay and added geometry assertion. Branch worker/save-the-plumber-t-020-shaft-repair-r4m8 head dfdbda93. Full CI pending. Haunted maze remains.
+
+      Verified kind_robots#5876 merged at 207116fb after 10/10 implementation workflows and branch janitor passed on dfdbda93. Full shaft replay green. Return to ready for haunted maze exit logic, final t-020 integrated acceptance. Production deployment not verified.
     owner: worker
-    claimed_by: 20261126T030301Z-plumber-shaft-repair-r4m8
-    claimed_at: '2026-11-26T03:03:01Z'
+    claimed_by: 20261126T050501Z-plumber-haunted-h8z4
+    claimed_at: '2026-11-26T05:05:01Z'
   - id: t-021
     milestone: m6
     title: "Gen-2 World 1: re-author Bluebell Pipeworks as a full SMB3/SMW-class world"

@@ -138,29 +138,31 @@ tasks:
   - id: t-009
     milestone: m3
     title: "Account-backed save for signed-in players with local fallback"
-    status: review
+    status: ready
     depends_on: t-006
-    owner: worker
     passes: 0
     stakes: reversible
     note: |-
       Main-game standard item 3. Keep the versioned local record as the fallback.
 
       App commit 1c38b4db implements explicit account backup/restore of autosave, three slots, and chronicle via a private revision-checked archive, retaining local saves. Added round-trip and invalid payload regressions; CI and authenticated live verification pending. No schema migration.
-    claimed_by: 2026-11-26T032400Z-deepheart-t009-97d6e4
-    claimed_at: '2026-11-26T03:24:00Z'
-    updated: '2026-11-26T03:28:00Z'
+
+      Kind Robots #5878 merged 90e8d8ae after all ten completed successful CI workflows, including Playbook Kit 45749360796 and Contract Tests 45749360778. Explicit revisioned account backup/restore of run slots and chronicle landed. Return ready for scrapbook/settings integration and live two-device verification.
+    updated: '2026-11-26T05:05:00Z'
   - id: t-010
     milestone: m3
     title: "Sound and music behind the kit sound setting"
-    status: ready
+    status: claimed
     depends_on: t-006
     passes: 0
     stakes: reversible
     note: |-
       Torchlit ambience per layer, combat stings, a campfire theme; respect the kit's
       sound setting and reduced motion.
-    updated: '2026-11-26T05:03:33Z'
+    updated: '2026-11-26T05:05:00Z'
+    owner: worker
+    claimed_by: 2026-11-26T050500Z-deepheart-t010-bdf931
+    claimed_at: '2026-11-26T05:05:00Z'
   - id: t-011
     milestone: m4
     title: "Art ledger: queue every brief auto_submit"
