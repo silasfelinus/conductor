@@ -9,6 +9,16 @@ on:
       - 'pitches/*.md'
       - 'LEARNING.yaml'
       - 'scripts/build_status.py'
+      - 'scripts/build_agent_context.py'
+      - 'CONTROL.md'
+      - 'docs/agents/master-issues.yaml'
+      - 'scripts/show_control.py'
+      - 'scripts/project_triage.py'
+      - 'scripts/roadmap_claims.py'
+      - 'scripts/next_ready_task.py'
+      - 'scripts/daily_gate.py'
+      - 'scripts/project_lifecycle.py'
+      - 'scripts/roadmap_deps.py'
       - 'project-overrides.yaml'
       - 'projects/priority.yaml'
   workflow_dispatch:
@@ -51,10 +61,11 @@ jobs:
             git reset --hard origin/main
 
             python scripts/build_status.py
+            python scripts/build_agent_context.py
             python scripts/build_workspace.py
             python scripts/build_learning_summary.py
 
-            git add STATUS.md workspace.html LEARNING-REPORT.md
+            git add STATUS.md workspace.html LEARNING-REPORT.md ops/agent-context
             if git diff --staged --quiet; then
               echo "No changes to commit"
               exit 0

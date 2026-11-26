@@ -5,7 +5,7 @@ Conductor is Silas's private project manager. Git is canonical; scripts and work
 ## Pick work, not paperwork
 
 - Honor a direct assignment. Otherwise use Todos first (`scripts/fetch_todos.py`; missing token: continue), then `scripts/select_role.py`. Connector-only: use open PRs and generated STATUS.md pickup hints, not a portfolio-wide roadmap scan.
-- Read current global direction once and only the selected project's CONTROL block (`scripts/show_control.py`), lifecycle/priority and relevant live task (`scripts/show_task.py`). Never load unrelated roadmaps or full history. Snapshots are advisory.
+- Read current global direction once and only the selected project's CONTROL block (`scripts/show_control.py`), lifecycle/priority and relevant live task (`scripts/show_task.py`). Connector agents use [task locators](docs/agents/agent-context.md) for exact source ranges. Never load unrelated roadmaps or full history. Snapshots are advisory.
 - Work active projects first; playtest/continuous are fallback. Paused/retired/finished and member projects obey [lifecycle rules](docs/agents/picking-work.md).
 - Choose an unblocked, non-resting ready task; respect dependencies, umbrella delegates and human approvals. Verify live ownership. One active claim per worker. Use collision-resistant sessions, `scripts/claim_task.py` or [connector task-events](docs/github-connector-worker.md). Expired claims are reconciled by the serialized workflow (90 minutes); diagnose failures instead of repeating the scan.
 - Load one role playbook, relevant master-issue sections and target-repo instructions. Read additional references only when needed. If blocked, choose independent eligible work. Never end on inventory alone when work is available.

@@ -142,6 +142,8 @@ jobs:
                 gh workflow run sync-kind-robots-projection.yml \
                   --repo "$GITHUB_REPOSITORY" \
                   --ref main
+                echo "Refreshing advisory agent context after canonical changes."
+                gh workflow run refresh-status.yml --repo "$GITHUB_REPOSITORY" --ref main
               fi
               break
             fi
