@@ -30,8 +30,14 @@ the question.
   (`docs/agents/roles/`) that `select_role.py` names in `playbook`; then a topical doc from the
   index below only when its situation arises. `docs/sweep-checks.md`,
   `docs/agents/frontend-verification.md` and `docs/agents/git-troubleshooting.md` are situational.
-- **One sweep call.** `python scripts/session_sweep.py` prints one line per startup check plus the
-  tail of anything flagged. Don't run checks one by one or re-run what the SessionStart hook printed.
+- **One sweep call.** `python scripts/session_sweep.py` prints a compact report; don't duplicate its
+  checks or the SessionStart hook. The serialized Process task events workflow reconciles expired
+  claims; inspect failures rather than rescanning every roadmap each session.
+- **Connector-only pickup.** Use the generated `STATUS.md` Agent pickup hints (or project table)
+  and open PRs to shortlist work. Read current CONTROL's global overview and selected project block,
+  lifecycle/priority and the relevant live task, then verify ownership per
+  [connector-worker protocol](docs/github-connector-worker.md). Snapshots are advisory, never claims,
+  completion proof or permission to bypass current dependencies and gates.
 - **Never read a big file whole.** `TALKBACK.md` (>1MB), `projects/*/HISTORY.md`,
   `projects/*/T*-HISTORY.md`, run logs, and every roadmap over ~40KB:
   - one task → `python scripts/show_task.py <project>/<task-id>` (`--no-note` / `--note-tail N`);
@@ -143,7 +149,7 @@ in a repos.yaml repo into its owning project's roadmap as a `ready` task with
 Full procedure, with the history behind each step: [`docs/agents/picking-work.md`](docs/agents/picking-work.md).
 
 1. Todos first (above).
-2. Read `CONTROL.md`'s global overview and your project's block:
+2. Read `CONTROL.md`'s global overview and your project's block (once per session unless it changes):
    `python scripts/show_control.py <project>` (~25–35KB instead of the whole ~125KB file). It
    overrides any roadmap it conflicts with. Then `projects/priority.yaml` and the relevant roadmap
    (via `show_task.py`).
