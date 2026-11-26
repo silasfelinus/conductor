@@ -124,7 +124,7 @@ tasks:
   - id: t-007
     milestone: m4
     title: "Finish the finite roadmap and hand off for human playtest"
-    status: waiting
+    status: done
     depends_on: [t-002, t-003, t-004, t-005, t-006, t-013]
     passes: 0
     stakes: reversible
@@ -142,7 +142,11 @@ tasks:
       2026-11-25 PT: handoff withdrawn the same session; it now waits on t-013's painted tile
       set (Silas: painted must replace code-drawn art). Checklist and promo stay ready for
       when it lands.
-    updated: '2026-11-26T00:59:31Z'
+
+      2026-11-26 PT: t-013's painted tile set landed and passed review, so the handoff is
+      restored: lifecycle playtest/normal (project-overrides.yaml in the same PR), PLAYTEST-
+      CHECKLIST.md and the promo card as before. No deploy.
+    updated: '2026-11-26T11:04:45Z'
     implementation_pr: 'silasfelinus/kind_robots#5856'
   - id: t-008
     milestone: m1
