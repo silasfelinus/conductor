@@ -87,15 +87,12 @@ tasks:
     direction, and the offline-at-runtime rule.
 - id: t-067
   title: 'Main-game standard: audit and close the gaps for The Ruler Is Hooked'
-  status: review
-  owner: worker
-  claimed_by: 20261125T091730Z-ruler-hooked-t067-b6f2
-  claimed_at: '2026-11-25T09:17:30Z'
+  status: ready
   milestone: m6
   stakes: reversible
   passes: 0
   depends_on: []
-  updated: '2026-11-25T09:18:00Z'
+  updated: '2026-11-26T02:09:08Z'
   note: |-
     Silas 2026-11-11 PT, in session: "Our games should all have a base standard of quality ... We want our main games to have 12 plus achievements." Standard: docs/agents/main-game-standard.md; CONTROL.md global overview.
 
@@ -130,6 +127,8 @@ tasks:
     Account backup/restore kind_robots#5735 merged at 1fb504ce4b942857339534a1f94b524627f06cd1; exact-head Ruler Hooked 45370921048 and Contract Tests 45370921234 passed. Audio, scrapbook and display settings are also merged. Return to ready for actual deployed signed-in backup/restore and full standards verification; no production data writes or visual pass claimed.
 
     Fixed pending court petitions and ending offers disappearing on reload or slot switch. Stable IDs persist in saves and private backup; resume resolves against current authored catalog and ignores retired, answered once-only, dismissed or completed offers. Added local and backup round-trip regressions. App head d183d56d216a1f76f755e11635c36a3b1056a874; CI pending. Partial t-067, mid-fight and rendered device QA remain.
+
+    Kind Robots #5814 merged e8bc9a59; all eight exact-head workflows passed (Ruler Hooked 45584213569, Contract Tests 45584213540). Branch janitor cancelled. Pending petition/finale persistence landed; mid-fight save and deployed account/device verification remain.
 
 - id: t-068
   title: 'The Ruler Is Hooked achievement upgrade: 12 or more live achievements'
@@ -940,10 +939,7 @@ tasks:
 - id: t-048
   milestone: m6
   title: Fishing first-catch fairness, input edge cases and shop/economy adversarial suite
-  status: review
-  owner: worker
-  claimed_by: 20261125T055800Z-ruler-hooked-t048-c4e9
-  claimed_at: '2026-11-25T05:58:00Z'
+  status: ready
   stakes: reversible
   passes: 0
   note: |-
@@ -966,7 +962,9 @@ tasks:
     2026-11-24 PT: verified kind_robots#5790 merged at 97ba23660b7deb386520c916493688a9197072aa. All eight exact-head PR workflows and Branch janitor completed successfully (Ruler Hooked 45540913438, Contract Tests 45540913813). Catch parity and guided reign regression slice landed; remaining input parity and adversarial economy coverage stay ready. No rendered device QA claimed.
 
     Common-only timing-quality curve preserves complete misses and perfect stops while forgiving modest timing errors. Independent reducer-math simulation: alternating +/- 2 percentage points, 4/128 before and 128/128 after; +/- 3 points, 0/128 before and 128/128 after. Added actual encounter regression for 128 seeds and 128 reckless misses. App head ba3ec9d7a83b250636e1c9e4db224d3111b44e88; CI pending. Partial t-048, no interactive browser tests claimed.
-  updated: '2026-11-25T05:58:01Z'
+
+    Kind Robots #5804 merged fd4deb1a; latest head 863839b5 all eight PR workflows passed (Ruler Hooked 45583885070, Contract Tests 45583884871). Branch janitor cancelled, not a gameplay check. Partial first-catch fairness delivered; actual input/device and remaining economy adversarial coverage remain.
+  updated: '2026-11-26T02:09:08Z'
 - id: t-049
   milestone: m6
   title: Full policy-matrix kingdom simulator and witnessed complete ending graph
@@ -1170,18 +1168,17 @@ tasks:
 - id: t-061
   milestone: m6
   title: 'Post-deploy visual QA of the console at phone, tablet and desktop widths'
-  status: review
+  status: ready
   gate_human: false
-  owner: worker
-  claimed_by: 20261126T004633Z-ruler-hooked-t061-8a2e
-  claimed_at: '2026-11-26T00:46:33Z'
   stakes: reversible
   passes: 0
   note: |-
     After kind_robots#4828 and #4834 reach kindrobots.org (Force Update), screenshot every screen at 390, 820 and 1440 widths: title, coronation, crier, lake idle/fight/reveal, court petition/ending, map, gear, fishopedia and chronicle. Confirm the art loads through the /images media fallback, and fix spills or crushed panels. Repeat after t-054's restyle, and attach the shots for Silas's t-032 acceptance.
 
     Added the canonical /play/ruler-hooked route to the production responsive audit, with guest-only title/settings/scrapbook/achievements/coronation/crier/lake/fishing navigation and per-stage rendered geometry and screenshots at phone, tablet portrait, tablet landscape and desktop. App branch worker/ruler-hooked-t061-rendered-audit-8a2e at 6d385a50. Local HTTPS attempt failed DNS resolution; no rendered pass or completed art inspection claimed. Remaining catch/court/finale/map/gear/fishopedia/chronicle device coverage is not done. CI and actual scheduled live audit required.
-  updated: '2026-11-26T00:48:00Z'
+
+    Kind Robots #5862 merged cfc7cdec; six exact-head PR workflows passed including Contract Tests 45731351686 and Layout Contract 45731351690, branch janitor 45734187832 passed. Instrumentation is not a rendered acceptance pass; remaining screen coverage and actual self-hosted screenshots are required.
+  updated: '2026-11-26T02:09:08Z'
 
 - id: t-062
   milestone: m6
