@@ -91,12 +91,12 @@ tasks:
       images asserted as live.
   - id: t-028
     title: 'Main-game standard: audit and close the gaps for Save the Plumber'
-    status: claimed
+    status: ready
     milestone: m6
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-26T10:49:44Z'
+    updated: '2026-11-26T11:10:44Z'
     note: |-
       Silas 2026-11-11 PT, in session: "Our games should all have a base standard of quality ... We want our main games to have 12 plus achievements." Standard: docs/agents/main-game-standard.md; CONTROL.md global overview.
 
@@ -154,10 +154,19 @@ tasks:
       outside PR CI: verifySavePlumberLevels ('3-4 is cleared losing 4 lives') and
       verifySavePlumberKeys ('the top rung releases the heroine'). Remaining: name entry, text
       size, rendered finale + gallery screenshots. Return to ready.
-    implementation_pr: 'silasfelinus/kind_robots#5884'
+
+      2026-11-26 PT: reading options. Settings gains Large text (story, banner, victory,
+      finale and boss lines draw 1.25x, shrink to fit, never below normal) and Slow reading
+      (story panels and boss plates hold 1.6x). Both persist, reset with RESTORE DEFAULTS and
+      reach the game via the cabinet. verifySavePlumberReading added to arcade-engine and
+      cabinet-contracts CI. kind_robots#5890. Remaining: name entry, rendered finale + gallery
+      screenshots.
+
+      Merged kind_robots#5890 at 5ae6b7bd after 21/21 exact-head checks passed. Reading
+      options live. Remaining: name entry, rendered finale + gallery screenshots. Return to
+      ready.
+    implementation_pr: 'silasfelinus/kind_robots#5890'
     owner: worker
-    claimed_by: 2026-11-26T10:49:44Z-do21bd
-    claimed_at: '2026-11-26T10:49:44Z'
   - id: t-029
     title: 'Save the Plumber achievement upgrade: 12 or more live achievements'
     status: done
