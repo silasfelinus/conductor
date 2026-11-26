@@ -1,0 +1,15 @@
+version: 1
+project: save-the-plumber
+task: t-020
+operation: review
+owner: worker
+session: 20261126T030301Z-plumber-shaft-repair-r4m8
+updated: '2026-11-26T03:06:00Z'
+note: >-
+  Fixed merged vertical shaft regression by opening tiles either side of rope
+  so the 18px heroine does not land on adjacent ledges during descent.
+  Extracted actual updateClimb/moveY/ladder methods reproduced original
+  failure and passed repaired descent to y=224 and ascent to y=96 (76/75
+  ticks). Kept full replay and added geometry assertion. Branch
+  worker/save-the-plumber-t-020-shaft-repair-r4m8 head dfdbda93.
+  Full CI pending. Haunted maze remains.
