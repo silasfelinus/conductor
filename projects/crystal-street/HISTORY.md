@@ -160,3 +160,19 @@ AUTO-PARKED by process_task_events.py (conductor/t-112): this event's operation 
 with all checks green. Re-checked live: https://kindrobots.org/api/achievements returns
 16 crystal-street achievement records (target 12+). Closed done.
 <!-- note:end t-025 -->
+
+## t-026 — Add rendered phone/desktop accessibility and spoiler-regression coverage for each Crystal Street scrapbook tab
+
+<!-- note:begin t-026 -->
+Kaizen from kind_robots#5240 (t-024 silhouette slice, merged 2026-11-16 PT). That PR's verification was unit-level only (discoveryProgress) plus Vue template compilation; no rendered check proves locked slots never leak a name, portrait src or alt text. Add a component/layout-contract test that mounts each scrapbook tab (weeks, nightmares, endings, friends, achievements) with an empty, partial and complete save and asserts: locked slots render only "???" and the generic aria-label, no catalog name/portrait path appears for undiscovered entries, and the X/N counts match. Run it at phone and desktop widths in the existing layout-contract harness.
+
+2026-11-24 PT: kind_robots#5779 adds
+utils/scripts/verifyCrystalStreetScrapbookRender.test.ts (Vite SSR render of every
+scrapbook tab + endings wall + each locked nightmare selected, empty/partial/complete
+saves; 7891 checks; mutation-checked; wired into crystal-street-gameplay.yml). Widths
+not covered: scrapbook HTML has no viewport-conditional rendering; rendered overflow
+stays with layout-contract/e2e. Next: merge #5779 when green, then done.
+
+2026-11-24 PT: kind_robots#5779 merged (8e17dd2c) after a capture-group-guard fix;
+crystal-street-gameplay contract green with the new render test.
+<!-- note:end t-026 -->

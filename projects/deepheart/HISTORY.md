@@ -9,6 +9,18 @@ Each note below is the **verbatim** original — nothing is summarized or trimme
 markers delimit each note exactly; `archive_done_task_notes.py --verify-only` re-extracts
 every note and checks it byte-for-byte against what the roadmap recorded.
 
+## t-007 — Two-tier support scenes for all 35 pairs; three campfire beats per romance and oath
+
+<!-- note:begin t-007 -->
+Today each support has one scene and each companion has blurb, secret and heart lines.
+Write a second support tier and a three-beat arc per romanceable preset, keeping the
+romance setting able to hide every romance beat.
+
+Art-first playable support and relationship progression implemented on worker/deepheart-t-007-camp-stories-d4a2. 35 distinct sequel scenes, second support tier earned after trust at a subsequent campfire (with a stronger real combat bonus), two personal conversations before a third commitment beat, platonic oath route when romance is off, hidden first-time relationship labels, anti-skip validation, old-save compatibility, UI tier labels, and regression tests. Await latest-head CI and PR merge. No new art jobs queued; existing approved portraits illustrate the camp scenes.
+
+2026-11-25 PT reconciliation: #5658 merged d9c918f6; all eight recorded head workflow runs completed successfully, including Playbook Kit 45161520354 and Contract Tests 45161520305. All 35 sequel scenes and three-beat relationship progression delivered; art and full playtest QA remain separately tracked.
+<!-- note:end t-007 -->
+
 ## t-011 — Art ledger: queue every brief auto_submit
 
 <!-- note:begin t-011 -->

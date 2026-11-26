@@ -2929,19 +2929,10 @@ tasks:
     passes: 0
     stakes: reversible
     depends_on: []
-    note: |-
-      Three initial high-priority Krea 2 queue requests are in projects/art-prompts.yaml. Require recorded ArtJob IDs and delivered files, not queue-only claims. Stylized character based on user-provided photos; public portrait likeness needs Kate's consent.
+    note: >-
+      Three initial high-priority Krea 2 queue requests are in projects/art-prompts.yaml.
 
-      2026-11-22 PT: six high-priority Krea 2 adversary portrait requests committed in companion Conductor PR #7889: Greyscale Dryer, Pruner, Neon Inspector, Archivist, Sorting Machine, and Palette Keeper. Nine previous title, hero, icon and chapter scrapbook queue requests remain in the same PR. All requests are pending; no ArtJob IDs, rendered assets or delivered art were verified. User-facing Kate likeness still requires Kate's consent. Return to ready after this queue slice merges so the remaining actual artwork delivery can continue. Do not mark t-177 done.
-
-      Reviewer (scheduled agent, 2026-11-22 PT): the six Superkate boss requests and nine
-      title/hero/icon/scrapbook requests landed on main via conductor#7895 (rescue of #7889),
-      with prompts rephrased to the affirmative no-text form. All pending, none rendered. Back
-      to ready for actual art delivery, as the worker's review note asked.
-
-      2026-11-24 PT art-medic: all 15 queued Superkate renders exist (ArtJobs 76732-76734, 76805-76816; ids and paths in projects/kr-arcade/art/RECOVERED-2026-11-24.yaml). Title is live in games.ts; hero, icon, bosses and scrapbook still need wiring, plus portraits and Kate's likeness consent. Do not re-submit.
-
-      2026-11-24 PT: Silas explicitly directed clearing this artwork task and moving on; he expects delivery on the site rather than in GitHub. Accept the 15 recorded renders (ArtJobs 76732-76734 and 76805-76816, recovered ledger) at owner direction, with independent live delivery verification waived, not asserted. Remaining in-game integration and visual QA belong to existing t-179, t-186, t-187, t-188 and t-184. No duplicate rendering, deployment, publication or real-person likeness consent inferred.
+      Full history: projects/kr-arcade/HISTORY.md#t-177
   - id: t-178
     milestone: m12
     title: "Superkate Spectrum: author 30 curated boards with three special bubble types and six distinct chapter mechanics"
@@ -2964,27 +2955,10 @@ tasks:
     passes: 0
     stakes: reversible
     depends_on: [t-178]
-    note: |-
-      2026-11-24 PT: implemented six post-puzzle boss core encounters on worker/kr-arcade-t-179-spectrum-boss-f37e92, with distinct target sequences, bank-only inspector, visible miss budgets, chapter rewards gated on victory and actual projectile regression tests. Pending CI, art and encounter polish; do not mark complete yet.
+    note: >-
+      2026-11-24 PT: implemented six post-puzzle boss core encounters on worker/kr-arcade-t-179-spectrum-boss-f37e92, with distinct target sequences, bank-only inspector, visible miss budgets, chapter rewards gated on victory and actual projectile regression tests.
 
-      2026-11-24 PT: verified Kind Robots #5724 merged 306e097a33b1d5685963ff6981cb08ee7476faf9. Six core sequences and victory-gated progression landed. Requeue for further distinctive boss attacks, illustrated presentation and device QA, not done.
-
-      2026-11-24 PT: committed five distinct visible shield patterns, retaining Neon Inspector bank-only cores, in Kind Robots head 285fa9e13e1bc63647efdfbb483f74be03eef5f0. Shared contact checks cover both aim preview and actual projectile collision. Standalone deterministic trajectory sweep found 21-99 legal sampled angles per core; expanded existing actual-game boss regressions to verify blocked shots consume one miss and never award stars. Await exact-head CI, illustration wiring and device QA; partial scope only.
-
-      2026-11-24 PT: Kind Robots #5777 merged 957066de818ca26973ecd3466dd83b16080f2988 after exact head 285fa9e13e1bc63647efdfbb483f74be03eef5f0 passed all substantive checks. Six boss mechanics and all 25 core trajectories verified; illustration wiring and device QA remain. Requeue partial task, no deploy initiated.
-
-      2026-11-24 PT: integrated six recovered boss illustrations (ArtJobs 76805-76810) as static cropped backdrops beneath readable targeting overlays, with stronger high-contrast veil and existing headless/missing-image fallback. Head 1be22b06e1abc630d4deaf9d908d00a1211e9716 includes path regression assertions. Live URL probes failed DNS resolution in this sandbox; device QA and CI pending. Partial scope, no deployment.
-
-      2026-11-24 PT: verified kind_robots #5795 merged 23ae128bbd27330f810d9c791ebb5251972c75d0 after nine successful workflows on exact latest head. All six boss illustration paths and rendering integration confirmed in main. Remaining rendered device QA; recovered ArtJobs 76805-76810, no new generation or deploy.
-
-      2026-11-25 PT: rendered all six boss encounters at 390px through the real cabinet
-      (targets, shields, miss budget readable; kind_robots#5816) and
-      verifySpectrumCampaign.test.ts defeats every boss by real shots on three routes (30 boss
-      shots per route, 0 lives lost). Device feel goes to the human playtest checklist.
-
-      2026-11-25 PT: verified kind_robots#5816 merged 160baa8482ff7b091756af0a266ed50ecbe46490
-      after all 18 checks passed on exact head 59ebb60d (incl. TypeScript and the Spectrum
-      cabinet job). No deploy initiated.
+      Full history: projects/kr-arcade/HISTORY.md#t-179
     owner: worker
     claimed_by: 2026-11-25T094544Z-spectrum-qa-sbjq3s
     claimed_at: '2026-11-25T10:06:39Z'
@@ -3011,28 +2985,10 @@ tasks:
     passes: 0
     stakes: reversible
     depends_on: [t-176]
-    note: |-
-      2026-11-24 PT: implemented opt-in cabinet stage pointer capture, Spectrum drag-to-aim/release-to-fire, cancellation and out-of-field guards, tap-to-play unlocked stage nodes, cosmetic selection, next-bubble swap and story choices. The aim preview uses actual projectile movement and collision. Added engine regressions for all 30 nodes, locked cosmetics/stages, gesture cancellation and shot exclusion. Pending CI and rendered device/controller QA; partial scope only.
+    note: >-
+      2026-11-24 PT: implemented opt-in cabinet stage pointer capture, Spectrum drag-to-aim/release-to-fire, cancellation and out-of-field guards, tap-to-play unlocked stage nodes, cosmetic selection, next-bubble swap and story choices.
 
-      2026-11-24 PT: Kind Robots #5757 merged 29db193c80241a779a50e49da07328f0a4a2c8f8; exact head 96b90db62f1b62436395bfbc8cdf71cc4d8d99bf passed all substantive checks including Chromium, TypeScript and viewport contracts. Direct touch aim and stage selection landed. Requeue remaining controller/device QA and settings touch navigation.
-
-      2026-11-24 PT: head 834b5b7082b1d2250ffe091d09479d0562759020 adds touch navigation for all four menu tabs, chapter browsing, all seven setting rows, mixer volume and Story/Classic mode switching. Shared setting actions preserve keyboard/controller behavior. Regression assertions added for touch navigation, persistence, mixer and canceled drag; CI and actual device QA pending. Partial scope.
-
-      2026-11-24 PT: verified Kind Robots #5783 merged 60f76be3a0d4f5b8ae9061fb70551ed38f717445 after exact head 834b5b7082b1d2250ffe091d09479d0562759020 passed all substantive CI checks; post-merge prune in progress. All cabinet tabs, settings and mode switches now touch-accessible. Remaining Spectrum-specific rendered controller/device QA; requeue, not done.
-
-      2026-11-25 PT: rendered QA through the real cabinet + real arcade store in Chromium at
-      390x844/768x1024 (touch) and 1440x900 (keyboard + standard gamepad), kind_robots#5816.
-      Found and fixed: phone leave/fullscreen chips on the top bubble row (Spectrum now uses
-      the clear-stage touch plan; planner learns labelled four-button size); upright tablet
-      controls over HUD/NEXT/launcher (opt-in touchClearMinShare 0.5 → 490px board, controls
-      in a band); NEXT/HEARTS, hub-hint/HUD, map LOCK/district-name text overlaps. New
-      verifySuperkateSpectrumCabinet.browser.test.mjs runs on every cabinet PR. Real-hardware
-      feel is in projects/kr-arcade/superkate-spectrum/PLAYTEST-CHECKLIST.md, not an agent
-      gate.
-
-      2026-11-25 PT: verified kind_robots#5816 merged 160baa8482ff7b091756af0a266ed50ecbe46490
-      after all 18 checks passed on exact head 59ebb60d (incl. TypeScript and the Spectrum
-      cabinet job). No deploy initiated.
+      Full history: projects/kr-arcade/HISTORY.md#t-181
     owner: worker
     claimed_by: 2026-11-25T094544Z-spectrum-qa-sbjq3s
     claimed_at: '2026-11-25T09:45:49Z'
@@ -3045,32 +3001,10 @@ tasks:
     passes: 0
     stakes: reversible
     depends_on: []
-    note: |-
-      2026-11-22 PT: audio-slice submitted on Kind Robots PR #5624: six region music loops, six finale arrangements, Classic and menu, source-free synthesized chiptunes, shared Arcade mixer mute/volume, independently saved music and effect toggles, and tests. Missing recorded mastered audio, completed final-head CI and real playback acceptance. Leave as review, not done.
+    note: >-
+      2026-11-22 PT: audio-slice submitted on Kind Robots PR #5624: six region music loops, six finale arrangements, Classic and menu, source-free synthesized chiptunes, shared Arcade mixer mute/volume, independently saved music and effect toggles, and tests.
 
-      2026-11-22 PT: substantial implemented audio slice in Kind Robots PR #5624: a shared Arcade audio bridge for in-game master mute and volume, separately saved original music and effects toggles, six neighborhood chiptunes plus six chapter-finale variations, Classic and menu music, responsive preset SFX, and regression tests for music, options and Classic stage 35. The current PR is unmerged; final-head CI and actual playback verification remain pending. Recorded mastered soundtrack, mobile balance and audio QA are unfinished, so keep this task in review rather than marking full t-182 complete.
-
-      2026-11-23 PT: reconciled previously merged Kind Robots #5624 (00e264dc667b9c212253c867247a0d6f42d3e7bc); final-head CI completed successfully. Existing synthesized music and SFX are implemented. Recorded/mastered tracks, playback and mobile audio QA remain; requeue, not done.
-
-      2026-11-24 PT: expanded six regional scores to two contrasting phrases and added harmonies, extended finale percussion, rendered 14 original mastered WAV loops (six regions, six boss arrangements, Classic, menu) with deterministic offline synthesis. Committed all binary masters, runtime recorded paths with existing oscillator fallback, reproducible renderer and audio header/duration/peak/RMS regression tests. Generated audio measured peak at most 0.54 and RMS 0.109–0.145; CI and real playback, individual effects balance and mobile acceptance remain. Partial scope; no deployment.
-
-      2026-11-24 PT: Kind Robots #5758 merged bc26f621438992f5df1208e9052e310e00ba2310 after all 15 substantive check runs completed successfully on exact head 86b8df5a2f2f47f0a7369504a26ed973a0f5b45c; optional autofix skipped. Fourteen mastered original WAV loops and renderer regression checks landed. Requeue remaining mobile playback and SFX balance QA; no deployment initiated.
-
-      2026-11-25 PT: agent-side audio scope is complete (14 recorded masters + suite now on
-      every cabinet PR via kind_robots#5816; mixer/toggles covered). What remains is listening
-      on real phone speakers/headphones for music vs SFX balance and mute transitions, which
-      this sandbox cannot do. Soft gate: item 6 of projects/kr-arcade/superkate-
-      spectrum/PLAYTEST-CHECKLIST.md. Close done when a human playtest reports balance
-      acceptable, or file playtest_iteration tasks.
-
-      2026-11-25 PT: closed at Silas's direction that agents finish this. Separate MUSIC LEVEL
-      and EFFECTS LEVEL settings (saved, validated) drive the shared mixer via setMix,
-      verified in the real cabinet; verifySpectrumRecordedMusic now enforces the music/effects
-      balance (music RMS 0.060-0.080 after theme, every effect 0.5-4x of it). Listening on
-      real phone speakers is item 6 of PLAYTEST-CHECKLIST.md, a handoff, not a build gate.
-      verified kind_robots#5823 merged dbe07455fa7a063ec00e6963c4cf90818b685b06 after all 17
-      checks passed on exact head 1642fd95 (incl. TypeScript and the Spectrum cabinet job). No
-      deploy.
+      Full history: projects/kr-arcade/HISTORY.md#t-182
     gate_reason: ''
     soft_gate: false
     implementation_pr: 'silasfelinus/kind_robots#5823'
@@ -3082,32 +3016,10 @@ tasks:
     passes: 0
     stakes: reversible
     depends_on: [t-178]
-    note: |-
+    note: >-
       Silas, 2026-11-22 PT: Classic mode is now included in the first playable prototype; ranked Story and Classic scoreboards must be separately keyed before public competition, without erasing device-local best Classic score or Story stars.
 
-      2026-11-24 PT: head 61fbc5b38577afe6be5b6b422ce2e7b01f1d5963 separates Story and Classic board keys using existing score storage and registry. Story late-stage replay is unranked, Classic remains ranked; cabinet selects and labels board, hall uses new Story bracket, legacy rows and career saves untouched. Pure helper verified for all 30 stages in both modes; engine and registry regression assertions added, CI pending. Remaining Atelier, cooperative relay and competition QA are not done.
-
-      2026-11-24 PT: verified Kind Robots #5791 merged 756371908893a1eceb54aa6c6c346ae99b2c0ff1. Story and Classic rank separation landed; Atelier, relay and competition QA remain. No deploy initiated.
-
-      2026-11-24 PT: first playable Atelier mode adds six authored fixed-ammunition challenges with tap/controller selection, retry, back, isolated career and no ranked score or generic run completion. Standalone trajectory simulation cleared all six in 18 shots; actual engine regression coverage added for all six, exhaustion, retry and unchanged save. Head e6e54e98364da09a0e6e4e6f14eafc5573eb7969, CI pending. Remaining cooperative relay, deeper Atelier designs and competition QA; partial scope only.
-
-      2026-11-24 PT: verified kind_robots #5796 merged b36773cbbd921bc36cff4d802b3d7a5112697b3f after nine successful workflows on exact latest head. Six introductory Atelier puzzles and actual trajectory regression tests confirmed in main. Remaining cooperative relay, advanced Atelier and competition QA.
-
-      2026-11-24 PT: implemented local pass-and-play relay over six existing Atelier boards, alternating players after shot settlement, shared combo score, round progression and retry checkpoints, without ranked or career mutations. Actual projectile regression cases cover full relay, turn alternation, score, retry and save isolation. Head 1b0020d46a155248b63220f98f6d6e692345cd04; CI pending. Distinct relay boards, independent ammunition, gifted specials, finale boss, persistent records and device QA remain. Partial scope; no deploy.
-
-      2026-11-24 PT: verified #5805 merged b7c6ff6d28779e91c06f3966c909787e4750f160. Local relay landed; dedicated cooperative puzzles, records and finale remain. Partial, no deploy.
-
-      2026-11-25 PT: kind_robots#5816 ships the finished Co-op Relay: six authored two-player
-      boards, each player's own orbs, turn after every shot, three-match gifted Prism, Palette
-      Keeper duet boss after round 6, best score + furthest round persisted (validated,
-      bounded, max-merged; legacy saves valid), unranked. Atelier gains six advanced row-drawn
-      puzzles (12 total). verifySpectrumCampaign plays the relay (6 rounds + boss, 42 shots)
-      and all 12 puzzles through the real update loop. Ranked Story/Classic separation landed
-      earlier (#5791).
-
-      2026-11-25 PT: verified kind_robots#5816 merged 160baa8482ff7b091756af0a266ed50ecbe46490
-      after all 18 checks passed on exact head 59ebb60d (incl. TypeScript and the Spectrum
-      cabinet job). No deploy initiated.
+      Full history: projects/kr-arcade/HISTORY.md#t-183
     updated: '2026-11-25T10:23:38Z'
     owner: worker
     claimed_by: 2026-11-25T094544Z-spectrum-qa-sbjq3s
@@ -3149,27 +3061,10 @@ tasks:
     passes: 0
     stakes: reversible
     depends_on: [t-176]
-    note: |-
-      Silas, 2026-11-22 PT: wants Candy Crush-style permanent memory, where progress continues across many play sessions. Initial implementation is a versioned, device-local Arcade save with 30 star ratings, Color Rank, XP, highest unlocked stage and Classic records. This task adds authenticated cloud sync, guest-to-account adoption, race-safe merges using max stage/best stars/highest ranked records, and a clear account/device state indicator. No purchase or energy gates.
+    note: >-
+      Silas, 2026-11-22 PT: wants Candy Crush-style permanent memory, where progress continues across many play sessions.
 
-      Fixed cloud conflict retries to merge latest local career rather than stale request snapshots, isolated concurrent uploads by sync generation, made saving status truthful, and retired active cabinet instances on account change. Added VM regression exercising actual store functions with deferred PUTs, 409, and account switch. Branch worker/kr-arcade-t185-save-race-8fa19c. CI and real two-device QA pending.
-
-      2026-11-23 PT: Kind Robots #5707 merged b5b6df1a3dd4777e5ac4570020f95ea57a6f884b after ten completed successful workflows on head 2e694b27b14752766067b89c64c010e1b7572f4b. Save conflict/account-generation races regression-tested. Requeue remaining actual guest/offline/two-device QA; no production account writes or deployment.
-
-      2026-11-25 PT: guest adoption, conflict-aware max merge, account-switch retirement and
-      sync races are implemented and regression-tested (verifyCabinetSpectrumSaveRace now runs
-      on every cabinet PR via kind_robots#5816; relay records merge by max). Remaining is a
-      live two-device signed-in check on production, which needs real accounts and a deployed
-      build. Soft gate: item 7 of projects/kr-arcade/superkate-spectrum/PLAYTEST-CHECKLIST.md.
-
-      2026-11-25 PT: closed at Silas's direction. verifySuperkateSpectrumAccounts runs two
-      browser contexts (two devices) on the real cabinet and store sync against a mock API
-      following the server's revision rules: guest adoption on sign-in, second device pulls
-      the career, stale device 409 -> refetch -> merge losing nothing, account switch inherits
-      nothing, outage keeps play local and syncs after. Live accounts on the deployed site are
-      item 7 of PLAYTEST-CHECKLIST.md. verified kind_robots#5823 merged
-      dbe07455fa7a063ec00e6963c4cf90818b685b06 after all 17 checks passed on exact head
-      1642fd95 (incl. TypeScript and the Spectrum cabinet job). No deploy.
+      Full history: projects/kr-arcade/HISTORY.md#t-185
     gate_reason: ''
     soft_gate: false
     implementation_pr: 'silasfelinus/kind_robots#5823'
@@ -3181,25 +3076,10 @@ tasks:
     passes: 0
     stakes: reversible
     depends_on: [t-176]
-    note: |-
-      Silas, 2026-11-22 PT: visual Candy Crush-style long-term progression without monetization. Existing menu has a numeric stage picker, earned styles (glass, candy, starlight, prismatic), XP meter and three special powers (Prism, Burst, Ribbon). Build a polished illustrated stage map, level-specific medal/replay interactions, clear unlock celebrations, power tutorials and mobile-friendly navigation; verify 390/768/1440.
+    note: >-
+      Silas, 2026-11-22 PT: visual Candy Crush-style long-term progression without monetization.
 
-      2026-11-24 PT: implemented a six-district serpentine 30-stage map with individual stars, locked nodes, selected replay, total medals and four cosmetic previews with rank locks on worker/kr-arcade-t-186-spectrum-map-6cb4e8. Added traversal and replay regression tests. CI, delivered illustrated art, touch input and unlock celebrations remain pending; partial slice.
-
-      2026-11-24 PT: Kind Robots #5734 merged b6c5e82b463b010fd76b77a39245ba32124ab36f after nine completed successful workflows on exact head 8a784cf7e0182a339fcd6c1d0f994fea255047bd. Requeue illustrated art, direct touch selection, unlock celebrations and device QA. No deploy initiated.
-
-      2026-11-24 PT: illustrated all six district rows using recovered robot-only boss art (ArtJobs 76805-76810), aspect-preserving crop, contrast veil and missing-image fallback. Added earned cosmetic threshold notifications with animated bubble preview, calm-motion support, sound, unchanged selected style and save compatibility. Regression tests cover all thresholds and actual Story/Classic projectile unlocks, expiry and reload. Head 41eaab763424e7f4dcbcf16767213bed7e0fc4d3; CI pending. Power tutorials and rendered device/art verification remain. No new art generation or deployment.
-
-      2026-11-25 PT: verified #5808 merged 22dbfefa25d5e750fb3f8f7cc86eecb139d43443 after nine successful exact-head workflows. Illustrated districts and earned skin celebrations landed. Power tutorials and rendered device QA remain; partial scope, no deployment.
-
-      2026-11-25 PT: power tutorials shipped in kind_robots#5816: first Prism/Burst/Ribbon per
-      visit shows an explaining card (fire or timeout dismisses; repeats and demo none),
-      loaded-power label moved off the DROP counter, star-map medals now pips inside nodes.
-      Rendered at 390/768/1440 in the cabinet contract. Remaining scope: none agent-side.
-
-      2026-11-25 PT: verified kind_robots#5816 merged 160baa8482ff7b091756af0a266ed50ecbe46490
-      after all 18 checks passed on exact head 59ebb60d (incl. TypeScript and the Spectrum
-      cabinet job). No deploy initiated.
+      Full history: projects/kr-arcade/HISTORY.md#t-186
     owner: worker
     claimed_by: 2026-11-25T094544Z-spectrum-qa-sbjq3s
     claimed_at: '2026-11-25T10:06:44Z'
@@ -3216,19 +3096,10 @@ tasks:
     passes: 0
     stakes: reversible
     depends_on: [t-176]
-    note: |-
-      Silas, 2026-11-22 PT: preserve old-school game character but wrap it in premium modern presentation. No second disconnected route: provide a cohesive console-first cabinet home with illustrated stage-map cards, classic/story mode selection, collected bubble cosmetics, chapter and character scrapbook, earned trophies, music/effects/volume and accessibility settings, and a visible account/device cloud-save state. Foundation is in app PR #5624: in-canvas four-tab menu with story stars, local scrapbook, achievement list and aim/animation/high-contrast toggles. Remaining: delivered art, accessible touch interaction, responsive polish, readable one-screen layout at 390/768/1440, input QA and full UI playback validation.
+    note: >-
+      Silas, 2026-11-22 PT: preserve old-school game character but wrap it in premium modern presentation.
 
-      2026-11-25 PT: added six boss-memory collectible album panels, earned from actual persisted boss-stage medals, and all nine trophy displays with touch and keyboard/controller pagination. Uses existing robot-only art (ArtJobs 76805-76810), no unapproved likeness art. Regression tests verify no premature unlocks, migrated saves, full navigation and no mutation. Head 202145550fc2ddf36e4c37bda8022c6053ebda57; CI pending. Partial t-187; rendered device and integration QA remain. No deploy.
-
-      2026-11-25 PT: taken over at Silas's direction (prior claim expired; #5813 had merged
-      without rendered checks). verifySuperkateSpectrumHub renders and drives the hub through
-      the real cabinet + store at 390/768 touch and 1440 keyboard with real art checked
-      locally: six Scrapbook districts (earned memories vs locked), three trophy pages, every
-      setting, reopen persistence; the hub now shows the account save state
-      (synced/syncing/offline/device) pushed from the cabinet. verified kind_robots#5823
-      merged dbe07455fa7a063ec00e6963c4cf90818b685b06 after all 17 checks passed on exact head
-      1642fd95 (incl. TypeScript and the Spectrum cabinet job). No deploy.
+      Full history: projects/kr-arcade/HISTORY.md#t-187
     implementation_pr: 'silasfelinus/kind_robots#5823'
   - id: t-188
     milestone: m12
@@ -3238,28 +3109,9 @@ tasks:
     stakes: reversible
     depends_on: [t-177, t-180, t-182, t-185]
     note: >-
-      Implement six published region themes, Classic loop and music
-      transitions, finale stingers and bubble SFX with independent
-      music/effects volumes. The existing WebAudio prototype supplies
-      playable oscillator loops but no verified recorded assets.
-      Ship album memories, character portraits, best stars,
-      cosmetic displays and earned globally seeded achievements.
-      Validate replay, sign-in, account switch, offline save and
-      old-save migration, retaining progress across every device.
+      Implement six published region themes, Classic loop and music transitions, finale stingers and bubble SFX with independent music/effects volumes.
 
-      2026-11-25 PT: of this scope, region themes/Classic loop are delivered (t-182 masters),
-      album memories and 9-trophy gallery are in kind_robots#5813 (t-187), relay records +
-      migration validated in #5816. Character portraits of Superkate need Kate's likeness
-      consent (creative/legal decision for Silas) before any agent produces them.
-
-      2026-11-25 PT: agent scope finished in kind_robots#5816/#5813/#5823: region themes,
-      Classic loop, boss variants and 14 recorded masters; separate music/effects levels on
-      the shared mixer; album memories, best stars, cosmetics and nine trophies rendered and
-      verified; site achievements verified to award once through the real cabinet; replay,
-      sign-in, account switch, offline and old-save migration covered by
-      verifySuperkateSpectrumAccounts and the engine suite. The only remainder, art showing
-      the Superkate character (the six delivered scrapbook district illustrations, ArtJobs
-      76811-76816, and any portrait), needs Kate's consent and moves to t-189.
+      Full history: projects/kr-arcade/HISTORY.md#t-188
     updated: '2026-11-25T11:38:37Z'
     implementation_pr: 'silasfelinus/kind_robots#5823'
   - id: t-189
@@ -3272,14 +3124,9 @@ tasks:
     gate_reason: legal
     depends_on: []
     updated: '2026-11-25T22:08:40Z'
-    note: |-
-      2026-11-25 PT: six delivered scrapbook district illustrations (ArtJobs 76811-76816, live at /images/arcade/superkate-spectrum/scrapbook-*.webp, prompts in projects/kr-arcade/art/RECOVERED-2026-11-24.yaml) each show the stylized rainbow-haired stylist with cat-eye glasses. They are rendered but not wired: the Scrapbook uses robot-only boss art instead. Wiring them, or making any Superkate portrait, publicly displays a character based on Kate, which the design brief reserves for her consent; Silas's 2026-11-24 art acceptance explicitly did not infer it.
-      FOR SILAS: yes (with Kate's consent) and an agent wires the six illustrations as district memories in the Scrapbook, keeping the boss art for the trophy panels; no and they stay unused. Either way nothing else in Spectrum waits on this.
+    note: >-
+      2026-11-25 PT: six delivered scrapbook district illustrations (ArtJobs 76811-76816, live at /images/arcade/superkate-spectrum/scrapbook-*.webp, prompts in projects/kr-arcade/art/RECOVERED-2026-11-24.yaml) each show the stylized rainbow-haired stylist with cat-eye glasses.
 
-      2026-11-25 PT: Silas, in session: "Put the superk8 pics in." The six illustrations are
-      now the Scrapbook district memories on 2:3 memory cards (restored: full art; reached but
-      unbeaten: dimmed glimpse; unvisited: hidden), rendered and checked at 390/768/1440 with
-      the live art. kind_robots#5836 merged after all 15 checks passed on exact head 744ae281.
-      No deploy.
+      Full history: projects/kr-arcade/HISTORY.md#t-189
     approved_by_human: true
     implementation_pr: 'silasfelinus/kind_robots#5836'
