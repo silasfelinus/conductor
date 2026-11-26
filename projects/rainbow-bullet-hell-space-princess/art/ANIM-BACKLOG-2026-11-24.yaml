@@ -2692,6 +2692,8 @@ subjects:
       status: DONE
       art_image_id: 280388
 - key: idle-b02-phase1-v2
+  verdict: 'reject: 2026-11-26 PT review, on model but still nearly static (motion 1.02 vs the angler floor 2.7); retake idle-b02-phase1-v3
+    with the bell pulse and tentacle sway driven harder'
   lane: wan-mp4
   entity: sprite-animation
   title: b02-phase1 idle loop
@@ -2713,6 +2715,8 @@ subjects:
       status: DONE
       art_image_id: 280389
 - key: idle-b03-phase1-v2
+  verdict: 'reject: 2026-11-26 PT review, on model but still nearly static (motion 1.59 vs the 2.7 floor); retake idle-b03-phase1-v3
+    with stronger rocking and thruster flare'
   lane: wan-mp4
   entity: sprite-animation
   title: b03-phase1 idle loop
@@ -2734,6 +2738,8 @@ subjects:
       status: DONE
       art_image_id: 280390
 - key: idle-b04-phase2-v2
+  verdict: 'keep: 2026-11-26 PT review, motion 6.33, the cracked core flickers while the body and legs hold on model; eight
+    cells keyed and sized to the 337x214 still, shipped as doodle/anim/b04-phase2-idle in kind_robots#5868'
   lane: wan-mp4
   entity: sprite-animation
   title: b04-phase2 idle loop
@@ -2755,6 +2761,8 @@ subjects:
       status: DONE
       art_image_id: 280391
 - key: idle-b05-phase3-v2
+  verdict: 'keep: 2026-11-26 PT review, motion 14.16, the jaw opens and snaps shut with the shark on model; shipped as doodle/anim/b05-phase3-idle
+    in kind_robots#5868'
   lane: wan-mp4
   entity: sprite-animation
   title: b05-phase3 idle loop
@@ -2776,6 +2784,8 @@ subjects:
       status: DONE
       art_image_id: 280392
 - key: idle-b06-phase3-v2
+  verdict: 'keep: 2026-11-26 PT review, motion 7.05, the eye flashes and the fins ripple with the body steady; shipped as
+    doodle/anim/b06-phase3-idle in kind_robots#5868'
   lane: wan-mp4
   entity: sprite-animation
   title: b06-phase3 idle loop
@@ -2797,6 +2807,8 @@ subjects:
       status: DONE
       art_image_id: 280393
 - key: idle-b08-phase1-v2
+  verdict: 'reject: 2026-11-26 PT review, motion 22.1 but the whole fish jumps between two heights (cells 1-2 and 8 high,
+    3-7 low), a hop instead of a swim; retake idle-b08-phase1-v3 with the body anchored and only the tail and fins moving'
   lane: wan-mp4
   entity: sprite-animation
   title: b08-phase1 idle loop
@@ -2818,6 +2830,8 @@ subjects:
       status: DONE
       art_image_id: 280394
 - key: idle-coral-asteroid-v2
+  verdict: 'reject: 2026-11-26 PT review, on model but static (motion 0.61 vs the 2.7 floor); third failed take after v1 melted,
+    so coral-asteroid stays a still, per the three-take rule'
   lane: wan-mp4
   entity: sprite-animation
   title: coral-asteroid idle loop
@@ -2840,6 +2854,8 @@ subjects:
       status: DONE
       art_image_id: 280395
 - key: idle-guardian-pearl-warden-v3
+  verdict: 'keep: 2026-11-26 PT review, motion 21.5, both wings flap in a full stroke with the shell body steady and on model
+    (cell 263x159 vs the 263x163 still); shipped as doodle/anim/guardian-pearl-warden-idle in kind_robots#5868'
   lane: wan-mp4
   entity: sprite-animation
   title: guardian-pearl-warden idle loop
@@ -2862,6 +2878,9 @@ subjects:
       status: DONE
       art_image_id: 280396
 - key: idle-b04-phase1-v3
+  verdict: 'reject: 2026-11-26 PT review, motion 21.7 but the mech legs smear and morph, green fringe on the feet, and cell
+    1 is scaled smaller than the rest (cell 260 tall vs the 207 still); third failed take, so b04-phase1 stays a still, per
+    the three-take rule'
   lane: wan-mp4
   entity: sprite-animation
   title: b04-phase1 idle loop
@@ -2949,3 +2968,51 @@ subjects:
     wan-mp4:
       status: PENDING
       art_image_id: null
+- key: idle-b02-phase1-v3
+  lane: wan-mp4
+  entity: sprite-animation
+  title: b02-phase1 idle loop
+  asset: rainbow-princess-art/doodle/anim/b02-phase1-idle
+  size: 832x832
+  seed: 1125601
+  source_url: /rainbow-princess-art/doodle/bosses/b02-phase1.webp
+  last_image_id: /rainbow-princess-art/doodle/bosses/b02-phase1.webp
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: A giant cyan and pink jellyfish bell squeezes hard and blooms wide again in one strong heartbeat,
+    its rim flaring outward, while the long magenta tentacle curtain whips left and then right in a big swinging
+    wave. Same colours and sticker outline, the green surround untouched.
+- key: idle-b03-phase1-v3
+  lane: wan-mp4
+  entity: sprite-animation
+  title: b03-phase1 idle loop
+  asset: rainbow-princess-art/doodle/anim/b03-phase1-idle
+  size: 832x640
+  seed: 1125602
+  source_url: /rainbow-princess-art/doodle/bosses/b03-phase1.webp
+  last_image_id: /rainbow-princess-art/doodle/bosses/b03-phase1.webp
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: The purple submarine boss tilts its bow down and then up in a big see-saw, the hooked periscope tail
+    swinging, the deck cannon sweeping across, and long blue jet flames bursting from its thrusters and shrinking
+    back. Same paint job and outline on a flat green surround.
+- key: idle-b08-phase1-v3
+  lane: wan-mp4
+  entity: sprite-animation
+  title: b08-phase1 idle loop
+  asset: rainbow-princess-art/doodle/anim/b08-phase1-idle
+  size: 832x576
+  seed: 1125603
+  source_url: /rainbow-princess-art/doodle/bosses/b08-phase1.webp
+  last_image_id: /rainbow-princess-art/doodle/bosses/b08-phase1.webp
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: The smiling pink and violet fish holds its place at the centre of the frame, its body staying
+    at one height, while its tail fin sweeps side to side, its yellow belly fin paddles and its spiky dorsal fins
+    ripple in a wave. Still lens, school-folder airbrush on green.
