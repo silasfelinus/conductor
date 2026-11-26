@@ -131,7 +131,10 @@ tasks:
   - id: t-008
     milestone: m3
     title: "Room variety and balance from seeded sims"
-    status: ready
+    status: claimed
+    owner: worker
+    claimed_by: 2026-11-26T012253Z-deepheart-t008-b7f18c
+    claimed_at: '2026-11-26T01:22:53Z'
     depends_on: t-005
     passes: 0
     stakes: reversible
@@ -150,7 +153,7 @@ tasks:
       Kind Robots commit 330cc099 requires a recorded greedy choice as well as the existing 600 gold threshold for Gilded, adds regression coverage for both gates and non-holy Redemption, and directs the seeded ending trace toward greed. CI pending. Survival calibration by party size/class remains outstanding; return ready after this scoped fix merges.
 
       Kind Robots #5845 merged e7893e29 after seven completed successful checks, including Playbook Kit 45719267042 and Contract Tests 45719266906. Gilded requires a greedy narrative choice and 600 gold; non-holy Redemption gate covered. Remaining scope is quantitative survival calibration by party size and class.
-    updated: '2026-11-26T00:34:08Z'
+    updated: '2026-11-26T01:22:53Z'
   - id: t-009
     milestone: m3
     title: "Account-backed save for signed-in players with local fallback"
