@@ -188,7 +188,10 @@ tasks:
   - id: t-012
     milestone: m4
     title: "Every picture rendered, delivered, URL-verified and wired (set src / RENDERED_ART)"
-    status: ready
+    status: claimed
+    owner: worker
+    claimed_by: 2026-11-26T124500Z-deepheart-t012-e3a6f4b9
+    claimed_at: '2026-11-26T12:45:00Z'
     depends_on: t-011
     passes: 0
     stakes: reversible
@@ -226,7 +229,7 @@ tasks:
       App commit e72a4e98 maps 20 already completed Krea 2 achievement ArtJobs 69637–69656 to the actual Deepheart achievement pane via the existing protected art endpoint; preserves fallback icons and catalog images if delivery fails. Adds assertions for all twenty distinct badge mappings. CI and authenticated delivery verification pending; return ready after scoped merge for remaining scrapbook art.
 
       Kind Robots #5895 merged at 101a403e after all seven latest-head CI workflows passed, including Playbook Kit 45815098940 and Contract Tests 45815099056. All twenty completed Krea 2 achievement badge ArtJobs 69637–69656 are now mapped. Live delivery remains unverified. Return ready for remaining visual coverage.
-    updated: '2026-11-26T12:11:00Z'
+    updated: '2026-11-26T12:45:00Z'
   - id: t-013
     milestone: m4
     title: "Adversarial seeded playthroughs and 390/768/1440 px checks"
