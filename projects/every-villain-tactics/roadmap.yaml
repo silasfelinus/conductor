@@ -618,8 +618,8 @@ tasks:
   - id: t-029
     milestone: m4
     title: "Ship original tactical music and contextual combat SFX with accessible persistent mixer before human playtests"
-    status: ready
-    updated: '2026-11-25T09:15:00Z'
+    status: done
+    updated: '2026-11-26T11:20:35Z'
     depends_on: []
     passes: 0
     stakes: reversible
@@ -633,3 +633,5 @@ tasks:
       Scoped scheduler repair committed to Kind Robots worker/every-villain-tactics-t-029-audio-lifecycle-4e9d at 6425d131446ae4637b007719f2d52bea8b531478. Cancel active and queued voices on mood/mute/visibility/disable/disposal, stop scheduling inaudible channels, prevent suspended-context cue buildup, preserve independent mixer channels, and add deterministic active WebAudio stand-in regression. CI and actual browser playback pending; this does not close t-029.
 
       2026-11-25 PT: verified merged Kind Robots PR #5770 at d93c234ea958963bd3a696a32bb389e8c0b283cc; all seven implementation workflows and their required jobs passed, branch janitor also succeeded and no t-029 branch remains. Audio lifecycle regression is merged; browser/mobile playback and audible audition remain open. Return partial task to ready rather than done.
+
+      2026-11-26 PT explicit Silas direction: "If we have audio made, then that’s good enough until human testing." Verified merged Kind Robots #5608 and #5770, including original seven-theme score, contextual cues, persistent accessible mixer and lifecycle regressions. All returned latest-head Actions workflows completed successfully, including game tests and branch janitor; repair head 7b568b7b19e122fb587388eed4de5d02ccbbd77b. Actual speaker/browser/mobile playback and subjective audition are deferred to human playtesting by explicit user direction, not claimed verified. Finite audio implementation accepted for roadmap closure; no publication or broader game acceptance implied.

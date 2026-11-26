@@ -1155,8 +1155,8 @@ tasks:
   - id: t-049
     milestone: m4
     title: "Deliver original adaptive music and event-driven sound effects with persistent accessible audio settings before Prom human playtests"
-    status: ready
-    updated: '2026-11-25T07:29:00Z'
+    status: done
+    updated: '2026-11-26T11:20:35Z'
     depends_on: []
     passes: 0
     stakes: reversible
@@ -1168,6 +1168,8 @@ tasks:
       Prom audio scheduler repair staged at kind_robots c8f3804986a83034bbdf233f56dab15fca20276c on worker/comet-city-academy-t-049-audio-lifecycle-c6e3. Cancels voices across mood, mute, channel-zero, hidden tab and disposal; suspended contexts cannot accumulate effects. Active WebAudio stand-in regression added. Two files disjoint from #5770. Full CI and live playback pending; task remains partial.
 
       2026-11-24 PT: PR #5798 merged into kind_robots main at 8975b30d50303b222b089e2999fa34132897ce9d after all eight latest-head workflows passed. WebAudio cancellation, channel independence and suspend/recovery regression are merged. Actual browser/mobile playback remains unverified; return partial task to ready.
+
+      2026-11-26 PT explicit Silas direction: "If we have audio made, then that’s good enough until human testing." Verified merged Kind Robots #5609 and #5798, including original seven-theme score, contextual cues, persistent accessible mixer and lifecycle regressions. All returned latest-head Actions workflows completed successfully, including game tests and branch janitor; repair head c8f3804986a83034bbdf233f56dab15fca20276c. Actual speaker/browser/mobile playback and subjective audition are deferred to human playtesting by explicit user direction, not claimed verified. Finite audio implementation accepted for roadmap closure; no publication or broader game acceptance implied.
   - id: t-050
     milestone: m4
     title: "Summarize post-merge Prom LEDGER_MEDIA_PROOF results per ArtImage into the ledger without re-enqueueing failures"
