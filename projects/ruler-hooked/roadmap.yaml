@@ -87,7 +87,7 @@ tasks:
     direction, and the offline-at-runtime rule.
 - id: t-067
   title: 'Main-game standard: audit and close the gaps for The Ruler Is Hooked'
-  status: claimed
+  status: review
   owner: worker
   claimed_by: 20261126T0305Z-ruler-hooked-t067-5dc8
   claimed_at: '2026-11-26T03:04:41.382Z'
@@ -95,7 +95,7 @@ tasks:
   stakes: reversible
   passes: 0
   depends_on: []
-  updated: '2026-11-26T03:04:41.382Z'
+  updated: '2026-11-26T03:05:36.739Z'
   note: |-
     Silas 2026-11-11 PT, in session: "Our games should all have a base standard of quality ... We want our main games to have 12 plus achievements." Standard: docs/agents/main-game-standard.md; CONTROL.md global overview.
 
@@ -136,6 +136,8 @@ tasks:
     Classic fishing checkpoint replay, bounded input validation and local/private backup regressions committed to Kind Robots worker/ruler-hooked-t067-fight-checkpoint-f2a9 at cc2aa45d. Restores fish and recorded stops without advancing the turn or awarding a catch. Partial scope: quiz question checkpoint, live device and account tests remain. CI pending.
 
     Kind Robots #5869 merged e3893054; all eight exact-head PR workflows on a8c8b7e passed, including Ruler Hooked 45741766527 and Contract Tests 45741766464. Branch janitor 45746385385 in progress at verification. Classic checkpoint delivered; quiz interruption and actual account/device QA remain.
+
+    Quiz fishing checkpoint implementation at a26d7376 on Kind Robots worker/ruler-hooked-t067-quiz-checkpoint-5dc8. Saves active fish, exact question/options, introduction and wrong-answer review; rejects malformed/stale checkpoints, prevents stale async question responses across reigns, and provides explicit Classic fallback for unavailable tutor catalog. Added local and private-backup regression assertions. Partial t-067: CI and actual browser/account verification pending.
 
 - id: t-068
   title: 'The Ruler Is Hooked achievement upgrade: 12 or more live achievements'
