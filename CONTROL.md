@@ -57,7 +57,7 @@ now lead work rather than fallback.) Outside the explicit
 animation-manager/t-007 daily-commitment exception above, finite `active` work always outranks
 `continuous` programs; dream-cycle remains the final idle fallback.
 **Never idle (2026-09-29):** a run never ends on "nothing to do". When queues are empty, walk
-AGENTS.md "Never idle: the fallback ladder" — continuous tasks, dream docket, art, polish,
+docs/agents/role-assignment.md's fallback ladder — continuous tasks, dream docket, art, polish,
 bug hunts, old pitches, new objects, new pitches — and ship one unit.
 
 **Standing rules for all agents:** Respect each project's `kind`. Honor `depends_on` gates.
@@ -74,7 +74,7 @@ Silas explicitly approves that concrete action too.
 **Default-recommendation rule (Silas, 2026-09-30, in session):** a reversible product-decision
 gate with a written agent recommendation is adopted after 7 days without an answer. This never
 covers money, publishing, legal, security, irreversible, secrets, or physical-access gates. See
-AGENTS.md "A gate must say why it needs a human".
+docs/agents/human-gates.md.
 
 **Global notes (free-form, agents read these):**
 - Slug parity is a standing rule: every conductor project must have a matching
