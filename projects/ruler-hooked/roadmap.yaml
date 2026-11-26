@@ -923,8 +923,7 @@ tasks:
 - id: t-046
   milestone: m6
   title: Audit and polish every kingdom quest, faction arc, NPC choice and ending
-  status: review
-  owner: worker
+  status: done
   claimed_by: 20261126T1108Z-ruler-hooked-t046-8ac7
   claimed_at: '2026-11-26T11:06:16.504Z'
   stakes: reversible
@@ -935,7 +934,9 @@ tasks:
     Master completion issue kind_robots#4144. Inventory the entire card/deck, arc, faction, visiting NPC, multi-day choice and ending graph, then polish all story prose, dialogue, delayed callbacks and narrative consequences to Emperor of Dust standards for long-running depth. Ensure nuanced different philosophies, no generic consequence funnels, meaningful failure scenes, multiple revisits and every ending graph prerequisite. Provide full-run edited transcript evidence and make missing arcs/tasks explicit; no outstanding substantial text rewrites.
 
     Editorial implementation at kind_robots 6072f27a: 45 prose revisions, five alternate arc conclusions, meaningful bargain/exile/one-time-event consequences, public dock fishing access, structural audit of every card and arc edge, all terminal arc path transcripts and complete four-ending reign transcripts from actual choice logs. Existing scenes reused. CI pending; inspect gameplay logs and assess acceptance before closing.
-  updated: '2026-11-26T11:08:26.473Z'
+
+    Verified Kind Robots #5891 merged at bf8f50993e631a308d9fed3e08dbe3183dc95f11. All eight exact-head PR workflows on 527392fbf61ccc5c9bfbccf63758026f1cbb5c2e passed and branch janitor 45811156863 succeeded. Inspected gameplay run 45808488376 job 139870045123: 60 narrative cards, six arcs, 25 terminal arc transcripts and four complete legal finale transcripts at 35/35/36/36 casts, with all gameplay self-tests successful. The merged editorial implementation adds 45 passage revisions and five alternate arc conclusions and fixes one-time grants, bargain and exile consequences and public dock access. Close the editorial task; comprehensive stochastic policy coverage belongs to t-049, actual art reconciliation/inspection to t-047, device QA to t-050/t-061. No rendered or deployment claim.
+  updated: '2026-11-26T12:46:01Z'
 - id: t-047
   milestone: m6
   title: Deliver and visually audit all required coronation, fish, NPC, map and ending art
@@ -979,7 +980,7 @@ tasks:
 - id: t-049
   milestone: m6
   title: Full policy-matrix kingdom simulator and witnessed complete ending graph
-  status: waiting
+  status: ready
   owner: null
   stakes: reversible
   passes: 0

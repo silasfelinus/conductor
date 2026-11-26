@@ -564,12 +564,11 @@ tasks:
   - id: t-021
     milestone: m6
     title: "Gen-2 World 1: re-author Bluebell Pipeworks as a full SMB3/SMW-class world"
-    status: review
-    owner: worker
+    status: ready
     depends_on: [t-002, t-011, t-020]
     passes: 0
     stakes: reversible
-    updated: '2026-11-26T11:23:00Z'
+    updated: '2026-11-26T12:47:00Z'
     note: |-
       Build World 1 to the GEN2-WORLDS.md graph: 6-9 nodes including a fortress, a Hush House, the first Valve Chapel and at least one secret exit, each level 3-6 minutes with sub-areas and a real secret. Wire the GEN2-ROUND-1 overworld plate and far-sky plate. Record first-clear times. This world is the template Silas plays before Worlds 2-8 are rebuilt.
 
@@ -578,8 +577,8 @@ tasks:
       Verified kind_robots#5889 merged at b6121a1a after all ten implementation workflows passed on exact head 6db6c157. Rustbolt Keep key chambers and persisted map unlock shipped. Branch janitor queued. Partial World 1 scope; Sluicegate Steps, Foreman Flange, expanded rooms, art and full acceptance remain. Production unverified.
 
       Implemented the first playable Sluicegate Steps dam climb (76 columns), rope, spring and elevated token routes, spillway checkpoint and exit gating the castle. Kept the legacy castle code 1-4 distinct from the dam runtime code 1-sluice and node 1-4, with regression coverage for map entry, input-driven climb, camera ascent, checkpoint respawn, clear and persistence. Geometry probe passed. App branch worker/save-the-plumber-t-021-sluice-s7m3, head 7e82d59f. Full gameplay and TypeScript CI pending; partial World 1 scope.
-    claimed_by: 20261126T112200Z-plumber-sluice-s7m3
-    claimed_at: '2026-11-26T11:22:00Z'
+
+      PR kind_robots#5893 merged at 5903f437; all eleven implementation workflows and branch janitor passed on 8c786ef9. Sluicegate Steps baseline delivered. Remaining World 1 scope stays ready.
   - id: t-022
     milestone: m6
     title: "Gen-2 Worlds 2-4: Tideglass Marina, Lantern Orchard, Clockwork Fair"
@@ -679,9 +678,8 @@ tasks:
       Related: PR #4080, issue #4062, conductor/save-the-plumber t-025.
   - id: t-027
     title: "Save the Plumber Maker: playable level editor, saves, sharing, ratings, Mario Maker and Geometry Dash parity"
-    status: review
-    owner: worker
-    updated: '2026-11-26T11:35:00Z'
+    status: ready
+    updated: '2026-11-26T12:47:00Z'
     stakes: reversible
     passes: 0
     source_issue: "silasfelinus/kind_robots#4347"
@@ -734,5 +732,5 @@ tasks:
       Verified kind_robots#5677 merged at e1668063. Maker review loading fix shipped; remaining advanced Maker scope. Return to ready.
 
       Corrected Maker validation to use the same pipe-mouth pairing rule as the runtime parser instead of counting every painted pipe-body tile. Added unequal-height paired pipe share roundtrip and real bidirectional portal input regression plus rejection of equal cell counts with unequal mouth counts. Branch worker/save-the-plumber-t-027-pipes-p8n4 head d7160b0c. Full CI pending; partial t-027 scope.
-    claimed_by: 20261126T113400Z-plumber-maker-p8n4
-    claimed_at: '2026-11-26T11:34:00Z'
+
+      PR kind_robots#5894 merged at 9cdc0317; all ten implementation workflows and branch janitor passed on 8b0c3c2e. Pipe-mouth validation and portal replay shipped. Remaining advanced Maker scope stays ready.
