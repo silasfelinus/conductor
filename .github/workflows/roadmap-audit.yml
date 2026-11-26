@@ -12,6 +12,8 @@ on:
       - 'scripts/audit_roadmaps.py'
       - 'scripts/build_status.py'
       - 'tests/test_build_status.py'
+      - 'scripts/build_agent_context.py'
+      - 'tests/test_build_agent_context.py'
       - 'scripts/check_talkback_kaizen.py'
       - 'docs/AUDITOR-DUTIES.md'
       - 'docs/SELF-IMPROVING-STUDIO.md'
@@ -40,7 +42,8 @@ jobs:
         if: github.event_name == 'pull_request'
         run: |
           python -m pip install pytest
-          python -m pytest -q tests/test_build_status.py
+          python -m pytest -q tests/test_build_status.py tests/test_build_agent_context.py
+          python scripts/build_agent_context.py
 
       # Runs before the audit: audit_roadmaps.py reads with PyYAML, which accepts
       # a shape the kind_robots Projects board's YAML 1.2 parser rejects outright.

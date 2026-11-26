@@ -232,6 +232,7 @@ def build_status():
         "verify PRs, live task state, CONTROL.md and ownership before acting. "
         "Ready hints exclude blocked, resting and already-run daily tasks. "
         "Expired claims are handled by Process task events. Missing rows are not proof of no work.",
+        "> Connector agents: fetch `ops/agent-context/<project>.json` for exact canonical task and CONTROL ranges, source commit, and advisory role hints.",
         "",
         "| Project | Lifecycle | Review IDs | Ready candidates (up to 3) |",
         "|---|---|---|---|",
