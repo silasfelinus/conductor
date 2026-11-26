@@ -244,7 +244,7 @@ tasks:
   - id: t-005
     milestone: m2
     title: "Implement enemy interaction, held objects and powerup systems"
-    status: claimed
+    status: review
     claimed_by: 2026-11-26T222400Z-plumber-t005-inventory-31c9
     claimed_at: '2026-11-26T22:24:00Z'
     depends_on: [t-003]
@@ -311,6 +311,8 @@ tasks:
       Conductor#8062 carries the private painted prop request; delivery unverified. Partial
       scope; remaining map-usable inventory, ride companion, dedicated water courses and
       painted Ballast/Tidecoat props. Production deployment unverified. Return to ready.
+
+      Added validated equipped power and reserve save fields, slot isolation, map Y equip/swap with immediate persistence, and a shared cabinet regression suite. App branch worker/save-the-plumber-t-005-inventory-31c9 head 1ae51f90. Partial scope; full CI pending and ride companion, water courses and painted prop delivery remain.
     updated: '2026-11-26T22:24:00Z'
     owner: worker
     implementation_pr: 'silasfelinus/kind_robots#5899'
