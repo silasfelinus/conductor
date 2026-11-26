@@ -225,8 +225,8 @@ import show_control  # noqa: E402
 def test_agents_md_stays_core_sized():
     # AGENTS.md is read in full and CLAUDE.md is injected into every session.
     # Detail belongs in docs/agents/*.md; raise these only with a reason.
-    assert len((ROOT / "AGENTS.md").read_bytes()) < 36_000
-    assert len((ROOT / "CLAUDE.md").read_bytes()) < 10_000
+    assert len((ROOT / "AGENTS.md").read_bytes()) < 9_000
+    assert len((ROOT / "CLAUDE.md").read_bytes()) < 2_500
 
 
 def test_agents_md_topical_doc_links_resolve():

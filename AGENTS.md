@@ -44,7 +44,7 @@ Do not hand routine verification, merging or cleanup to Silas. Use Pacific time 
 | Need | Reference |
 | --- | --- |
 | Task selection, lifecycle, claims | [Picking work](docs/agents/picking-work.md), [connector protocol](docs/github-connector-worker.md) |
-| Roles and fallback | [Role assignment](docs/agents/role-assignment.md), [role playbooks](docs/agents/roles/) |
+| Roles and fallback | [Role assignment](docs/agents/role-assignment.md), [worker](docs/agents/roles/worker.md), [other role playbooks](docs/agents/roles/) |
 | CI and parallel work | [Continuous production](docs/agents/continuous-production-pipeline.md), [Git troubleshooting](docs/agents/git-troubleshooting.md) |
 | Gates and security | [Human gates](docs/agents/human-gates.md), [safety details](docs/agents/safety-rules-detail.md), [cross-repo](docs/agents/cross-repo.md) |
 | Master issue and UI | [Issue index](docs/agents/master-issues.yaml), [issue context](docs/agents/project-issue-context.md), [frontend verification](docs/agents/frontend-verification.md) |
