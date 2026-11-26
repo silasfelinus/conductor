@@ -152,7 +152,7 @@ tasks:
   - id: t-010
     milestone: m3
     title: "Sound and music behind the kit sound setting"
-    status: review
+    status: done
     depends_on: t-006
     passes: 0
     stakes: reversible
@@ -161,8 +161,9 @@ tasks:
       sound setting and reduced motion.
 
       Kind Robots #5882 (778e4949) implements seven original synthesized themes and state-driven cues, gesture gating, shared kit sound/reduced-motion controls, tab visibility and cleanup, with loop/cue/lifecycle regressions. CI pending; actual browser playback unverified.
-    updated: '2026-11-26T05:29:30Z'
-    owner: worker
+
+      Kind Robots #5882 merged at 7975cce5; all seven latest-head workflows completed successfully, including Playbook Kit 45776917453 and Contract Tests 45776917406. Audio implementation and regression coverage complete. Actual browser playback remains unverified and belongs in final t-013 QA, not a separate subjective gate.
+    updated: '2026-11-26T11:10:00Z'
     claimed_by: 2026-11-26T050500Z-deepheart-t010-bdf931
     claimed_at: '2026-11-26T05:05:00Z'
   - id: t-011
