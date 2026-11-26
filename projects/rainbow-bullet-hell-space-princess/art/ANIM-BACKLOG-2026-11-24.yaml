@@ -1941,6 +1941,8 @@ subjects:
       status: DONE
       art_image_id: 280737
 - key: idle-coral-choir-pod
+  verdict: 'reject: 2026-11-26 PT review, on model but the pod and its notes barely move (motion 0.93, under the
+    2.7 floor); retake idle-coral-choir-pod-v2'
   lane: wan-mp4
   entity: sprite-animation
   title: coral-choir-pod idle loop
@@ -3281,6 +3283,9 @@ subjects:
       status: DONE
       art_image_id: 280746
 - key: idle-kelp-frond-v3
+  verdict: 'keep: 2026-11-26 PT review, the strand sways over and ripples back on model with its frilly outline and
+    aqua stripes intact (motion 7.63); a few green fringe pixels despilled; eight cells sized to the 184x268 still,
+    shipped as doodle/anim/kelp-frond-idle in kind_robots#5906'
   lane: wan-mp4
   entity: sprite-animation
   title: kelp-frond idle loop
@@ -3303,6 +3308,8 @@ subjects:
       status: DONE
       art_image_id: 280747
 - key: idle-charge-v3
+  verdict: 'reject: 2026-11-26 PT review, it hops (motion 17.62) but goes soft and blurry, the crisp pink rim melts
+    into a glow and one cell warps the points; third failed take, so the charge pickup stays a still'
   lane: wan-mp4
   entity: sprite-animation
   title: charge idle loop
@@ -3325,6 +3332,9 @@ subjects:
       status: DONE
       art_image_id: 280748
 - key: idle-power-v3
+  verdict: 'keep: 2026-11-26 PT review, the diamond bobs and tilts while staying solid, crown, facets and yellow
+    rim on model (motion 6.11); eight cells sized to the 128x95 still, shipped as doodle/anim/power-idle in
+    kind_robots#5906'
   lane: wan-mp4
   entity: sprite-animation
   title: power idle loop
@@ -3347,6 +3357,8 @@ subjects:
       status: DONE
       art_image_id: 280749
 - key: idle-shield-v3
+  verdict: 'reject: 2026-11-26 PT review, the pink swirl morphs into blobs and smears across the badge mid-loop
+    (motion 3.92); third failed take, so the shield pickup stays a still'
   lane: wan-mp4
   entity: sprite-animation
   title: shield idle loop
@@ -3368,3 +3380,19 @@ subjects:
     wan-mp4:
       status: DONE
       art_image_id: 280750
+- key: idle-coral-choir-pod-v2
+  lane: wan-mp4
+  entity: sprite-animation
+  title: coral-choir-pod idle loop
+  asset: rainbow-princess-art/doodle/anim/coral-choir-pod-idle
+  size: 832x768
+  seed: 1125614
+  source_url: /rainbow-princess-art/doodle/pickups/coral-choir-pod.webp
+  last_image_id: /rainbow-princess-art/doodle/pickups/coral-choir-pod.webp
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: The little coral choir pod rocks side to side and bounces up and back down, its round window glowing
+    bright then dim, while glowing music notes pop out above it, float up and fade. Locked view, exact pod outline,
+    flat lime-green backdrop all around, shiny airbrushed doodle.
