@@ -138,8 +138,7 @@ tasks:
   - id: t-009
     milestone: m3
     title: "Account-backed save for signed-in players with local fallback"
-    status: review
-    owner: worker
+    status: done
     claimed_by: 2026-11-26T111500Z-deepheart-t009-7c5d29a1
     claimed_at: '2026-11-26T11:15:00Z'
     depends_on: t-006
@@ -153,7 +152,9 @@ tasks:
       Kind Robots #5878 merged 90e8d8ae after all ten completed successful CI workflows, including Playbook Kit 45749360796 and Contract Tests 45749360778. Explicit revisioned account backup/restore of run slots and chronicle landed. Return ready for scrapbook/settings integration and live two-device verification.
 
       App commit da815ccd includes the shared Kit scrapbook unlocks and settings in the account archive, restores only Deepheart's Kit record, preserves legacy archives without a Kit payload and protects unreadable local records. Added round-trip and invalid Kit data regressions. CI and authenticated two-device verification pending.
-    updated: '2026-11-26T11:19:00Z'
+
+      Kind Robots #5892 merged at 4a64c8bb; all seven latest-head CI workflows passed including Playbook Kit 45809076695 and Contract Tests 45809076749; branch janitor 45810888561 succeeded. Account slots, chronicle, scrapbook and settings implementation complete. Authenticated two-device verification remains in final t-013 QA.
+    updated: '2026-11-26T11:35:00Z'
   - id: t-010
     milestone: m3
     title: "Sound and music behind the kit sound setting"
@@ -187,7 +188,7 @@ tasks:
   - id: t-012
     milestone: m4
     title: "Every picture rendered, delivered, URL-verified and wired (set src / RENDERED_ART)"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 2026-11-26T113500Z-deepheart-t012-c9b73e4a
     claimed_at: '2026-11-26T11:35:00Z'
@@ -224,7 +225,9 @@ tasks:
       App commit f9c1347d binds seven already completed Krea 2 ArtImages (273855–273858, 273872–273873, 273875; ArtJobs 69511–69514, 69528–69529, 69531) to four canon-compatible non-anthro boss portraits and three artifact scrapbook plates. All 94 approved anthro repaint and 41 separate private mature jobs have DONE records. Actual live media delivery and remaining art still need verification; return ready after CI and partial merge.
 
       Kind Robots #5874 merged 7e6cb9fd after seven completed successful CI workflows, including Playbook Kit 45745943645. Four boss portraits and three artifact plates are mapped to completed Krea 2 ArtImages. Authenticated delivery and remaining art coverage still need verification; return ready.
-    updated: '2026-11-26T11:35:00Z'
+
+      App commit e72a4e98 maps 20 already completed Krea 2 achievement ArtJobs 69637–69656 to the actual Deepheart achievement pane via the existing protected art endpoint; preserves fallback icons and catalog images if delivery fails. Adds assertions for all twenty distinct badge mappings. CI and authenticated delivery verification pending; return ready after scoped merge for remaining scrapbook art.
+    updated: '2026-11-26T11:38:00Z'
   - id: t-013
     milestone: m4
     title: "Adversarial seeded playthroughs and 390/768/1440 px checks"
