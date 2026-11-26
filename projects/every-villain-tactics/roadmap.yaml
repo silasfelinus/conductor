@@ -250,18 +250,17 @@ tasks:
   - id: t-008
     milestone: m3
     title: "Author 48 hero and villain playable arcs with distinct supporting cast"
-    status: review
+    status: ready
     depends_on: t-007
-    owner: worker
     passes: 0
     stakes: reversible
     note: |-
       For every permanent Prom of Doom identity, author two genuinely different playable routes: protagonist HERO or VILLAIN. Maintain independent characterization, dialogue and consequences for their supporting sidekicks and henchmen as NPCs, not extra starting modes. Audit 96 distinct playable arcs and meaningful supporting-actor agency; reject string replacements and renamed identities. Retain compatibility with saves made under the historical four-role preview. This supersedes the original 192-player-arc target.
 
       Scoped playable increment: Kind Robots commit 2792765c3e3e4a31cc42b2790ed9d731d59bc846 implements 16 hero/villain First Bell arcs for the eight accident identities, with 80 distinct authored scenes and independently voiced squad support. Actual cast names are resolved from battle state; choices and legacy save schema remain intact. Source audit passed 80 unique nonempty scenes; integrated gameplay regression committed, latest-head CI pending. Partial: 40 identities remain, plus deeper supporting-cast agency and full route acceptance.
-    claimed_by: 20261126T022300Z-evt-t008-4d9e
-    claimed_at: '2026-11-26T02:23:00Z'
-    updated: '2026-11-26T03:06:00Z'
+
+      PR #5877 merged as 331f1c114a62610f86943088cae39fae664667cd after all seven latest-head workflows passed. 80 First Bell routes, 400 authored scenes, 2644 isolated assertions, permanent regression coverage; no remaining worker branch. Release incomplete scope for the final Psychic family and supporting-actor consequences. No full campaign acceptance claimed.
+    updated: '2026-11-26T07:38:00Z'
   - id: t-009
     milestone: m3
     title: "Author 48 bespoke six-level fixed-cast personal routes"
