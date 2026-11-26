@@ -1,113 +1,11 @@
 # CLAUDE.md
 
-The operating manual is **[AGENTS.md](./AGENTS.md)** — read it in full at the start of every
-session. It applies to all agents and projects. This file is injected into every session, so it
-holds only the startup/close-out contract; full ritual text lives in
-[`docs/agents/daily-rituals.md`](docs/agents/daily-rituals.md).
+Use [AGENTS.md](AGENTS.md) as the shared agent contract. Read it once; do not duplicate it here.
 
-## Session startup
+For a direct task, proceed with that task and its role-specific context. Otherwise use the SessionStart hook's current signals and `scripts/select_role.py`; load only the named playbook. For the assigned project, use the [master issue index](docs/agents/master-issues.yaml) and [targeted issue context](docs/agents/project-issue-context.md). Use `scripts/session_sweep.py --max-lines 3` when diagnosing maintenance signals, not as a mandatory full sweep before every assignment. Scheduled deterministic checks own routine detection; inspect failures and stale results as needed.
 
-Before responding to any task, run a conductor sweep and report it to Silas:
+Daily Dream, Dead Air, five daily upgrades and other recurring creative commitments retain their current CONTROL.md requirements. Load [daily rituals](docs/agents/daily-rituals.md) only for that assignment. Never revive stopped rituals.
 
-1. Read `AGENTS.md`. Load only the role playbook `select_role.py` names (or the one matching an
-   explicit ask). Once assigned a project, read only its relevant `docs/agents/master-issues.yaml`
-   sections per `docs/agents/project-issue-context.md`; never preload them.
-2. Git state, open agent PRs, and the ready / needs-human / claimed scan are in the SessionStart
-   hook's `CONDUCTOR STARTUP SWEEP` message — use it. Only if it's missing, re-run them (GitHub MCP
-   for PRs) and **skip every project whose `project-overrides.yaml` status isn't `active`/`continuous`**.
-   Before proposing a new project status for a "closed project keeps coming up" complaint, confirm
-   it isn't already marked there and simply not being checked.
-3. `python scripts/session_sweep.py` — every reconciliation check in one process, one line each plus
-   the tail of anything non-zero. Don't run checks individually unless you need a flag (`--repair`,
-   `--include-inactive`, `--payload-only`). What each check means and how to fix it:
-   [`docs/sweep-checks.md`](docs/sweep-checks.md) — read only the entry for a check that flagged.
-   Exit 1/3 is a reconciliation prompt, not permission to bypass a gate; exit 2 is unresolved (often
-   a missing token), never clean. `docs/state-reconciliation.md` governs fixes.
-4. TALKBACK: the hook lists the latest entry headings. Read a body only when it looks unresolved
-   (escalation or `security-flag`) with `tail -n 80 TALKBACK.md`. Never read or grep the whole file.
-5. **Daily rituals** — each has its own section in `docs/agents/daily-rituals.md`; open it only when
-   the ritual is due:
-   - **Dream docket** (step 7, re-enabled by Silas 2026-11-14 PT, parallel to Dead Air): if `build_dream_proposal.py --check` reports fewer than 5 unbuilt
-     proposals, author exactly ONE version-4, ten-asset proposal this session (six linked Dream creations, plus four private setting/character model candidates and no Zuzu/Emperor gameplay) (`--brief` → `--from-json`); exit 1 = empty, author
-     now. Read `docs/sweep-checks.md` "Step 7" before authoring.
-   - **Dead Air storyboard runway** (continuous, independent of Dream): run
-     `python scripts/check_dead_air_runway.py --days 7` against today's Pacific
-     date. When it reports a missing date, author ONE original private five-shot
-     episode YAML for the earliest missing day using the canonical
-     `projects/dead-air/episodes/` schema and `dead_air_produce.validate`.
-     Keep source-rights and tone constraints, never mark authored as rendered, and
-     never publish the output. The daily private producer will submit ArtJobs
-     only when that dated episode becomes eligible.
-   - **Five daily upgrades** (step 8, since 2026-10-13): build first, review afterward — five small,
-     reversible, CI-tested improvements to active projects, PR-backed, recorded via
-     `python scripts/daily_project_deliveries.py --brief` → `projects/dream-cycle/daily-deliveries/<date>.yaml`
-     → `--materialize` → `--check`. Starting 2026-11-15 PT, each entry names
-     a DISTINCT canonical project `roadmap_task: t-NNN`. Append
-     `daily-delivery:<date>/<slug>` and the implementation PR to that existing
-     task's note; never generate five separate roadmaps.
-     **Audience-first window through 2026-11-25 PT:** at least three
-     of the five help a first-time visitor find, understand, share or support the site.
-   - **Playbook challenge** (step 9): **stopped** by Silas 2026-10-29 PT (CONTROL.md "2026-10-29 PT
-     daily creative correction"). Do not author `pitches/playbook-challenges/` dockets or revive them
-     from idle; prior drafts, `MEMORY.yaml` and `SILAS-NOTES.yaml` are historical source material.
-     Report it as stopped, not missing. The original direction is kept in the rituals doc.
+Open PRs, verify completed green checks, merge safe work and reconcile the actual task state per AGENTS.md. Genuine gates remain gated. Do not ask Silas to select routine work. Report the result concisely.
 
-**Hourly playtest-advancement scheduled task:** when a scheduled session asks you to move
-high-priority games toward playtest, follow
-[docs/agents/hourly-playtest-advancement.md](docs/agents/hourly-playtest-advancement.md).
-This is a task-specific development lane, not the read-only hourly Conductor report.
-
-Then report, briefly: branch and tree state; open PRs; ready tasks in priority order; needs-human
-gates from active projects only, by project; state-reconciliation findings; projection headroom
-(the `check_roadmap_note_size` payload line — report it every session); art-queue health; container
-log triage (omit if unconfigured); unresolved TALKBACK escalations; creation fallback; daily dream,
-daily upgrades and Daily Tzaddik status. Priority-queue depth only when
-`check_priority_queue_starvation.py` exits non-zero. What each line must contain:
-[`docs/agents/daily-rituals.md`](docs/agents/daily-rituals.md) "Full session-report checklist".
-
-After the report, ask Silas what he wants — or proceed directly if his first message is a clear
-task. **Never ask Silas to choose the order of ready work** (2026-10-08: *"autonomous progress trumps
-letting me micromanage"*): pick by dependency, then priority, and report what you took. Asking is
-for genuine human gates only. **Unattended/trigger-fired runs:** nobody reads the report (the daily
-digest is Silas's view), so skip it — run `python scripts/select_role.py` first, act on it, and on
-`idle` walk AGENTS.md's fallback ladder. Run the sweep as `session_sweep.py --max-lines 3` and fix
-only what your role owns. End with at most five lines: what shipped, PR, what's next. A run that
-ends with only a sweep report is a failed run.
-
-## Session end
-
-### State reconciliation is part of done
-
-A merged implementation, recovered incident, or completed human decision isn't closed until the
-matching task agrees with reality (`docs/state-reconciliation.md`): re-fetch the roadmap from
-`main` after merge; reconcile status, `approved_by_human` (only when Silas decided it this session),
-claim fields, dependencies, completion note and milestone; apply via `task-events` or the close-out
-helper and verify it landed; re-run `check_pr_merged_drift.py` and `audit_human_gates.py` if you
-changed roadmap state. Close a recovered incident when its criteria are met and track root cause
-separately. Never report gates from paused/retired/finished projects unless asked for an archive sweep.
-
-### Standing instruction: open PRs automatically, merge when green
-
-Silas, 2026-07-31, verbatim: *"You should open prs automatically, merge when green, we prefer a
-tight ship with a single main branch once work is done, and I test on main."*
-
-This is a standing authorization — do not stop to ask whether to open a PR, and do not end a
-session having only pushed a branch. **Open the PR as soon as the work is pushed, then merge it
-once CI is green.** Some harnesses ship a default "do not create a pull request unless the user
-explicitly asks for one" — the paragraph above IS that explicit request, standing for every session
-in this repo. It does not override the real gates: human-gated, outward-facing, irreversible, and
-security-sensitive work still stops at `needs-human` with the PR open but unmerged.
-
-Leave a clean `main` with no branch behind: merge safe work (its branch auto-deletes); only gated
-work ends unmerged, and it still needs an open PR. A branch you can't delete (ref deletion 403s) is
-cleared by the `branch-janitor` workflow via `workflow_dispatch` with `force_delete_branches`.
-
-### Git push trouble and background agents
-
-- First push or post-rebase push fails with **HTTP 413**: create the ref with the GitHub MCP
-  `create_branch` tool, or commit via `push_files` against the branch's remote tip. Never
-  force-push. Recipes: [`docs/agents/git-troubleshooting.md`](docs/agents/git-troubleshooting.md).
-- After `git clone --depth 1`, run `git config remote.origin.fetch '+refs/heads/*:refs/remotes/origin/*'`
-  before the first push.
-- Never delegate a git-mutating step to a background subagent without `isolation: 'worktree'`
-  (hard rules 11–12), and never hand one a workaround you're also fixing in the foreground.
+Full prior startup/closeout details are preserved in [the reference](docs/agents/claude-reference-2026-11-26.md); read only the relevant section if needed.

@@ -1,3 +1,4 @@
+from datetime import datetime, timezone
 from pathlib import Path
 
 import scripts.build_status as build_status
@@ -32,6 +33,8 @@ def test_status_counts_real_lifecycle_states(tmp_path: Path, monkeypatch) -> Non
     assert "| Continuous projects | 1 |" in text
     assert "| Finished projects | 1 |" in text
     assert "| forever | continuous | software |" in text
+    assert "## Agent pickup hints" in text
+    assert "| finite | active | — | t-001 |" in text
 
 
 def test_status_splits_live_and_archival_gates_and_parses_markdown_pitch_status(
@@ -81,3 +84,45 @@ def test_status_splits_live_and_archival_gates_and_parses_markdown_pitch_status(
     assert "| Pitches pending | 1 |" in text
     assert "Still pending" in text
     assert "Retire old surface" not in text
+
+
+def test_pickup_hints_prioritize_reviews_and_filter_unclaimable_work() -> None:
+    now = datetime(2026, 11, 26, 22, tzinfo=timezone.utc)
+    overrides = {
+        "ongoing": {"status": "continuous"},
+        "finite": {"status": "active"},
+        "paused": {"status": "paused"},
+        "finished": {"status": "finished"},
+    }
+    tasks = {
+        "ongoing": [{"id": "t-001", "status": "ready"}],
+        "finite": [
+            {"id": "t-001", "status": "review"},
+            {"id": "t-002", "status": "ready", "depends_on": "t-001"},
+            {"id": "t-003", "status": "ready", "rest_until": "2026-11-27T01:00:00Z"},
+            {"id": "t-004", "status": "ready", "remaining_scope_task": "t-001"},
+            {"id": "t-005", "status": "ready", "note": "Once per Pacific calendar day. Ran on 2026-11-26 Pacific."},
+            {"id": "t-006", "status": "claimed", "claimed_at": "2026-11-26T18:00:00Z"},
+            {"id": "t-007", "status": "done", "gate_human": True},
+            {"id": "t-008", "status": "ready", "depends_on": "t-007"},
+            *({"id": f"t-{i:03}", "status": "ready"} for i in range(9, 14)),
+        ],
+        "paused": [{"id": "t-001", "status": "review"}],
+        "finished": [{"id": "t-001", "status": "ready"}],
+    }
+    assert build_status.pickup_rows(
+        tasks, overrides, ["ongoing", "paused", "finite", "finished"], now=now
+    ) == [
+        "| finite | active | t-001 | t-009, t-010, t-011 (+2 more) |",
+        "| ongoing | continuous | — | t-001 |",
+    ]
+
+
+def test_pickup_hints_bound_review_ids_without_hiding_count() -> None:
+    rows = build_status.pickup_rows(
+        {"live": [{"id": f"t-{i:03}", "status": "review"} for i in range(1, 9)]},
+        {"live": {"status": "active"}},
+        [],
+        now=datetime(2026, 11, 26, tzinfo=timezone.utc),
+    )
+    assert rows == ["| live | active | t-001, t-002, t-003, t-004, t-005, t-006 (+2 more) | — |"]

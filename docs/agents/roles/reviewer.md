@@ -43,15 +43,7 @@ Read AGENTS.md (core) first; this playbook adds only what this role needs.
 - **Ledger on close**: whenever your decision closes a task (`done` after merge, or
   `blocked` at passes == 3), append the outcome record to `LEARNING.yaml` — including
   the failure category and a one-line lesson.
-- **Kaizen on merge**: after every successful merge, create exactly one new `ready` task
-  in the project's roadmap from the Worker's kaizen suggestion (or substitute your own if
-  theirs is weak). One sentence title, `stakes: reversible`. Get the id from
-  `python scripts/next_free_task_id.py <project>` (checks `origin/main` fresh) rather than
-  hand-picking one — this is the fix for the id-collision class that produced
-  interface-vision/t-065 (`t-061`/`t-062` each hand-assigned twice in one day). This
-  compounds improvement across cycles automatically. Check `LEARNING-REPORT.md` first
-  — target a systematic
-  weakness over a generic improvement when one applies (see "Learning ledger").
+- **Finite scope on merge:** record useful lessons and optional improvement ideas, but do not create a task merely because a PR merged. Create a ready task only for a demonstrated defect, unmet original requirement, or explicit Silas direction; optional ideas belong in a nonblocking backlog. Use `python scripts/next_free_task_id.py <project>` for any warranted new task and check existing tasks first. Do not reopen completed finite scope for generic polish.
 - **On a `challenged` task:** read the Worker's TALKBACK entry carefully. If the Worker's
   case has merit, adjust your decision and append a response. If not, escalate to
   `needs-human` for Silas to arbitrate — never re-reject a challenge silently.
