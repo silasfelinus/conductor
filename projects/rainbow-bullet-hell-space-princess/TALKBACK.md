@@ -305,3 +305,10 @@ Companion kind_robots#4764 was already on main, so merge order held. CI green on
 
 - Only one render had finished since batch 4: b02-phase1-v3 (ArtImage 280452). Motion 0.81, static for the third time (0.6, 1.02, 0.81), so b02-phase1 stays a still under the three-take rule. Nothing ships to kind_robots this cycle.
 - Still running: b03-phase1-v3, b08-phase1-v3 and 44 other pending loops. Next worker reviews those, then the P-03 ending clips.
+
+## 2026-11-26 PT | worker (scheduled agent) | t-042 P-03 ending clips
+
+- Five of the six ending clips had finished: restore, evacuate, sever-open, loyal-restore and loyal-evacuate (ArtImage 280725–280729). All five are kept and shipped in kind_robots#5900. They are re-encoded at CRF 28, run 168–300 KB, and are registered in `RAINBOW_ENDING_MOTION`. `verifyRainbowAnimation` and every other `verifyRainbow*` test pass.
+- loyal-evacuate looks muted beside the others, but it matches its shipped still plate (279933), so the clip is faithful. If the plate should be brighter, that is a plate retake, not a clip problem.
+- loyal-sever is still RUNNING. When it lands, review it, ship it and add it to `RAINBOW_ENDING_MOTION`; that closes P-03.
+- Env: the system Pillow is still broken. A scratchpad venv with pillow and numpy runs `anim_review.py`.
