@@ -461,10 +461,10 @@ tasks:
   - id: t-020
     milestone: m6
     title: "Gen-2 level engine: sub-areas, vertical rooms, midpoints, secret exits, campaign-wide switches"
-    status: claimed
+    status: review
     passes: 0
     stakes: reversible
-    updated: '2026-11-26T02:45:01Z'
+    updated: '2026-11-26T02:49:00Z'
     note: |-
       GEN2-STANDARD.md section 2. Doors, pipes and ladders into sub-rooms with their own camera bounds; vertical shafts and climbs; a midpoint checkpoint per level; a second, hidden exit type that reports `secret` to the overworld (t-011); Valve Chapel switch state read by every level so pressed switches make outlined blocks solid campaign-wide; auto-scroll and haunted-maze (Hush House) exit logic. Deterministic replay tests for each: secret exit reachable, sub-room return position, switch persistence across levels and save/reload.
 
@@ -495,6 +495,8 @@ tasks:
       Added a checkpointed forced-scroll stretch to Cottongear Coaster (4-2), 1.15px/tick, independent heroine control, front movement cap, visible and audible rear warning, life-loss and checkpoint reset, and an authored rail release. Added replay tests for lag, sprint, bounds, recovery and campaign checkpoint. Extracted committed-method probe passed (175 idle ticks to death, 321 sprint ticks to release). App branch worker/save-the-plumber-t-020-autoscroll-m7q2 head 2a8d0367. Full CI pending. Partial scope; vertical courses and haunted maze exit logic remain.
 
       Verified kind_robots#5865 merged at 5cd16eff after all 11 implementation workflows and branch janitor completed successfully on f856915f. Coaster auto-scroll delivered. Return partial scope to ready for vertical traversal and haunted maze exit logic. Production deployment unverified.
+
+      Extended Neon Tiles (7-1) with a 224px sealed vertical chamber, 128px rope descent/ascent, intermediate ledges and three lower tokens. Retained original pipe, gear, and normal route. Added real-input regression for pipe entry, descent, reward, climb and jump back to pipe. Source geometry checks passed including preserved 32px main-route headroom and unchanged exterior. Branch worker/save-the-plumber-t-020-vertical-v9k3 head a28c63e2. Full CI pending; partial scope, haunted maze remains.
     owner: worker
     claimed_by: 20261126T024501Z-plumber-vertical-v9k3
     claimed_at: '2026-11-26T02:45:01Z'
