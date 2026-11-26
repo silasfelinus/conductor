@@ -149,7 +149,7 @@ in a repos.yaml repo into its owning project's roadmap as a `ready` task with
 Full procedure, with the history behind each step: [`docs/agents/picking-work.md`](docs/agents/picking-work.md).
 
 1. Todos first (above).
-2. Read `CONTROL.md`'s global overview and your project's block (once per session unless it changes):
+2. Read `CONTROL.md`'s global overview once per session unless it changes, plus each selected project's block:
    `python scripts/show_control.py <project>` (~25–35KB instead of the whole ~125KB file). It
    overrides any roadmap it conflicts with. Then `projects/priority.yaml` and the relevant roadmap
    (via `show_task.py`).
