@@ -97,8 +97,7 @@ tasks:
   - id: t-006
     milestone: m2
     title: "Main-game standard: title, settings, save/load, 20 achievements, chronicle; verify one award live"
-    status: review
-    owner: worker
+    status: done
     claimed_by: 2026-11-26T025300Z-deepheart-t006-79c2e1
     claimed_at: '2026-11-26T02:53:00Z'
     passes: 0
@@ -118,7 +117,9 @@ tasks:
       Kind Robots #5839 merged 0013c4ed after all seven latest-head workflows passed (Playbook Kit 45712070183, Contract Tests 45712070144). Original ranger/warrior achievement regression shipped. Live catalog and earned-award acceptance still outstanding; release review ownership.
 
       App commit 4b480ec2 fixes shared achievement retry loss affecting Deepheart: retain known codes after unsuccessful award writes, remove only confirmed awards during retry and guest migration, and add mixed-success/failure regression coverage. Live catalog and account award verification remain outstanding; no KR_API_TOKEN and local DNS cannot reach production. Return ready after verified partial merge.
-    updated: '2026-11-26T02:56:00Z'
+
+      Kind Robots #5873 merged e675ea28 after all seven completed successful CI workflows, including Contract Tests 45745064790 and Boot Achievement Budget 45745064728. Per Silas's direction to close t-006 when implementation checks pass, complete the implementation milestone and unblock saves, audio and QA; live catalog coverage and authenticated earned-award acceptance remain required in t-013 final QA and were not verified here.
+    updated: '2026-11-26T03:21:00Z'
   - id: t-007
     milestone: m3
     title: "Two-tier support scenes for all 35 pairs; three campfire beats per romance and oath"
@@ -169,7 +170,7 @@ tasks:
   - id: t-009
     milestone: m3
     title: "Account-backed save for signed-in players with local fallback"
-    status: waiting
+    status: ready
     depends_on: t-006
     owner: null
     passes: 0
@@ -179,7 +180,7 @@ tasks:
   - id: t-010
     milestone: m3
     title: "Sound and music behind the kit sound setting"
-    status: waiting
+    status: ready
     depends_on: t-006
     owner: null
     passes: 0
@@ -203,7 +204,7 @@ tasks:
   - id: t-012
     milestone: m4
     title: "Every picture rendered, delivered, URL-verified and wired (set src / RENDERED_ART)"
-    status: review
+    status: ready
     depends_on: t-011
     passes: 0
     stakes: reversible
@@ -235,14 +236,13 @@ tasks:
       Kind Robots #5857 merged d8d0e15d after all seven successful CI runs; all twelve court ArtImages wired to cast and live encounter component. Actual authenticated delivery/visual audit remains outstanding. Return to ready.
 
       App commit f9c1347d binds seven already completed Krea 2 ArtImages (273855–273858, 273872–273873, 273875; ArtJobs 69511–69514, 69528–69529, 69531) to four canon-compatible non-anthro boss portraits and three artifact scrapbook plates. All 94 approved anthro repaint and 41 separate private mature jobs have DONE records. Actual live media delivery and remaining art still need verification; return ready after CI and partial merge.
-    updated: '2026-11-26T03:03:00Z'
-    owner: worker
-    claimed_by: 2026-11-26T030000Z-deepheart-t012-b761fe
-    claimed_at: '2026-11-26T03:00:00Z'
+
+      Kind Robots #5874 merged 7e6cb9fd after seven completed successful CI workflows, including Playbook Kit 45745943645. Four boss portraits and three artifact plates are mapped to completed Krea 2 ArtImages. Authenticated delivery and remaining art coverage still need verification; return ready.
+    updated: '2026-11-26T03:20:00Z'
   - id: t-013
     milestone: m4
     title: "Adversarial seeded playthroughs and 390/768/1440 px checks"
-    status: waiting
+    status: ready
     depends_on: t-006
     owner: null
     passes: 0
