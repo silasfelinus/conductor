@@ -250,7 +250,7 @@ tasks:
   - id: t-008
     milestone: m3
     title: "Author 48 hero and villain playable arcs with distinct supporting cast"
-    status: claimed
+    status: review
     owner: worker
     depends_on: t-007
     passes: 0
@@ -265,9 +265,11 @@ tasks:
       Kind Robots commit aede3283b4bc72ccfc4c77689160e1ce965baca1 adds all 16 Psychic First Bell arcs. All 48 identities now have 96 distinct hero/villain First Bell narratives, 480 unique authored scenes, and roster-wide permanent regression coverage. Extracted selector audit passed 3172 assertions with real roster and authored catalogs, stubbed generic base scenes. CI pending; supporting-actor mechanical consequences and full acceptance remain open, so do not close umbrella t-008.
 
       PR #5885 merged at fea5beec98992795928e7d00a2374f0eea5ad1a1 after all seven latest-head workflows passed. All 96 First Bell narratives now on main. Remaining scope is independent supporting-actor mechanical consequences and full route acceptance; release for next increment.
+
+      Reclaimed existing PR #5898 after stale-claim sweep released the previous session during implementation. Commit 9c277f4adc5214f90af7261780ddf9cf1caa4794 adds deterministic independent companion actions, save receipts and field reports, with 1536 isolated story paths passing 19972 assertions and 384 permanent integration paths. Latest-head CI pending. No competing Tactics PR and no production deployment.
     claimed_by: 20261126T125100Z-evt-t008-recover-5898-f32c
     claimed_at: '2026-11-26T12:51:00Z'
-    updated: '2026-11-26T12:51:00Z'
+    updated: '2026-11-26T12:52:00Z'
 
   - id: t-009
     milestone: m3
