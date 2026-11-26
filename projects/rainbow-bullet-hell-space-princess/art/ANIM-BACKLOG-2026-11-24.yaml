@@ -1580,6 +1580,8 @@ subjects:
       status: DONE
       art_image_id: 280729
 - key: ending-motion-loyal-sever
+  verdict: 'reject: 2026-11-26 PT review, a small lilac jet smears and morphs from about frame 16, and by the held last frame
+    the pink and lilac jets have faded to translucent ghosts and the searchlights are gone; retake ending-motion-loyal-sever-v2'
   lane: wan-mp4
   entity: cinematic
   title: loyal-sever ending plate, one-shot motion
@@ -1779,6 +1781,8 @@ subjects:
       status: DONE
       art_image_id: 280381
 - key: idle-flagship
+  verdict: 'reject: 2026-11-26 PT review, keys clean but the hull barely stirs (motion 1.58, under the 2.7 floor); retake
+    idle-flagship-v2 from the shipped still'
   lane: wan-mp4
   entity: sprite-animation
   title: flagship idle loop
@@ -1800,6 +1804,8 @@ subjects:
       status: DONE
       art_image_id: 280731
 - key: idle-flagship-phase2
+  verdict: 'reject: 2026-11-26 PT review, fires flicker a little but the hull sits still (motion 1.94, under the 2.7 floor);
+    retake idle-flagship-phase2-v2 from the shipped still'
   lane: wan-mp4
   entity: sprite-animation
   title: flagship-phase2 idle loop
@@ -1821,6 +1827,7 @@ subjects:
       status: DONE
       art_image_id: 280732
 - key: idle-kelp-frond
+  verdict: 'reject: 2026-11-26 PT review, the frond hardly sways (motion 0.69, under the 2.7 floor); retake idle-kelp-frond-v2'
   lane: wan-mp4
   entity: sprite-animation
   title: kelp-frond idle loop
@@ -1842,6 +1849,8 @@ subjects:
       status: DONE
       art_image_id: 280733
 - key: idle-charge
+  verdict: 'reject: 2026-11-26 PT review, the star sits static with no spin or pulse (motion 0.70, under the 2.7 floor); retake
+    idle-charge-v2'
   lane: wan-mp4
   entity: sprite-animation
   title: charge idle loop
@@ -1860,8 +1869,8 @@ subjects:
     wan-mp4: 77210
   art:
     wan-mp4:
-      status: RUNNING
-      art_image_id: null
+      status: DONE
+      art_image_id: 280734
 - key: idle-power
   lane: wan-mp4
   entity: sprite-animation
@@ -1881,7 +1890,7 @@ subjects:
     wan-mp4: 77211
   art:
     wan-mp4:
-      status: PENDING
+      status: RUNNING
       art_image_id: null
 - key: idle-shield
   lane: wan-mp4
@@ -3047,3 +3056,80 @@ subjects:
     wan-mp4:
       status: PENDING
       art_image_id: null
+- key: idle-flagship-v2
+  lane: wan-mp4
+  entity: sprite-animation
+  title: flagship idle loop
+  asset: rainbow-princess-art/doodle/anim/flagship-idle
+  size: 832x544
+  seed: 1125604
+  source_url: /rainbow-princess-art/doodle/bosses/flagship.webp
+  last_image_id: /rainbow-princess-art/doodle/bosses/flagship.webp
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: The white and gold battleship rolls gently from side to side and heaves up and down like a ship on a
+    swell, its bow crown flashing pink, every gun turret swinging left then right, and pink engine glow pulsing hard
+    at the stern. Held camera, identical paint and outline, solid green all around.
+- key: idle-flagship-phase2-v2
+  lane: wan-mp4
+  entity: sprite-animation
+  title: flagship-phase2 idle loop
+  asset: rainbow-princess-art/doodle/anim/flagship-phase2-idle
+  size: 832x560
+  seed: 1125605
+  source_url: /rainbow-princess-art/doodle/bosses/flagship-phase2.webp
+  last_image_id: /rainbow-princess-art/doodle/bosses/flagship-phase2.webp
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: The cracked battleship shudders and lurches, bow dipping low then rising, orange fireballs blooming
+    in its torn hull and sparks spraying out, the turrets jerking as the damaged warship strains. Locked shot,
+    unchanged hull art, even lime backdrop.
+- key: idle-kelp-frond-v2
+  lane: wan-mp4
+  entity: sprite-animation
+  title: kelp-frond idle loop
+  asset: rainbow-princess-art/doodle/anim/kelp-frond-idle
+  size: 640x832
+  seed: 1125606
+  source_url: /rainbow-princess-art/doodle/hazards/kelp-frond.webp
+  last_image_id: /rainbow-princess-art/doodle/hazards/kelp-frond.webp
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: The violet kelp ribbon whips in a strong current, its curled tip swinging wide to the left and back
+    to the right, waves of motion travelling down the ribbon while the cyan veins shimmer. Fixed viewpoint, same
+    shape and glow, flat green field.
+- key: idle-charge-v2
+  lane: wan-mp4
+  entity: sprite-animation
+  title: charge idle loop
+  asset: rainbow-princess-art/doodle/anim/charge-idle
+  size: 832x832
+  seed: 1125607
+  source_url: /rainbow-princess-art/doodle/pickups/charge.webp
+  last_image_id: /rainbow-princess-art/doodle/pickups/charge.webp
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: The golden star bounces up and down and wobbles, tilting left and right, its white core blazing
+    bright then dimming, little twinkles popping off its points. Steady camera, exact star design, plain bright
+    green around it, cartoon sticker gloss.
+- key: ending-motion-loyal-sever-v2
+  lane: wan-mp4
+  entity: cinematic
+  title: loyal-sever ending plate, one-shot motion
+  asset: rainbow-princess-video/endings/loyal-sever
+  size: 832x480
+  seed: 1125608
+  source_image_id: 279939
+  duration: 4
+  loop: false
+  prompt_prose: The solid cat-eared jets stay crisp and opaque as they bank and streak off past the right edge one
+    after another, rainbow exhaust trailing, while the battleship searchlights keep sweeping the sky and the crystal
+    crown hovers over the glittering sea. Camera locked. Neon airbrushed 1980s school-folder doodle.

@@ -954,11 +954,11 @@ tasks:
     implementation_pr: 'silasfelinus/kind_robots#4105'
   - id: t-042
     title: "Rainbow Bullet Hell Space Princess — Master Roadmap to Final Creative Approval"
-    status: claimed
+    status: ready
     stakes: reversible
     passes: 0
     source_issue: "silasfelinus/kind_robots#4146"
-    updated: '2026-11-26T14:48:40Z'
+    updated: '2026-11-26T14:51:37Z'
     note: |-
       FROM GITHUB ISSUE silasfelinus/kind_robots#4146 (https://github.com/silasfelinus/kind_robots/issues/4146), opened by @silasfelinus on 2026-10-25. Imported by scripts/sync_github_issues.py. Reference the canonical roadmap in implementation PRs with `Refs silasfelinus/kind_robots#4146`, never `Closes`. Keep #4146 open throughout finite build, art and QA work. Only the verified playtest handoff workflow may prefix `[FLAGGED FOR HUMAN TESTING]` and close the single master issue after Conductor lifecycle, priority, evidence and genuine `needs-human` subjective-acceptance gate are confirmed; closing the issue is not human approval or permission to publish.
 
@@ -1024,10 +1024,15 @@ tasks:
       2026-11-26 PT P-01 batch 5: only b02-phase1-v3 had finished; motion 0.81 (third static
       take), so b02-phase1 stays a still. 46 loops still rendering (incl. b03/b08 v3). Next:
       review those, then P-03 ending clips. Partial master-roadmap scope; return to ready.
+
+      2026-11-26 PT P-01/P-03 batch 6: reviewed 5 finished renders, all rejected. flagship
+      (1.58), flagship-phase2 (1.94), kelp-frond (0.69) and charge (0.70) idle loops sit under
+      the 2.7 motion floor; the loyal-sever ending clip has a morphing jet and ghosted jets in
+      its held last frame. -v2 retakes appended to ANIM-BACKLOG for auto-submit (verdicts in
+      this conductor PR). loyal-sever is the last unshipped P-03 clip. Next: review the
+      retakes and ~35 pending loops. Partial master-roadmap scope; return to ready.
     owner: worker
     implementation_pr: 'silasfelinus/kind_robots#5868'
-    claimed_by: 2026-11-26T14:55:00Z-focused-johnson-kd6t8m
-    claimed_at: '2026-11-26T14:48:40Z'
   - id: t-043
     milestone: m4
     title: "Fever Dream look: review the doodle re-renders (DOODLE-SET-2) and ship the keepers"
