@@ -863,10 +863,7 @@ tasks:
 - id: t-045
   milestone: m4
   title: Deepen kingdom quest arcs and connect decisions to fishing spots and species
-  status: review
-  owner: worker
-  claimed_by: 20261125T230900Z-ruler-hooked-t045-c9a7
-  claimed_at: '2026-11-25T23:09:00Z'
+  status: ready
   stakes: reversible
   passes: 0
   depends_on:
@@ -902,7 +899,9 @@ tasks:
     Verified family autonomy PR kind_robots#5842 merged at e374e546; all eight PR workflows and Branch janitor completed successfully. Six seeded family routes passed. Partial quest depth; return to ready for remaining work.
 
     Fixed divergence between actual gameplay and headless quest witnesses: the pure choice reducer now owns resolved petition accounting, excluding deferrals. Quiet fishing turns can offer an eligible finale without requiring another court interruption. Added threshold, deferral and dismissal regression assertions. App branch worker/ruler-hooked-t045-finale-accounting-c9a7 at 46a35f49. Partial quest/ending integrity work, CI pending; no art or visual QA claim.
-  updated: '2026-11-25T23:11:00Z'
+
+    Verified kind_robots#5844 merged at fd7bb029 and all eight exact-head PR workflows passed, including gameplay 45719210928. Shared petition accounting and quiet-cast finale offers landed. Return to ready for seeded ending integrity work; remaining narrative and device/art QA are not certified.
+  updated: '2026-11-26T00:05:00Z'
 
 - id: t-046
   milestone: m6
