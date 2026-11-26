@@ -488,10 +488,10 @@ tasks:
   - id: t-020
     milestone: m6
     title: "Gen-2 level engine: sub-areas, vertical rooms, midpoints, secret exits, campaign-wide switches"
-    status: review
+    status: done
     passes: 0
     stakes: reversible
-    updated: '2026-11-26T05:10:00Z'
+    updated: '2026-11-26T09:12:32Z'
     note: |-
       GEN2-STANDARD.md section 2. Doors, pipes and ladders into sub-rooms with their own camera bounds; vertical shafts and climbs; a midpoint checkpoint per level; a second, hidden exit type that reports `secret` to the overworld (t-011); Valve Chapel switch state read by every level so pressed switches make outlined blocks solid campaign-wide; auto-scroll and haunted-maze (Hush House) exit logic. Deterministic replay tests for each: secret exit reachable, sub-room return position, switch persistence across levels and save/reload.
 
@@ -532,13 +532,19 @@ tasks:
       Verified kind_robots#5876 merged at 207116fb after 10/10 implementation workflows and branch janitor passed on dfdbda93. Full shaft replay green. Return to ready for haunted maze exit logic, final t-020 integrated acceptance. Production deployment not verified.
 
       Implemented Drip Parlour (1-h) playable Hush House: three sealed rooms, conditional door graph with directional clues and looping wrong choices, checkpoint, normal and elevated alternate exit, independent camera framing, map unlocks and save persistence. Added overworld input regressions for false doors, normal and secret clears. Isolated committed-source geometry and all six graph transitions passed, as did actual door method probe. Branch worker/save-the-plumber-t-020-haunted-h8z4 head b244c8d4. Full CI pending; engine baseline delivered subject to integration checks, expanded authored courses and visual art remain in t-021 and later tasks.
+
+      2026-11-26 PT: kind_robots#5881 merged after pr-medic fixed its TS2532 (optional slot
+      secrets in verifySavePlumberOverworld.test.ts, 81aec00); TypeScript and all contract
+      checks green. Engine baseline complete; expanded Drip Parlour art, attic/cellar and
+      world variants continue in t-021.
     owner: worker
     claimed_by: 20261126T050501Z-plumber-haunted-h8z4
     claimed_at: '2026-11-26T05:05:01Z'
+    implementation_pr: 'silasfelinus/kind_robots#5881'
   - id: t-021
     milestone: m6
     title: "Gen-2 World 1: re-author Bluebell Pipeworks as a full SMB3/SMW-class world"
-    status: waiting
+    status: ready
     depends_on: [t-002, t-011, t-020]
     owner: null
     passes: 0
