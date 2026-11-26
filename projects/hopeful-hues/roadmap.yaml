@@ -144,12 +144,22 @@ tasks:
   - id: t-007
     milestone: m4
     title: "Finish the finite roadmap and hand off for human playtest"
-    status: waiting
+    status: done
     depends_on: [t-002, t-003, t-004, t-005, t-006]
     passes: 0
     stakes: reversible
     note: >-
       Reconcile the goal against the product, then set lifecycle to playtest.
+
+      2026-11-25 PT: goal reconciled against the product: nine worlds, 495 winnable levels,
+      quests, achievements, saves, scrapbook, character select, multiple pathways and ten
+      endings, all verified; lifecycle set to playtest/normal in the same PR. Handoff:
+      projects/hopeful-hues/PLAYTEST-CHECKLIST.md and promo/hopeful-hues-promo-1080x1350.webp
+      (not for posting without Silas). Verified kind_robots#5856 merged after all 13 checks
+      passed on exact head a7b2193b (incl. TypeScript and the new Hopeful Hues browser
+      playthrough). No deploy.
+    updated: '2026-11-26T00:45:08Z'
+    implementation_pr: 'silasfelinus/kind_robots#5856'
   - id: t-008
     milestone: m1
     title: "Move Hopeful Hues to a standalone Play front page with a home highlight and Play link, each with art"
