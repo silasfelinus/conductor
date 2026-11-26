@@ -250,7 +250,8 @@ tasks:
   - id: t-008
     milestone: m3
     title: "Author 48 hero and villain playable arcs with distinct supporting cast"
-    status: ready
+    status: claimed
+    owner: worker
     depends_on: t-007
     passes: 0
     stakes: reversible
@@ -260,7 +261,10 @@ tasks:
       Scoped playable increment: Kind Robots commit 2792765c3e3e4a31cc42b2790ed9d731d59bc846 implements 16 hero/villain First Bell arcs for the eight accident identities, with 80 distinct authored scenes and independently voiced squad support. Actual cast names are resolved from battle state; choices and legacy save schema remain intact. Source audit passed 80 unique nonempty scenes; integrated gameplay regression committed, latest-head CI pending. Partial: 40 identities remain, plus deeper supporting-cast agency and full route acceptance.
 
       PR #5877 merged as 331f1c114a62610f86943088cae39fae664667cd after all seven latest-head workflows passed. 80 First Bell routes, 400 authored scenes, 2644 isolated assertions, permanent regression coverage; no remaining worker branch. Release incomplete scope for the final Psychic family and supporting-actor consequences. No full campaign acceptance claimed.
-    updated: '2026-11-26T07:38:00Z'
+    claimed_by: 20261126T074000Z-evt-t008-psychic-b7e2
+    claimed_at: '2026-11-26T07:40:00Z'
+    updated: '2026-11-26T07:40:00Z'
+
   - id: t-009
     milestone: m3
     title: "Author 48 bespoke six-level fixed-cast personal routes"
