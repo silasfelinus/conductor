@@ -273,8 +273,15 @@ tasks:
       hues/tiles/<world>/. Project priority raised to high. Next: wire painted tiles over the
       SVG with the colorblind symbol and special markers on top, verify each delivered tile at
       390/768/1440, then hand off.
+
+      2026-11-26 PT: first deliveries checked at tile size. Paradise's six jewels, rainbow and
+      hermit-crab buddy are strong; Clanktown's first three jewels read well. The Gloom and
+      knot renders came back as framed icons with a silhouette, so they're rejected: the game
+      reads mist.webp/knot.webp, re-queued with texture- and object-specific prompts (18).
+      Painted tiles' opaque backgrounds hid Gloom drawn underneath; kind_robots#5870 moves
+      Gloom over the tiles as a translucent wash.
     owner: worker
-    updated: '2026-11-26T00:59:43Z'
+    updated: '2026-11-26T02:23:03Z'
     implementation_pr: 'silasfelinus/kind_robots#5856'
   - id: t-014
     milestone: m2
