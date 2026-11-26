@@ -135,10 +135,7 @@ tasks:
   - id: t-008
     milestone: m3
     title: "Room variety and balance from seeded sims"
-    status: review
-    owner: worker
-    claimed_by: 2026-11-25T230915Z-deepheart-t008-9c2f4a
-    claimed_at: '2026-11-25T23:09:15Z'
+    status: ready
     depends_on: t-005
     passes: 0
     stakes: reversible
@@ -155,7 +152,9 @@ tasks:
       Shipped verified Deepheart roguelike direction in Conductor PR #7570 (71eb9105) and custom-hero/hard-won mercy/party d20 gameplay in Kind Robots PR #5306 (4f7d3484). All seven Kind Robots checks completed successful, including Playbook Kit, TypeScript, lint ratchet and four-shard contract tests. The custom hero is independent of fifty canonical presets and survives the existing save record; charitable options incur real up-front costs and Redemption requires two paid sacrifices alongside successful mercy. No new art jobs added. Remaining t-008 original balance work: targeted seeded simulations of 75-85 percent survival by party size/class, Gilded ending requiring real greed, and verification of compassionate non-holy paths. Remain ready rather than claiming the full playtest balance milestone done.
 
       Kind Robots commit 330cc099 requires a recorded greedy choice as well as the existing 600 gold threshold for Gilded, adds regression coverage for both gates and non-holy Redemption, and directs the seeded ending trace toward greed. CI pending. Survival calibration by party size/class remains outstanding; return ready after this scoped fix merges.
-    updated: '2026-11-25T23:09:15Z'
+
+      Kind Robots #5845 merged e7893e29 after seven completed successful checks, including Playbook Kit 45719267042 and Contract Tests 45719266906. Gilded requires a greedy narrative choice and 600 gold; non-holy Redemption gate covered. Remaining scope is quantitative survival calibration by party size and class.
+    updated: '2026-11-26T00:34:08Z'
   - id: t-009
     milestone: m3
     title: "Account-backed save for signed-in players with local fallback"

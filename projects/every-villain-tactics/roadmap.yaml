@@ -236,8 +236,8 @@ tasks:
   - id: t-007
     milestone: m3
     title: "Write and implement all six distinctive tactical story missions"
-    status: ready
-    updated: '2026-11-25T23:27:50.181Z'
+    status: claimed
+    updated: '2026-11-26T00:35:25.481Z'
     depends_on: [t-003, t-005, t-006]
     passes: 0
     stakes: reversible
@@ -295,6 +295,9 @@ tasks:
       Crossfire finale now uses shared tactical support thresholds, preserving both rescue and evidence earned on First Bell and rejecting a defeated prior chapter. Rescue ending takes precedence if both thresholds are reached. Kind Robots 3045a23e8983a1f34d9aa1c40cd77a7d16939496; six isolated finale cases passed with stubbed helpers, real-save regression committed for CI. Partial umbrella; full campaign QA remains open.
 
       2026-11-25 PT review reconciliation: Verified #5841 merged ad094b84643b; six chapter continuity fix landed, full campaign acceptance remains. Release partial scope for independent continuation. No open matching implementation PR or worker branch found in either repository.
+    owner: worker
+    claimed_by: 20261126T003500Z-evt-campaign-qa-6d2e
+    claimed_at: '2026-11-26T00:35:25.481Z'
   - id: t-008
     milestone: m3
     title: "Author 48 hero and villain playable arcs with distinct supporting cast"
@@ -503,10 +506,10 @@ tasks:
   - id: t-019
     milestone: m3
     title: "Deterministic post-battle points and earned scrapbook achievements"
-    status: review
+    status: ready
     depends_on: [t-006, t-016]
     passes: 0
-    updated: '2026-11-25T23:32:43.189Z'
+    updated: '2026-11-26T00:35:20.580Z'
     stakes: reversible
     note: |-
       Mission-end scored breakdown for flawless survival, zero damage, no knockouts, optional secrets, rescues and tactical bonuses, with explicit eligible conditions. Replay-safe recorded points, scrapbook heroes won with, villains beaten and authored route discoveries. Distinguish end-of-turn summaries from mission completion.
@@ -532,9 +535,8 @@ tasks:
       2026-11-25 PT review reconciliation: Verified #5838 merged 7f707034d252; scrapbook recovery delivered, cumulative six-chapter scoring remains. No open matching implementation PR or worker branch found in either repository.
 
       Cumulative Crossfire scoring and aftermath display implemented in Kind Robots afc89fbb3fed1f13af41ea89908e10709cbc338f. Validated journal only, active victory counts once, no defeat credit, stable on advancement and reload. Six chapter regression coverage committed; CI and rendered QA pending. Full adversarial campaign and secret audit remain open.
-    owner: worker
-    claimed_by: 20261125T233000Z-evt-score-91f7
-    claimed_at: '2026-11-25T23:31:38.139Z'
+
+      Verified PR #5849 merged at 9d1c4b2516b6437d56ada9324d28a92277212493. Cumulative scoring and replay-safe checkpoint totals delivered. Remaining secret-route audit and adversarial campaign scoring QA remain open; release for further work.
   - id: t-020
     milestone: m3
     title: "48 canonical hero-villain foil pairings beyond generic story mode"
