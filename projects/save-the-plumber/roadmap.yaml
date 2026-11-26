@@ -91,12 +91,12 @@ tasks:
       images asserted as live.
   - id: t-028
     title: 'Main-game standard: audit and close the gaps for Save the Plumber'
-    status: claimed
+    status: ready
     milestone: m6
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-26T05:53:55Z'
+    updated: '2026-11-26T06:17:15Z'
     note: |-
       Silas 2026-11-11 PT, in session: "Our games should all have a base standard of quality ... We want our main games to have 12 plus achievements." Standard: docs/agents/main-game-standard.md; CONTROL.md global overview.
 
@@ -138,10 +138,15 @@ tasks:
       copy; roster test asserts unique, named, <=72 chars. Merged kind_robots#5843 at 11b95035
       after 16/16 exact-head checks. Remaining: name entry, boss taunts, accessibility (text
       size/reset), rendered finale + gallery screenshots. Return to ready.
-    implementation_pr: 'silasfelinus/kind_robots#5843'
+
+      2026-11-26 PT: Settings pane gains RESTORE DEFAULTS (arcadeStore.resetCabinetSettings:
+      sound on, full volume, high contrast off, still camera follows reduced motion;
+      keys/saves/initials untouched). Merged kind_robots#5883 at 2e694b0a after all exact-head
+      checks passed. Remaining: name entry, boss taunts, text size, rendered finale + gallery
+      screenshots. Note: verifySavePlumberFrontPage.test.ts fails on main (console
+      ArcadeCabinet assertion), pre-existing. Return to ready.
+    implementation_pr: 'silasfelinus/kind_robots#5883'
     owner: worker
-    claimed_by: 2026-11-26T12:40:00Z-focused-johnson
-    claimed_at: '2026-11-26T05:53:55Z'
   - id: t-029
     title: 'Save the Plumber achievement upgrade: 12 or more live achievements'
     status: done
