@@ -124,7 +124,7 @@ tasks:
   - id: t-007
     milestone: m4
     title: "Finish the finite roadmap and hand off for human playtest"
-    status: waiting
+    status: done
     depends_on: [t-002, t-003, t-004, t-005, t-006, t-013]
     passes: 0
     stakes: reversible
@@ -142,7 +142,11 @@ tasks:
       2026-11-25 PT: handoff withdrawn the same session; it now waits on t-013's painted tile
       set (Silas: painted must replace code-drawn art). Checklist and promo stay ready for
       when it lands.
-    updated: '2026-11-26T00:59:31Z'
+
+      2026-11-26 PT: t-013's painted tile set landed and passed review, so the handoff is
+      restored: lifecycle playtest/normal (project-overrides.yaml in the same PR), PLAYTEST-
+      CHECKLIST.md and the promo card as before. No deploy.
+    updated: '2026-11-26T11:04:45Z'
     implementation_pr: 'silasfelinus/kind_robots#5856'
   - id: t-008
     milestone: m1
@@ -215,7 +219,7 @@ tasks:
   - id: t-013
     milestone: m3
     title: "Visual parity: painted map backdrops per region, painted tile set trial, richer match and special effects"
-    status: ready
+    status: done
     passes: 0
     stakes: reversible
     note: >-
@@ -246,9 +250,18 @@ tasks:
       reads mist.webp/knot.webp, re-queued with texture- and object-specific prompts (18).
       Painted tiles' opaque backgrounds hid Gloom drawn underneath; kind_robots#5870 moves
       Gloom over the tiles as a translucent wash.
+
+      2026-11-26 PT: painted tile set complete. All 90 tiles delivered (six jewels, rainbow,
+      buddy, mist and knot for each of nine worlds), each checked at 120px and 40px, and every
+      world played at level 7 at 390 and 1440 with 81/81 painted board tiles, no broken images
+      and no page errors. Two jewels that shared a shape and near hue with a neighbour were
+      re-rendered (circus jewel-0 as a juggling club, dustneon jewel-4 as a cactus bloom; -v2
+      ids, ArtJobs 77427/77428, force: true via conductor#8054) and re-verified in play. The
+      painted tiles sit over the SVG fallback with the colorblind symbol badge and special
+      markers on top; Gloom washes over them.
     owner: worker
-    updated: '2026-11-26T02:23:03Z'
-    implementation_pr: 'silasfelinus/kind_robots#5856'
+    updated: '2026-11-26T11:04:34Z'
+    implementation_pr: 'silasfelinus/kind_robots#5870'
   - id: t-014
     milestone: m2
     title: "Nine hero-led worlds: unique jewels, blockers, effects, music, maps, story, quests, achievements, endings and art"
