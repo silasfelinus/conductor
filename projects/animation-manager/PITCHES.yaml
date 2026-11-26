@@ -2959,3 +2959,18 @@ pitches:
         verification:
           - headless Chromium render at 1280x800 and 390x844 with hover and click, no page errors
           - vue-tsc, eslint, prettier and verifyAnimationCatalog clean; registered in stores/animationCatalog.ts
+  - id: cranberry-bog-harvest
+    title: Cranberry Bog Harvest
+    status: shipped
+    priority: 99
+    surprise: A flooded cranberry bog at golden hour where hundreds of buoyant berries collide, bob on the swell and clump through a Cheerios-effect meniscus pull inside a yellow floating boom that slowly tightens them into a packed crimson raft and relaxes again; pointer motion draws a wake through the berries, click drops a ripple ring that pushes them outward.
+    builds:
+      - version: 1
+        status: shipped
+        component: components/screenfx/cranberry-bog-harvest.vue
+        pull_request: silasfelinus/kind_robots#5888
+        merge_sha: cf1e76c
+        released_at: '2026-11-26T14:00:00Z'
+        verification:
+          - headless Chromium render at 1280x800, 390x844 and reduced-motion 800x500 with hover and click, no page errors, ~55-60 fps
+          - vue-tsc, eslint, prettier, audit:icons and verifyAnimationCatalog clean; registered in stores/animationCatalog.ts
