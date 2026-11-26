@@ -951,7 +951,7 @@ tasks:
 - id: t-048
   milestone: m6
   title: Fishing first-catch fairness, input edge cases and shop/economy adversarial suite
-  status: claimed
+  status: review
   owner: worker
   claimed_by: 20261126T234300Z-ruler-hooked-t048-f7c2
   claimed_at: '2026-11-26T23:43:00Z'
@@ -979,7 +979,9 @@ tasks:
     Common-only timing-quality curve preserves complete misses and perfect stops while forgiving modest timing errors. Independent reducer-math simulation: alternating +/- 2 percentage points, 4/128 before and 128/128 after; +/- 3 points, 0/128 before and 128/128 after. Added actual encounter regression for 128 seeds and 128 reckless misses. App head ba3ec9d7a83b250636e1c9e4db224d3111b44e88; CI pending. Partial t-048, no interactive browser tests claimed.
 
     Kind Robots #5804 merged fd4deb1a; latest head 863839b5 all eight PR workflows passed (Ruler Hooked 45583885070, Contract Tests 45583884871). Branch janitor cancelled, not a gameplay check. Partial first-catch fairness delivered; actual input/device and remaining economy adversarial coverage remain.
-  updated: '2026-11-26T23:43:00Z'
+
+    Kind Robots b692b1bf fixes visible target interpolation disagreeing with scored geometry, rejects repeated keyboard activation and duplicate same-beat events, waits for a frame of the new beat, and adds source-contract regressions. Combined with #5909's 16959 successful policy-matrix attempts and 89 purchase checks, remaining t-048 evidence is latest CI plus real device input verification. No browser pass claimed.
+  updated: '2026-11-26T23:45:00Z'
 - id: t-049
   milestone: m6
   title: Full policy-matrix kingdom simulator and witnessed complete ending graph
