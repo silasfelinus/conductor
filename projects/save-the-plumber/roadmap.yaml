@@ -704,7 +704,7 @@ tasks:
       Related: PR #4080, issue #4062, conductor/save-the-plumber t-025.
   - id: t-027
     title: "Save the Plumber Maker: playable level editor, saves, sharing, ratings, Mario Maker and Geometry Dash parity"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 2026-11-26T223300Z-plumber-t027-scroll-9c4f
     claimed_at: '2026-11-26T22:33:00Z'
@@ -763,6 +763,8 @@ tasks:
       Corrected Maker validation to use the same pipe-mouth pairing rule as the runtime parser instead of counting every painted pipe-body tile. Added unequal-height paired pipe share roundtrip and real bidirectional portal input regression plus rejection of equal cell counts with unequal mouth counts. Branch worker/save-the-plumber-t-027-pipes-p8n4 head d7160b0c. Full CI pending; partial t-027 scope.
 
       PR kind_robots#5894 merged at 9cdc0317; all ten implementation workflows and branch janitor passed on 8b0c3c2e. Pipe-mouth validation and portal replay shipped. Remaining advanced Maker scope stays ready.
+
+      Added optional forced-scroll ranges and speed to Maker validation, serialization, settings, undo snapshots, and real runtime stage conversion. Added roundtrip, invalid input, and moving-camera gameplay regressions. App branch worker/save-the-plumber-t-027-scroll-9c4f head 01d86abb. Partial scope; CI pending, further advanced editing and community lifecycle remain.
   - id: t-030
     milestone: m2
     title: "Add one water-traversal fixture that runs every heroine and the speed-route pilot through Tidecoat swimming"
