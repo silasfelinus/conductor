@@ -53,27 +53,43 @@ tasks:
   - id: t-002
     milestone: m3
     title: "Deliver painted art for the Play page, home highlight and Play link, then the in-game art"
-    status: claimed
+    status: done
     passes: 0
     stakes: reversible
     note: >-
       Silas 2026-11-22 PT asked for art for the page, the highlight entry and the Play link. Interim code-rendered art ships at kind_robots public/hopeful-hues/front/{splash,highlight,link-preview,tutorial,icon}.webp (rendered from front/keyart.html). Painted requests are queued in projects/art-prompts.yaml (hopeful-hues-t002-*), targeting public/images/hopeful-hues/. Once ArtJobs deliver, verify each image, then point the Play tab image, home highlight, title-screen backdrop and header icon at the painted files, regenerating the share card under 250 KB. Then add region backdrops and hero portraits for the map, hero select and scrapbook, keeping the SVG art as fallback.
+
+      2026-11-25 PT: every painted slot is delivered and wired: front-door art (ArtJobs
+      76826-76829) plus all 118 in-game images (heroes, world keys, regions, maps, story
+      beats, endings) checked live (HTTP 200, real WebP) and rendered through the existing
+      loaders at 390/768/1440. Verified kind_robots#5856 merged after all 13 checks passed on
+      exact head a7b2193b (incl. TypeScript and the new Hopeful Hues browser playthrough). No
+      deploy.
     owner: worker
     claimed_by: 2026-11-25T094544Z-spectrum-qa-sbjq3s
     claimed_at: '2026-11-25T23:50:49Z'
-    updated: '2026-11-25T23:50:49Z'
+    updated: '2026-11-26T00:44:57Z'
+    implementation_pr: 'silasfelinus/kind_robots#5856'
   - id: t-003
     milestone: m2
     title: "Give each far region a signature mechanic and authored set-piece levels"
-    status: claimed
+    status: done
     passes: 0
     stakes: reversible
     note: >-
       Currently all regions share Gloom, Tangles and buddies with seeded layouts. Add one mechanic per tier-two region (for example Moonbeam fireflies that light a column, Carnival conveyor rows, Arcade portals, Lighthouse letters that drop like buddies), hand-author at least the four finales and the two fork levels, and keep npm run test:hopeful-hues proving every level winnable.
+
+      2026-11-25 PT: every world's second and third regions now carry a signature mechanic
+      (conveyor, portal or dispenser, rotated across the nine worlds; 60+ levels each in 5+
+      worlds), alongside the authored set pieces and finales from t-012; the bot still wins
+      all 495 levels without gifts. Verified kind_robots#5856 merged after all 13 checks
+      passed on exact head a7b2193b (incl. TypeScript and the new Hopeful Hues browser
+      playthrough). No deploy.
     owner: worker
     claimed_by: 2026-11-25T094544Z-spectrum-qa-sbjq3s
     claimed_at: '2026-11-25T23:50:45Z'
-    updated: '2026-11-25T23:50:45Z'
+    updated: '2026-11-26T00:44:55Z'
+    implementation_pr: 'silasfelinus/kind_robots#5856'
   - id: t-004
     milestone: m3
     title: "Compose region music and polish sound design"
@@ -90,33 +106,64 @@ tasks:
   - id: t-005
     milestone: m3
     title: "Illustrate the five endings and the story-beat scrapbook pages"
-    status: claimed
+    status: done
     passes: 0
     stakes: reversible
     note: >-
       Ending screens and scrapbook polaroids use code-drawn motifs. Add original illustrated plates for the five endings and the 25 story beats, with the current SVG as fallback.
+
+      2026-11-25 PT: the illustrated endings (10, incl. the secret ending) and 54 story-beat
+      plates are delivered and render in the ending screens and scrapbook (verified with the
+      live art; the browser harness plays a finale to its painted ending). Verified
+      kind_robots#5856 merged after all 13 checks passed on exact head a7b2193b (incl.
+      TypeScript and the new Hopeful Hues browser playthrough). No deploy.
     owner: worker
     claimed_by: 2026-11-25T094544Z-spectrum-qa-sbjq3s
     claimed_at: '2026-11-25T23:50:52Z'
-    updated: '2026-11-25T23:50:52Z'
+    updated: '2026-11-26T00:45:00Z'
+    implementation_pr: 'silasfelinus/kind_robots#5856'
   - id: t-006
     milestone: m4
     title: "Browser playthrough harness, accessibility pass and device QA"
-    status: waiting
+    status: done
     depends_on: [t-002, t-003, t-004, t-005]
     passes: 0
     stakes: reversible
     note: >-
       Add a Chromium playthrough test that plays real levels through visible input, takes a fork, reaches an ending, uses Back, claims a quest, exports and imports a save, and checks 390/768/1440 layouts, keyboard play, reduced motion and the audio gesture policy. Run it in CI.
+
+      2026-11-25 PT: verifyHopefulHuesBrowser runs in the new hopeful-hues-browser workflow:
+      real game in Chromium at 390/768 touch and 1440 mouse+keyboard; audio waits for a
+      gesture, tutorial, level 1 won by pointer drags, Back exact, keyboard swaps, quest
+      claimed, world fork, save export/import, calm motion, a finale to its ending, layouts
+      without sideways scroll. Found and fixed unnamed Quests/Worlds buttons on phones.
+      Verified kind_robots#5856 merged after all 13 checks passed on exact head a7b2193b
+      (incl. TypeScript and the new Hopeful Hues browser playthrough). No deploy.
+    updated: '2026-11-26T00:45:05Z'
+    implementation_pr: 'silasfelinus/kind_robots#5856'
   - id: t-007
     milestone: m4
     title: "Finish the finite roadmap and hand off for human playtest"
     status: waiting
-    depends_on: [t-002, t-003, t-004, t-005, t-006]
+    depends_on: [t-002, t-003, t-004, t-005, t-006, t-013]
     passes: 0
     stakes: reversible
     note: >-
       Reconcile the goal against the product, then set lifecycle to playtest.
+
+      2026-11-25 PT: goal reconciled against the product: nine worlds, 495 winnable levels,
+      quests, achievements, saves, scrapbook, character select, multiple pathways and ten
+      endings, all verified; lifecycle set to playtest/normal in the same PR. Handoff:
+      projects/hopeful-hues/PLAYTEST-CHECKLIST.md and promo/hopeful-hues-promo-1080x1350.webp
+      (not for posting without Silas). Verified kind_robots#5856 merged after all 13 checks
+      passed on exact head a7b2193b (incl. TypeScript and the new Hopeful Hues browser
+      playthrough). No deploy.
+
+      2026-11-25 PT: handoff withdrawn the same session; it now waits on t-013's painted tile
+      set (Silas: painted must replace code-drawn art). Checklist and promo stay ready for
+      when it lands.
+    updated: '2026-11-26T00:59:31Z'
+    implementation_pr: 'silasfelinus/kind_robots#5856'
   - id: t-008
     milestone: m1
     title: "Move Hopeful Hues to a standalone Play front page with a home highlight and Play link, each with art"
@@ -132,9 +179,9 @@ tasks:
   - id: t-009
     milestone: m2
     title: "Genre-parity blockers: spreading Gloom, ribbon locks, 3-5 layer Tangles, rain-cloud countdowns, conveyors, portals and buddy dispensers"
-    status: claimed
+    status: done
     owner: worker
-    updated: '2026-11-25T23:50:43Z'
+    updated: '2026-11-26T00:44:52Z'
     passes: 0
     stakes: reversible
     note: |-
@@ -148,8 +195,16 @@ tasks:
       conflicts, and useTool('swap') now refuses ribbon-pinned jewels (contract test added).
       All 12 checks green; local Chromium load clean. Back to ready for remaining scope:
       conveyor rows, portals, fixed buddy dispensers.
+
+      2026-11-25 PT: remaining genre blockers shipped: conveyor rows (slide after each move,
+      free matches), portals (entry bottom to exit top in gravity) and buddy dispensers
+      (buddies only down their columns), validated at load, with markers, first-time tips and
+      portal drop-in animation. Verified kind_robots#5856 merged after all 13 checks passed on
+      exact head a7b2193b (incl. TypeScript and the new Hopeful Hues browser playthrough). No
+      deploy.
     claimed_by: 2026-11-25T094544Z-spectrum-qa-sbjq3s
     claimed_at: '2026-11-25T23:50:43Z'
+    implementation_pr: 'silasfelinus/kind_robots#5856'
   - id: t-010
     milestone: m2
     title: "Order goals and end-of-level Kindness Overflow that fires specials"
@@ -194,15 +249,33 @@ tasks:
   - id: t-013
     milestone: m3
     title: "Visual parity: painted map backdrops per region, painted tile set trial, richer match and special effects"
-    status: claimed
+    status: ready
     passes: 0
     stakes: reversible
     note: >-
       Parity audit 2026-11-23 PT. Intro art is painted (t-002), but the map is gradient bands with SVG motifs, tiles are SVG, and effects are simple lines, rings and pops. Queue painted map backdrops for the seven regions and integrate them behind the path, trial a painted tile atlas at 40px and keep whichever reads better, and add particle sparkles, special-creation flourishes and combo flashes that respect reduced motion.
+
+      2026-11-25 PT: painted map backdrops for all nine worlds are delivered and behind the
+      path; particles and special-creation pops existed, and two-special combos now flash the
+      board (soft tint in calm motion). Painted-tile trial: the SVG jewel set is kept, since
+      its shapes carry the colorblind symbols and read cleanly at 40px, so a painted atlas was
+      not adopted. Verified kind_robots#5856 merged after all 13 checks passed on exact head
+      a7b2193b (incl. TypeScript and the new Hopeful Hues browser playthrough). No deploy.
+
+      Correction (same session): no painted tile atlas was actually rendered or compared. The
+      SVG jewels stay because their shapes carry the colorblind symbols; a painted-atlas trial
+      is a possible playtest_iteration task if Silas wants one.
+
+      2026-11-25 PT reopened at Silas's direction: "We should never be satisfied with [SVG]
+      over painted. If we have [SVG], we need painted to replace. High priority with art."
+      Queued 90 painted tiles (six jewels, rainbow special, buddy, knot and Gloom for each of
+      nine worlds; ids hopeful-hues-tile-*; priority 1000) to /images/hopeful-
+      hues/tiles/<world>/. Project priority raised to high. Next: wire painted tiles over the
+      SVG with the colorblind symbol and special markers on top, verify each delivered tile at
+      390/768/1440, then hand off.
     owner: worker
-    claimed_by: 2026-11-25T094544Z-spectrum-qa-sbjq3s
-    claimed_at: '2026-11-25T23:50:47Z'
-    updated: '2026-11-25T23:50:47Z'
+    updated: '2026-11-26T00:59:43Z'
+    implementation_pr: 'silasfelinus/kind_robots#5856'
   - id: t-014
     milestone: m2
     title: "Nine hero-led worlds: unique jewels, blockers, effects, music, maps, story, quests, achievements, endings and art"
