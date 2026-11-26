@@ -53,15 +53,23 @@ tasks:
   - id: t-002
     milestone: m3
     title: "Deliver painted art for the Play page, home highlight and Play link, then the in-game art"
-    status: claimed
+    status: done
     passes: 0
     stakes: reversible
     note: >-
       Silas 2026-11-22 PT asked for art for the page, the highlight entry and the Play link. Interim code-rendered art ships at kind_robots public/hopeful-hues/front/{splash,highlight,link-preview,tutorial,icon}.webp (rendered from front/keyart.html). Painted requests are queued in projects/art-prompts.yaml (hopeful-hues-t002-*), targeting public/images/hopeful-hues/. Once ArtJobs deliver, verify each image, then point the Play tab image, home highlight, title-screen backdrop and header icon at the painted files, regenerating the share card under 250 KB. Then add region backdrops and hero portraits for the map, hero select and scrapbook, keeping the SVG art as fallback.
+
+      2026-11-25 PT: every painted slot is delivered and wired: front-door art (ArtJobs
+      76826-76829) plus all 118 in-game images (heroes, world keys, regions, maps, story
+      beats, endings) checked live (HTTP 200, real WebP) and rendered through the existing
+      loaders at 390/768/1440. Verified kind_robots#5856 merged after all 13 checks passed on
+      exact head a7b2193b (incl. TypeScript and the new Hopeful Hues browser playthrough). No
+      deploy.
     owner: worker
     claimed_by: 2026-11-25T094544Z-spectrum-qa-sbjq3s
     claimed_at: '2026-11-25T23:50:49Z'
-    updated: '2026-11-25T23:50:49Z'
+    updated: '2026-11-26T00:44:57Z'
+    implementation_pr: 'silasfelinus/kind_robots#5856'
   - id: t-003
     milestone: m2
     title: "Give each far region a signature mechanic and authored set-piece levels"
