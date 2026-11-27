@@ -66,3 +66,9 @@ type: critique
 ## 2026-11-22 PT | reviewer (scheduled agent) | merged conductor#7853 (three dedicated venue paintings into private media proof)
 
 **Decision:** Merged on green CI after updating the branch from `main`. The earlier red came from main's stage-depth ledger checks, not this PR. The change is scoped: three ledgers are added to the existing proof workflow and the receipt IDs are pinned in tests. t-025 stays open until the post-merge proof run and kind_robots#5592 land. **Kaizen:** t-028.
+
+## 2026-11-26 PT | Reviewer | t-009 | Kind Robots #5912
+
+**Decision:** Reviewed the three-file narrative and regression diff and seven green latest-head workflows (including all four contract shards). Promoted the draft and squash-merged as `23607e06643bcdf42ca99b871f4695de0af9f14e`. Eight Accident-origin aftermath narratives and 32 personal epilogues now use the existing Crossfire selectors without a save change. The canonical task returns to ready, not done.
+
+**Next:** Author the other 40 identities, fixed supporting casts and in-mission conversations. Do not count unique aftermath text as complete playable personal routes.
