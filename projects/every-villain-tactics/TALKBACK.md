@@ -96,3 +96,9 @@ type: critique
 **Decision:** Verified seven green workflows and all four contract shards on each latest head. #5930 merged `26ccf945912fdc44d3828d98ad9b5196abd4b15d` completing 48/48 authored aftermath catalogs; #5931 merged `3ef1bf0ca63ffb81b6753ef0c9e30dbccab668f6` with risk-aware flanking and hazard-safe movement. Both worker branches removed. Both umbrella tasks remain partial; return ready.
 
 **Next:** Personal fixed combat casts and bespoke mission conversations, named crews and full-game AI acceptance. Catalog coverage is not full-route acceptance.
+
+## 2026-11-26 PT | Reviewer | t-009 / t-021 | Kind Robots #5933, #5937
+
+**Decision:** #5933 fixed casts merged `55433df14e4d8751aa2f755d809bc3cc2f604ad8`; #5937 Hydrant Blue merged `adb2c2209927110b88d0fd7994879a7a52fb3927`. Verified seven successful latest-head workflows and all four contract shards for each, and both implementation branches removed. Canonical partial release verified. No deployment.
+
+**Next:** All six chapters need personal cast continuity (now in #5941); origin coverage is six of 48, with dedicated art and full-run acceptance still outstanding. Keep environmental signature targets usable after the rivals are defeated.
