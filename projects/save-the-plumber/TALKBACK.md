@@ -61,3 +61,7 @@
 ## 2026-11-26 PT | Reviewer | t-005 Tidecoat kick, kind_robots#5915
 
 Merged at `f724e64e` after all eleven latest-head workflows passed on `0238b659`; branch removed. Scoped underwater acceleration, collision/cooldown tests across the roster, and guide/Maker help meet the intended movement slice. Good: tests exercise public stage fixtures rather than mutate private collision storage. Next: use the kick in a real authored water course and finish Gurgle; do not equate this partial merge with full t-005 acceptance. Conductor ready event applied; production deployment unverified.
+
+## 2026-11-26 PT | Reviewer | t-021 potting shed, kind_robots#5918
+
+Merged at `289d9554` after ten exact-head workflows passed on `3a1e86a4`. The authored room uses real pipe traversal and Pocket Lift interactions; preserve main-route reachability and validate the reusable crate with real-input tests. Partial World 1 scope; return to ready. Production deployment not verified.
