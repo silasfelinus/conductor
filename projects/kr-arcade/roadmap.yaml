@@ -1507,11 +1507,9 @@ tasks:
   - id: t-090
     milestone: m8
     title: "Glitch Garden depth slice 3: Autumn and Winter"
-    status: review
-    owner: worker
-    claimed_by: 2026-11-22T115435Z-kr-arcade-t090-winter-8b7e
-    claimed_at: '2026-11-22T11:54:35Z'
-    updated: '2026-11-22T12:00:15Z'
+    status: ready
+    owner: null
+    updated: '2026-11-27T07:00:47Z'
     passes: 0
     stakes: reversible
     depends_on: t-089
@@ -1531,6 +1529,12 @@ tasks:
       PR silasfelinus/kind_robots#5572 merged at 2026-11-22T11:47:47Z (d75deb7), adding two winter garden layouts and ten authored waves. Partial t-090 only: frost and heater interactions, icy movement, winter-specific enemies, Frost Millipede boss, deterministic regression tests and full campaign QA remain. Return to ready for implementation.
 
       Winter follow-up implemented spreading frost, four spray-lit greenhouse heaters, Warm Up objective, Snowball Hill icy inertia and shootable rolling snowballs with Snow Day special wave. Added deterministic cabinet regression tests and updated eight-garden campaign contracts. Await latest-head CI; Frost Millipede and full eight-garden QA remain before t-090 is done.
+
+      2026-11-26 PT, Silas-directed finite-roadmap clearing: verified
+      https://github.com/silasfelinus/kind_robots/pull/5575 merged as partial scope. Frost
+      sprite, Frost Millipede and eight-garden QA remain. Returned to ready; no human approval
+      or deployment inferred.
+    implementation_pr: 'silasfelinus/kind_robots#5575'
 
   - id: t-091
     milestone: m8
