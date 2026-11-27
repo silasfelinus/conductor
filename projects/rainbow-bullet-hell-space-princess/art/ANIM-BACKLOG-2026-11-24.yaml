@@ -2301,6 +2301,8 @@ subjects:
       status: DONE
       art_image_id: 280885
 - key: idle-guardian-urchin-v2
+  verdict: 'reject: 2026-11-27 PT review, second take; on model but near-static, the spikes and legs barely
+    shift (keyed motion 3.6 against 50.1 for the kept bulwark-v3 on the same keyed 33-frame scale); retake as v3'
   lane: wan-mp4
   entity: sprite-animation
   title: guardian-urchin idle loop
@@ -2323,6 +2325,8 @@ subjects:
       status: DONE
       art_image_id: 280886
 - key: idle-comet-crown-v2
+  verdict: 'reject: 2026-11-27 PT review, second take; on model but near-static, no visible bob or engine flicker
+    (keyed motion 2.7 against 50.1 for the kept bulwark-v3); retake as v3'
   lane: wan-mp4
   entity: sprite-animation
   title: comet-crown idle loop
@@ -2345,6 +2349,8 @@ subjects:
       status: DONE
       art_image_id: 280887
 - key: idle-halo-fin-v2
+  verdict: 'reject: 2026-11-27 PT review, second take; on model but near-static, no wobble and the rim lights do
+    not chase (keyed motion 5.8 against 50.1 for the kept bulwark-v3); retake as v3'
   lane: wan-mp4
   entity: sprite-animation
   title: halo-fin idle loop
@@ -3700,3 +3706,53 @@ subjects:
     wan-mp4:
       status: PENDING
       art_image_id: null
+- key: idle-guardian-urchin-v3
+  lane: wan-mp4
+  entity: sprite-animation
+  title: guardian-urchin idle loop
+  asset: rainbow-princess-art/doodle/anim/guardian-urchin-idle
+  size: 832x752
+  seed: 1127501
+  source_url: /rainbow-princess-art/doodle/enemies/guardian-urchin.webp
+  last_image_id: /rainbow-princess-art/doodle/enemies/guardian-urchin.webp
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: The white armoured beetle walker squats down low then springs up tall in a big heavy stomp, its
+    stubby legs marching one after another, every purple spike on its back flaring wide open and snapping shut,
+    and its one yellow eye blinking and glowing bright. Locked view, exact outline and colours in every frame,
+    flat lime-green backdrop all around, glossy airbrushed doodle.
+- key: idle-comet-crown-v3
+  lane: wan-mp4
+  entity: sprite-animation
+  title: comet-crown idle loop
+  asset: rainbow-princess-art/doodle/anim/comet-crown-idle
+  size: 832x720
+  seed: 1127502
+  source_url: /rainbow-princess-art/doodle/ships/comet-crown.webp
+  last_image_id: /rainbow-princess-art/doodle/ships/comet-crown.webp
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: The whole lavender swept-wing jet rises high and dips low in a big floating bob, banking its wings
+    to tilt one way then the other, a bright pink engine flame pulsing long and short out of its tail. Locked view,
+    exact outline and colours in every frame, flat lime-green backdrop all around, glossy airbrushed doodle.
+- key: idle-halo-fin-v3
+  lane: wan-mp4
+  entity: sprite-animation
+  title: halo-fin idle loop
+  asset: rainbow-princess-art/doodle/anim/halo-fin-idle
+  size: 832x576
+  seed: 1127503
+  source_url: /rainbow-princess-art/doodle/ships/halo-fin.webp
+  last_image_id: /rainbow-princess-art/doodle/ships/halo-fin.webp
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: The whole yellow flying saucer rises high and sinks low in a big floating bob, rocking its rim
+    side to side like a spinning top, the cyan glass dome glinting and the pink lights round its rim flashing on and
+    off in a racing circle. Locked view, exact outline and colours in every frame, flat lime-green backdrop all
+    around, glossy airbrushed doodle.
