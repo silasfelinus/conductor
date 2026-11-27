@@ -155,7 +155,7 @@ tasks:
   - id: t-005
     milestone: m2
     title: "Implement enemy interaction, held objects and powerup systems"
-    status: ready
+    status: claimed
     depends_on: [t-003]
     passes: 0
     stakes: reversible
@@ -181,7 +181,10 @@ tasks:
       Branch worker/save-the-plumber-t-005-gurgle-travel-f5d81a at a0a4677839d88da6b9e75c81a6857673da177f83 adds per-slot companion travel after mounted course clears; restore on later courses and reload, park at checkpoint after death, no charge transfer, no Maker/demo/Endless leakage. Added mount/clear/save/restore and slot-isolation assertions. CI pending; scale plates, additional authored water courses, companion art and remaining acceptance still open.
 
       PR kind_robots#5975 merged at b7892f8d; exact-head a0a46778 all 17 applicable checks passed (autofix skipped), including browser, viewport, TypeScript and contracts; branch janitor passed. Companion travels between compatible courses and saves; water charges reset. Remaining scale plates, small enemy interactions, authored water courses and painted companion/prop acceptance. Production deployment unverified.
-    updated: '2026-11-27T10:23:00Z'
+    updated: '2026-11-27T10:24:00Z'
+    owner: worker
+    claimed_by: plumber-small-foes-20261127T1024Z-8c21
+    claimed_at: '2026-11-27T10:24:00Z'
   - id: t-006
     milestone: m3
     title: "Build World 1: four complete garden/pipeworks levels and boss"
