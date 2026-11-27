@@ -102,3 +102,7 @@ type: critique
 **Decision:** #5933 fixed casts merged `55433df14e4d8751aa2f755d809bc3cc2f604ad8`; #5937 Hydrant Blue merged `adb2c2209927110b88d0fd7994879a7a52fb3927`. Verified seven successful latest-head workflows and all four contract shards for each, and both implementation branches removed. Canonical partial release verified. No deployment.
 
 **Next:** All six chapters need personal cast continuity (now in #5941); origin coverage is six of 48, with dedicated art and full-run acceptance still outstanding. Keep environmental signature targets usable after the rivals are defeated.
+
+## 2026-11-26 PT | Reviewer | t-009 and t-025 | Kind Robots #5950 and #5947
+
+**Reconciliation:** #5950 merged `13155aedad`, seven substantive workflows and janitor green on `d54cf1a`; eight Accident leads gain 88 authored Science Wing lines. #5947 merged `9917625a`, seven substantive workflows green on `228acced`; janitor cancelled, branch cleanup unverified. Everyone's Villain uses actual playable Hero/Villain First Bell victories. Both are partial; return ready for remaining authored mission dialogue and standard art/full-run/device acceptance. Keep master issue open.
