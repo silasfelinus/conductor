@@ -1,0 +1,19 @@
+version: 1
+project: monstress-convention
+task: t-015
+operation: ready
+updated: '2026-11-27T23:25:00Z'
+note: >-
+  2026-11-27 PT: three main-game-standard gaps closed, each merged after every latest-head check was green.
+  (1) Account-backed saves, kind_robots#6005 (squash 407ae1e): GET/PUT /api/monstrique/account-save on the shared ArcadeCabinetSave
+  table. The slot is monstrique-general or monstrique-mature, chosen server-side by monstriqueAudienceFor. Human sessions only;
+  revisioned writes with 409 on conflict; edition mismatch refused; the general slot rejects mature-only flags and items; 512 KB cap.
+  The public store syncs automatically (newest wins, a fresh device adopts the account copy, scrapbook unlocks merge permanently),
+  and the title sheet shows sync status. (2) Sound and music, kind_robots#6006 (squash 385e91e): seven original procedural WebAudio
+  themes, a rain bed and comic cues; gesture unlock; persisted master/music/effects/mute sliders on the title settings sheet; the kit
+  Sound setting honoured. Real-Chromium check at 390/1440: the AudioContext runs after the first tap and the slider persists.
+  (3) Ending plates, kind_robots#6007 (squash 4c62090): delivered ArtImages 270458 (lead-earned) and 270459 (reckless), both
+  isMature false, committed as static webp and wired as src/alt in both editions' endings and on the ending card. They show the
+  pre-2026-11-22 lead looks; a repaint is optional. Remaining t-015: finished-run history, a third earned ending,
+  replay/customization (or Silas's character-customization exception, per the audit's B), a cross-device save round trip on the
+  deployed build after Force Update, and full acceptance. Returned to ready, not done.
