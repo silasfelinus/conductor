@@ -155,7 +155,7 @@ tasks:
   - id: t-005
     milestone: m2
     title: "Implement enemy interaction, held objects and powerup systems"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: plumber-traversal-20261127T230825Z-9c2f7e
     claimed_at: '2026-11-27T23:08:25Z'
@@ -194,7 +194,9 @@ tasks:
       App branch worker/save-the-plumber-t-005-water-regression-3d7c91 at 29838fa2b13d1cc07a03b820a3ae5d855baa36f7 fixes the documented dry Gurgle sip regression: check the exposed waterline instead of tracing into the middle of a water tile through the intervening ground. Mirrored geometric probe confirmed both clear paths and wall occlusion. Add the existing complete companion replay to Maker contract CI. Runtime CI pending. Partial scope: authored water courses and campaign scale-plate placement, painted art acceptance remain.
 
       Verified kind_robots#5997 merged at 0dd408f0; eleven implementation workflows and branch janitor successful on 29838fa2. Maker workflow includes passing complete Gurgle replay; viewport rerun succeeded after Microsoft apt mirror 403. Remaining authored water courses, campaign plate placement and painted art acceptance. Production deployment unverified.
-    updated: '2026-11-27T23:08:25Z'
+
+      App branch worker/save-the-plumber-t-005-wharf-9c2f7e at 24fcbba3deedd12d6b497006fa038d4e9c6efebd adds a shallow four-tile water practice pool immediately after the Floating Wharves Gurgle barrel and Tidecoat pickup, with real-input mount, swim, charge and safe bank traversal regression. Verified 24 by 355 rectangular grid, empty approach and solid bottom, scoped two-file diff. Full gameplay CI pending; partial scope, other authored traversal and art acceptance remain.
+    updated: '2026-11-27T23:11:00Z'
   - id: t-006
     milestone: m3
     title: "Build World 1: four complete garden/pipeworks levels and boss"
@@ -428,14 +430,11 @@ tasks:
   - id: t-021
     milestone: m6
     title: "Gen-2 World 1: re-author Bluebell Pipeworks as a full SMB3/SMW-class world"
-    status: review
-    owner: worker
-    claimed_by: plumber-rain-20261127T2216Z-9f2ab1
-    claimed_at: '2026-11-27T22:16:00Z'
+    status: ready
     depends_on: [t-002, t-011, t-020]
     passes: 0
     stakes: reversible
-    updated: '2026-11-27T22:20:00Z'
+    updated: '2026-11-27T23:07:08Z'
     note: |-
       Build World 1 to the GEN2-WORLDS.md graph: 6-9 nodes including a fortress, a Hush House, the first Valve Chapel and at least one secret exit, each level 3-6 minutes with sub-areas and a real secret. Wire the GEN2-ROUND-1 overworld plate and far-sky plate. Record first-clear times. This is the agent-verified production template for Worlds 2-8; human verdict is not a prerequisite. Completion checkpoints: 1-1, 1-2, 1-h and cottage, 1-3 and chapel, 1-f including Foreman Flange, 1-4 and 1-castle. Verify each authored beat, original art and route timing against GEN2-WORLDS.md.
 
@@ -472,6 +471,8 @@ tasks:
       Verified kind_robots#5986 merged at 45ff1ae1; all ten reported workflows completed successfully on exact head 366be131. Sluicegate inspection chamber Gear, distinct persistence, map and collection counts and ending eligibility delivered. Partial scope: Wildwater, remaining authored challenges, original art and timing acceptance. Production deployment unverified.
 
       App branch worker/save-the-plumber-t-021-rain-9f2ab1 at bc0bc816cb9aa8d74d4977d81f191b5bcd72f39e implements Rain Stands Still: hidden cellar tap, six temporary one-way frozen rain steps to rooftop, Wild Pearl, original music in D major, death/reset, persistent slot/album/cloud reconciliation and collection display. Verified authored steps occupy empty cells. Added actual input route, retry, save and isolation assertions to Maker CI. Runtime and browser CI pending; provisional tap/pearl rendering, other six Wildwaters and full World 1 timing/art acceptance remain. Partial scope.
+
+      Verified kind_robots#6002 merged at f4f3a500; eleven implementation workflows and branch janitor completed successfully on final head 2d103413. Rain Stands Still optional Wildwater route, collectible persistence and original music delivered. Partial scope: remaining authored beats, original art and complete World 1 timing/acceptance. Production unverified.
   - id: t-022
     milestone: m6
     title: "Gen-2 Worlds 2-4: Tideglass Marina, Lantern Orchard, Clockwork Fair"
