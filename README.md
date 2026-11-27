@@ -13,6 +13,8 @@ Conductor is a private, single-owner, Git-native project manager for Silas's pro
 
 Six specialist assignments are developer, reviewer, content, art, QA and daily creative. The live selector and generated task locators share role hints; medic roles handle exceptions. No routine model-provider API calls from Actions.
 
+**Game completion:** [shared playtest-readiness standard](docs/agents/main-game-standard.md) defines the complete art-first game floor and existing project acceptance scopes.
+
 **Working on one project:** use [agent context](docs/agents/agent-context.md) for scoped source ranges. **Preparing a project for completion:** follow [roadmap polishing](projects/README.md); don't rewrite unrelated roadmaps.
 
 See [SOURCE_OF_TRUTH.md](SOURCE_OF_TRUTH.md) for ownership, [CONTROL.md](CONTROL.md) for current direction, and the [connector protocol](docs/github-connector-worker.md) for live claims and transitions.

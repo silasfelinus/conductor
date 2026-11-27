@@ -137,15 +137,7 @@ docs/agents/human-gates.md.
   near-identical implementations the same hour here, caught only by the routine
   fetch-before-push step.
 
-- **Main-game quality standard (Silas, 2026-11-11 PT):** every main game (full-length story
-  or campaign game) must reach a shared floor before it is finished or shown for a final
-  verdict: title screen, a settings menu, save/load with persistent progress, **12+
-  achievements** (arcade cabinets stay at 3), a scrapbook of endings/characters/art/runs,
-  multiple endings with painted plates, customizable characters in most cases, and at least
-  three replay hooks (unlockables, persistent saves, branching paths, etc.). Exceptions:
-  Zuzu Gamebook keeps its fixed protagonist. Full text, game list and audit procedure:
-  [docs/agents/main-game-standard.md](docs/agents/main-game-standard.md). Every main game
-  carries a "Main-game standard" roadmap task and an achievements task.
+- **Full-game playtest readiness (Silas, 2026-11-26 PT):** fully developed art-first single-screen games, original generated artwork AND icons (no SVG art or placeholder icon sets), front page/settings, global account saves, achievements (12+ main/3 small), scrapbook equivalent, appropriate endings/replay, sound/music and adversarial full-game/device QA. Apply [main-game-standard.md](docs/agents/main-game-standard.md) for relevant scopes, not a duplicated checklist. Verified readiness precedes human playtesting; subjective approval and publication stay separate.
 
 ---
 
