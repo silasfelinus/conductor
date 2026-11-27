@@ -90,3 +90,9 @@ type: critique
 **Decision:** Latest head `75c7c2a` passed all seven workflows including all four contract shards. Reviewed the actual directional-cover retreat planner, hazard avoidance, ordinary AP/reaction rules and seeded full-turn tests. Squash-merged as `e7a2a36e7277feb4b6f6a1fa99a7e2ac15d352bc`. Initial merge raced a main update; refreshed state and retried successfully without force-pushing. Partial scope; return ready.
 
 **Next:** Named crew integration and broader AI/full-run acceptance remain. Keep one-hit and bespoke lieutenant behavior distinct.
+
+## 2026-11-26 PT | Reviewer | t-009 / t-010 | Kind Robots #5930, #5931
+
+**Decision:** Verified seven green workflows and all four contract shards on each latest head. #5930 merged `26ccf945912fdc44d3828d98ad9b5196abd4b15d` completing 48/48 authored aftermath catalogs; #5931 merged `3ef1bf0ca63ffb81b6753ef0c9e30dbccab668f6` with risk-aware flanking and hazard-safe movement. Both worker branches removed. Both umbrella tasks remain partial; return ready.
+
+**Next:** Personal fixed combat casts and bespoke mission conversations, named crews and full-game AI acceptance. Catalog coverage is not full-route acceptance.
