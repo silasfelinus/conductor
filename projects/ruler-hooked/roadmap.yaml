@@ -914,7 +914,7 @@ tasks:
 - id: t-047
   milestone: m6
   title: Deliver and visually audit all required coronation, fish, NPC, map and ending art
-  status: review
+  status: ready
   stakes: reversible
   passes: 0
   note: |-
@@ -927,10 +927,9 @@ tasks:
     Conductor #8116 merged b21cf0d30e287d4ba9902dba4f46fd7dcb978bcf; all five exact-head workflows passed, including Worker PR CI 45939690752 and Alpha Audit 45939690766. Main queue verified 28 distinct event rows, ten done and 18 pending. Render delivery remains; return ready.
 
     Kind Robots 1b2cbd8bf7a177b0dec1d29907172900520757a5 repairs runtime vista candidates using authored region time variants. The Reed Shallows now binds its timeless paintings (ArtJobs 68378-68380); unpainted golden variants are no longer requested and player portraits cannot enter vista candidates. Ran exact committed resolver logic against current canonical queue blob 31ea0cef84c6b411f8926c2c94c0a731b6f3ace4: all 120 region-state-time cases pass and all 52 distinct candidate paintings have done ArtJob receipts. 299 total ledger rows marked done; five missing explicit job IDs; no new requests. Both live media and app probes failed DNS from this environment, so no new visual delivery claim. Full CI pending; partial t-047.
-  updated: '2026-11-27T21:44:31Z'
-  owner: worker
-  claimed_by: ruler-t047-art-audit-20261127-e91b7f
-  claimed_at: '2026-11-27T21:43:22Z'
+
+    Kind Robots #6000 merged at 0aef1943389b454aca8d6a372decc1903991dfc2; all eight exact-head workflows passed on 1b2cbd8bf7a177b0dec1d29907172900520757a5, including Ruler Hooked 46072428894 and Contract Tests 46072428868. Branch janitor 46075325443 passed. Vista binding correction delivered; live visual delivery remains outstanding. Return ready for verification; no deployment claimed.
+  updated: '2026-11-27T22:14:08Z'
 
 - id: t-048
   milestone: m6
@@ -1189,7 +1188,7 @@ tasks:
 - id: t-061
   milestone: m6
   title: 'Post-deploy visual QA of the console at phone, tablet and desktop widths'
-  status: ready
+  status: claimed
   gate_human: false
   stakes: reversible
   passes: 0
@@ -1205,7 +1204,10 @@ tasks:
     App commit 72d126033ed0eb2e10732c3cde8565ccfbdfd566 expands real browser audit through third coronation beat, enlarged/high-contrast/reduced-motion and mute settings persistence, nonterminal classic fishing reload with fish/beat/progress/tension parity, and pending finale handling. JavaScript syntax validation passed; scheduled browser execution and CI remain. A bounded opening without a finale logs explicitly, not a full ending pass. No live deployment claim.
 
     Kind Robots #5954 squash-merged at 448cf1f538a8c1962f049fa2b8488c66294b4b1c after all six latest-head workflows and all applicable checks on 30ec57d9606c929bd1205172fda7cf14e50e4a6f passed. Third coronation beat, accessibility/audio preference reload, classic encounter checkpoint and conditional finale browser audit coverage delivered. Actual current deployed audit, ending completion and authenticated evidence remain; return ready. No deployment claimed.
-  updated: '2026-11-27T05:43:00Z'
+  updated: '2026-11-27T22:14:08Z'
+  owner: worker
+  claimed_by: ruler-t061-quiz-audit-20261127-d94b13
+  claimed_at: '2026-11-27T22:14:08Z'
 
 - id: t-062
   milestone: m6

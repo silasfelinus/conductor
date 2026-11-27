@@ -155,7 +155,7 @@ tasks:
   - id: t-005
     milestone: m2
     title: "Implement enemy interaction, held objects and powerup systems"
-    status: review
+    status: ready
     depends_on: [t-003]
     passes: 0
     stakes: reversible
@@ -189,10 +189,9 @@ tasks:
       kind_robots#5995 merged at 13b29666; all 17 exact-head checks on a549038f passed (autofix skipped). Scale plates (_) and sluice gates (Z): Ballast Boots hold a plate only while she stands on it, a parked Gurgle holds it for good, sluices lift while every plate is down and never drop onto her; both glyphs in the Maker; real-input regression verifyCabinetSavePlumberScalePlates runs in the Maker contract workflow. Partial scope: authored water courses and campaign plate placement, painted companion/plate/sluice props remain. Pre-existing: verifyCabinetSavePlumberGurgle fails locally at 'dry mount can sip nearby water', also at 2dfa6ef5 (manual soak only); needs separate follow-up. Production deployment unverified.
 
       App branch worker/save-the-plumber-t-005-water-regression-3d7c91 at 29838fa2b13d1cc07a03b820a3ae5d855baa36f7 fixes the documented dry Gurgle sip regression: check the exposed waterline instead of tracing into the middle of a water tile through the intervening ground. Mirrored geometric probe confirmed both clear paths and wall occlusion. Add the existing complete companion replay to Maker contract CI. Runtime CI pending. Partial scope: authored water courses and campaign scale-plate placement, painted art acceptance remain.
-    updated: '2026-11-27T21:20:00Z'
-    owner: worker
-    claimed_by: plumber-water-regression-20261127T2117Z-3d7c91
-    claimed_at: '2026-11-27T21:17:00Z'
+
+      Verified kind_robots#5997 merged at 0dd408f0; eleven implementation workflows and branch janitor successful on 29838fa2. Maker workflow includes passing complete Gurgle replay; viewport rerun succeeded after Microsoft apt mirror 403. Remaining authored water courses, campaign plate placement and painted art acceptance. Production deployment unverified.
+    updated: '2026-11-27T22:16:00Z'
   - id: t-006
     milestone: m3
     title: "Build World 1: four complete garden/pipeworks levels and boss"
