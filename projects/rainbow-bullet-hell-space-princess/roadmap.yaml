@@ -678,7 +678,7 @@ tasks:
     owner: worker
     passes: 0
     stakes: reversible
-    updated: '2026-11-27T05:52:38Z'
+    updated: '2026-11-27T10:50:00Z'
     note: |-
       GEN2-STANDARD.md sections 5-6. WAN first/last-frame clips from the delivered cutscene stills (ART-ROUND-19) and pilot cut-ins, then enemy idle/attack cycles packed into atlases. Bullets stay crisp code-drawn shapes; animation is for craft, pilots and scenes.
 
@@ -729,6 +729,10 @@ tasks:
       2026-11-27 PT: reviewed six more loops. Kept skate-v2 and guardian-bulwark-v2 (kind_robots#5978).
       Rejected squid-v2 and turret-v2 (static), lighthouse-lamp-v3 (red flash, jitter) and salvager-v3 (morph).
       19 v2/v3 retakes are still rendering (ANIM-BACKLOG-2026-11-24).
+
+      2026-11-27 PT (later): reviewed guardian clawstrike-v2, lantern-v2 and salvager-v2. All on model but
+      near-static (keyed motion 1.7-4.3 against 27.6 for the kept bulwark-v2), so rejected; v3 retakes with
+      bigger-motion prompts queued in ANIM-BACKLOG-2026-11-24. 16 earlier retakes are still rendering.
     implementation_pr: 'silasfelinus/kind_robots#5767'
   - id: t-031
     milestone: m6
