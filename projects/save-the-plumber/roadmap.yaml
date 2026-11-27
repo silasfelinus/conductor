@@ -145,7 +145,10 @@ tasks:
   - id: t-005
     milestone: m2
     title: "Implement enemy interaction, held objects and powerup systems"
-    status: ready
+    status: claimed
+    owner: worker
+    claimed_by: plumber-t005-slurp-20261127-9af12d
+    claimed_at: '2026-11-27T04:13:00Z'
     depends_on: [t-003]
     passes: 0
     stakes: reversible
@@ -159,7 +162,7 @@ tasks:
       App branch worker/save-the-plumber-t005-gurgle-b6d4 head 21951354 implements Gurgle mounting, surface swimming, water-charge hop, hit/puddle recovery, park/remount and checkpoint return. Added actual-input pool regression and control guide. Dedicated art, slurp/spit, scale plates and inter-course persistence remain; no full task closure. CI pending.
 
       Verified kind_robots#5926 merged at 9fac0f20; twelve implementation workflows and branch janitor completed successfully on a09f27ea. Gurgle mounting, swimming, water hop and recovery shipped. Remaining slurp/spit, scale plates, cross-course persistence, art and campaign acceptance. Partial scope; production deployment unverified.
-    updated: '2026-11-27T04:09:09Z'
+    updated: '2026-11-27T04:13:00Z'
   - id: t-006
     milestone: m3
     title: "Build World 1: four complete garden/pipeworks levels and boss"
