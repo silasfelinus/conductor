@@ -106,3 +106,7 @@ type: critique
 ## 2026-11-26 PT | Reviewer | t-009 and t-025 | Kind Robots #5950 and #5947
 
 **Reconciliation:** #5950 merged `13155aedad`, seven substantive workflows and janitor green on `d54cf1a`; eight Accident leads gain 88 authored Science Wing lines. #5947 merged `9917625a`, seven substantive workflows green on `228acced`; janitor cancelled, branch cleanup unverified. Everyone's Villain uses actual playable Hero/Villain First Bell victories. Both are partial; return ready for remaining authored mission dialogue and standard art/full-run/device acceptance. Keep master issue open.
+
+## 2026-11-26 PT | Reviewer | t-010 and t-009 | Kind Robots #5959 and #5958
+
+**Decision:** Both scoped PRs merged after seven completed successful workflows on exact heads. #5959 `dc909bce` uses actual incoming and reaction odds for wounded-rival retreat; #5958 `d0b79340` adds eight Magic Science Wing routes and expands the existing regression. Both partial; return ready. Named crews, other personal chapter dialogue and full-run QA remain. No deployment or art acceptance.
