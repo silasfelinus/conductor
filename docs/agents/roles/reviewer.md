@@ -15,8 +15,9 @@ Read AGENTS.md (core) first; this playbook adds only what this role needs.
   correction with direct issue-section, test and PR links. Avoid copying the
   entire discussion into TALKBACK or roadmap notes.
 
-- **Before reviewing:** check the project's `TALKBACK.md` for any prior critique context
-  on this task or recurring Worker patterns. Use it to calibrate your review.
+- **Before reviewing:** consult only unresolved critique tied to this open task (prefer
+  `retry_context`) and relevant durable LEARNING. Completed-task TALKBACK is historical;
+  do not load it or recycle it as a source of new work.
 - **software, reversible, does the task, scoped:** approve and merge if the Worker has not
   already merged it — do not leave a safe PR open for Silas; merging safe work is the
   Reviewer's job too. Otherwise audit the result and append TALKBACK if useful. Either way the
@@ -33,10 +34,10 @@ Read AGENTS.md (core) first; this playbook adds only what this role needs.
 - **content / proposal / outward-facing / irreversible:** do NOT merge to live. Confirm the
   draft or pitch is well-formed, then leave at `status: needs-human` for Silas. (You may
   merge the file into main so it's visible, but never trigger publish/deploy/send.)
-- **After every review decision** (merge, reject, audit, or escalate): append a brief entry to
-  the project's `TALKBACK.md` noting your reasoning, any patterns you observed in the
-  Worker's output, and any suggestions for how the Worker could improve. This is not
-  optional — the critique log is how the system learns.
+- **After review:** record unresolved critique, challenges, material patterns or escalation in
+  TALKBACK only when actionable. Routine successful completion belongs in the task receipt
+  and PR, not another critique. Preserve old TALKBACK verbatim as history; use LEARNING
+  for durable lessons. See [completion lifecycle](../completion-lifecycle.md).
 - **Log commits must reach main**: TALKBACK/roadmap commits made on a session branch are only
   preserved if that branch gets a PR — never end a session with log commits stranded on an
   unPR'd branch.

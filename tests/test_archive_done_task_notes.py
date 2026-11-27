@@ -175,3 +175,27 @@ def test_archive_refuses_a_note_containing_an_archive_marker(tmp_path, monkeypat
     result = archiver.archive_project("demo")
     assert result["archived"] == []
     assert result["failed"] and "marker" in result["failed"][0][1]
+
+
+def test_archive_preserves_unrelated_history_verbatim(tmp_path, monkeypatch):
+    monkeypatch.setattr(archiver, "ROOT", tmp_path)
+    note = "Verified complete. " + ("old detail " * 60)
+    write_roadmap(
+        tmp_path,
+        "demo",
+        f"""tasks:
+        - id: t-001
+          status: done
+          title: Completed
+          note: >-
+            {note}
+        """,
+    )
+    history = tmp_path / "projects" / "demo" / "HISTORY.md"
+    prior = b"# Existing history\r\n\r\nOriginal directive and raw YAML.\r\n"
+    history.write_bytes(prior)
+    result = archiver.archive_project("demo")
+    assert result["archived"] == ["t-001"]
+    assert history.read_bytes().startswith(prior)
+    assert archiver.verify_project("demo") == []
+    assert archiver.archive_project("demo")["archived"] == []

@@ -35,6 +35,8 @@ playtesting is the next phase, not a roadmap task; publication and creative sign
 separate approvals. Later fixes use `playtest_iteration: true`; never relabel unfinished build
 work.
 
+**Completion (2026-11-26 PT):** Done means done. Completed tasks retain compact receipts and stable IDs; completed milestones collapse out of active work. Original directives and resolved feedback remain retrievable history, not routine TALKBACK or new tasks. Apply [completion lifecycle](docs/agents/completion-lifecycle.md) to all current roadmaps and future closes. Genuine gates and evidenced regressions remain actionable.
+
 **Creative focus portfolio (2026-10-21):** Weird Humboldt, Emperor of Dust, Zuzu Gamebook, Zuzu
 Shifting Lands, Shifting Desks, Rainbow Space Princess and Save the Plumber are one unranked
 portfolio, favored for discretionary story, choice, gameplay, test and image-led work (five are

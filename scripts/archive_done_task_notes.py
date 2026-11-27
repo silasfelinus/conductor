@@ -221,28 +221,43 @@ def archive_project(slug: str, *, dry_run: bool = False) -> dict[str, Any]:
     if not todo:
         return result
 
-    # Merge with anything already archived, so re-runs extend rather than replace.
-    merged: dict[str, tuple[str, str]] = {}
-    titles = {t["id"]: str(t.get("title", "")) for t in (data.get("tasks") or []) if isinstance(t, dict)}
-    for task_id, note in existing_entries(history_path).items():
-        merged[task_id] = (titles.get(task_id, task_id), note)
-    originals = {t["id"]: t["note"] for t in todo}
+    # Append only: HISTORY.md can also contain verbatim raw task blocks and
+    # project-specific archival material. Never regenerate an existing archive.
+    prior = history_path.read_bytes().decode("utf-8") if history_path.is_file() else ""
+    old_entries = extract_notes(prior)
+    entries = []
+    originals = {}
     for task in todo:
-        merged[task["id"]] = (str(task.get("title", "")), task["note"])
+        tid = task["id"]
+        note = task["note"]
+        want = note if note.endswith("\n") else note + "\n"
+        if tid in old_entries and old_entries[tid] != want:
+            result["failed"].append((tid, "different prior archive entry; preserve both"))
+            continue
+        if build_pointer(slug, tid, note) is None:
+            result["failed"].append((tid, "pointer would change first_sentence()"))
+            continue
+        originals[tid] = note
+        if tid not in old_entries:
+            entries.append((tid, str(task.get("title", "")), note))
+    todo = [task for task in todo if task["id"] in originals]
+    if not todo:
+        return result
 
-    def sort_key(tid: str) -> tuple[int, str]:
-        m = re.match(r"t-(\d+)", tid)
-        return (int(m.group(1)), tid) if m else (10**9, tid)
-
-    entries = [(tid, merged[tid][0], merged[tid][1]) for tid in sorted(merged, key=sort_key)]
-    history_text = render_history(slug, entries)
-
-    # --- the safety property: write, re-read from disk, verify, THEN rewrite ---
-    if dry_run:
-        recovered = extract_notes(history_text)
+    rendered = render_history(slug, entries)
+    if prior:
+        addition = rendered.removeprefix(HISTORY_HEADER.format(slug=slug))
+        history_text = prior + (("\n" if not prior.endswith("\n") else "") + addition if addition else "")
     else:
-        history_path.write_text(history_text, encoding="utf-8")
-        recovered = extract_notes(history_path.read_text(encoding="utf-8"))
+        history_text = rendered
+
+    recovered = extract_notes(history_text)
+    assert all(recovered.get(tid) == note for tid, note in old_entries.items())
+    for tid, note in originals.items():
+        assert recovered.get(tid) == (note if note.endswith("\n") else note + "\n")
+    if not dry_run and history_text != prior:
+        history_path.write_bytes(history_text.encode("utf-8"))
+        assert history_path.read_bytes() == history_text.encode("utf-8")
 
     verified: list[dict[str, Any]] = []
     for task in todo:
