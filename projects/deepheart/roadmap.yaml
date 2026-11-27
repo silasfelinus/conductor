@@ -263,11 +263,11 @@ tasks:
   - id: t-018
     milestone: m4
     title: "Complete canon-consistent scrapbook, support scenes and relationship art"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 2026-11-27T085000Z-deepheart-t-018-5d60ac
     claimed_at: '2026-11-27T08:50:00Z'
-    updated: '2026-11-27T08:50:00Z'
+    updated: '2026-11-27T08:51:00Z'
     depends_on: t-007
     passes: 0
     stakes: reversible
@@ -293,3 +293,5 @@ tasks:
       App commit b8ec8df1 keeps earned support paintings visible for successful second-tier campfire conversations, while rejected or stale actions clear presentation and cannot reveal art. Added regression assertions for first and second tiers, romance-off refusal, stale action, and unchanged earned moment list. Return ready after merge for six remaining render receipts and delivery checks.
 
       Kind Robots #5970 merged 9421f42a; seven exact-head workflows and branch janitor green. Both support tiers now use earned paintings; refused/stale actions reveal none. All 35 support jobs now have DONE receipts, six remaining mappings (jobs 77536-77541, ArtImages 280852-280857). Return ready for final wiring and delivery verification.
+
+      Kind Robots commit 0fe7dd08 maps final six DONE support receipts (jobs 77536-77541, ArtImages 280852-280857). All 35 support mappings are distinct and agree with authored scene IDs. Added assertions requiring all 35 painted support scenes and matching scrapbook sources. Authenticated media and visual verification remain outstanding; reconcile after green merge.
