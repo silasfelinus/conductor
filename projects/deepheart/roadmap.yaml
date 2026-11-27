@@ -240,7 +240,7 @@ tasks:
   - id: t-016
     milestone: m4
     title: "Paint and integrate the full bestiary and three boss encounter plates"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 2026-11-27T032608Z-deepheart-t-016-c8f4a7
     claimed_at: '2026-11-27T03:26:08Z'
@@ -254,6 +254,8 @@ tasks:
       2026-11-26 PT: commit 93c0c8ce adds BESTIARY-2026-11-26.yaml, auto_submit Krea 2 priority 200, 36 ordinary portraits and three distinct guardian chamber scenes. Existing guardian and Mimic ArtJobs 69511-69513 and 69523 retained. Validated all 36 runtime keys and distinct prompt wording; CI and ArtJob receipts pending. Return ready after merge for delivery and integration.
 
       2026-11-26 PT: Conductor #8080 merged 483c94a6 after four successful latest-head workflows. 39 private Krea 2 requests are on main with auto_submit enabled; no new ArtJob receipts yet verified. Resume delivery, curation, integration and URL checks, preserving existing guardian and Mimic assets.
+
+      Kind Robots commit 4f615697 integrates 18 DONE Krea 2 ledger receipts (jobs 77450-77467, ArtImages 280763-280780) into the private admin-only art registry. Verified unique IDs and enemy keys against runtime definitions. Actual authenticated image URLs and visual acceptance remain unverified; token absent and site DNS unavailable in runtime. Return ready after partial merge; remaining portraits and guardian plates pending. No duplicate jobs, no mature art changes.
   - id: t-017
     milestone: m4
     title: "Distinct painted environments and significant encounters in live gameplay"
@@ -271,11 +273,8 @@ tasks:
   - id: t-018
     milestone: m4
     title: "Complete canon-consistent scrapbook, support scenes and relationship art"
-    status: review
-    owner: worker
-    claimed_by: 2026-11-27T013100Z-deepheart-t-018-5e93bd
-    claimed_at: '2026-11-27T01:31:00Z'
-    updated: '2026-11-27T01:32:00Z'
+    status: ready
+    updated: '2026-11-27T03:26:08Z'
     depends_on: t-007
     passes: 0
     stakes: reversible
@@ -287,3 +286,5 @@ tasks:
       Conductor #8103 merged c2f606ed after four successful workflows. All 35 support art requests are on main. Resume runtime scrapbook mapping, render receipts, curation and ending audit.
 
       Kind Robots commit 97651cd1 adds the 23 missing support unlock mappings and scrapbook entries, preserves all 12 existing IDs, applies romance visibility to lovers/exes, and adds earned-discovery regression tests for every pair. Art delivery and final ending/artifact curation remain outstanding; return ready after merge.
+
+      Kind Robots #5921 merged 288fcb85; exact PR head e3517e0a has seven completed successful implementation workflows plus successful branch janitor. All 35 support unlock mappings are integrated, with original IDs preserved. Art delivery, curation and ending/artifact audit remain outstanding. Return ready, not done.
