@@ -350,3 +350,16 @@ Independent private media proof evidence implementation: add read-only checkpoin
 
 Verified completed finite report scope: Conductor #7882 merged at e425043eb667aa69ce3466c8589f21b9c6e69e1b with four successful latest-head workflows. Production proof run 45118667491 job 137507202611 completed successfully, including the per-ArtImage source/runtime/visibility summarizer; actual log reports SOURCE_VERIFIED=236 and RUNTIME_VERIFIED=236. No re-enqueue or artistic approval. Remaining curation and game attachment stay open.
 <!-- note:end t-050 -->
+
+## t-046 — Queue separately reviewed corrective ArtJobs for legacy Prom renders whose prompts predate the canon-anatomy guard (e.g. magic-earth, tech-genius)
+
+<!-- note:begin t-046 -->
+Kaizen from conductor#7800 review (t-045). The new preflight grandfathers already-accepted
+lanes, so legacy mismatched identity renders remain as QA debt. Verify existing replacements
+and actual media bytes first, then queue only the missing private corrective cells; never
+bulk-requeue accepted work.
+
+ArtJob delivery work in review: six canon-specific private replacement candidates (Granny Mayhem hero/villain, human Lionel Marsh hero and transformed Dr. Frog villain, four-armed Asha hero/villain) with stable outcome slot keys and unique seeds; corrected Auto Art Generate ledger sweep to enqueue when the Kind Robots API is healthy even if the render box is offline. Await actual accepted ArtJob receipts and candidate media QA before marking complete. No new accepted IDs verified yet.
+
+Six private corrective jobs 76593–76598 are DONE with ArtImages 278587–278592. CANON-OUTCOME-CORRECTIONS-2026-11-22.yaml records VERIFIED media proof for every original job/image pair, decoded 1344x768 dimensions, aspect match, nonblank checks and pixel digests. The scoped corrective queue and candidate media-verification acceptance is complete; separate artistic curation and canonical gameplay attachment remain with existing t-007/t-031/t-032. No new requests or artistic approval. Conductor #7808 merged 1cf6a540; follow-up media proof #7855 and #7894 merged.
+<!-- note:end t-046 -->

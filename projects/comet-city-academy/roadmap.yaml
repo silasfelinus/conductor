@@ -294,22 +294,18 @@ tasks:
     implementation_pr: 'silasfelinus/conductor#7800'
   - id: t-046
     title: "Queue separately reviewed corrective ArtJobs for legacy Prom renders whose prompts predate the canon-anatomy guard (e.g. magic-earth, tech-genius)"
-    status: review
+    status: done
     claimed_by: 2026-11-22T061300Z-comet-t046-artq-g6r2
     claimed_at: '2026-11-22T06:13:00Z'
-    updated: '2026-11-22T06:22:00Z'
-    owner: worker
+    updated: '2026-11-27T21:23:00Z'
     milestone: m3
     stakes: reversible
     passes: 0
     depends_on: []
-    note: |-
-      Kaizen from conductor#7800 review (t-045). The new preflight grandfathers already-accepted
-      lanes, so legacy mismatched identity renders remain as QA debt. Verify existing replacements
-      and actual media bytes first, then queue only the missing private corrective cells; never
-      bulk-requeue accepted work.
+    note: >-
+      Kaizen from conductor#7800 review (t-045).
 
-      ArtJob delivery work in review: six canon-specific private replacement candidates (Granny Mayhem hero/villain, human Lionel Marsh hero and transformed Dr. Frog villain, four-armed Asha hero/villain) with stable outcome slot keys and unique seeds; corrected Auto Art Generate ledger sweep to enqueue when the Kind Robots API is healthy even if the render box is offline. Await actual accepted ArtJob receipts and candidate media QA before marking complete. No new accepted IDs verified yet.
+      Full history: projects/comet-city-academy/HISTORY.md#t-046
   - id: t-012
     milestone: m2
     title: "Promote the seven-day demo into Capes & Tassels name and genuine day/night map slice"
@@ -491,11 +487,8 @@ tasks:
   - id: t-007
     milestone: m3
     title: "Deliver academy key, map, follower emotion and injury art"
-    status: review
-    owner: worker
-    claimed_by: 20261122204657Z-comet-t007-asha-private-qa-q7v4
-    claimed_at: '2026-11-22T20:46:57.893Z'
-    updated: '2026-11-22T20:49:23.396Z'
+    status: ready
+    updated: '2026-11-27T21:23:00Z'
     passes: 0
     stakes: reversible
     note: |-
@@ -546,6 +539,8 @@ tasks:
       Kind Robots #5589 and Conductor #7851 are merged; this broad art task remains incomplete. Continue with four DONE Asha four-arm repaint candidates as private reviewable ArtImages, never final art approval or public delivery.
 
       Scoped private QA increment: ten DONE canonical replacement ArtImages for Asha, Lionel Marsh and Granny Mayhem are now mapped into a distinct authenticated admin image-review gallery branch, preserving previous 20 candidates. A companion credentialed workflow branch fetches real source bytes, compares private game URLs, enforces nonpublic DB visibility and checkpoints media proof metadata. Both PRs still require CI and release; no visual approval or canonical slot promotion claimed. Broad t-007 remains incomplete after the scoped handoff.
+
+      Kind Robots #5596 merged 2c6af636 (eight successful workflows including janitor); Conductor #7855 merged 67fae2d0 (four successful workflows). Ten corrective candidates already mapped in the admin gallery; six correction media receipts now VERIFIED. Original broad art scope remains incomplete: map and companion delivery, independent visual curation and runtime attachment/QA. Return ready; reuse existing jobs.
   - id: t-008
     milestone: m3
     title: "Illustrate all patrol, location, relationship and ending branches"
@@ -984,14 +979,11 @@ tasks:
       Kind Robots PR #5725 merged at b3dbe510d2fbe9d2cd1723316745d932bbf978f7 after eight latest-head workflows completed successfully. Canon-safe comic art metadata and 24 source-image blob regressions are on main. Private production curation and attachment remain incomplete; no new ArtJobs, live playback or deployment verified.
   - id: t-032
     title: "Prom of Doom (Capes & Tassels) | Master 30-Day Playbook Roadmap"
-    status: review
-    claimed_by: 20261121T112313Z-comet-t032-canon-art-qa-q9f2
-    claimed_at: '2026-11-21T11:23:13.919Z'
+    status: ready
     stakes: reversible
-    owner: worker
     passes: 0
     source_issue: "silasfelinus/kind_robots#4181"
-    updated: '2026-11-21T11:26:19.528Z'
+    updated: '2026-11-27T21:23:00Z'
     note: |-
       FROM GITHUB ISSUE silasfelinus/kind_robots#4181 (https://github.com/silasfelinus/kind_robots/issues/4181), opened by @silasfelinus on 2026-10-25. Imported by scripts/sync_github_issues.py. Reference the canonical roadmap in implementation PRs with `Refs silasfelinus/kind_robots#4181`, never `Closes`. Keep #4181 open throughout finite build, art and QA work. Only the verified playtest handoff workflow may prefix `[FLAGGED FOR HUMAN TESTING]` and close the single master issue after Conductor lifecycle, priority, evidence and genuine `needs-human` subjective-acceptance gate are confirmed; closing the issue is not human approval or permission to publish.
 
@@ -1025,17 +1017,15 @@ tasks:
       handoff; master issue #4181 stays open.
 
       Scoped original media QA: fetched and visually examined 16 actual committed Prom WebP image bytes. Rejected 9 mismatched identity paintings with their exact original Git blob SHAs: four tech-genius outcomes portray a girl, not male Dr. Lionel Marsh; alien-discipline hero/villain outcomes portray reptiles, not koala Zuzu; three mutant-earth student/outcomes portray a male instead of Hattie Nkemelu. Kept source assets without deletion and quarantined incorrect use in identity choices, active scenes, comic reveals, console/Yearbook, and Playbook Studio. Retained existing correct student art for Dr. Frog/Zuzu as fallback; no replacement fabricated. Verified source coverage: 46 canon-safe students, 47 hero and 46 villain display paths after rejection. Code PR pending; more identities require visual QA and replacement art through real queue. Do not complete umbrella task or master issue yet.
-    implementation_pr: 'silasfelinus/kind_robots#5505'
+
+      Kind Robots #5505 merged 95a43910 and #5517 merged 9a898029; #5517 exact head 615dfb4 has ten successful workflows including janitor. Existing outcome plates resolve and nine wrong-character images were quarantined. Master umbrella is incomplete; keep issue #4181 open and return ready for remaining finite scope.
   - id: t-033
     title: "Prom of Doom: complete art-first animated card interactions across gameplay"
-    status: review
+    status: ready
     stakes: reversible
-    owner: worker
     passes: 0
-    claimed_by: 2026-11-19T183100Z-comet-city-academy-t-033-f82c
-    claimed_at: '2026-11-19T18:31:00Z'
     source_issue: "silasfelinus/kind_robots#4659"
-    updated: '2026-11-19T18:39:00Z'
+    updated: '2026-11-27T21:23:00Z'
     note: |-
       FROM GITHUB ISSUE silasfelinus/kind_robots#4659 (https://github.com/silasfelinus/kind_robots/issues/4659), opened by @silasfelinus on 2026-11-02. Imported by scripts/sync_github_issues.py. Reference the issue in the implementing PR (`Closes silasfelinus/kind_robots#4659`) so it closes on merge; the bridge closes it otherwise once this task is done.
 
@@ -1059,6 +1049,8 @@ tasks:
       First mission-hand / illustrated case-focus increment: PR #4657. That PR is not complete acceptance of this issue; continue through other screens and gameplay before closure.
 
       Scoped mission-hand copy correction in kind_robots branch worker/comet-city-academy-t-033-20261119-f82c; labels committed companions as allies, not heroes, for choice-driven villain routes. Broader card-interaction acceptance remains open.
+
+      Kind Robots #5353 merged 418fd993; eight completed successful workflows including janitor on 04c591a. Mission hand labels allies correctly across allegiances. Broad animated card interaction and full 30-day/device acceptance remain; issue #4659 stays open. Return ready.
 
   - id: t-047
     milestone: m3
@@ -1118,11 +1110,8 @@ tasks:
   - id: t-051
     milestone: m4
     title: "Review and attach 12 verified private one-hit crew telegraph renders to the shared Prom cast atlas"
-    status: review
-    owner: worker
-    claimed_by: 20261124T094600Z-comet-t051-media-dimensions-c7f4
-    claimed_at: '2026-11-24T09:46:00Z'
-    updated: '2026-11-24T09:47:00Z'
+    status: ready
+    updated: '2026-11-27T21:23:00Z'
     depends_on: []
     passes: 0
     stakes: reversible
@@ -1145,3 +1134,5 @@ tasks:
       Confirmed Kind Robots #5700 merged at eaa9d6e5c848184df356030303b526eef47a5027. Review controls shipped, but no actual curator decisions or gameplay attachment verified. Preserve all 24 ArtJob and ArtImage receipts.
 
       Added exact decoded-dimension validation for all twelve original telegraph ArtImages 277786–277797 in the shared private loader, sourced from verified ledger dimensions. Wrong-sized media now fails before attachment or curator review, retaining retry and object URL cleanup. Regression tests cover all 12 valid dimensions and 24 mismatch cases. Kind Robots commit cda72af352a51649c5633269c43d8b2eaad40102. Production DNS resolution failed in this environment and KR_API_TOKEN absent; no new submissions, byte downloads or subjective approvals. Partial scope; return to ready after merge.
+
+      Kind Robots #5733 merged e5f4aa1a; eight completed successful workflows including janitor on e70aa6e. Exact dimension validation for twelve private telegraph ArtImages 277786–277797 is shipped, alongside prior 24 atlas mappings and curator controls. Independent private visual curation and live UI verification remain; no new jobs or approvals. Return ready.
