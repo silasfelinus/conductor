@@ -202,16 +202,15 @@ tasks:
   - id: t-011
     milestone: m4
     title: "Security regression suite for mature opt-in and CHILD restrictions across all discovery and direct access"
-    status: claimed
+    status: ready
     depends_on: t-001
-    updated: '2026-11-27T12:11:26Z'
+    updated: '2026-11-27T12:52:00Z'
     passes: 0
     stakes: reversible
     note: |-
       Verify authenticated opt-in and no CHILD role including CHILD+ADMIN; ?showMature=true never grants access. Initial general Play and two-edition release #4903 approved/merged; separate ADMIN+mature Studio #5010. Remaining security matrix: direct ArtImage/splash URLs, nav/highlights/project list/search, SSR/hydration, direct route, JSON/API, invalid JWT, cross-account and cross-edition saves, actual authenticated production behavior. Verify all surfaces; no deploy or new publication. Prior approval is not a blanket mature-content/promotion or full-game acceptance gate. Full prior note: ROADMAP-HISTORY-2026-11-26.md#t-011.
-    owner: worker
-    claimed_by: 20261127T1215Z-t011-security-m3v
-    claimed_at: '2026-11-27T12:11:26Z'
+
+      2026-11-27 PT: kind_robots#5990 merged (squash 655b824) after all 14 checks were green, including TypeScript, content-visibility verify and the four contract shards. Added server/utils/monstriqueAccess.ts monstriqueAudienceFor(auth): JWT + real viewerShowsMature, used by /api/monstrique/audience. The splash route keeps the audit-recognised inline viewerShowsMature. The new contract test verifyMonstriqueSecurity.test.ts runs the real predicate across a matrix: mature only for opted-in adult or adult ADMIN with a JWT; general for opted-out, no preference and string "true", and for CHILD as primary role, roles, the UserRoles join, the lowercase alias and CHILD+ADMIN; general for delegation, beta-admin, user API key, agent credential, guest and invalid. It also pins no-store and Vary on the public routes and their independence from the request, the Studio gate (404) on every Bible route, mature splash ids staying out of every client directory, general-edition hotspots/verbs/shortcuts, and per-edition per-account save slots. Mutation-checked. Remaining t-011 (needs a live DB or production, no deploy): authenticated production behaviour, direct /api/art delivery of the mature splash ArtImage rows, SSR/hydration per audience, nav/highlights/search exclusion, and server-side cross-account saves (saves are browser-local today). Returned to ready, not done.
   - id: t-012
     milestone: m4
     title: "Adversarial end-to-end playthroughs and visual/performance acceptance preparation"
