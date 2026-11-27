@@ -327,6 +327,20 @@ Shared source/game/private media proof helper with evidence checkpoint per ledge
 Merged shared authenticated private-art media proof helper and per-ledger checkpointing in conductor#7863 at 5bdedd4ded2494f221d0dc55c4f2854fbfa27c11. Four latest-head CI workflows completed successfully, including Python tests, security audit, and Worker PR CI. This closes helper implementation only, not visual approval, artwork delivery, or final private URL checks for individual paintings.
 <!-- note:end t-048 -->
 
+## t-049 — Deliver original adaptive music and event-driven sound effects with persistent accessible audio settings before Prom human playtests
+
+<!-- note:begin t-049 -->
+Silas's explicit 2026-11-22 PT pre-playtest requirement. There was no music/SFX task in this roadmap or game-page implementation. Compose original licensed-safe title, school/day, patrol/tension and finale/ending cues; original navigational, recruit, investigation, injury, choice, success/failure and villain-reveal SFX; route real run transitions to cues rather than generic button-only beeps. Provide opt-in browser audio unlock, independently persisted master/music/SFX volume and mute, reduced-motion/accessible visual-equivalent behavior, cleanup on navigation and no SSR/autoplay crash. Add deterministic cue/state, settings migration, mute/unlock and source-level integration contract tests; test actual playback on the supported browser/mobile path before marking delivered. Music and SFX are required for agent-complete playtest readiness, not the later human verdict.
+
+Original audio implementation #5609 merged at e4393cef8b411b5079b31f7d332d39a2e3c10cfa. No active Prom audio PR found. Remaining playback lifecycle regression repair and browser acceptance are not complete. Reopen for independent scoped implementation alongside Tactics audio PR #5770.
+
+Prom audio scheduler repair staged at kind_robots c8f3804986a83034bbdf233f56dab15fca20276c on worker/comet-city-academy-t-049-audio-lifecycle-c6e3. Cancels voices across mood, mute, channel-zero, hidden tab and disposal; suspended contexts cannot accumulate effects. Active WebAudio stand-in regression added. Two files disjoint from #5770. Full CI and live playback pending; task remains partial.
+
+2026-11-24 PT: PR #5798 merged into kind_robots main at 8975b30d50303b222b089e2999fa34132897ce9d after all eight latest-head workflows passed. WebAudio cancellation, channel independence and suspend/recovery regression are merged. Actual browser/mobile playback remains unverified; return partial task to ready.
+
+2026-11-26 PT explicit Silas direction: "If we have audio made, then that’s good enough until human testing." Verified merged Kind Robots #5609 and #5798, including original seven-theme score, contextual cues, persistent accessible mixer and lifecycle regressions. All returned latest-head Actions workflows completed successfully, including game tests and branch janitor; repair head c8f3804986a83034bbdf233f56dab15fca20276c. Actual speaker/browser/mobile playback and subjective audition are deferred to human playtesting by explicit user direction, not claimed verified. Finite audio implementation accepted for roadmap closure; no publication or broader game acceptance implied.
+<!-- note:end t-049 -->
+
 ## t-050 — Summarize post-merge Prom LEDGER_MEDIA_PROOF results per ArtImage into the ledger without re-enqueueing failures
 
 <!-- note:begin t-050 -->

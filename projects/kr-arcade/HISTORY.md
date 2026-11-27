@@ -1184,3 +1184,15 @@ unbeaten: dimmed glimpse; unvisited: hidden), rendered and checked at 390/768/14
 the live art. kind_robots#5836 merged after all 15 checks passed on exact head 744ae281.
 No deploy.
 <!-- note:end t-189 -->
+
+## t-190 — Superkate Spectrum: painted orbs and color cannon replace the code-drawn bubbles (24 orbs, 1 cannon)
+
+<!-- note:begin t-190 -->
+Silas, 2026-11-25 PT: "We should never be satisfied with [SVG] over painted. If we have [SVG], we need painted to replace. High priority with art." Spectrum's bubbles were canvas-drawn gradients. Queued 25 renders (superkate-spectrum-orb-<style>-<hue> for glass/candy/starlight/prismatic x six hues, plus superkate-spectrum-orb-launcher; priority 1000) to /images/arcade/superkate-spectrum/orbs/. The game draws each painted orb clipped to its circle with the colorblind emblem on a light halo above it, and falls back to the drawn gradient until delivered; high contrast keeps flat drawn orbs by design. Next: verify each delivered orb at 390/768/1440 and replace any that read poorly at 26px.
+
+2026-11-26 PT: all 24 painted orbs and the launcher delivered and checked at 120px and
+in the game's own crop (2.3x radius, clipped circle, ~30px). Prismatic gold read rainbow
+and prismatic lime sat small in frame; both re-rendered (-v2, ArtJobs 77429/77430,
+force: true via conductor#8054) and now fill their circles in their own hue. Visual
+acceptance in play stays with Silas under t-184.
+<!-- note:end t-190 -->

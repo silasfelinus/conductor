@@ -69,6 +69,31 @@ App commit 6e75e609 adjusts enemy HP and attack by original party size, preserve
 Kind Robots #5871 merged 782b7336; all seven latest-head CI workflows passed. Playbook Kit 45741692123 job 139647991283 measured party 2/3/4 survival 77/81/80 percent (300 original runs) and 74/87/78 percent (300 independent runs, within 70-90 guard). Baseline 48/60, all nine endings reachable, 50 presets, 35 supports, 20 achievements. Earlier #5845 verified Gilded greed gate and secular Redemption. Original t-008 scope complete.
 <!-- note:end t-008 -->
 
+## t-009 — Account-backed save for signed-in players with local fallback
+
+<!-- note:begin t-009 -->
+Main-game standard item 3. Keep the versioned local record as the fallback.
+
+App commit 1c38b4db implements explicit account backup/restore of autosave, three slots, and chronicle via a private revision-checked archive, retaining local saves. Added round-trip and invalid payload regressions; CI and authenticated live verification pending. No schema migration.
+
+Kind Robots #5878 merged 90e8d8ae after all ten completed successful CI workflows, including Playbook Kit 45749360796 and Contract Tests 45749360778. Explicit revisioned account backup/restore of run slots and chronicle landed. Return ready for scrapbook/settings integration and live two-device verification.
+
+App commit da815ccd includes the shared Kit scrapbook unlocks and settings in the account archive, restores only Deepheart's Kit record, preserves legacy archives without a Kit payload and protects unreadable local records. Added round-trip and invalid Kit data regressions. CI and authenticated two-device verification pending.
+
+Kind Robots #5892 merged at 4a64c8bb; all seven latest-head CI workflows passed including Playbook Kit 45809076695 and Contract Tests 45809076749; branch janitor 45810888561 succeeded. Account slots, chronicle, scrapbook and settings implementation complete. Authenticated two-device verification remains in final t-013 QA.
+<!-- note:end t-009 -->
+
+## t-010 — Sound and music behind the kit sound setting
+
+<!-- note:begin t-010 -->
+Torchlit ambience per layer, combat stings, a campfire theme; respect the kit's
+sound setting and reduced motion.
+
+Kind Robots #5882 (778e4949) implements seven original synthesized themes and state-driven cues, gesture gating, shared kit sound/reduced-motion controls, tab visibility and cleanup, with loop/cue/lifecycle regressions. CI pending; actual browser playback unverified.
+
+Kind Robots #5882 merged at 7975cce5; all seven latest-head workflows completed successfully, including Playbook Kit 45776917453 and Contract Tests 45776917406. Audio implementation and regression coverage complete. Actual browser playback remains unverified and belongs in final t-013 QA, not a separate subjective gate.
+<!-- note:end t-010 -->
+
 ## t-011 — Art ledger: queue every brief auto_submit
 
 <!-- note:begin t-011 -->
@@ -85,3 +110,45 @@ Authored 29 remaining Deepheart asset prompts in worker/deepheart-t-011-missing-
 
 Merged Conductor #7505 as fae31db; Auto Art Generate 43983771297 successfully submitted and checkpointed 29 unique Deepheart ArtJobs 69628-69656 in projects/deepheart/art/MISSING-ASSETS-2026-11-16.yaml (3 emblems, 6 rooms, 20 achievements). Previously queued original 139 jobs 69460-69598 are all DONE with ArtImage IDs. No duplicates. Submission is complete; t-012 now owns rendered media URL verification and wiring, including association of the badge ArtImages with live Achievement records.
 <!-- note:end t-011 -->
+
+## t-015 — Expand enemy roster to 40 distinct types and recalibrate seeded encounter variety
+
+<!-- note:begin t-015 -->
+Silas 2026-11-26 PT: double enemy variety so runs are not repetitive. Target twelve ordinary enemies per layer, three existing bosses and Mimic (40 total). Give newcomers distinctive names, silhouettes, traits and balanced stats. Prove each type is reachable in seeded combat, keep nonviolent routes and all nine endings, repeat the existing survival calibration. Preserve fixed-seed determinism.
+
+App commit 72fd0bcd expands the three live encounter pools to twelve ordinary enemies each, preserves the three bosses and Mimic, and adds seeded door reachability tests for all 36 ordinary enemies. Existing survival and ending tests remain unchanged; CI results pending.
+
+2026-11-26 PT: Kind Robots #5907 merged c23c16cd; seven latest-head workflows passed, including Playbook Kit 45902870505, TypeScript 45902870420 and branch janitor 45904314464. Forty enemy types, seeded reachability and existing survival/ending calibration shipped. Unlock t-016 for bestiary art.
+<!-- note:end t-015 -->
+
+## t-016 — Paint and integrate the full bestiary and three boss encounter plates
+
+<!-- note:begin t-016 -->
+Every one of the forty enemy types has unique Krea 2 artwork in target cards, including the three bosses and Mimic; reuse canon-compatible delivered assets. Each guardian also has an appropriate full-width battle plate. Record ArtJob and ArtImage IDs and verify final authenticated media URLs. No skull/crown glyphs as final combatants. Keep targeting, HP and statuses readable.
+
+2026-11-26 PT: commit 93c0c8ce adds BESTIARY-2026-11-26.yaml, auto_submit Krea 2 priority 200, 36 ordinary portraits and three distinct guardian chamber scenes. Existing guardian and Mimic ArtJobs 69511-69513 and 69523 retained. Validated all 36 runtime keys and distinct prompt wording; CI and ArtJob receipts pending. Return ready after merge for delivery and integration.
+
+2026-11-26 PT: Conductor #8080 merged 483c94a6 after four successful latest-head workflows. 39 private Krea 2 requests are on main with auto_submit enabled; no new ArtJob receipts yet verified. Resume delivery, curation, integration and URL checks, preserving existing guardian and Mimic assets.
+
+Kind Robots commit 4f615697 integrates 18 DONE Krea 2 ledger receipts (jobs 77450-77467, ArtImages 280763-280780) into the private admin-only art registry. Verified unique IDs and enemy keys against runtime definitions. Actual authenticated image URLs and visual acceptance remain unverified; token absent and site DNS unavailable in runtime. Return ready after partial merge; remaining portraits and guardian plates pending. No duplicate jobs, no mature art changes.
+
+Kind Robots #5934 merged 42076636; seven implementation workflows completed successfully. 18 ordinary portraits wired. Remaining 18 portraits and three guardian plates now have DONE receipts; integrate and test. Owner 2026-11-26 PT explicitly accepts completed render receipts as availability evidence; manual art approval is not a gate.
+
+App head 6d2b5e4b maps the remaining 18 ordinary portraits and 3 guardian scenes from completed jobs 77468-77488 (ArtImages 280781-280801). Guardian battle stages use their own wide plates, separate from combat target portraits. Regression requires 40 distinct enemy art sources and three distinct guardian plates. All 39 new Krea 2 receipts plus four retained boss/Mimic portraits accounted for; owner-approved render-receipt acceptance applies. Close t-016 after green merge.
+
+Kind Robots #5944 merged 4abdae6e, corrected head 045cd9b3: all seven implementation workflows and branch janitor completed successfully, including Playbook Kit 45939168471 and Contract Tests 45939168369. All 40 enemy target portraits and three dedicated guardian scenes wired and tested. Owner-approved render receipt acceptance applies. No manual art gate.
+<!-- note:end t-016 -->
+
+## t-017 — Distinct painted environments and significant encounters in live gameplay
+
+<!-- note:begin t-017 -->
+Show recognizable Ossuary Gate, Drowned Halls and Ember Deep landscapes during exploration and appropriate backgrounds during combat and room choices. Illustrate merchants, communities and significant authored non-court encounters, not merely six generic room types. Reuse canon-compatible existing artwork and queue only missing Krea 2 briefs; verify delivered URLs and responsive gameplay.
+
+2026-11-26 PT: commit 4582e3fc commissions 15 missing non-court choice scenes in NONCOURT-ENCOUNTERS-2026-11-26.yaml, including all six community encounters. Existing six moment plates retained. Verified all 21 authored non-court event IDs against ledgers and checked prompt specificity (58+ unique words). CI, delivery and runtime bindings outstanding.
+
+Conductor #8101 merged b5716014 after four completed successful workflows. Fifteen missing non-court scenes are on main with auto_submit enabled. Resume after receipt and visual verification, integrating all event-specific art. No delivered-image claim.
+
+App head 7010d7cb maps all 15 new non-court DONE receipts (jobs 77489-77503, ArtImages 280802-280816), restores three existing moment mappings (jobs 69526,69527,69530), uses distinct authored encounter plates and layer-specific ordinary combat scenery. Regression asserts 21 distinct non-court event sources. Owner-approved receipt acceptance applies; manual visual checks are not a gate. CI pending; close t-017 only after green merge.
+
+Kind Robots #5936 merged 14c55f7b after seven completed successful workflows, including Playbook Kit 45935725057 and TypeScript 45935725118. All 21 distinct non-court encounter plates wired and covered by regression; three layer landscapes used in exploration and ordinary combat. Owner-approved render-receipt acceptance applies. No manual art gate.
+<!-- note:end t-017 -->

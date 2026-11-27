@@ -360,7 +360,7 @@ tasks:
       slots. Preserve persistent ship/party state across seamless boss
       transitions, with rare optional tableau checkpoints after Acts III
       and V. See ACT-STRUCTURE.md. Do not mark done for a document alone.
-    status: review
+    status: done
     claimed_by: 2026-11-20T003545Z-rainbow-t012-roster-k8j3
     claimed_at: '2026-11-20T00:40:12Z'
     depends_on: [t-002, t-009]
@@ -391,7 +391,12 @@ tasks:
       pilot finale roles, S12 safe-route continuity, S13 credits, S14 plurals, S18 solo
       address, S19 rebel log, S22 loyal verdict. verifyRainbowCrewVoices pins them. Story
       majors S3-S11 and the remaining minors are t-066.
-    updated: '2026-11-24T06:11:21Z'
+
+      2026-11-26 PT intent audit: closed. #5709 (critic fixes), #5687 (score, SFX, stingers)
+      and #5670 (comms modes, 15 party masks) merged. The 11-24 note moved the only remaining
+      scope, animated cinematics, to t-030; the story majors went to t-066 (done). Closed so
+      that scope is not tracked twice. The 11-20 claim had expired.
+    updated: '2026-11-27T05:52:01Z'
     implementation_pr: 'silasfelinus/kind_robots#5709'
   - id: t-013
     milestone: m5
@@ -574,7 +579,7 @@ tasks:
   - id: t-022
     milestone: m4
     title: "Kontext pass: recolour off-model frames, compose cutscenes and group art, and build layout-guided stage planes"
-    status: review
+    status: ready
     passes: 0
     stakes: reversible
     depends_on: [t-020]
@@ -598,10 +603,12 @@ tasks:
       2026-11-25 PT: kind_robots#5767 merged: the finale's own card, strip and planes (P-04,
       P-07) and X1-X3 Fever Dream detour twins (P-14); X4 sky in #5774. Retakes on a green key
       for X1 far, X2 far, X3 mid/near and X4 far/near are rendering.
+
+      2026-11-26 PT intent audit: partial, so back to ready. The planes, cards and detour
+      twins shipped (#5767, #5774). The X1-X4 green-key retakes are still rendering (ART-
+      BACKLOG-2026-11-24). The 11-22 claim had expired.
     owner: worker
-    claimed_by: 2026-11-22T201537Z-rainbow-t022-planes-f4p9
-    claimed_at: '2026-11-22T20:15:37Z'
-    updated: '2026-11-25T00:53:44Z'
+    updated: '2026-11-27T05:52:36Z'
     implementation_pr: 'silasfelinus/kind_robots#5767'
   - id: t-023
     milestone: m4
@@ -713,13 +720,11 @@ tasks:
   - id: t-030
     milestone: m6
     title: "Gen-2 animation: animated pilot cut-ins, enemy sprite cycles and moving cutscenes"
-    status: review
+    status: ready
     owner: worker
-    claimed_by: 2026-11-22T024100Z-rainbow-t030-cutin-k2v7
-    claimed_at: '2026-11-22T02:41:00Z'
     passes: 0
     stakes: reversible
-    updated: '2026-11-25T00:53:30Z'
+    updated: '2026-11-27T05:52:38Z'
     note: |-
       GEN2-STANDARD.md sections 5-6. WAN first/last-frame clips from the delivered cutscene stills (ART-ROUND-19) and pilot cut-ins, then enemy idle/attack cycles packed into atlases. Bullets stay crisp code-drawn shapes; animation is for craft, pilots and scenes.
 
@@ -761,6 +766,11 @@ tasks:
       2026-11-25 PT: kind_robots#5767 merged (idle-atlas clock P-01, moving endings P-03,
       Solenne Fever portrait/comms P-19). First reviewed idle loop (angler) ships in #5774; 81
       loops and the six ending clips are still rendering (ANIM-BACKLOG-2026-11-24).
+
+      2026-11-26 PT intent audit: partial, so back to ready. The idle-atlas clock, moving
+      endings and P-19 shipped (#5767). Idle loops are being reviewed in batches
+      (conductor#8117, batch 12); the rest are still rendering (ANIM-BACKLOG-2026-11-24). The
+      11-22 claim had expired.
     implementation_pr: 'silasfelinus/kind_robots#5767'
   - id: t-031
     milestone: m6

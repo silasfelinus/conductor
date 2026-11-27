@@ -58,6 +58,15 @@ Add a Chromium playthrough test that plays real levels through visible input, ta
 2026-11-25 PT: verifyHopefulHuesBrowser runs in the new hopeful-hues-browser workflow: real game in Chromium at 390/768 touch and 1440 mouse+keyboard; audio waits for a gesture, tutorial, level 1 won by pointer drags, Back exact, keyboard swaps, quest claimed, world fork, save export/import, calm motion, a finale to its ending, layouts without sideways scroll. Found and fixed unnamed Quests/Worlds buttons on phones. Verified kind_robots#5856 merged after all 13 checks passed on exact head a7b2193b (incl. TypeScript and the new Hopeful Hues browser playthrough). No deploy.
 <!-- note:end t-006 -->
 
+## t-007 — Finish the finite roadmap and hand off for human playtest
+
+<!-- note:begin t-007 -->
+Reconcile the goal against the product, then set lifecycle to playtest.
+2026-11-25 PT: goal reconciled against the product: nine worlds, 495 winnable levels, quests, achievements, saves, scrapbook, character select, multiple pathways and ten endings, all verified; lifecycle set to playtest/normal in the same PR. Handoff: projects/hopeful-hues/PLAYTEST-CHECKLIST.md and promo/hopeful-hues-promo-1080x1350.webp (not for posting without Silas). Verified kind_robots#5856 merged after all 13 checks passed on exact head a7b2193b (incl. TypeScript and the new Hopeful Hues browser playthrough). No deploy.
+2026-11-25 PT: handoff withdrawn the same session; it now waits on t-013's painted tile set (Silas: painted must replace code-drawn art). Checklist and promo stay ready for when it lands.
+2026-11-26 PT: t-013's painted tile set landed and passed review, so the handoff is restored: lifecycle playtest/normal (project-overrides.yaml in the same PR), PLAYTEST- CHECKLIST.md and the promo card as before. No deploy.
+<!-- note:end t-007 -->
+
 ## t-008 — Move Hopeful Hues to a standalone Play front page with a home highlight and Play link, each with art
 
 <!-- note:begin t-008 -->
@@ -123,6 +132,17 @@ Added 36 explicit world board diagrams, quarter-turn chapter variants, authored 
 
 90 authored levels including all nine finales merged; all six CI workflows green, including Hopeful Hues contract. Browser acceptance remains in t-006. Implementation PR silasfelinus/kind_robots#5684.
 <!-- note:end t-012 -->
+
+## t-013 — Visual parity: painted map backdrops per region, painted tile set trial, richer match and special effects
+
+<!-- note:begin t-013 -->
+Parity audit 2026-11-23 PT. Intro art is painted (t-002), but the map is gradient bands with SVG motifs, tiles are SVG, and effects are simple lines, rings and pops. Queue painted map backdrops for the seven regions and integrate them behind the path, trial a painted tile atlas at 40px and keep whichever reads better, and add particle sparkles, special-creation flourishes and combo flashes that respect reduced motion.
+2026-11-25 PT: painted map backdrops for all nine worlds are delivered and behind the path; particles and special-creation pops existed, and two-special combos now flash the board (soft tint in calm motion). Painted-tile trial: the SVG jewel set is kept, since its shapes carry the colorblind symbols and read cleanly at 40px, so a painted atlas was not adopted. Verified kind_robots#5856 merged after all 13 checks passed on exact head a7b2193b (incl. TypeScript and the new Hopeful Hues browser playthrough). No deploy.
+Correction (same session): no painted tile atlas was actually rendered or compared. The SVG jewels stay because their shapes carry the colorblind symbols; a painted-atlas trial is a possible playtest_iteration task if Silas wants one.
+2026-11-25 PT reopened at Silas's direction: "We should never be satisfied with [SVG] over painted. If we have [SVG], we need painted to replace. High priority with art." Queued 90 painted tiles (six jewels, rainbow special, buddy, knot and Gloom for each of nine worlds; ids hopeful-hues-tile-*; priority 1000) to /images/hopeful- hues/tiles/<world>/. Project priority raised to high. Next: wire painted tiles over the SVG with the colorblind symbol and special markers on top, verify each delivered tile at 390/768/1440, then hand off.
+2026-11-26 PT: first deliveries checked at tile size. Paradise's six jewels, rainbow and hermit-crab buddy are strong; Clanktown's first three jewels read well. The Gloom and knot renders came back as framed icons with a silhouette, so they're rejected: the game reads mist.webp/knot.webp, re-queued with texture- and object-specific prompts (18). Painted tiles' opaque backgrounds hid Gloom drawn underneath; kind_robots#5870 moves Gloom over the tiles as a translucent wash.
+2026-11-26 PT: painted tile set complete. All 90 tiles delivered (six jewels, rainbow, buddy, mist and knot for each of nine worlds), each checked at 120px and 40px, and every world played at level 7 at 390 and 1440 with 81/81 painted board tiles, no broken images and no page errors. Two jewels that shared a shape and near hue with a neighbour were re-rendered (circus jewel-0 as a juggling club, dustneon jewel-4 as a cactus bloom; -v2 ids, ArtJobs 77427/77428, force: true via conductor#8054) and re-verified in play. The painted tiles sit over the SVG fallback with the colorblind symbol badge and special markers on top; Gloom washes over them.
+<!-- note:end t-013 -->
 
 ## t-014 — Nine hero-led worlds: unique jewels, blockers, effects, music, maps, story, quests, achievements, endings and art
 

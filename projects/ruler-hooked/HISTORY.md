@@ -641,6 +641,71 @@ Silas revised the original ruler-cosmetic-removal request on 2026-10-23 PT: pres
 Merged silasfelinus/kind_robots#4060 to main at commit 7cb8b695ad3dc4cb4884f21e747ae4d934f7208c after all 14 GitHub Actions workflows completed successfully (TypeScript, full contract suite, layout, icon audit, formatting, Ruler Hooked game tests). Under Silas's revised direction, ruler name, honorific and portrait selection now belong to an illustrated, in-game coronation with large preset previews and optional custom image. The world, fishing, briefings and chronicles never render the player's face; only the opening does. Separated scene screens, one initial fishing spot, and easier two-stop plus tap/pause fishing are merged. Canonical first-person prompt instructions and opening-only portrait generation also merged via silasfelinus/conductor#6550. Production self-hosted deploy and rendered tablet/mobile visual acceptance remain unverified and are not claimed done.
 <!-- note:end t-044 -->
 
+## t-045 — Deepen kingdom quest arcs and connect decisions to fishing spots and species
+
+<!-- note:begin t-045 -->
+Silas, 2026-10-23 PT: match Emperor of Dust's depth of kingdom incidents, dilemma writing, faction tradeoffs, long-running consequences and NPC follow-ups. Repeated choices must meaningfully transform the illustrated world map, alter which fishing spots unlock or close and change the fish available at each location. Keep the offline deterministic story engine and add adversarial playtests for distinct player philosophies and replay paths.
+
+First substantial branch: five canon-linked delayed petitions (weir, moat, border, marina, royal wedding) with ten distinct policy outcomes, map and fish ecology changes, authored art prompts, and legal-quest regression witnesses. kind_robots worker/ruler-hooked-t-045-20261122-x7p4; follow-up art queue and CI in progress. The broader story-depth task is not fully complete.
+
+2026-11-22 PT reviewer: merged kind_robots#5605 (five delayed petitions, ten policy outcomes, map/fish ecology changes) and conductor#7867 (five pending Krea 2 card requests for weir, moat, treaty, marina and wedding aftershocks; staged, not rendered). This was one slice: the broader Emperor-of-Dust-depth quest work is still incomplete, so the task goes back to ready for the next slice. Art counts as delivered only after the renders are inspected and bound in game (t-047).
+
+Second authored story slice: three cross-faction late petitions and six distinct policy endings with map, fish-ecology and resource consequences, choice-path regression witnesses, and three high-priority pending Krea 2 card paintings. Kind Robots worker/ruler-hooked-t-045-20261123-b8e4c9 and Conductor worker/ruler-hooked-t-045-art-20261123-b8e4c9. This is partial t-045 scope: further depth and delivered/inspected art remain.
+
+Second quest-depth slice kind_robots#5629 merged at 4b94c8bc49d117cc6c82b348b6311a1bbebc17ee; exact-head Ruler Hooked 45113826983 and Contract Tests 45113826977 passed. Return to ready for remaining interconnected quest writing rather than duplicate the three new petitions. Art delivery remains t-047.
+
+Third quest-depth slice: flood-debt-council and harbour-apprentice-hearing, four late policy branches, reversible concession/pier flags, species and illustrated region consequences, authored scene prompts and regression tests. App head a7d2fed8df307338f0f379d985228c864ad61cc5; Conductor art head a774ec3f86016094968a660a5afd17dd3376b3b0. Partial t-045 scope; CI and delivered art pending.
+
+Reviewer 2026-11-24 PT: third slice landed — app kind_robots#5792 merged; art requests
+conductor#7997 merged at 24e9fac (CI green, latest handoff rerun passed). Returned to
+ready for remaining interconnected quest depth; art delivery/inspection stays with
+t-047.
+
+Added real turn-loop, from-new-game seeded route witnesses for ten late river, harbour and water-rights policy combinations in Kind Robots commit 63f9d56076941f65d585368b2d0b66a7b593b283. Tests exercise only offered cards, deterministic replay and retirement; CI pending. Partial t-045 scope, no rendered QA or ending completion claimed.
+
+Kind Robots #5803 merged at 004a95a12319a4ae09dac1b206b8b72920034b86. Ten legal late-petition routes are implemented; return to ready for remaining interconnected narrative consequences. Art inspection remains t-047.
+
+Added water-stewards-strike, a delayed labor dispute after the water-rights hearing with three policy outcomes, mutually exclusive trust/monopoly flags, region and fish effects, six new seeded legal route witnesses, and canonical scene prompt. App head 2e04b535ad5a2d4688e3afcc471122f32fb969db; CI pending. Art request to be staged separately; no rendered art claimed. Partial t-045 pending verification.
+
+Verified partial quest-depth slice kind_robots#5818 merged at 508fc0cb and conductor#8011 at 5e4e973b; all eight app PR workflows and five Conductor workflows completed successfully. Family reconciliation and expanded epilogues #5822 also merged at c072ea92 with eight successful app PR workflows. Return to ready for remaining interconnected quest writing, not done; art delivery and full ending-route QA remain separate. Deferred petition repair #5819 was synchronized with main at 4f48e987 and awaits fresh CI.
+
+Added an independent royal-family reconciliation path that recognizes the marriage without forcing a return to the palace, with a distinct political and treasury cost and a later wedding petition. Added six seeded legal family route witnesses and focused estrangement tests. App branch worker/ruler-hooked-t045-family-autonomy-f8e2 at 0833288e; existing scene art reused for the same petition, no new render claimed. CI pending; partial t-045.
+
+Verified family autonomy PR kind_robots#5842 merged at e374e546; all eight PR workflows and Branch janitor completed successfully. Six seeded family routes passed. Partial quest depth; return to ready for remaining work.
+
+Fixed divergence between actual gameplay and headless quest witnesses: the pure choice reducer now owns resolved petition accounting, excluding deferrals. Quiet fishing turns can offer an eligible finale without requiring another court interruption. Added threshold, deferral and dismissal regression assertions. App branch worker/ruler-hooked-t045-finale-accounting-c9a7 at 46a35f49. Partial quest/ending integrity work, CI pending; no art or visual QA claim.
+
+Verified kind_robots#5844 merged at fd7bb029 and all eight exact-head PR workflows passed, including gameplay 45719210928. Shared petition accounting and quiet-cast finale offers landed. Return to ready for seeded ending integrity work; remaining narrative and device/art QA are not certified.
+
+Added full-reign deterministic policy witnesses for every authored ending, using actual per-cast seed derivation, daily proclamations, offered choices and legal finale dismissal/acceptance. Replays through JSON round-trips and prints exact actions for each successful witness. App branch worker/ruler-hooked-t045-ending-witnesses-b3d9 at 9d1c77ed; CI must establish reachability, not yet claimed. Partial preflight for later t-049; no interactive fishing, rendered QA or art claim.
+
+Verified kind_robots#5855 merged at 7682f108, eight green latest-head workflows and successful branch janitor. Actual gameplay logs 45726592525/job/139598068573 prove all four endings at 35/35/36/36 casts using the first policy seed, with complete deterministic JSON replay. Full interactive, art and narrative QA remain. Return to ready for remaining quest scope.
+
+Actual atlas fishing destinations added in Kind Robots fcb624c2: lake plus four quest-gated regional waters, location-specific species draws, locked/depleted access messaging, saved location and shared preview/catch parity, first-person regional art fallback. Legal quest route and 64-seed regional catch regression assertions added. CI pending; art delivery and full editorial/policy-matrix verification remain separate.
+
+Completed the finite quest-depth and fishing-location implementation. Kind Robots #5880 merged at 4eb3bdef8de2d461993f26c3fc732a7a2f8b39f8 after all eight exact-head workflows on 0d2aefaefbff417403666cb66ef145ebdcabfd72 succeeded, including Ruler Hooked 45776956201 (job 139762809986) and Contract Tests 45776956141. Four additional actual fishing destinations unlock or close through kingdom choices, with persistent regional species pools and 64 seeded preview/reward parity assertions. The prior merged delayed/cross-faction petitions, family consequences, finale accounting and legal four-ending witnesses (#5855) cover the implementation scope. Full editorial audit, delivered art, expanded adversarial policy matrix and rendered acceptance are explicitly owned by t-046/t-047/t-049/t-050; no claim that those are complete. Release t-046 for its independent audit rather than repeating implementation slices indefinitely.
+<!-- note:end t-045 -->
+
+## t-046 — Audit and polish every kingdom quest, faction arc, NPC choice and ending
+
+<!-- note:begin t-046 -->
+Master completion issue kind_robots#4144. Inventory the entire card/deck, arc, faction, visiting NPC, multi-day choice and ending graph, then polish all story prose, dialogue, delayed callbacks and narrative consequences to Emperor of Dust standards for long-running depth. Ensure nuanced different philosophies, no generic consequence funnels, meaningful failure scenes, multiple revisits and every ending graph prerequisite. Provide full-run edited transcript evidence and make missing arcs/tasks explicit; no outstanding substantial text rewrites.
+
+Editorial implementation at kind_robots 6072f27a: 45 prose revisions, five alternate arc conclusions, meaningful bargain/exile/one-time-event consequences, public dock fishing access, structural audit of every card and arc edge, all terminal arc path transcripts and complete four-ending reign transcripts from actual choice logs. Existing scenes reused. CI pending; inspect gameplay logs and assess acceptance before closing.
+
+Verified Kind Robots #5891 merged at bf8f50993e631a308d9fed3e08dbe3183dc95f11. All eight exact-head PR workflows on 527392fbf61ccc5c9bfbccf63758026f1cbb5c2e passed and branch janitor 45811156863 succeeded. Inspected gameplay run 45808488376 job 139870045123: 60 narrative cards, six arcs, 25 terminal arc transcripts and four complete legal finale transcripts at 35/35/36/36 casts, with all gameplay self-tests successful. The merged editorial implementation adds 45 passage revisions and five alternate arc conclusions and fixes one-time grants, bargain and exile consequences and public dock access. Close the editorial task; comprehensive stochastic policy coverage belongs to t-049, actual art reconciliation/inspection to t-047, device QA to t-050/t-061. No rendered or deployment claim.
+<!-- note:end t-046 -->
+
+## t-049 — Full policy-matrix kingdom simulator and witnessed complete ending graph
+
+<!-- note:begin t-049 -->
+Master completion issue kind_robots#4144. Simulate compassionate, selfish, greedy, industrial, nature-positive, chaotic, fishing-only, completionist, diplomatic, low-resource, deliberately unlucky and exploiter runs. Verify all map location gates and closures, ecology and fish availability by world state, NPC arc/relationship consequences, impossible predicate detection and ALL authored endings from legal new-game seeds/actions. Require all quests/branches outcome coverage, save/load determinism, meaningful route difference and no softlocks; publish replay witnesses, full ending graph and independent editorial reports.
+
+Kind Robots 7790cbe1 adds twelve distinct seeded policy agents, 144 full reigns with actual timing-stop encounters, regional unlock/closure checks, catch/reward parity, legal choices, duplicate purchase and invalid input checks, per-policy deterministic save replay and explicit coverage gaps. Exact-head CI is required; existing four legal ending witnesses remain in the same test. Full branch coverage and actual observed results must be reconciled before closure.
+
+PR kind_robots#5909 merged 482b11bac738d2c21706e12af5bd2675a121085f; exact head 4695f0b0868042c95e08b547fc50bc7af217af36 all eight workflows completed success. Ruler Hooked run 45906232561 job 140203640882 logs verified 144 policy reigns, 16959 attempts, 2558 escapes, 89 purchases, 142 distinct worlds, all five destinations, 152/152 authored choices with no uncovered choices, ten targeted replay witnesses and four legal ending witnesses at 35/35/36/36 casts. Earlier editorial PR #5891 supplies independent narrative review and terminal arc transcripts. Art and rendered device acceptance remain separate tasks.
+<!-- note:end t-049 -->
+
 ## t-052 — Playbook Forge upgrade: literal Krea 2 prompts for 87 beats and the missing encounters and quests
 
 <!-- note:begin t-052 -->
@@ -678,6 +743,18 @@ Delivered via silasfelinus/kind_robots#4837, merged squash SHA 2f2bae82c5868bbe7
 <!-- note:begin t-056 -->
 2026-11-05 PT, Silas in session with four ChatGPT concept screens (Lake, Map, Court, Fishopedia): "We need a massive overhaul of the ruler is hooked. The current version looks like a janky webapp. This concept art ... is a little too shiny freeware style, but it's a lot closer to what we want in terms of an illustrated, art heavy design that doesn't look like a webapp. We need a significant redesign, fish, backgrounds, plus tutorial, daily kingdom events, illustrated characters, etc." ROOT CAUSE FIRST: 126 of 150 planned renders existed on media.acrocatranch.com but every /images/ruler-hooked/* request 404'd on kindrobots.org, because the image route only remote-fell-back for academy/ (fixed by kind_robots#4828, merged). SHIPPED (kind_robots#4834, merged, CI green): a full-bleed console with HUD meters, painted tabs, a first-person lake, court petitions with presenter portraits and effect-chip choice cards, a postcard Kingdom Atlas, gear, a Fishopedia plate and carousel, Quill's situational tutorial (utils/rulerHooked/tutorial.ts), and the Town Crier's daily proclamations (utils/rulerHooked/dailyEvents.ts: per in-game day, never expire, nudges not gates). Verified with vue-tsc, lint, the layout contract, 13 selftests and a local Chromium playthrough at 1440 and 390 widths. Built in the storybook palette BEFORE the same day's Chronicle + Broadside decision (t-054). That decision supersedes the look; t-054 owns the restyle and builds on this structure. Needs a Force Update to reach kindrobots.org.
 <!-- note:end t-056 -->
+
+## t-057 — Restyle the console art lane to Chronicle + Broadside, then stage and render it
+
+<!-- note:begin t-057 -->
+build_ruler_hooked_art_queue.py has a `console` lane: 28 entries whose image_path keys match what kind_robots utils/rulerHooked/artLibrary.ts loads. They are 5 screen backdrops, 5 nav-tab vignettes, 10 daily-proclamation scenes, 7 gear/kingdom still lifes, and a real Quill the Steward portrait (character-steward-quill.webp rendered as a literal feather pen; the console skips it). The lane was written in the storybook register and DELIBERATELY NOT STAGED, because Silas picked Chronicle (world) + Broadside (documents) the same day (t-054). Re-voice CONSOLE_FINISH and the prompts: backdrops, tabs and the map in Chronicle; proclamations and gear notices in Broadside. Then stage with `--write --lane console` and spot-check in place. Coordinate with t-054 so the frame and backdrops agree.
+
+Silas rejected the Chronicle/Broadside medieval treatment on 2026-11-06 PT. Worker restyled the generator to psychedelic rainbow fantasy with restrained screenprint grain, updated 28 console ArtJob queue rows in place (pending, force true), restyled the Kind Robots console chrome, and made the newer direction authoritative in art-direction and t-054 notes. Conductor and Kind Robots implementation PRs under review; renders and deployed visuals are not yet verified. Opaque layer compositing remains t-059.
+
+Reconciled historical review: Conductor #7114 and #7155 merged with all applicable workflows successful; Kind Robots #4857 and #4882 merged with all returned checks successful. Latest central art-prompts.yaml records 28/28 console rows done with source URLs and 28 ArtJob IDs (65298–65324 with 68336 and 68337 replacements). Rainbow direction supersedes the old title. Existing runtime chains are in artLibrary.ts. Direct media probe failed DNS in this environment; actual byte/visual inspection remains t-057/t-047/t-061. Do not resubmit these done rows; return ready for verification, not done.
+
+Original 28/28 console entries are done with concrete ArtJob IDs 65298–65324 (68336 and 68337 replacements), and current main artLibrary resolves the matching backdrops, tab vignettes, original proclamations, gear and Quill portrait. Conductor #7114/#7155 and Kind Robots #4857/#4882 already merged green. Owner's 2026-11-26 main-game standard presumes completed generated art delivered; unavailable direct media inspection is not a separate graduation prerequisite. The 18 later proclamation requests from merged Conductor #8116 belong to t-047; old-build fallback observations and actual device evidence remain t-061/t-050. No current deployment or visual pass claimed.
+<!-- note:end t-057 -->
 
 ## t-059 — Reconcile the compositing contract with the opaque region layers that actually rendered
 
@@ -743,6 +820,20 @@ Replaced classic reel/slack webapp buttons with one-input mouse/touch/Space stop
 Merged kind_robots PR #4853 as 65109678d792ae0222ab93f1d54f9a1785888141. Classic fishing now uses a single animated water-and-bobber stop interface (Space/Enter/click/tap), drifting bands and sudden fish surges; underlying deterministic encounter/timing system preserves fish rarity, profiles, gear, catch rewards and replay behavior. Quiz mode remains independent and pinned per cast. All ten PR workflows completed successfully. Self-hosted deployment separate and unverified.
 <!-- note:end t-065 -->
 
+## t-066 — Playtest fixes: readable rainbow court, findable quiz mode, quiz/flag fixes, and rainbow restage of the held regal-style art
+
+<!-- note:begin t-066 -->
+Silas, 2026-11-07/08 PT playtest: decree descriptions buried in a barely-visible inner scroll box; court styling should match the rainbow fishing screens; "where is the advancement where we can change the fishing minigame to mandarin or other quizes?"; Mandarin tutor info should take more space and its bottom button was barely clickable; no repeated info sheet after a correct answer (only after a wrong one); do not give answers before testing on flags or capitals; real flags, not initials; "resubmit / rewrite any art in the regal motif".
+
+kind_robots#4898: edict panel (painting, full petition text, petitioner) beside the decree hand with stage-height card sizing and no inner scroll; court panels, ledgers, ribbons and presenter frame in the indigo/spectrum/neon fishing look; Classic/Learning switch and subjects link under Cast a line; quiz dock bounded between HUD and nav, near-full-width study sheet, two-column Mandarin field guide; correct answers land the fish immediately; only Mandarin keeps a study-first preview; flags are bundled SVGs (flag-icons, MIT) in public/flags. Verified in headless Chromium at five viewports; vue-tsc, Prettier, ESLint and Ruler Hooked selftests pass locally.
+
+Merged kind_robots#4898 as ee6c253656f2dfea57f09c230f4bf2cee215dea9 after all PR checks passed on c8d954d (the one red Contract verifiers run belonged to the superseded head, whose shard 1 was cancelled by the follow-up push). Self-hosted deployment not verified.
+
+Conductor: Silas's 2026-11-08 instruction releases the #7122 hold. build_ruler_hooked_art_queue.py --include-layers --write --restage rewrote all 169 stale rows (165 held + 4 done whose prompts changed) to pending, force: true, with the rainbow prompts; --check is clean. read_regions now parses t-054 ramp states and the trailing pins block (it exited on the layer lane before), with a regression test. Renders and in-game visual verification still to follow.
+
+Reconciled the explicitly scoped UI/quiz fixes and art RESTAGE task. Kind Robots #4898 merged ee6c253656f2dfea57f09c230f4bf2cee215dea9; all eight latest-head PR workflows on c8d954d succeeded, including Ruler Hooked 42427800529 and layout 42427800536; branch janitor succeeded. Conductor #7155 merged e0e1c45b89165c1f96f0145cdf3cfe0379ce54dc with all five applicable workflows successful (one skipped), including Worker PR CI 42428385261. That PR restaged all 169 outdated regal prompts in the rainbow style and fixed the region parser. This closes the UI changes and queue restage only, not delivered art or current production visual acceptance; those remain t-047/t-057/t-061/t-050.
+<!-- note:end t-066 -->
+
 ## t-068 — The Ruler Is Hooked achievement upgrade: 12 or more live achievements
 
 <!-- note:begin t-068 -->
@@ -805,6 +896,16 @@ Committed source roster census and hermetic count-format regression at 7d9c515. 
 
 Reviewer 2026-11-23 PT: #7914 was red (6 fixture failures from stubbing read_cast/read_regions to None). Rescued in conductor#7916 with empty-roster stubs (mechanical drift, no pass consumed), plus a main bug fix: t-072's duplicate guard crashed every live --check with KeyError 'outcomeKey'. Live census against kind_robots 4c0f092b: cast 11 · fish 36 · cards 57 · regions 8. Kaizen: t-074.
 <!-- note:end t-073 -->
+
+## t-074 — Review and restage the 8 ruler-hooked card prompts that drifted from upstream card text
+
+<!-- note:begin t-074 -->
+Kaizen from reviewer of conductor#7916 (t-073, 2026-11-23 PT). Once the outcomeKey crash was fixed, live `build_ruler_hooked_art_queue.py --check` reported 0 missing and 8 stale card rows (e.g. card-marina-family-charter, card-water-rights-hearing) because kind_robots card text changed. Check each prompt diff against the art-prompt contract, then `--write --restage --lane card` so --check exits clean. Art-queue only.
+
+Eight previously rendered but now text-drifted quest card scenes restaged as force/pending auto_submit with superseded ArtJob provenance. Patch 0b6db772 also sets the canonical /play URL and tests the regenerated queue rows. CI and delivered paints pending.
+
+Verified Conductor #7936 merged at 59986f9a and its latest handoff check passed. Follow-up #7940 merged at 3a9539f2 with four successful applicable workflows (one skipped), including Worker PR CI 45292647002 and Ruler Hooked Alpha Audit 45292646729. Its reported generator --check found 226 entries and zero stale prompts, and 60 targeted tests passed. The eight prompt restages are complete; actual delivery/visual inspection remains t-047 and is not certified by this closeout. Known newly assigned job 76977 for treaty-reckoning is not a verified delivered paint.
+<!-- note:end t-074 -->
 
 ## t-075 — Test that the fish roster slugs, Kind Robots runtime fish and staged art-request ids stay one-to-one
 
