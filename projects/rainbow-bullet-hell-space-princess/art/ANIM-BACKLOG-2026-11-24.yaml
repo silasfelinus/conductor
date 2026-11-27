@@ -2422,6 +2422,7 @@ subjects:
       status: DONE
       art_image_id: 280914
 - key: idle-b07-phase1-v2
+  verdict: 'reject: 2026-11-27 PT review, first rendered take; on model but near-static, the head and coils barely shift (keyed motion 0.86 against 74.7 for the kept halo-fin-v3 on the same scale); retake as v3 with a big head sway and a visible coil roll'
   lane: wan-mp4
   entity: sprite-animation
   title: b07-phase1 idle loop
@@ -3797,6 +3798,7 @@ subjects:
       status: DONE
       art_image_id: 280895
 - key: idle-petal-wing-v3
+  verdict: 'reject: 2026-11-27 PT review, final take; it moves (motion 28.4) but tumbles end over end, flips to show the navy underside and changes silhouette between cells, so it is off model and cannot loop in place; petal-wing stays a still, per the three-take rule'
   lane: wan-mp4
   entity: sprite-animation
   title: petal-wing idle loop
@@ -3820,6 +3822,7 @@ subjects:
       status: DONE
       art_image_id: 280916
 - key: idle-guardian-clawstrike-v4
+  verdict: 'reject: 2026-11-27 PT review, final take; on model but near-static, no visible breath, pincer or cannon movement (keyed motion 0.96 against 74.7 for the kept halo-fin-v3); guardian-clawstrike stays a still, per the three-take rule'
   lane: wan-mp4
   entity: sprite-animation
   title: guardian-clawstrike idle loop
@@ -3934,3 +3937,20 @@ subjects:
     wan-mp4:
       status: PENDING
       art_image_id: null
+- key: idle-b07-phase1-v3
+  lane: wan-mp4
+  entity: sprite-animation
+  title: b07-phase1 idle loop
+  asset: rainbow-princess-art/doodle/anim/b07-phase1-idle
+  size: 832x560
+  seed: 1127701
+  source_url: /rainbow-princess-art/doodle/bosses/b07-phase1.webp
+  last_image_id: /rainbow-princess-art/doodle/bosses/b07-phase1.webp
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: The coiled glassy blue sea serpent lifts its head high and swings it clearly left then right in a big
+    slow sway, its jaw opening and closing, while a strong wave rolls along its coils from neck to tail. Locked view,
+    exact outline, the same blue glass and dark net scales in every frame, flat lime-green backdrop all around,
+    glossy airbrushed doodle.
