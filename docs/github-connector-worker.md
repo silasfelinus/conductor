@@ -126,7 +126,7 @@ After creating an event:
 
 ## TALKBACK and learning closeout
 
-Append required TALKBACK entries by page-fetching the complete current file, appending new text without modifying existing entries, and updating it with the exact current blob SHA.
+Append only actionable unresolved critique, challenges, escalation or material patterns to TALKBACK, by page-fetching the complete current file and preserving all existing entries with the exact blob SHA. A routine successful close needs its PR/receipt and learning outcome, not another TALKBACK entry. Never use completed-task feedback as a source of future work; see [completion lifecycle](agents/completion-lifecycle.md).
 
 Prefer the task event's `learning` payload for `done` and `blocked` outcomes so the processor appends `LEARNING.yaml` safely.
 

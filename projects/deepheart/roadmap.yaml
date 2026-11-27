@@ -21,7 +21,7 @@ milestones:
   - id: m3
     title: "DEPTH - support and romance writing, balance, account saves, sound"
     weight: 20
-    status: in-progress
+    status: done
   - id: m4
     title: "ART & SHIP - every picture rendered, adversarial QA, playtest handoff"
     weight: 30
@@ -190,7 +190,11 @@ tasks:
       App head bb973f1a restores three completed scrapbook receipts (jobs 69533-69535, ArtImages 273877-273879) for duo and guardian victories; adds all-ending and cast art coverage assertions. Full-party historical job 69532 explicitly depicts dwarf/elf rather than current animal-folk canon; held out pending suitable replacement. No duplicate jobs or mature asset changes. Return ready after partial merge; support art and remaining canon/gate reconciliation still outstanding.
 
       Kind Robots #5952 merged a07a0156; all seven exact-head workflows and branch janitor green. Three scrapbook plates restored; all cast and distinct ending art assertions passed. Remaining full-party canon repaint and support art reconciliation outstanding.
-    updated: '2026-11-27T05:00:33Z'
+
+      Conductor commit c89b27b3 commissions one private Krea 2 Four at the Stair repaint using the current animal-folk spec and the unchanged moment:full-party node. All ten existing art ledgers checked; only legacy job 69532 / ArtImage 273876 depicts the obsolete dwarf/elf group. No duplicate pending replacement. After merge return ready pending job receipt, integration and delivery verification.
+
+      Conductor #8123 merged 2d8b21e4; all four exact-head workflows passed. Canon full-party repaint brief is on main; no ArtJob receipt yet. Return ready for integration and actual delivery verification.
+    updated: '2026-11-27T08:06:08Z'
   - id: t-013
     milestone: m4
     title: "Adversarial seeded playthroughs and 390/768/1440 px checks"
@@ -261,9 +265,9 @@ tasks:
     title: "Complete canon-consistent scrapbook, support scenes and relationship art"
     status: review
     owner: worker
-    claimed_by: 2026-11-27T054100Z-deepheart-t-018-f6c03a
-    claimed_at: '2026-11-27T05:41:00Z'
-    updated: '2026-11-27T05:41:00Z'
+    claimed_by: 2026-11-27T080700Z-deepheart-t-018-1c8f72
+    claimed_at: '2026-11-27T08:07:00Z'
+    updated: '2026-11-27T08:08:00Z'
     depends_on: t-007
     passes: 0
     stakes: reversible
@@ -279,3 +283,11 @@ tasks:
       Kind Robots #5921 merged 288fcb85; exact PR head e3517e0a has seven completed successful implementation workflows plus successful branch janitor. All 35 support unlock mappings are integrated, with original IDs preserved. Art delivery, curation and ending/artifact audit remain outstanding. Return ready, not done.
 
       App commit 31ca132c maps four completed support art receipts (jobs 77507-77510; ArtImages 280822-280825). All keys match existing authored scrapbook entries; checked distinct IDs and absence of collisions. Preserve earned discovery and maturity filters. Remaining 31 renders pending; return ready after green merge.
+
+      Kind Robots #5956 merged ffa95400; all seven exact-head workflows and branch janitor completed successfully. Four completed support illustrations wired (jobs 77507-77510, ArtImages 280822-280825). Return ready for remaining renders and curation; no new art jobs.
+
+      App commit 44dbb433 wires 25 additional DONE support receipts (jobs 77511-77535, ArtImages 280826-280850), making 29 of 35 support plates mapped. Checked all IDs against authored scrapbook and engine, no duplicates or collisions. Six render receipts pending; authenticated media and visual curation not verified. Return ready after green merge, not done.
+
+      Kind Robots #5966 merged 26d4cad6. All seven exact-head implementation workflows and branch janitor passed. Twenty-five additional support plates mapped; 29 of 35 total. Jobs 77536-77541 remain pending in the ledger. Return ready for remaining receipts and authenticated visual/media verification.
+
+      App commit b8ec8df1 keeps earned support paintings visible for successful second-tier campfire conversations, while rejected or stale actions clear presentation and cannot reveal art. Added regression assertions for first and second tiers, romance-off refusal, stale action, and unchanged earned moment list. Return ready after merge for six remaining render receipts and delivery checks.

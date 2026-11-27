@@ -56,6 +56,7 @@ jobs:
           git sparse-checkout init --no-cone
           git sparse-checkout set --no-cone \
             '/projects/*/roadmap.yaml' \
+            '/projects/*/HISTORY.md' \
             '/project-overrides.yaml' \
             '/task-events/*.yaml' \
             '/task-events/failed/*' \
@@ -110,6 +111,9 @@ jobs:
             # Run in this serialized, fetch/retry-safe writer so a newer claim wins.
             python3 scripts/reconcile_stale_claims.py --apply
             python3 scripts/process_task_events.py || had_error=1
+            # Existing serialized writer owns completion compaction too. A
+            # declined archive retains the original and is reported separately.
+            python3 scripts/compact_completed_roadmaps.py
             python3 scripts/validate_roadmaps.py
 
             if git diff --quiet && git diff --cached --quiet; then

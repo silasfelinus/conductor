@@ -82,15 +82,12 @@ tasks:
     direction, and the offline-at-runtime rule.
 - id: t-067
   title: 'Main-game standard: audit and close the gaps for The Ruler Is Hooked'
-  status: review
-  owner: worker
-  claimed_by: 20261127T054008Z-ruler-t067-audio-5e8c2a
-  claimed_at: '2026-11-27T05:40:08Z'
+  status: ready
   milestone: m6
   stakes: reversible
   passes: 0
   depends_on: []
-  updated: '2026-11-27T05:43:08Z'
+  updated: '2026-11-27T07:00:00Z'
   note: |-
     Silas 2026-11-11 PT, in session: "Our games should all have a base standard of quality ... We want our main games to have 12 plus achievements." Standard: docs/agents/main-game-standard.md; CONTROL.md global overview.
 
@@ -143,6 +140,8 @@ tasks:
     Kind Robots c59c0464108bf70cbf86acdae7794933538e584e repairs gesture-based audio recovery when a previously unlocked browser context is interrupted, suspended or closed. Recreates a closed context without duplicate timers; preserves settings and muted/hidden behavior. Added audio lifecycle self-test to the Ruler Hooked workflow. Exact committed audio logic and test passed 28 assertions in an isolated JS runner with simulated AudioContext. Real audible/browser and authenticated cross-device QA remain; partial t-067.
 
     App commit c59c0464108bf70cbf86acdae7794933538e584e recovers suspended, interrupted and closed audio contexts on user gestures and adds a mocked lifecycle regression in Ruler Hooked CI. Actual browser playback and CI remain unverified.
+
+    Verified Kind Robots #5960 merged at 01a6fd610eaaa4cd5652df9dde17975fbb278dbe. All eight exact-head PR workflows and branch janitor succeeded on c59c0464108bf70cbf86acdae7794933538e584e (Ruler Hooked 45947491289, Contract Tests 45947491404, janitor 45951410751). Audio recovery delivered; actual audible playback and authenticated cross-device evidence remain. Return ready; no deployment claimed.
 
 - id: t-068
   title: 'The Ruler Is Hooked achievement upgrade: 12 or more live achievements'
@@ -959,7 +958,11 @@ tasks:
     Kind Robots commit 8e71644505007f72d6f5f30fcbb6ce5fccec086f fixes transient catch/escape reveal dismissal across console navigation and labels finale navigation correctly. Added source-contract regression and real responsive audit assertion. Partial t-048; actual live device input evidence remains outstanding. No save format changes.
 
     Kind Robots #5945 merged 48004de98402d171b627e73115568163b5513528; all eight exact-head workflows and branch janitor 45941558644 passed. Catch reveal dismissal and finale label repair delivered; latest live device verification remains shared with t-061/t-050. Return ready.
-  updated: '2026-11-27T04:49:00Z'
+
+    Kind Robots 5bc11c8edd948e6ae3001298cdd15175377c98aa prevents spending on kingdom works that cannot improve any affected slider; displays actual clamped gains and disables saturated purchases. Added 404 health/catalog cases and 100 repeated saturated clicks, including a partially saturated shrine. Independent arithmetic model passed 404 cases; actual TypeScript selftest and CI pending. Partial t-048; live input QA remains.
+
+    Kind Robots #5967 merged 5299489457f04f6a2635820a4ec6c616a5cbe9aa after all eight exact-head workflows on 5bc11c8edd948e6ae3001298cdd15175377c98aa passed (Ruler Hooked 45961936324, Contract Tests 45961936351). Saturated purchases now reject spending and partial gains are displayed accurately; 404 health/catalog cases and 100 repeated capped purchases covered. Remaining real-device input verification shared with t-061/t-050; return ready. No deployment claimed.
+  updated: '2026-11-27T08:16:00Z'
 - id: t-049
   milestone: m6
   title: Full policy-matrix kingdom simulator and witnessed complete ending graph
