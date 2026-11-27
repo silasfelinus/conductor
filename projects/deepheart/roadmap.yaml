@@ -180,10 +180,7 @@ tasks:
   - id: t-012
     milestone: m4
     title: "Every picture rendered, delivered, URL-verified and wired (set src / RENDERED_ART)"
-    status: review
-    owner: worker
-    claimed_by: 2026-11-27T105100Z-deepheart-t012-c583a9f1
-    claimed_at: '2026-11-27T10:51:00Z'
+    status: ready
     depends_on: t-011
     passes: 0
     stakes: reversible
@@ -203,7 +200,9 @@ tasks:
       Kind Robots #5977 merged 286ac884; seven exact-head implementation workflows passed on f16d7a2f (Playbook Kit run 45976884012). Branch janitor run 45981473535 was cancelled. Full-party job 77563 remains PENDING. Actual live media verification remains unavailable (token absent, curl DNS failure). Return ready for delivery and curation, not done.
 
       Full-party Krea 2 job 77563 now DONE in FULL-PARTY-REPAINT-2026-11-26.yaml, ArtImage 280883. Kind Robots commit bb1ca511 maps the original moment:full-party slot to that ID, excludes obsolete 273876, and asserts distinct nonempty sources for every scrapbook moment. No new art jobs or save changes. Return ready after green merge if live authenticated delivery, visual curation, or private romance verification remains incomplete.
-    updated: '2026-11-27T10:53:00Z'
+
+      Kind Robots #5984 merged fd7c854e after all seven implementation workflows and branch janitor passed (Playbook Kit 45985738848). All 95 distinct scrapbook art sources pass coverage; full-party job 77563 / ArtImage 280883 wired. Return ready solely for actual delivery, visual curation and remaining maturity verification.
+    updated: '2026-11-27T11:07:00Z'
   - id: t-013
     milestone: m4
     title: "Adversarial seeded playthroughs and 390/768/1440 px checks"
