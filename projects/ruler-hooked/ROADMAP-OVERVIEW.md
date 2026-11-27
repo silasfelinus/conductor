@@ -1,0 +1,5 @@
+# ruler-hooked: project outline
+
+The Ruler wants to fish rather than rule. No visible ruler outside coronation/player creation. Current psychedelic rainbow fantasy supersedes older medieval Chronicle/Broadside art. Three fishing modes, meaningful decisions, ecology, shop, factions, fish catalog, multiple endings and offline saves. FULL-GAME-GAP-AUDIT.md is historical PoC context, not a completion percentage. Remaining t-047 art, t-048 fairness/economy, t-057/058 restyle/expression delivery, t-067 main-game standards and live account/device proof, t-061/050 actual rendered QA, t-051 full readiness dossier. t-032 final human subjective verdict is post-readiness, not approval to publish. Keep #4144 open until verified playtest handoff.
+
+Live task IDs/state/dependencies: [roadmap.yaml](roadmap.yaml). Original acceptance: [master issue #4144](https://github.com/silasfelinus/kind_robots/issues/4144), current CONTROL and design references. Verify actual current evidence before closing. [History](ROADMAP-HISTORY-2026-11-26.md) preserves replaced text.
