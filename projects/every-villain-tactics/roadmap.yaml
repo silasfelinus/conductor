@@ -257,11 +257,11 @@ tasks:
   - id: t-010
     milestone: m3
     title: "Henchmen, lackeys, guests and smart tactical enemy behavior"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 20261127T035330Z-evt-voices-21c7
     claimed_at: '2026-11-27T03:53:23.634Z'
-    updated: '2026-11-27T03:53:23.634Z'
+    updated: '2026-11-27T03:55:30.139Z'
     depends_on: t-007
     passes: 0
     stakes: reversible
@@ -275,6 +275,8 @@ tasks:
       Kind Robots commit 4dbfd8249a5f458d92beb486c0f3620a9f19d6c2 adds risk-aware flanking with actual outgoing hit, incoming exposure, overwatch cost and legal AP; normal rivals avoid active hazard destinations, use directional exposure to break advance ties, and spend remaining AP guarding after firing. Extracted committed planner/combat geometry passed 18 assertions; seeded full-turn regression added. Full CI pending; named crews and full-game AI acceptance remain. Partial scope, return ready after merge.
 
       Kind Robots #5931 merged 3ef1bf0ca63ffb81b6753ef0c9e30dbccab668f6; seven latest-head workflows and all four contract shards passed. Risk-aware flanking, safe ordinary movement and post-attack guarding verified in seeded combat regression. Partial scope: named crews and full-run AI acceptance remain.
+
+      Kind Robots commit 3c5352069b7d2c4e3958b115dc60bf566ecc3da5 adds 48 canonical companion motives, 144 distinct lines and explicit mark/guard preferences for new Crossfire First Bell support decisions, preserving old behavior. Actual chosen voice appears in combat events; refusals guard, fallen actors never act. Extracted committed planner/resolution passed 771 assertions, permanent full-engine tests added, CI pending. Partial scope; named one-hit crews and wider recruitment/reversal/AI acceptance remain.
   - id: t-011
     milestone: m3
     title: "Save, fork, share and browse versioned community levels"
