@@ -206,3 +206,7 @@ for hours draws a medic rescue, and medic and worker fixes then race.
 **Decision:** Cleared draft after canonical review, inspected test-only patch and seven completed successful exact-head workflows at `a0ac6c5`; squash-merged `ebbfd8779d66cfc704520bdee13ab161d77b1a4e`. Seeded gameplay job passed. Full-term canonical regression covers 48 identities, 1392 nights, at least 36 resolved cases and four grades. Partial scope: return ready, retain patrol art and identity-specific consequence work. No release or art approval.
 
 **Pattern:** Real action traces and round-trip assertions are stronger evidence than deck inventory. Next verify the remaining identity-specific outcomes and delivered art.
+
+## 2026-11-26 PT | Reviewer | t-016 | Kind Robots #5949
+
+**Reconciliation:** Verified existing merge `9bba5b59` and eight successful substantive workflows plus branch janitor on exact head `2954356`. Keeping an earned mantle is distinct from switching roles; legacy saves remain valid. Partial; personal arcs and relationship/art/QA remain. Return ready.
