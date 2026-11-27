@@ -79,12 +79,12 @@ tasks:
       images asserted as live.
   - id: t-028
     title: 'Main-game standard: audit and close the gaps for Save the Plumber'
-    status: ready
+    status: claimed
     milestone: m6
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-27T08:17:00Z'
+    updated: '2026-11-27T08:48:00Z'
     note: |-
       Main-game standard: use STANDARD-AUDIT-2026-11-12.md and docs/agents/main-game-standard.md. Verify title, settings, persistent saves, 12+ achievements (separate task), scrapbook, multiple painted endings, customizable heroine and three replay hooks. Recorded merges #5722, #5772, #5773, #5832, #5843, #5883, #5884, #5890, #5896 and #5901 delivered settings/contrast, achievement browser, separate New Game/Continue, three endings/epilogues, reset, taunts, reading options, name entry and repaired engine tests. Latest receipt #5901 at 9debf882 reports all 17 exact-head checks passed. Remaining: global account-backed saves and permanent unlocks across devices (reload, account isolation and reset), actual earned/deduplicated achievement records and generated badges, complete scrapbook including run outcomes and locked counts, distinct delivered painted ending plates, rendered finale/gallery screenshots and accessibility against the current main-game standard; do not repeat shipped controls. No production deployment verified. Keep ready until actual visual/acceptance evidence. Full prior note: ROADMAP-HISTORY-2026-11-26.md#t-028.
 
@@ -95,6 +95,9 @@ tasks:
       Added three-way save reconciliation for independent slot changes, explicit same-slot conflicts, intentional slot erasure, monotonic album and Endless records. Added regression assertions for first sync, conflicting progress/erase, remote-only progress and independent slot edits. App branch worker/save-the-plumber-t-028-reconcile-2e67 at 783fe8ebbe453373bf74334cf3e4bcc99e7b2b66. CI pending. Partial scope; wire client account synchronization and conflict handling next.
 
       PR kind_robots#5968 merged at 07336ae9; all ten implementation workflows and fifteen individual checks passed on c37da08e (autofix job correctly skipped). Conflict-safe three-way save reconciliation and slot/album regressions delivered. Partial scope: wire client account synchronization, isolation and explicit conflict handling; other main-game acceptance remains. Production deployment unverified.
+    owner: worker
+    claimed_by: plumber-sync-client-20261127T0848Z-b7f39a
+    claimed_at: '2026-11-27T08:48:00Z'
   - id: t-029
     title: 'Save the Plumber achievement upgrade: 12 or more live achievements'
     status: done
