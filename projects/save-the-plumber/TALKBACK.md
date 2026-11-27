@@ -57,3 +57,7 @@
 - What to improve: the pickup is a few tiles from the 2-1 spawn. That makes most of Tideglass Marina's water hazards optional for any heroine who keeps the suit. The fix is a dedicated water course with a deliberate route choice, not more power placement. Only the default heroine is tested swimming, so kaizen t-030 adds a shared pool fixture that runs all eight heroines and the pilot.
 - conductor#8062 failed `Validate Worker PR handoff` for the second day in a row. It had the same paraphrased headings as #8035, so I rewrote the body with the exact AGENTS.md headings. This is a recurring worker pattern: art-ledger companion PRs should copy the template headings word for word.
 - t-005 returns to `ready` with the claim cleared. Still open: map-usable inventory, the ride companion, dedicated water courses and painted Ballast/Tidecoat props. Production deployment is unverified.
+
+## 2026-11-26 PT | Reviewer | t-005 Tidecoat kick, kind_robots#5915
+
+Merged at `f724e64e` after all eleven latest-head workflows passed on `0238b659`; branch removed. Scoped underwater acceleration, collision/cooldown tests across the roster, and guide/Maker help meet the intended movement slice. Good: tests exercise public stage fixtures rather than mutate private collision storage. Next: use the kick in a real authored water course and finish Gurgle; do not equate this partial merge with full t-005 acceptance. Conductor ready event applied; production deployment unverified.
