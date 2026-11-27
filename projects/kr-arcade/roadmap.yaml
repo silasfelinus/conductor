@@ -1417,10 +1417,8 @@ tasks:
   - id: t-085
     milestone: m8
     title: "Pixel Hop depth slice 3: Glacier Moon and Clockwork Planet"
-    status: review
-    owner: worker
-    claimed_by: 2026-11-23T165353Z-kr-arcade-t-085-k7m2
-    claimed_at: '2026-11-23T16:53:53Z'
+    status: ready
+    owner: null
     passes: 0
     stakes: reversible
     depends_on: t-084
@@ -1434,8 +1432,13 @@ tasks:
       back to ready.
 
       Partial Clockwork Planet implementation on worker branch: six conveyor and gear stages, two colour schemes, planet map entry. Boss and picture finale remain to be authored; keep task ready after merge.
-    updated: '2026-11-23T17:02:00Z'
-    implementation_pr: 'silasfelinus/kind_robots#5659'
+
+      2026-11-26 PT, Silas-directed finite-roadmap clearing: verified
+      https://github.com/silasfelinus/kind_robots/pull/5674 merged as partial scope. Clockwork
+      enemies, picture board, Grandfather Cog and complete planets 3-4 QA remain. Returned to
+      ready; no human approval or deployment inferred.
+    updated: '2026-11-27T06:06:54Z'
+    implementation_pr: 'silasfelinus/kind_robots#5674'
 
   - id: t-086
     milestone: m8
