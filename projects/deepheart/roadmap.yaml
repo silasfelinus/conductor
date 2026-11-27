@@ -180,7 +180,7 @@ tasks:
   - id: t-012
     milestone: m4
     title: "Every picture rendered, delivered, URL-verified and wired (set src / RENDERED_ART)"
-    status: ready
+    status: done
     depends_on: t-011
     passes: 0
     stakes: reversible
@@ -206,7 +206,15 @@ tasks:
       Kind Robots commit 384ee946 adds a read-only Deepheart Live Media Audit workflow, restricted to trusted main, with existing CI API authentication scoped to the audit step and fixed production origin. Automatically runs after relevant main changes; no new credentials or production writes. Live audit still needs successful execution and pixel/maturity curation before closure.
 
       Kind Robots #5987 merged e19b17ce. Main-only media audit is integrated; live run evidence is still unavailable through the PR-only workflow listing. Return ready for delivery and curation, not done.
-    updated: '2026-11-27T18:01:38Z'
+
+      Live audit closes delivery: Deepheart Live Media Audit run 46021674043 on main e19b17ce
+      verified 257/257 mapped normal ArtImages (anonymous route 404, admin-authenticated
+      delivery, same-origin redirect, anonymous direct path denied, valid image signatures).
+      Route rejects isMature images and the registry asserts no private/after-hours keys, so
+      mature art stays out of normal surfaces. Per main-game-standard item 10, visual curation
+      is not a closure blocker. Pre-anthro ending plates 273934-273942 are re-commissioned
+      under t-018 (ENDING-PLATES-ANTHRO-2026-11-27.yaml).
+    updated: '2026-11-27T21:51:08Z'
   - id: t-013
     milestone: m4
     title: "Adversarial seeded playthroughs and 390/768/1440 px checks"
@@ -275,8 +283,8 @@ tasks:
   - id: t-018
     milestone: m4
     title: "Complete canon-consistent scrapbook, support scenes and relationship art"
-    status: claimed
-    updated: '2026-11-27T21:47:42Z'
+    status: ready
+    updated: '2026-11-27T21:51:11Z'
     depends_on: t-007
     passes: 0
     stakes: reversible
@@ -310,6 +318,13 @@ tasks:
       Kind Robots head 3c637aff stops locked Deepheart scrapbook and ending tiles from loading their actual paintings; uses the existing key-art cover until earned. Added regression coverage for every authored moment and ending, preserves other games and existing romance settings and saves. Live authenticated delivery/visual curation still outstanding. Return ready after green merge, not done.
 
       Kind Robots #5979 merged 875b552f; all seven exact-head implementation workflows and branch janitor succeeded (Playbook Kit 45981967934). Locked artwork no longer loads before earned discovery. Return ready for actual authenticated delivery and visual curation.
+
+      Ending audit: all nine wired ending plates (jobs 69590-69598, ArtImages 273934-273942)
+      are original pre-anthro kit renders, which DESIGN-BRIEF rejects as final art. Commit
+      3c69399 adds ENDING-PLATES-ANTHRO-2026-11-27.yaml: nine private auto-submit Krea 2
+      briefs on the original ending:* nodes, current animal-folk delvers matching moment:full-
+      party, Aldric as an elderly moose, undead kept as monsters. Live prompt contract 9/9.
+      All 35 support plates and the full-party repaint are wired and live-verified (run
+      46021674043, 257/257). Return ready after merge: map the nine ending receipts in
+      renderedArt.ts, replacing 273934-273942, then close.
     owner: worker
-    claimed_by: 2026-11-27T183000Z-deepheart-t018-endings-5c3e
-    claimed_at: '2026-11-27T21:47:42Z'
