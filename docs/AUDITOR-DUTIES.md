@@ -33,7 +33,7 @@ python scripts/audit_roadmaps.py
 
 - YAML parses and expected top-level fields exist.
 - Every active project appears exactly once in priority order.
-- CONTROL’s current priority band matches `projects/priority.yaml`.
+- `projects/priority.yaml` is the only project ordering; CONTROL.md carries no separate priority band (removed 2026-11-27).
 - `dream-cycle` remains last.
 - Task IDs are unique and dependencies reference real IDs.
 - Multi-dependency values use YAML lists, never comma-separated strings.
