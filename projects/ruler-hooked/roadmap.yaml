@@ -925,7 +925,7 @@ tasks:
 - id: t-048
   milestone: m6
   title: Fishing first-catch fairness, input edge cases and shop/economy adversarial suite
-  status: claimed
+  status: review
   stakes: reversible
   passes: 0
   note: |-
@@ -962,7 +962,9 @@ tasks:
     Kind Robots 5bc11c8edd948e6ae3001298cdd15175377c98aa prevents spending on kingdom works that cannot improve any affected slider; displays actual clamped gains and disables saturated purchases. Added 404 health/catalog cases and 100 repeated saturated clicks, including a partially saturated shrine. Independent arithmetic model passed 404 cases; actual TypeScript selftest and CI pending. Partial t-048; live input QA remains.
 
     Kind Robots #5967 merged 5299489457f04f6a2635820a4ec6c616a5cbe9aa after all eight exact-head workflows on 5bc11c8edd948e6ae3001298cdd15175377c98aa passed (Ruler Hooked 45961936324, Contract Tests 45961936351). Saturated purchases now reject spending and partial gains are displayed accurately; 404 health/catalog cases and 100 repeated capped purchases covered. Remaining real-device input verification shared with t-061/t-050; return ready. No deployment claimed.
-  updated: '2026-11-27T09:40:00Z'
+
+    Kind Robots 2e58871c0905b93fe30fa89e4bdd54d4009d0a64 repairs gamepad state on disconnect and controller switch, samples held buttons during inactive opening/title to avoid stale actions, and blocks the X shortcut from bypassing coronation. Fourteen input sequence regression cases added to the console selftest; equivalent independent model passed 14 assertions. Full CI and real gamepad/browser verification remain; partial t-048.
+  updated: '2026-11-27T09:45:00Z'
   owner: worker
   claimed_by: 20261127T0940Z-ruler-t048-pad-bc0e91
   claimed_at: '2026-11-27T09:40:00Z'
