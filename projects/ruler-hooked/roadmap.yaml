@@ -1150,7 +1150,7 @@ tasks:
 - id: t-058
   milestone: m6
   title: 'Presenter expression sets for the cast and Quill'
-  status: claimed
+  status: review
   owner: worker
   claimed_by: 20261127T0421Z-ruler-hooked-t058-neutral-37ce
   claimed_at: '2026-11-27T04:21:00Z'
@@ -1163,7 +1163,9 @@ tasks:
     Implemented mood-aware presenter art lookups, Quill tutorial reactions and ten authored decree expression outcomes in the Kind Robots worker branch. Staged 48 high-priority Krea2 neutral/pleased/concerned/alarmed portrait requests for the full 12-character cast through the canonical YAML queue. Paints are pending and not counted as rendered; branch PRs and CI follow.
 
     Reconciled historical review: Kind Robots #5625 merged aaa95713 with nine successful workflows including branch janitor; Conductor #7895 merged 85b7f7b7 with six successful applicable workflows and one skipped. The rescued 48 expression rows now all record done and source URLs; 45 have ArtJobs 76738–76782. Quill neutral/pleased/concerned lack explicit job IDs; do not duplicate them. Runtime mood-specific candidates are wired. Direct media probe failed DNS; actual byte/visual delivery and fallback inspection remain. Return ready for verification, not done.
-  updated: '2026-11-27T04:21:00Z'
+
+    App commit 0b7b70a83f98ee17e8a75c106dddd89197196c35 fixes an uncovered expression binding gap: callers omitting mood bypassed all new generated expression portraits. Default neutral now precedes legacy portrait candidates for coronation, card fallback and other callers. Added full-cast default-neutral and Quill fallback assertions. CI pending; existing art receipts remain unchanged. Actual media delivery/visual inspection remains shared with t-047/t-061.
+  updated: '2026-11-27T04:22:00Z'
 - id: t-059
   milestone: m6
   title: 'Reconcile the compositing contract with the opaque region layers that actually rendered'
@@ -1207,7 +1209,9 @@ tasks:
     Kind Robots 0c162ef expands the real responsive audit through highlighted fishing stops with keyboard/touch/mouse, catch/escape, petition and decree, atlas, both shop tabs, Fishopedia and chronicle/scrapbook; adds 1366x600 short-wide and records visible art sources and wash fallback per stage. Actual deployment and screenshots not yet observed; finale, accessibility and authenticated verification remain.
 
     Kind Robots #5920 merged d990b67330acd03076af8975f1e0e0c9a28cf491; all six exact-head workflows on d1c8d3a6f2c0c8d486825e60a34ddd09f0269a29 and janitor 45927805806 passed. Expanded rendered audit instrumentation is delivered; actual deployed screenshots, interactions and ending evidence remain. Do not count CI source checks as browser acceptance.
-  updated: '2026-11-27T02:28:00Z'
+
+    Recovered actual production audit 45901306030 (shard 1 job 140187464938, artifact 15156749808, checkout 8766124388272282181920711b638969549194d7, captured 2026-11-26 22:30 UTC). Downloaded ZIP and visually inspected all 36 stage screenshots: phone, tablet portrait, tablet landscape, desktop x title/settings/scrapbook/achievements/coronation/coronation-next/crier/lake-idle/fishing. Viewport JSON reports all loaded, no document flow and no clipped galleries; phone global-header tagline informationally truncated. Actual scenes use mixed art: coronation backgrounds look photorealistic/older, lake landscape is painterly rather than psychedelic, Quill tutorial thumbnail appears to show water and distinct crier proclamations reuse the same bright artwork. These are observed on the older deployed build, not proof the latest assets are absent. Recheck after current authorized build and use visible source evidence from #5920 to distinguish stale delivery versus fallback; do not duplicate generated jobs. No current-head deployment, catch/court/shop/finale or authenticated QA proven. Keep ready; coordinate t-047/t-050/t-057/t-058.
+  updated: '2026-11-27T04:17:00Z'
 
 - id: t-062
   milestone: m6

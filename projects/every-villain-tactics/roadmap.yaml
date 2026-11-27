@@ -83,7 +83,7 @@ tasks:
       Full history: projects/every-villain-tactics/HISTORY.md#t-001
   - id: t-025
     title: 'Main-game standard: audit and close the gaps for Every Villain Tactics'
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 20261127T041700Z-evt-achievable-529e
     claimed_at: '2026-11-27T04:16:53.382Z'
@@ -91,9 +91,11 @@ tasks:
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-27T04:16:53.382Z'
+    updated: '2026-11-27T04:17:42.338Z'
     note: |-
       Main-game standard: start with STANDARD-AUDIT-2026-11-12.md and docs/agents/main-game-standard.md. Verify title/settings, persistent saves, 12+ achievements, scrapbook, painted endings, customization and three replay hooks. Historical #5626/#5631 merged; latter b15a4afe, eight green checks, named captain portraits ArtImages 277789/277793/277797 (ArtJobs 74396/74400/74404). Twelve DONE combat-pose ArtImages 278823–278834 and twelve telegraphs have an authored atlas integration slice; verify merge and runtime rather than infer approval. Remaining: re-audit all standard rows, attach/verify outstanding original art, rendered QA. Coordinate with t-018/t-012 and avoid duplicating those tasks. Full prior note: ROADMAP-HISTORY-2026-11-26.md#t-025.
+
+      Kind Robots commit 0ad5ac1000d53c5cf2ff65b2a93ba72a392fa173 repairs the unreachable Everyone's Villain achievement: use the actual HERO/VILLAIN launcher roles and require First Bell victories; legacy supporting-role results cannot substitute. Update obsolete eight-stage award copy without changing earned codes. Extracted actual award condition passed 48 assertions; permanent regression added, full CI pending. Partial t-025: original art and full-game/device acceptance remain.
   - id: t-026
     title: 'Every Villain Tactics achievement upgrade: 12 or more live achievements'
     status: done
@@ -265,11 +267,8 @@ tasks:
   - id: t-010
     milestone: m3
     title: "Henchmen, lackeys, guests and smart tactical enemy behavior"
-    status: review
-    owner: worker
-    claimed_by: 20261127T035330Z-evt-voices-21c7
-    claimed_at: '2026-11-27T03:53:23.634Z'
-    updated: '2026-11-27T03:55:30.139Z'
+    status: ready
+    updated: '2026-11-27T04:18:10.812Z'
     depends_on: t-007
     passes: 0
     stakes: reversible
@@ -285,6 +284,8 @@ tasks:
       Kind Robots #5931 merged 3ef1bf0ca63ffb81b6753ef0c9e30dbccab668f6; seven latest-head workflows and all four contract shards passed. Risk-aware flanking, safe ordinary movement and post-attack guarding verified in seeded combat regression. Partial scope: named crews and full-run AI acceptance remain.
 
       Kind Robots commit 3c5352069b7d2c4e3958b115dc60bf566ecc3da5 adds 48 canonical companion motives, 144 distinct lines and explicit mark/guard preferences for new Crossfire First Bell support decisions, preserving old behavior. Actual chosen voice appears in combat events; refusals guard, fallen actors never act. Extracted committed planner/resolution passed 771 assertions, permanent full-engine tests added, CI pending. Partial scope; named one-hit crews and wider recruitment/reversal/AI acceptance remain.
+
+      Kind Robots #5940 merged 4c4465de3a91a333c935dc020a049c8d788734c4. Seven latest-head workflows and all four contract shards plus verifiers successful. All 48 character-specific support voices and personality preferences merged; named one-hit crews and broader AI acceptance remain. Partial scope.
   - id: t-011
     milestone: m3
     title: "Save, fork, share and browse versioned community levels"
