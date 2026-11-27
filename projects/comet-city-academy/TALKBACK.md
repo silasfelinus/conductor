@@ -200,3 +200,9 @@ for hours draws a medic rescue, and medic and worker fixes then race.
 **Decision:** Reviewed optional betrayal memory, save validation and actual day-24 influence/danger regression. Latest head `5531912` passed all eight workflows and four contract shards; squash-merged as `cabb1f44772795635ac953349386bee9e8dd5a4d`. Mandatory defection and player-controlled reconciliation or separation are preserved. Partial scope; return ready.
 
 **Next:** Complete remaining character evolution and relationship arcs; do not treat seeded logic acceptance as device/visual acceptance.
+
+## 2026-11-26 PT | Reviewer | t-004 | Kind Robots #5953
+
+**Decision:** Cleared draft after canonical review, inspected test-only patch and seven completed successful exact-head workflows at `a0ac6c5`; squash-merged `ebbfd8779d66cfc704520bdee13ab161d77b1a4e`. Seeded gameplay job passed. Full-term canonical regression covers 48 identities, 1392 nights, at least 36 resolved cases and four grades. Partial scope: return ready, retain patrol art and identity-specific consequence work. No release or art approval.
+
+**Pattern:** Real action traces and round-trip assertions are stronger evidence than deck inventory. Next verify the remaining identity-specific outcomes and delivered art.
