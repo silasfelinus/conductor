@@ -1204,7 +1204,10 @@ tasks:
 - id: t-061
   milestone: m6
   title: 'Post-deploy visual QA of the console at phone, tablet and desktop widths'
-  status: ready
+  status: claimed
+  owner: worker
+  claimed_by: 20261127T0451Z-ruler-hooked-t061-audit-6d3b
+  claimed_at: '2026-11-27T04:51:00Z'
   gate_human: false
   stakes: reversible
   passes: 0
@@ -1216,7 +1219,7 @@ tasks:
     Kind Robots #5920 merged d990b67330acd03076af8975f1e0e0c9a28cf491; all six exact-head workflows on d1c8d3a6f2c0c8d486825e60a34ddd09f0269a29 and janitor 45927805806 passed. Expanded rendered audit instrumentation is delivered; actual deployed screenshots, interactions and ending evidence remain. Do not count CI source checks as browser acceptance.
 
     Recovered actual production audit 45901306030 (shard 1 job 140187464938, artifact 15156749808, checkout 8766124388272282181920711b638969549194d7, captured 2026-11-26 22:30 UTC). Downloaded ZIP and visually inspected all 36 stage screenshots: phone, tablet portrait, tablet landscape, desktop x title/settings/scrapbook/achievements/coronation/coronation-next/crier/lake-idle/fishing. Viewport JSON reports all loaded, no document flow and no clipped galleries; phone global-header tagline informationally truncated. Actual scenes use mixed art: coronation backgrounds look photorealistic/older, lake landscape is painterly rather than psychedelic, Quill tutorial thumbnail appears to show water and distinct crier proclamations reuse the same bright artwork. These are observed on the older deployed build, not proof the latest assets are absent. Recheck after current authorized build and use visible source evidence from #5920 to distinguish stale delivery versus fallback; do not duplicate generated jobs. No current-head deployment, catch/court/shop/finale or authenticated QA proven. Keep ready; coordinate t-047/t-050/t-057/t-058.
-  updated: '2026-11-27T04:17:00Z'
+  updated: '2026-11-27T04:51:00Z'
 
 - id: t-062
   milestone: m6
