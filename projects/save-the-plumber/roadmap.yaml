@@ -79,12 +79,12 @@ tasks:
       images asserted as live.
   - id: t-028
     title: 'Main-game standard: audit and close the gaps for Save the Plumber'
-    status: review
+    status: ready
     milestone: m6
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-27T08:50:00Z'
+    updated: '2026-11-27T10:23:00Z'
     note: |-
       Main-game standard: use STANDARD-AUDIT-2026-11-12.md and docs/agents/main-game-standard.md. Verify title, settings, persistent saves, 12+ achievements (separate task), scrapbook, multiple painted endings, customizable heroine and three replay hooks. Recorded merges #5722, #5772, #5773, #5832, #5843, #5883, #5884, #5890, #5896 and #5901 delivered settings/contrast, achievement browser, separate New Game/Continue, three endings/epilogues, reset, taunts, reading options, name entry and repaired engine tests. Latest receipt #5901 at 9debf882 reports all 17 exact-head checks passed. Remaining: global account-backed saves and permanent unlocks across devices (reload, account isolation and reset), actual earned/deduplicated achievement records and generated badges, complete scrapbook including run outcomes and locked counts, distinct delivered painted ending plates, rendered finale/gallery screenshots and accessibility against the current main-game standard; do not repeat shipped controls. No production deployment verified. Keep ready until actual visual/acceptance evidence. Full prior note: ROADMAP-HISTORY-2026-11-26.md#t-028.
 
@@ -97,9 +97,8 @@ tasks:
       PR kind_robots#5968 merged at 07336ae9; all ten implementation workflows and fifteen individual checks passed on c37da08e (autofix job correctly skipped). Conflict-safe three-way save reconciliation and slot/album regressions delivered. Partial scope: wire client account synchronization, isolation and explicit conflict handling; other main-game acceptance remains. Production deployment unverified.
 
       Account-scoped client save integration on worker/save-the-plumber-t-028-client-b7f39a at 8c355f1b5236ba825fad087ac3ac796e92d1c178. Device caches isolate accounts and guests, pull before cabinet launch, PUT with expected revision, preserve local and server copies on conflict, expose sync status, and add account-switch/conflict regression coverage. CI and rendered acceptance pending; explicit conflict resolution and guest migration choice remain. Partial t-028 scope.
-    owner: worker
-    claimed_by: plumber-sync-client-20261127T0848Z-b7f39a
-    claimed_at: '2026-11-27T08:48:00Z'
+
+      PR kind_robots#5974 merged at c46eede4; exact-head 27633a63 all 18 applicable checks passed (autofix skipped), including TypeScript, browser, viewport and contracts; branch janitor passed. Account-isolated client synchronization delivered. Remaining explicit conflict resolution, guest import decision, cross-device acceptance, scrapbook/ending art and final acceptance. Production deployment unverified.
   - id: t-029
     title: 'Save the Plumber achievement upgrade: 12 or more live achievements'
     status: done
@@ -156,7 +155,7 @@ tasks:
   - id: t-005
     milestone: m2
     title: "Implement enemy interaction, held objects and powerup systems"
-    status: review
+    status: ready
     depends_on: [t-003]
     passes: 0
     stakes: reversible
@@ -180,10 +179,9 @@ tasks:
       PR kind_robots#5965 merged at 16f8b926; twelve implementation workflows and all relevant individual checks passed on 61a86938. Gurgle supply slurp and wall occlusion delivered. Remaining other small enemies, scale plates, inter-course persistence, painted art and water-course acceptance. Production deployment unverified.
 
       Branch worker/save-the-plumber-t-005-gurgle-travel-f5d81a at a0a4677839d88da6b9e75c81a6857673da177f83 adds per-slot companion travel after mounted course clears; restore on later courses and reload, park at checkpoint after death, no charge transfer, no Maker/demo/Endless leakage. Added mount/clear/save/restore and slot-isolation assertions. CI pending; scale plates, additional authored water courses, companion art and remaining acceptance still open.
-    updated: '2026-11-27T09:07:00Z'
-    owner: worker
-    claimed_by: plumber-gurgle-20261127T0853Z-f5d81a
-    claimed_at: '2026-11-27T08:53:00Z'
+
+      PR kind_robots#5975 merged at b7892f8d; exact-head a0a46778 all 17 applicable checks passed (autofix skipped), including browser, viewport, TypeScript and contracts; branch janitor passed. Companion travels between compatible courses and saves; water charges reset. Remaining scale plates, small enemy interactions, authored water courses and painted companion/prop acceptance. Production deployment unverified.
+    updated: '2026-11-27T10:23:00Z'
   - id: t-006
     milestone: m3
     title: "Build World 1: four complete garden/pipeworks levels and boss"

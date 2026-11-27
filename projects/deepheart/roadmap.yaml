@@ -180,10 +180,7 @@ tasks:
   - id: t-012
     milestone: m4
     title: "Every picture rendered, delivered, URL-verified and wired (set src / RENDERED_ART)"
-    status: review
-    owner: worker
-    claimed_by: 2026-11-27T094000Z-deepheart-t012-9c38bf21
-    claimed_at: '2026-11-27T09:40:00Z'
+    status: ready
     depends_on: t-011
     passes: 0
     stakes: reversible
@@ -199,7 +196,9 @@ tasks:
       Conductor #8123 merged 2d8b21e4; all four exact-head workflows passed. Canon full-party repaint brief is on main; no ArtJob receipt yet. Return ready for integration and actual delivery verification.
 
       Kind Robots head a2d4aaf2 adds opt-in authenticated media audit for all mapped normal ArtImages, anonymous route and direct-path rejection, same-origin redirects and image signatures, plus six mocked regression cases in existing Deepheart CI suite. No new art jobs, no live media request (token missing and DNS unavailable). Full-party job 77563 remains PENDING. Return ready after green merge, not done; actual delivery and curation remain outstanding.
-    updated: '2026-11-27T09:43:00Z'
+
+      Kind Robots #5977 merged 286ac884; seven exact-head implementation workflows passed on f16d7a2f (Playbook Kit run 45976884012). Branch janitor run 45981473535 was cancelled. Full-party job 77563 remains PENDING. Actual live media verification remains unavailable (token absent, curl DNS failure). Return ready for delivery and curation, not done.
+    updated: '2026-11-27T10:23:00Z'
   - id: t-013
     milestone: m4
     title: "Adversarial seeded playthroughs and 390/768/1440 px checks"
