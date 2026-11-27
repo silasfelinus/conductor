@@ -177,6 +177,55 @@ Waits on the 20 enemy and boss sheets queued in silasfelinus/conductor#6158 (rew
 Reconciled 2026-10-14: PR kind_robots#3680 merged 2026-10-14T06:37:47Z.
 <!-- note:end t-019 -->
 
+## t-020 — Gen-2 level engine: sub-areas, vertical rooms, midpoints, secret exits, campaign-wide switches
+
+<!-- note:begin t-020 -->
+GEN2-STANDARD.md section 2. Doors, pipes and ladders into sub-rooms with their own camera bounds; vertical shafts and climbs; a midpoint checkpoint per level; a second, hidden exit type that reports `secret` to the overworld (t-011); Valve Chapel switch state read by every level so pressed switches make outlined blocks solid campaign-wide; auto-scroll and haunted-maze (Hush House) exit logic. Deterministic replay tests for each: secret exit reachable, sub-room return position, switch persistence across levels and save/reload.
+
+Fixed x-only checkpoint activation: pennants now require physical proximity, preventing distant upper routes from silently changing respawn. Added a deterministic upper-route bypass/contact replay in verifySavePlumberMovementReplay.test.ts. This is a partial t-020 slice; subrooms, secret exits and campaign switches remain. CI pending.
+
+Verified checkpoint contact PR #5635 merged at dfa809b2; no open Plumber PR found. Reopen remaining Gen-2 room and secret-exit work, not complete.
+
+Implemented the first authored alternate exit on Buried Meter (1-3), requiring deliberate grounded Down on the upper gear route, recording secret clears independently and unlocking Verdigris Chapel on the overworld. Added campaign reachability and save/reload regression assertions. Commit a62c6930, worker/save-the-plumber-t-020-secret-exit-n4b7. CI pending; subrooms, additional secret exits, switches and the chapel course itself remain incomplete.
+
+PR kind_robots#5705 merged at 7e8b705 after all 11 exact-head workflows passed, including secret route footing, overworld, movement and save regressions. First alternate exit works; further rooms and switches remain.
+
+Authored six additional secret exits in existing courses 3-2, 3-3, 4-3, 5-2, 6-2 and 7-3, opening their existing map links to three chapels and three Upstream Sky entrances. Added real stage clear/save roundtrip assertions and existing reachability flood covers all six. Branch worker/save-the-plumber-t-020-orchard-exits-r8c4 head 60cc223. CI pending; destination courses, subrooms and switches remain.
+
+Merged kind_robots#5732 at 5ad37ebb after 10/10 exact-head workflows passed. Seven secret exits implemented; remaining persistent switches, destination courses and subrooms. Return to ready.
+
+Added a playable Verdigris Chapel branch course and per-slot persistent solid switch blocks in Rainy Courtyard and Copper Greenhouses, using the existing normal-clear node memory without changing campaign indices or save format. Added map, goal-contact, reload and slot isolation regression assertions. Branch worker/save-the-plumber-t-020-valves-6f8c head b485c045. Partial engine scope; CI and further chapels/subrooms remain.
+
+Verified kind_robots#5769 merged 2026-11-24 PT. Verdigris Chapel and persistent switch blocks delivered; remaining chapels, subrooms and vertical stages. Return partial scope to ready.
+
+Generalized optional chapel entry, respawn, completion and backdrop; authored Brass, Cobalt and Rose Chapel courses and persistent per-slot switch blocks in Worlds 3, 4 and 6. Added map, death-reload, clear, save and fresh-slot regression coverage. App branch worker/save-the-plumber-t-020-chapels-v5c1 head d1190ef3. Full CI pending. Subrooms, vertical traversal, auto-scroll and haunted mazes remain.
+
+Verified kind_robots#5821 merged at cdd5acb4. All four Valve Chapels are implemented with persistent per-slot switches. Return partial engine scope to ready: subrooms, vertical routes, auto-scroll and haunted mazes remain.
+
+Implemented sealed pipe chamber detection, independently bounded camera framing, exterior masking and pipe transition cleanup across all eight existing late-world chambers. Added replay coverage for entry, camera lock, collection and return. App branch worker/save-the-plumber-t-020-rooms-x4n8 head e617951d. Partial engine scope; new vertical courses, auto-scroll and haunted mazes remain. Full CI and rendered acceptance pending.
+
+Verified kind_robots#5861 merged at 187ed4b6 after 11/11 implementation workflows passed on a5fe62e8; branch janitor queued. Eight independently framed pipe chambers delivered. Return partial scope to ready for vertical routes, auto-scroll and haunted mazes; production deployment unverified.
+
+Added a checkpointed forced-scroll stretch to Cottongear Coaster (4-2), 1.15px/tick, independent heroine control, front movement cap, visible and audible rear warning, life-loss and checkpoint reset, and an authored rail release. Added replay tests for lag, sprint, bounds, recovery and campaign checkpoint. Extracted committed-method probe passed (175 idle ticks to death, 321 sprint ticks to release). App branch worker/save-the-plumber-t-020-autoscroll-m7q2 head 2a8d0367. Full CI pending. Partial scope; vertical courses and haunted maze exit logic remain.
+
+Verified kind_robots#5865 merged at 5cd16eff after all 11 implementation workflows and branch janitor completed successfully on f856915f. Coaster auto-scroll delivered. Return partial scope to ready for vertical traversal and haunted maze exit logic. Production deployment unverified.
+
+Extended Neon Tiles (7-1) with a 224px sealed vertical chamber, 128px rope descent/ascent, intermediate ledges and three lower tokens. Retained original pipe, gear, and normal route. Added real-input regression for pipe entry, descent, reward, climb and jump back to pipe. Source geometry checks passed including preserved 32px main-route headroom and unchanged exterior. Branch worker/save-the-plumber-t-020-vertical-v9k3 head a28c63e2. Full CI pending; partial scope, haunted maze remains.
+
+Verified kind_robots#5872 merged at 7e886a9 despite failed Maker Gameplay Contract run 45744757369: movement replay line 1097 fails on ladder descent. Reopen for urgent repair before haunted maze. The 18px heroine overlaps the ledges immediately adjacent to the 16px ladder, blocking descent. Branch janitor succeeded; production unverified.
+
+Fixed merged vertical shaft regression by opening tiles either side of rope so the 18px heroine does not land on adjacent ledges during descent. Extracted actual updateClimb/moveY/ladder methods reproduced original failure and passed repaired descent to y=224 and ascent to y=96 (76/75 ticks). Kept full replay and added geometry assertion. Branch worker/save-the-plumber-t-020-shaft-repair-r4m8 head dfdbda93. Full CI pending. Haunted maze remains.
+
+Verified kind_robots#5876 merged at 207116fb after 10/10 implementation workflows and branch janitor passed on dfdbda93. Full shaft replay green. Return to ready for haunted maze exit logic, final t-020 integrated acceptance. Production deployment not verified.
+
+Implemented Drip Parlour (1-h) playable Hush House: three sealed rooms, conditional door graph with directional clues and looping wrong choices, checkpoint, normal and elevated alternate exit, independent camera framing, map unlocks and save persistence. Added overworld input regressions for false doors, normal and secret clears. Isolated committed-source geometry and all six graph transitions passed, as did actual door method probe. Branch worker/save-the-plumber-t-020-haunted-h8z4 head b244c8d4. Full CI pending; engine baseline delivered subject to integration checks, expanded authored courses and visual art remain in t-021 and later tasks.
+
+2026-11-26 PT: kind_robots#5881 merged after pr-medic fixed its TS2532 (optional slot
+secrets in verifySavePlumberOverworld.test.ts, 81aec00); TypeScript and all contract
+checks green. Engine baseline complete; expanded Drip Parlour art, attic/cellar and
+world variants continue in t-021.
+<!-- note:end t-020 -->
+
 ## t-029 — Save the Plumber achievement upgrade: 12 or more live achievements
 
 <!-- note:begin t-029 -->
@@ -186,3 +235,13 @@ Live today: 0 Achievement record(s) with this game's triggerCode prefix (checked
 
 Achievement upgrade merged in kind_robots#5050 (d2de843), all checks green: 15 live arcade-prefixed achievements via a PlumberRun feat queue and mastered list (cross-session backfill; Every Heroine accumulates), Level Designer from the Maker store. Catalog run 43142839846 succeeded. Not wired: the two secret-exit achievements, because SECRET_EXITS_READY is empty so they could never be earned.
 <!-- note:end t-029 -->
+
+## t-030 — Add one water-traversal fixture that runs every heroine and the speed-route pilot through Tidecoat swimming
+
+<!-- note:begin t-030 -->
+Kaizen from the t-005 Tidecoat review (kind_robots#5899, merged baa1b62c). The Maker regression only swims the default heroine on one custom pool. Build one shared pool fixture in test:arcade-engine that runs all eight heroines (each Y special, hitbox and float) and the autopilot/speed-route pilot through dive, buoyancy, surface breach and water exit, and asserts no death, no stuck-in-tile and that unsuited heroines still die in water. Reversible test-only change unless it uncovers a defect.
+
+Tidecoat shared pool fixture exercises every heroine, both predictive pilots, collision clearance, unsuited death, and swim exit. Fixed pilot swimming steering and surface stroke in kind_robots commit f98adccc on worker/save-the-plumber-t-030-tidecoat-8f19c2. Exact-head CI required before done.
+
+2026-11-26 PT: PR kind_robots#5908 merged at 823dee3100d84c2f26353ac11dca8624abc967a4. All eleven implementation workflows and branch janitor completed successfully on exact head f98adccc. Shared Tidecoat fixture and predictive pilot fix satisfy t-030; no publication or deploy claimed.
+<!-- note:end t-030 -->

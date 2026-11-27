@@ -177,6 +177,24 @@ Finite six-mission acceptance audit: 976 assertions passed across 72 paths using
 Finite six-mission scope verified and merged in kind_robots#5867, squash 2b1f4bc7148f957c7d314190ccfc71658f35ce52. Latest head 39c50c60b836a5e20cd63cbbde73e4de754a9c20: all seven workflows completed successfully, including dedicated Tactics run 45738017537 and all four contract shards in 45738017440. Reviewed the 72 narrative path regression, both perspectives, branching choices and victory/defeat closure; existing objective, linked chapter and save/retry tests also passed. Full adversarial gameplay and device QA remain t-013; personal routes t-008/t-009 and art t-012. No production deployment or human approval claimed.
 <!-- note:end t-007 -->
 
+## t-008 — Author 48 hero and villain playable arcs with distinct supporting cast
+
+<!-- note:begin t-008 -->
+For every permanent Prom of Doom identity, author two genuinely different playable routes: protagonist HERO or VILLAIN. Maintain independent characterization, dialogue and consequences for their supporting sidekicks and henchmen as NPCs, not extra starting modes. Audit 96 distinct playable arcs and meaningful supporting-actor agency; reject string replacements and renamed identities. Retain compatibility with saves made under the historical four-role preview. This supersedes the original 192-player-arc target.
+
+Scoped playable increment: Kind Robots commit 2792765c3e3e4a31cc42b2790ed9d731d59bc846 implements 16 hero/villain First Bell arcs for the eight accident identities, with 80 distinct authored scenes and independently voiced squad support. Actual cast names are resolved from battle state; choices and legacy save schema remain intact. Source audit passed 80 unique nonempty scenes; integrated gameplay regression committed, latest-head CI pending. Partial: 40 identities remain, plus deeper supporting-cast agency and full route acceptance.
+
+PR #5877 merged as 331f1c114a62610f86943088cae39fae664667cd after all seven latest-head workflows passed. 80 First Bell routes, 400 authored scenes, 2644 isolated assertions, permanent regression coverage; no remaining worker branch. Release incomplete scope for the final Psychic family and supporting-actor consequences. No full campaign acceptance claimed.
+
+Kind Robots commit aede3283b4bc72ccfc4c77689160e1ce965baca1 adds all 16 Psychic First Bell arcs. All 48 identities now have 96 distinct hero/villain First Bell narratives, 480 unique authored scenes, and roster-wide permanent regression coverage. Extracted selector audit passed 3172 assertions with real roster and authored catalogs, stubbed generic base scenes. CI pending; supporting-actor mechanical consequences and full acceptance remain open, so do not close umbrella t-008.
+
+PR #5885 merged at fea5beec98992795928e7d00a2374f0eea5ad1a1 after all seven latest-head workflows passed. All 96 First Bell narratives now on main. Remaining scope is independent supporting-actor mechanical consequences and full route acceptance; release for next increment.
+
+Reclaimed existing PR #5898 after stale-claim sweep released the previous session during implementation. Commit 9c277f4adc5214f90af7261780ddf9cf1caa4794 adds deterministic independent companion actions, save receipts and field reports, with 1536 isolated story paths passing 19972 assertions and 384 permanent integration paths. Latest-head CI pending. No competing Tactics PR and no production deployment.
+
+2026-11-26 PT: PR #5898 marked ready and squash merged as ef929e6d1d9e37d564718ae0ebdfc9bd63510772 after verifying all seven latest-head workflows at bcd1882606acf5632bfcdad0a0ff19438998fe5d. Tactics gameplay run 45823718109 passed. All 96 distinct hero/villain First Bell arcs and 480 authored scenes were previously delivered in #5877/#5885; supporting NPCs now have independently previewed and applied combat consequences, living-actor checks, refusal, field reports, and backward-compatible save validation. Permanent 384-path regression covers all identities and both player roles. Finite t-008 scope complete; bespoke six-level personal routes remain t-009 and full campaign/device QA remains t-013. No human acceptance, live deployment, or art approval claimed.
+<!-- note:end t-008 -->
+
 ## t-016 — Cinematic front menu, story/one-shot modes, settings and scrapbook shell
 
 <!-- note:begin t-016 -->
@@ -223,6 +241,42 @@ Define actual stats, short/mid/long range weapon profiles, mobility, defenses/ta
 2026-10-30: Shipped in kind_robots#4490 (squash 7b12e664) after 23/23 green checks. All 48 canonical heroes have a tactical role (8 roles: striker, skirmisher, tank, controller, duelist, sniper, guardian, support) with short/mid/long weapon falloff curves, aim, mobility (walk/dash), HP and defense, and one previewed signature active power with AP cost, threat/target tiles, a recharge (2-3 turns) or once-per-battle limit. 42 powers are generated from the canonical Prom origin x affinity power data (8 affinity families x 6 origin modifiers, test-verified as 48 mechanically distinct fingerprints) and 6 are hand-authored for the First Bell cast: Backdraft Flare, Updraft Catch, Heartbeat Quake, Thermite Cut, Adhesive Pad Volley, Grand Illusion. The new verifyEveryVillainPowers test runs 395 seeded preview-vs-resolution checks (only strikes roll RNG, with the displayed shot formula plus an aim bonus), confirms allies are never harmed, checks recharge limits, and checks AI determinism with rival use of powers across all 48 rosters. Console: POWER action (key P), gold target tiles and outlined threat tiles, an effect list, role lines, and role and power on all 48 dossier cards. Prom of Doom interludes opt out (roles: false), so their saves and balance are unchanged, and the EVT workflow now runs the Prom tactical suites. Balance is sanity- tested only (stat ranges, weapon ordering, AI usage); human playtest tuning is part of t-014.
 <!-- note:end t-017 -->
 
+## t-019 — Deterministic post-battle points and earned scrapbook achievements
+
+<!-- note:begin t-019 -->
+Mission-end scored breakdown for flawless survival, zero damage, no knockouts, optional secrets, rescues and tactical bonuses, with explicit eligible conditions. Replay-safe recorded points, scrapbook heroes won with, villains beaten and authored route discoveries. Distinguish end-of-turn summaries from mission completion.
+
+Scored battle debriefs, save-grounded medals and replay-safe scrapbook history implemented on the scoped worker branch. Pending PR and CI review.
+
+Merged kind_robots PR #4566 (squash 2c7258c567de71dd8f0212f330506720119986ef) after all 22 commit checks completed successfully. Shipped deterministic post-battle points, visible mission debrief, earned and de-duplicated scrapbook results, medals, score regression suite. Task remains open for true historical no-damage tracking, broader hidden-secret achievements, and hero/villain ledger.
+
+Added durable squad-damage history across gunfire, overwatch, powers and environmental hazards. The untouched medal now requires historical zero damage rather than healed full HP. Legacy saves remain compatible, cannot claim unrecorded flawless medals. Regression tests pending PR CI.
+
+Merged Kind Robots PR #4568 as 9d2ab94dfc87c034682818e6348941cb11bfa75c after all 18 check runs completed successfully. Tactics now records historical squad damage across attacks, overwatch, powers, area hits, fire, water and collapsed floors. Untouched is earned only on a true no-damage victory; healed extraction does not qualify and old saves cannot invent provenance. Remaining task scope: secret-route medals, hero-villain history and campaign level achievements.
+
+After reclaiming the stale t-019 claim and verifying session ownership, authored code for secret-trigger scoring, a new verified hidden-route medal and achievement, and visible 48-identity hero/villain/supported record in the Tactics scrapbook. Reversible scoped PR kind_robots#5470 is open at b0d27fb302e1fb93c536c25dbc0afa20b7049276 with regressions committed. CI pending: no local runtime execution in this connector-only session. Not done: 6-chapter full campaign scoring QA and broader secret-route audit.
+
+Reopen the remaining Scoring and scrapbook scope for independent production. No open matching implementation PR was found; preserve previously merged contributions and all acceptance requirements. Do not count partial implementation as done.
+
+Scoped score integrity repair on Kind Robots worker/every-villain-tactics-t-019-score-integrity-a8e4 at daa31471f90ccc1bd4b38c40dc4c94ea77fef43d. Reject malformed lines, duplicate lines and medals, defeat medals, and medals unsupported by positive score lines without discarding valid neighboring history. Connector-extracted actual validator reproduced old crash and rejected seven corrupt fixtures while retaining two valid records. Full TS and integration suite pending PR CI; six-chapter aggregation remains open.
+
+Verified PR #5812 merged at 1eeeb00282f267c5ea72407aa5fde73ccf347c73 with seven successful implementation workflows and successful branch janitor. Malformed and inconsistent scrapbook records are now rejected. Full campaign scoring remains open; return to ready.
+
+Crossfire journal scrapbook restoration committed at Kind Robots f1d5b6e2856700dec991311bd9a6a85a65956ae0 on worker/every-villain-tactics-t-019-journal-recovery-f93b. Recover validated completed and active chapter saves on load without awarding achievements again; finished journal excludes duplicate finale. Nine isolated selector cases passed with a stubbed validator. Added six-chapter real-save recovery and deduplication regressions to the existing CI verifier. Full integration checks pending; umbrella remains partial.
+
+2026-11-25 PT review reconciliation: Verified #5838 merged 7f707034d252; scrapbook recovery delivered, cumulative six-chapter scoring remains. No open matching implementation PR or worker branch found in either repository.
+
+Cumulative Crossfire scoring and aftermath display implemented in Kind Robots afc89fbb3fed1f13af41ea89908e10709cbc338f. Validated journal only, active victory counts once, no defeat credit, stable on advancement and reload. Six chapter regression coverage committed; CI and rendered QA pending. Full adversarial campaign and secret audit remain open.
+
+Verified PR #5849 merged at 9d1c4b2516b6437d56ada9324d28a92277212493. Cumulative scoring and replay-safe checkpoint totals delivered. Remaining secret-route audit and adversarial campaign scoring QA remain open; release for further work.
+
+Evidence scoring repair committed to Kind Robots 037906bcf8a1905f428593aa808730e847e3dba0. Four authored tactical evidence choices now grant 25 points and victory medal, stage-specific flags only; unchanged legacy score identities. Dedicated score regression tests added. Full CI and remaining secret-route/whole-campaign acceptance pending.
+
+Verified and merged kind_robots#5866 at 43161967c9787864812dfb544a3655a152a674e6. All seven latest-head workflows completed successfully at 037906bcf8a1905f428593aa808730e847e3dba0, including Tactics run 45737097078 and contract run 45737097048. Authored evidence choices in four stages now earn 25 points, duplicate and wrong-stage flags cannot inflate points, defeat cannot earn the medal. Partial: historical scores remain unchanged; secret-route scoring audit remains open. Release for finite acceptance without duplicating t-013 QA.
+
+2026-11-26 PT finite scoring acceptance: rechecked merged #5849 and #5866 and all returned latest-head workflows successful (Tactics runs 45722233951 and 45737097078). Reviewed existing six-chapter journal regression, including defeat exclusion, reload and advance deduplication. Executed 80 passing isolated assertions against current scoreFromSave source with type-only annotations removed, real authored scene IDs from all ten shipped stage scripts and synthetic save fixtures (checksum and flag helper stubbed). All four authored secret routes in Crosswalk, Rooftop, Under-Comet and Prom finale award 125 points and secret-route medal on victory only; unrelated/duplicate trigger IDs cannot increase points, active or defeated fights cannot earn that medal, both allegiances covered. Stages without authored secret scenes award none. The merged integration suite covers evidence, damage history, scrapbook validation, and replay protection. Scoring implementation and finite audit complete; full adversarial campaign and rendered QA remain t-013, not duplicated here. No production playtest or deployment claimed.
+<!-- note:end t-019 -->
+
 ## t-026 — Every Villain Tactics achievement upgrade: 12 or more live achievements
 
 <!-- note:begin t-026 -->
@@ -252,3 +306,19 @@ Proof-backed generator, generated receipt map and runtime override implemented o
 
 Implementation and verification contracts merged: conductor#7862 at e472637135cb06dac9b18b46c533ec736cd8d370, kind_robots#5604 at ec7e0988651e60d42767ea0282f9556d67e5c87b. Tactics' stage lookup now consumes generated proof-backed private receipt records for last-order, sunken-street and unlicensed-rescue, and preserves all other existing maps. Both original PR heads completed every relevant CI check green. No new ArtJobs, no invented visual-curator approvals. Self-hosted rollout and final browser proof remain separate from this generator task.
 <!-- note:end t-028 -->
+
+## t-029 — Ship original tactical music and contextual combat SFX with accessible persistent mixer before human playtests
+
+<!-- note:begin t-029 -->
+Silas's explicit 2026-11-22 PT pre-playtest requirement. Dedicated audio was absent from the finite tactical roadmap and page implementation. Compose original title, planning, action, danger, victory/defeat and cinematic/ending themes without borrowed franchise material. Hook meaningful sound to selecting, moving, shooting, ability counters, hit, damage, defeat, rescue, objectives, turn change, villain-reveal and mission outcomes; keep gameplay deterministic and never play during headless tests. Offer separately persisted master/music/SFX levels, mute, browser gesture unlock, SSR/hidden-tab cleanup and accessible visual equivalents. Verify cue mapping and preferences with tests plus at least one real browser playback, mobile mute/resume and cross-route cleanup check. Before claiming completion confirm original score and audible assets/oscillators are actually usable in the live game.
+
+Original seven-mood WebAudio score and 13 context-mapped tactical sound effects implemented on a scoped Kind Robots worker branch. The game now unlocks playback from real gestures, follows battle/scene/turn/impact state with pure deterministic cues, persists master/music/effects/mute controls, pauses on hidden tabs, and disposes the player on route exit. Dedicated Node regression and source integration checks are included in the Tactics test command. PR CI and real post-merge browser/mobile playback proof are pending, so t-029 remains in review rather than being marked delivered.
+
+Merged original sound implementation Kind Robots #5608 as 91f146a048a1188fa253c4f2df1f1c58b492b214 after all ten required latest-head workflows completed successfully. Seven original synthesized score themes, 13 contextual cues, gesture unlock, persistent mixer and reduced-interruption route cleanup are on main. Final self-hosted deployment, actual playback, phone mute/resume and speaker audition remain unverified; t-029 is partial and must return ready, not done.
+
+Scoped scheduler repair committed to Kind Robots worker/every-villain-tactics-t-029-audio-lifecycle-4e9d at 6425d131446ae4637b007719f2d52bea8b531478. Cancel active and queued voices on mood/mute/visibility/disable/disposal, stop scheduling inaudible channels, prevent suspended-context cue buildup, preserve independent mixer channels, and add deterministic active WebAudio stand-in regression. CI and actual browser playback pending; this does not close t-029.
+
+2026-11-25 PT: verified merged Kind Robots PR #5770 at d93c234ea958963bd3a696a32bb389e8c0b283cc; all seven implementation workflows and their required jobs passed, branch janitor also succeeded and no t-029 branch remains. Audio lifecycle regression is merged; browser/mobile playback and audible audition remain open. Return partial task to ready rather than done.
+
+2026-11-26 PT explicit Silas direction: "If we have audio made, then that’s good enough until human testing." Verified merged Kind Robots #5608 and #5770, including original seven-theme score, contextual cues, persistent accessible mixer and lifecycle regressions. All returned latest-head Actions workflows completed successfully, including game tests and branch janitor; repair head 7b568b7b19e122fb587388eed4de5d02ccbbd77b. Actual speaker/browser/mobile playback and subjective audition are deferred to human playtesting by explicit user direction, not claimed verified. Finite audio implementation accepted for roadmap closure; no publication or broader game acceptance implied.
+<!-- note:end t-029 -->
