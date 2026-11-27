@@ -1,0 +1,16 @@
+version: 1
+project: monstress-convention
+task: t-003
+operation: ready
+owner: worker
+updated: '2026-11-27T12:30:00Z'
+note: >-
+  2026-11-27 PT: kind_robots#5989 merged (squash 7c49479) after all eleven checks were green, including TypeScript and the four contract shards.
+  Shipped: per-room walk areas with deterministic grid A* and line-of-sight smoothing (utils/monstressConvention/navigation.ts). Iris walks
+  x/y multi-segment paths around furniture and bodies with depth scaling; Norb follows at a germ-safe distance; WASD walking for keyboard
+  parity (arrows still cycle hotspots); a map drawer Shortcuts list that routes door by door through travel/travelForAudience, so every gate
+  and edition filter applies. Also an optional unscored camera+purse compact-shade comparison (needs the bucket smear; max stays 205), and
+  restoreCase repairs (gated rooms fall back, unknown items/clues/topics dropped, duplicates removed, camera restored, empty transcript reseeded).
+  Contract test verifyMonstriqueNavigation.test.ts. Local nuxi dev plus Playwright on /play/monstrique at 390/768/1440: walk, WASD, hotspot
+  approach and shortcut all worked, with no page errors or horizontal overflow. Remaining t-003: per-exit entry points and re-fitting
+  WALK_AREAS to the painted backgrounds once t-014/t-009 art lands. Puzzle webs stay in t-006. Returned to ready, not done.
