@@ -366,36 +366,10 @@ tasks:
     depends_on: [t-002, t-009]
     passes: 0
     stakes: reversible
-    note: |-
-      Authored original short opening, mid-run character moments, distinct victory/failure and route endings, skippable credits, voice-optional subtitle treatment, original cleared sound rights, layered music and shot/hit/cue mixing. No copyrighted music/sample reuse.
-      Progress 2026-10-17 PT: an original layered chiptune score (each Act's key, mode and lead; drums for a guardian, drums and an arpeggio for a boss; ending and failure loops), Lilt's failure ending when the CONTINUE? countdown runs out, and A to skip the credits merged in kind_robots#3803. After Silas's first playtest (a solo Act I felt silent): Lilt calls out every Act I section with a pilot reply (#3806), and a pilot select renames the crew in Lilt's lines to the pilots flown. Open: the 15 composition banter tracks with a 4-bit pilot mask, between-stage dialogue for Acts II-VIII at the same density, voice-optional subtitle treatment, cinematic ending boards.
-      2026-11-01 PT claim-staleness assessment (Silas: stale claims are more likely finished- but-unrecorded than abandoned): partial work merged (#3803, #3806); open items per the 10-17 progress note: 15 banter tracks, Acts II-VIII between-stage dialogue, subtitles, ending boards. Claim released.
-      2026-11-06 PT (writing half, round 6): the finale now pays off the Act V allegiance choice. Each road (turn on the empire or stay the course) times each final choice is a named ending: ASK FIRST, OPEN WATER, NO MORE LEASHES, PEACE BY ORDER, AN EMPTY OCEAN and ORDERS BROKEN, plus the three shipped endings for flights saved before the memorial. The road sets the world consequence, Lilt's resolution, the epilogue for each crew size and the send-off, and the rescue verdict has four tiers. The credits and THE END name the ending. Acts VII and VIII close on a bridge line for each road, and the finale's opening and turn answer the road. Act I's opening is three punchy lines. A skips the ending line by line, and ending lines hold for 180 frames. verifyRainbowStoryScript pins: - intro, turn and outro dialogue for every Act; - 4,101 lines that fit the comms box at arcade pace, with no absent speakers; - every ending reachable by flying it; - the skip, through the engine.  Remains: the 15 partyMask composition tracks, with pilot-specific solo lines (dialogue is still written in seat terms and renamed by the pilot select); ROUTE-MAP route stingers once the t-028 alt flags exist; subtitle and comms settings (full, essential or off; replay); cinematic ending boards; and the sound and score half. Merged as kind_robots#4866 (2026-11-06).
+    note: >-
+      Authored original short opening, mid-run character moments, distinct victory/failure and route endings, skippable credits, voice-optional subtitle treatment, original cleared sound rights, layered music and shot/hit/cue mixing.
 
-      Authored all fifteen distinct pilot-set reveal responses and ending stingers, integrated them into Act VI and the finale by the actual four-bit pilot mask, and added script validation. Implementation commit 98343fc9a85723dbd73fdd35098e718632df0a10; t-012 still has further audio, comms settings and cinematic work.
-
-      Merged Kind Robots PR #5360 as 0635f88902e2cd7aef0b27c4eb89239d1d821e9c after all 10 latest workflow checks passed. The 15 pilot-set reveal and ending tracks are integrated, but comms settings, cinematic boards and audio remain. Release claim for continued implementation.
-
-      Implemented independent local 1-4 player C.A.T.S. crew selection and checkpoint-safe ordered pilot rosters, making the 15 previously merged authored dialogue masks reachable in real play. PR pending. Audio, subtitle controls, full cinematics and 15-mask runtime QA remain open; this review is a partial implementation, not task completion.
-
-      2026-11-24 PT: kind_robots#5687 (merged 12868a79) adds four orchestral detour themes
-      rendered offline by scripts/rainbow-score (levels matched to the Act cues), distinct SFX
-      for super/shield/hurt/boss phase/route fork/stinger, and the route stingers. With comms
-      full/story/off (#5670) and the 15 party masks, t-012's remaining scope is the animated
-      cinematics, tracked under t-030.
-
-      2026-11-23 PT: kind_robots#5709 (merged 66b6caa8) fixes the independent story critic's
-      blockers (REVIEW-ROUND-1-2026-11-23.md): S1 only the crew speaks on comms, detours
-      included (crewLine maps unflown authored seats onto the crew); S2 the rebel and loyal
-      road epilogues play (loyal crews no longer hear a rebel-toned party line); plus S7 four-
-      pilot finale roles, S12 safe-route continuity, S13 credits, S14 plurals, S18 solo
-      address, S19 rebel log, S22 loyal verdict. verifyRainbowCrewVoices pins them. Story
-      majors S3-S11 and the remaining minors are t-066.
-
-      2026-11-26 PT intent audit: closed. #5709 (critic fixes), #5687 (score, SFX, stingers)
-      and #5670 (comms modes, 15 party masks) merged. The 11-24 note moved the only remaining
-      scope, animated cinematics, to t-030; the story majors went to t-066 (done). Closed so
-      that scope is not tracked twice. The 11-20 claim had expired.
+      Full history: projects/rainbow-bullet-hell-space-princess/HISTORY.md#t-012
     updated: '2026-11-27T05:52:01Z'
     implementation_pr: 'silasfelinus/kind_robots#5709'
   - id: t-013
