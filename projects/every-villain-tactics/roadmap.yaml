@@ -448,11 +448,11 @@ tasks:
   - id: t-021
     milestone: m3
     title: "Ship 48 power-specific playable origin opening battles"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 20261127T080500Z-evt-garden-glass-6d3e9a
     claimed_at: '2026-11-27T08:05:00Z'
-    updated: '2026-11-27T08:05:00Z'
+    updated: '2026-11-27T08:07:00Z'
     depends_on: [t-005, t-017]
     passes: 0
     stakes: reversible
@@ -470,6 +470,8 @@ tasks:
       Kind Robots commit f1bf3be470fdca3309ad4f909e8cc9b31e2c3d46 implements Lanternwitch's The Candle That Wouldn't Die, a ninth origin arena with an adjacent two-AP one-use ritual, two gated rescues, hero/villain introduction, memory/extinguish choice with real combat effects and branching ending, menu routing and scoped save validation. Eighty-four extracted actual planner/commit/rescue and graph assertions passed using synthetic unit/tactic state, with permanent engine regressions added. Full CI and rendered QA pending; existing painted commons art is fallback only. Partial; 39 other origins, dedicated art and full acceptance remain.
 
       Kind Robots #5964 merged as de7677a34d54c95dc19b2e51eb3411a32989469c. Reviewed exact head 801a1d913fca1b4abde88d547f79c18f4c13e406; all seven latest-head workflows completed successfully (including Every Villain Tactics 45956399924). Nine distinct playable origins now on main. Remaining 39 origins, dedicated artwork and full acceptance remain; return nonrecurring task ready. No deployment or rendered acceptance claimed.
+
+      Kind Robots commit c30d11f33088a4f082509aa668407b0380e8e386 implements The Orchard Under Asphalt and The Future in the Glass. Distinct 9x6 arenas, root-tile self ritual versus three-tile clear-sightline water ritual, both two AP, gated evacuations, Hero/Villain intros, two choices with heal/suppress effects, branching endings and scoped existing save receipt rules. 166 isolated assertions passed on actual extracted planner, geometry, reachability, rescue gate and scene graph with synthetic units/tactics and outcome stub; permanent integrated regressions added. Full CI and rendered QA pending. Existing painted locations are fallback only. Partial scope: eleven implemented origins upon merge, 37 others and dedicated art/full acceptance remain.
   - id: t-022
     milestone: m3
     title: "Build 48 villain-owned lairs with changing tactical environments"
