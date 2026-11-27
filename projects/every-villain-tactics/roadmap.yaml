@@ -270,11 +270,11 @@ tasks:
   - id: t-010
     milestone: m3
     title: "Henchmen, lackeys, guests and smart tactical enemy behavior"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 20261127T081000Z-evt-claim-cinders-3f1b7a
     claimed_at: '2026-11-27T08:10:00Z'
-    updated: '2026-11-27T08:10:00Z'
+    updated: '2026-11-27T08:13:00Z'
     depends_on: t-007
     passes: 0
     stakes: reversible
@@ -296,6 +296,8 @@ tasks:
       Kind Robots commit 465366c3a1a4578a69950b4fbf98db3fb2f68dec accounts for immediate overwatch in critically wounded rival retreat scoring using shared shot and reachability rules. Twenty-four extracted actual planner/combat geometry assertions passed; permanent regression added. Full CI pending. Partial t-010: named crews and broader gameplay QA remain.
 
       Kind Robots #5959 merged dc909bce01b110c199b1f5ae32c24bf23f178e6a after seven completed successful workflows on 465366c. Reaction-aware retreat regression passed; named crews and wider QA remain.
+
+      Kind Robots commit 30cd262bda6f8ec7241e4e55cd4636ed760b39e0 fields Ash Invoice and Claim Cinders through the playable level studio, with canonical one-hit stats, visible saved INSURED tile, delayed one-damage ignition, sight/range limits, dodge/water/disarm counters, receipt motive and accessible warning. 38 isolated assertions passed on actual planner and LOS with stubbed movement/impact/outcome; integrated end-turn/save tests added. Full CI/rendered QA pending. Partial: remaining crews, original species artwork, captain loyalty/defection arcs and broader QA.
   - id: t-011
     milestone: m3
     title: "Save, fork, share and browse versioned community levels"
