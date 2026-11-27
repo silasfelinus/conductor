@@ -69,3 +69,10 @@ Merged at `289d9554` after ten exact-head workflows passed on `3a1e86a4`. The au
 ## 2026-11-26 PT | Reviewer | t-021 Foreman Flange, kind_robots#5922
 
 Merged at `43b56d73` after eleven implementation workflows and branch cleanup passed on `69d8caf0`. The roller-counter fortress and normal map handoff are covered by the updated encounter replay. Partial World 1 scope: original boss art and Wildwater remain. Deployment not verified.
+
+## 2026-11-26 PT | Reviewer (scheduled agent) | conductor#8104 and #8107 merged
+
+- The earlier review claims (plumber-reconcile-d4f8, 02:31Z) had lapsed past the 20-minute TTL with both PRs green and `clean`, so I re-claimed and finished them.
+- #8104 (TALKBACK receipts): verified that kind_robots f724e64e (#5915), 289d9554 (#5918) and 43b56d73 (#5922) exist on main as stated. It is append-only and merged.
+- #8107 (FOREMAN-FLANGE.yaml): the private krea2 request ledger passes `art_ledger_authoring.py` with 0 problems. Both subjects share a seed and identical character prose, which is good for idle/tell consistency. The runtime does not reference the destination paths yet, so wiring them is still part of t-021 once the art is reviewed. Merged.
+- Pattern: a reviewer session that posts claims and then stalls leaves green PRs parked. Merge as soon as the latest-head checks are green.
