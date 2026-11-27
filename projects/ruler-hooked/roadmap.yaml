@@ -914,7 +914,7 @@ tasks:
 - id: t-047
   milestone: m6
   title: Deliver and visually audit all required coronation, fish, NPC, map and ending art
-  status: ready
+  status: claimed
   stakes: reversible
   passes: 0
   note: |-
@@ -925,7 +925,11 @@ tasks:
     Conductor commit 4fcf62ecb2c41213905512a2b793bd53b98311f5 extends the canonical console art generator and central queue with 18 missing daily proclamation paintings (28/28 runtime event keys now covered). Added exact path/prompt contract regression; verified 18 new staged rows match the generator, have distinct paths and pending status, and retain existing queue bytes unchanged. CI pending; these are new requests, not delivered ArtJobs. Partial t-047, shared console QA t-057/t-061.
 
     Conductor #8116 merged b21cf0d30e287d4ba9902dba4f46fd7dcb978bcf; all five exact-head workflows passed, including Worker PR CI 45939690752 and Alpha Audit 45939690766. Main queue verified 28 distinct event rows, ten done and 18 pending. Render delivery remains; return ready.
-  updated: '2026-11-27T04:49:00Z'
+  updated: '2026-11-27T21:43:22Z'
+  owner: worker
+  claimed_by: ruler-t047-art-audit-20261127-e91b7f
+  claimed_at: '2026-11-27T21:43:22Z'
+
 - id: t-048
   milestone: m6
   title: Fishing first-catch fairness, input edge cases and shop/economy adversarial suite
