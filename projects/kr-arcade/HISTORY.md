@@ -1196,3 +1196,13 @@ and prismatic lime sat small in frame; both re-rendered (-v2, ArtJobs 77429/7743
 force: true via conductor#8054) and now fill their circles in their own hue. Visual
 acceptance in play stays with Silas under t-184.
 <!-- note:end t-190 -->
+
+## t-191 — Add a per-cabinet audit listing every rendered art slot that is still code-drawn, so painted replacements are queued systematically.
+
+<!-- note:begin t-191 -->
+Reviewer kaizen from conductor#8039 (and #8037): Silas, 2026-11-25 PT, wants painted art to replace every SVG/canvas-drawn slot. Build a small script or test that lists, per arcade cabinet, the visual slots still drawn in code with no painted request in projects/art-prompts.yaml, so the remaining replacements are found by a tool and not by hand.
+
+2026-11-27 PT: art audit implemented on worker/kr-arcade-t191-art-audit-20261127. Targeted audit tests and ESLint pass; full vue-tsc passed before latest-main integration and is rechecking. Full Arcade engine suite exposes the unmodified Rain Catcher sleet failure at verifyRainCatcher.test.ts:130. Source audit lists code-drawn render sites and matching durable requests, never asserts art delivery. Earlier review event expired during tool approval; this atomic claim/review pair restores a verified handoff without overriding another owner. No deployment or human acceptance claimed.
+
+2026-11-27 PT: completed in Kind Robots PR #5981, merged e099cb3444e0ac94e93d7fcec944777d63d31de3. The read-only AST audit reports per-cabinet code-drawn sites and exact ledger request/job matches; source locations, unresolved sites, functional-UI candidates and mixed renderers remain inspectable. Fixture tests, ESLint, formatting and full final-branch vue-tsc passed; latest-head CI completed green. Original Arcade baseline Rain Catcher defects are tracked under t-114, not hidden or weakened. No artwork delivery or deployment claimed.
+<!-- note:end t-191 -->
