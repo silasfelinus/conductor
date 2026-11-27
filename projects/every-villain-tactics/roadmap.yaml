@@ -456,16 +456,18 @@ tasks:
   - id: t-021
     milestone: m3
     title: "Ship 48 power-specific playable origin opening battles"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 20261127T034230Z-evt-hydrant-8bf2
     claimed_at: '2026-11-27T03:42:37.234Z'
-    updated: '2026-11-27T03:42:37.234Z'
+    updated: '2026-11-27T03:43:53.966Z'
     depends_on: [t-005, t-017]
     passes: 0
     stakes: reversible
     note: |-
       48/48 metadata blueprints exist; each needs a distinct playable original arena, power-specific solution, meaningful alternative, durable consequence and cinematic intro, both allegiances. Recorded five playable origins (Backdraft, Ferris, Cornerstone, Valcourt, Chorus), last #5455 merged 0717c7b8d104; verify current coverage and finish the remaining 43 if unchanged. Preserve shared Story/Tactics launcher #5362, identity/allegiance routing and save anti-forgery. Dedicated painted venues, full identity and from-new-game acceptance remain. Metadata is not playable maps. Full prior note: ROADMAP-HISTORY-2026-11-26.md#t-021.
+
+      Kind Robots commit 14fae9d790b1295165027ac84304097a012b5adf adds Hydrant Blue, the sixth distinct origin battle. Tidewarden targets a broken main directly using her one-use signature and ordinary AP/attack restrictions, then evacuates two trapped fire crews. Separate cinematic hero/villain introduction, allocation choice, rescue and ending scenes; save validates identity, signature-spend and rescue gate. Environmental target remains usable if rivals are defeated. Existing painted foundry fallback, dedicated venue art outstanding. Extracted committed preview/commit and blocker passed 15 assertions; full CI pending. Partial scope: 42 other origins and full visual/route acceptance remain.
   - id: t-022
     milestone: m3
     title: "Build 48 villain-owned lairs with changing tactical environments"
