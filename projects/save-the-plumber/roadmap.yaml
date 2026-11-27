@@ -79,7 +79,7 @@ tasks:
       images asserted as live.
   - id: t-028
     title: 'Main-game standard: audit and close the gaps for Save the Plumber'
-    status: claimed
+    status: review
     owner: worker
     claimed_by: plumber-sync-reconcile-20261127T0757Z-2e67
     claimed_at: '2026-11-27T07:57:00Z'
@@ -87,13 +87,15 @@ tasks:
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-27T07:57:00Z'
+    updated: '2026-11-27T07:58:00Z'
     note: |-
       Main-game standard: use STANDARD-AUDIT-2026-11-12.md and docs/agents/main-game-standard.md. Verify title, settings, persistent saves, 12+ achievements (separate task), scrapbook, multiple painted endings, customizable heroine and three replay hooks. Recorded merges #5722, #5772, #5773, #5832, #5843, #5883, #5884, #5890, #5896 and #5901 delivered settings/contrast, achievement browser, separate New Game/Continue, three endings/epilogues, reset, taunts, reading options, name entry and repaired engine tests. Latest receipt #5901 at 9debf882 reports all 17 exact-head checks passed. Remaining: global account-backed saves and permanent unlocks across devices (reload, account isolation and reset), actual earned/deduplicated achievement records and generated badges, complete scrapbook including run outcomes and locked counts, distinct delivered painted ending plates, rendered finale/gallery screenshots and accessibility against the current main-game standard; do not repeat shipped controls. No production deployment verified. Keep ready until actual visual/acceptance evidence. Full prior note: ROADMAP-HISTORY-2026-11-26.md#t-028.
 
       Added strict canonical v3 Plumber file validation and enabled the existing authenticated revisioned Arcade save endpoint for the Plumber slug, retaining user-scoped CAS and size limits. Added regression coverage for migrations, malformed files, property ordering, and album retention after slot erasure. Branch worker/save-the-plumber-t-028-cloud-4e8c2d head b30a8cf031f2ce36967b827d0218683ea264e7fa. CI pending. Partial scope: client account sync, owner isolation/reset/conflict tests and other main-game acceptance remain.
 
       Verified kind_robots#5957 merged at e6f2b08f; thirteen implementation workflows completed successfully on exact head b30a8cf0, including Maker, TypeScript and browser contracts. Janitor cancelled; check branch separately. Authenticated v3 save validation and revisioned endpoint delivered; client sync and remaining main-game acceptance still required. Production unverified.
+
+      Added three-way save reconciliation for independent slot changes, explicit same-slot conflicts, intentional slot erasure, monotonic album and Endless records. Added regression assertions for first sync, conflicting progress/erase, remote-only progress and independent slot edits. App branch worker/save-the-plumber-t-028-reconcile-2e67 at 783fe8ebbe453373bf74334cf3e4bcc99e7b2b66. CI pending. Partial scope; wire client account synchronization and conflict handling next.
   - id: t-029
     title: 'Save the Plumber achievement upgrade: 12 or more live achievements'
     status: done
@@ -150,10 +152,7 @@ tasks:
   - id: t-005
     milestone: m2
     title: "Implement enemy interaction, held objects and powerup systems"
-    status: review
-    owner: worker
-    claimed_by: plumber-gurgle-sip-20261127T0708Z-e92f
-    claimed_at: '2026-11-27T07:08:00Z'
+    status: ready
     depends_on: [t-003]
     passes: 0
     stakes: reversible
@@ -173,7 +172,9 @@ tasks:
       Verified kind_robots#5951 merged at 5d5b87a8; exact-head Maker and contract checks passed, but browser workflow failed without returned jobs. Subsequent descendant #5957 merged with both Maker and browser workflows successful (e6f2b08f is 12 commits ahead, zero behind #5951 merge). Slurp/spit partial scope; other slurp targets, scale plates, cross-course persistence, art and authored water courses remain. Production unverified.
 
       Mounted Wrench now slurps one reachable power/heart pickup or replenishes the water hop charge from nearby water. Reuses standard pickup collection, prioritizes rollers, preserves course water and blocks supplies behind walls. Added real-input supply/occlusion regressions and control guide. Branch worker/save-the-plumber-t-005-sip-e92f at f33a3441c58282d6fa6dce4eb3c2fe8bfadaa0a0. CI pending; scale plates, further small enemies, cross-course persistence, art and campaign water course acceptance remain.
-    updated: '2026-11-27T07:09:00Z'
+
+      PR kind_robots#5965 merged at 16f8b926; twelve implementation workflows and all relevant individual checks passed on 61a86938. Gurgle supply slurp and wall occlusion delivered. Remaining other small enemies, scale plates, inter-course persistence, painted art and water-course acceptance. Production deployment unverified.
+    updated: '2026-11-27T07:15:00Z'
   - id: t-006
     milestone: m3
     title: "Build World 1: four complete garden/pipeworks levels and boss"
@@ -407,14 +408,11 @@ tasks:
   - id: t-021
     milestone: m6
     title: "Gen-2 World 1: re-author Bluebell Pipeworks as a full SMB3/SMW-class world"
-    status: review
-    owner: worker
-    claimed_by: 20261127T054108Z-plumber-t021-f7c39a62
-    claimed_at: '2026-11-27T05:41:08Z'
+    status: ready
     depends_on: [t-002, t-011, t-020]
     passes: 0
     stakes: reversible
-    updated: '2026-11-27T05:43:00Z'
+    updated: '2026-11-27T07:15:00Z'
     note: |-
       Build World 1 to the GEN2-WORLDS.md graph: 6-9 nodes including a fortress, a Hush House, the first Valve Chapel and at least one secret exit, each level 3-6 minutes with sub-areas and a real secret. Wire the GEN2-ROUND-1 overworld plate and far-sky plate. Record first-clear times. This is the agent-verified production template for Worlds 2-8; human verdict is not a prerequisite. Completion checkpoints: 1-1, 1-2, 1-h and cottage, 1-3 and chapel, 1-f including Foreman Flange, 1-4 and 1-castle. Verify each authored beat, original art and route timing against GEN2-WORLDS.md.
 
@@ -443,6 +441,8 @@ tasks:
       Verified kind_robots#5946 merged at 3013022d after all ten implementation workflows and branch janitor passed on 88b21874. Buried Meter optional shaft and traversal regression shipped. Wildwater, remaining authored beats, delivered art and full timing acceptance remain. Production deployment unverified.
 
       Authored Sluicegate Steps optional dam inspection room with paired pipes, ladder descent and token alcove. Added input-driven regression for arrival, camera room, collection, climb and return before the existing checkpoint/clear test. Static geometry probe passed; runtime CI pending. App branch worker/save-the-plumber-t-021-dam-f7c39a62 at 078f2085e35405543020bc6a6a3dc48495d93c8d. Partial World 1 scope; Wildwater, Gear and full timing/art acceptance remain.
+
+      PR kind_robots#5961 merged at 3b02772b; all ten implementation workflows and branch janitor succeeded on b56b2601. Sluicegate inspection room and actual-input traversal regression delivered. Remaining Wildwater, Gear, original art and course timing/acceptance.
   - id: t-022
     milestone: m6
     title: "Gen-2 Worlds 2-4: Tideglass Marina, Lantern Orchard, Clockwork Fair"
@@ -545,11 +545,8 @@ tasks:
       Related: PR #4080, issue #4062, conductor/save-the-plumber t-025.
   - id: t-027
     title: "Save the Plumber Maker: playable level editor, saves, sharing, ratings, Mario Maker and Geometry Dash parity"
-    status: review
-    owner: worker
-    claimed_by: plumber-maker-stroke-20261127T0702Z-3c9b
-    claimed_at: '2026-11-27T07:02:00Z'
-    updated: '2026-11-27T07:03:00Z'
+    status: ready
+    updated: '2026-11-27T07:15:00Z'
     stakes: reversible
     passes: 0
     source_issue: "silasfelinus/kind_robots#4347"
@@ -610,6 +607,8 @@ tasks:
       2026-11-26 PT: kind_robots#5911 merged at 464db144. Forced-scroll Maker settings, serialization and runtime replay shipped; all 11 implementation workflows passed. Remaining advanced editor and community lifecycle. Partial scope; production deployment unverified.
 
       Continuous Maker brush interpolation fills grid cells between mouse/touch samples, redraws once per event, retains one undo stroke and preserves unique start/finish brush behavior. Added contiguous direction and painted terrain regression assertions. App branch worker/save-the-plumber-t-027-stroke-3c9b at 55121e741968f5d5a595966e5145a3c0d4b506b9. Runtime CI pending. Partial t-027; no publication or community changes.
+
+      PR kind_robots#5963 merged at f48d17a1; eleven implementation workflows succeeded on f30f048f; janitor cancelled. Continuous brush interpolation and regressions shipped; remaining editor/community acceptance stays open.
   - id: t-030
     milestone: m2
     title: "Add one water-traversal fixture that runs every heroine and the speed-route pilot through Tidecoat swimming"
