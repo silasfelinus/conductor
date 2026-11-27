@@ -82,7 +82,7 @@ tasks:
     direction, and the offline-at-runtime rule.
 - id: t-067
   title: 'Main-game standard: audit and close the gaps for The Ruler Is Hooked'
-  status: claimed
+  status: review
   owner: worker
   claimed_by: 20261127T004500Z-ruler-hooked-t067-account-5e8d
   claimed_at: '2026-11-27T00:45:00Z'
@@ -90,7 +90,7 @@ tasks:
   stakes: reversible
   passes: 0
   depends_on: []
-  updated: '2026-11-27T00:45:00Z'
+  updated: '2026-11-27T00:51:00Z'
   note: |-
     Silas 2026-11-11 PT, in session: "Our games should all have a base standard of quality ... We want our main games to have 12 plus achievements." Standard: docs/agents/main-game-standard.md; CONTROL.md global overview.
 
@@ -135,6 +135,8 @@ tasks:
     Quiz fishing checkpoint implementation at a26d7376 on Kind Robots worker/ruler-hooked-t067-quiz-checkpoint-5dc8. Saves active fish, exact question/options, introduction and wrong-answer review; rejects malformed/stale checkpoints, prevents stale async question responses across reigns, and provides explicit Classic fallback for unavailable tutor catalog. Added local and private-backup regression assertions. Partial t-067: CI and actual browser/account verification pending.
 
     Verified Kind Robots #5875 merged at 5145c12d01cd88369d192ef715a667b39f68a18b. All eight exact-head PR workflows on 202edbaf39627f03ab82f2b939d26f3caf21b809 passed, including Ruler Hooked 45747642890 and Contract Tests 45747642838; branch janitor 45748831846 also succeeded. Quiz checkpoint slice delivered. Return to ready for remaining live signed-in account and device standards verification; no deployed visual or account pass claimed.
+
+    Kind Robots 8612663 adds automatic private archive pull and debounced backup, account-scoped local save namespaces, explicit legacy-device import, revision retry and reconnect handling, account-switch guards, and headless owner-isolation/restore regressions. Original guest saves preserved. CI and actual authenticated device QA remain; this is not final standard acceptance.
 
 - id: t-068
   title: 'The Ruler Is Hooked achievement upgrade: 12 or more live achievements'
