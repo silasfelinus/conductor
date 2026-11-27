@@ -3149,10 +3149,15 @@ tasks:
   - id: t-191
     milestone: m12
     title: "Add a per-cabinet audit listing every rendered art slot that is still code-drawn, so painted replacements are queued systematically."
-    status: ready
+    status: review
     passes: 0
     stakes: reversible
     depends_on: []
-    updated: '2026-11-27T09:40:43Z'
+    updated: '2026-11-27T10:30:47Z'
     note: |-
       Reviewer kaizen from conductor#8039 (and #8037): Silas, 2026-11-25 PT, wants painted art to replace every SVG/canvas-drawn slot. Build a small script or test that lists, per arcade cabinet, the visual slots still drawn in code with no painted request in projects/art-prompts.yaml, so the remaining replacements are found by a tool and not by hand.
+
+      2026-11-27 PT: art audit implemented on worker/kr-arcade-t191-art-audit-20261127. Targeted audit tests and ESLint pass; full vue-tsc passed before latest-main integration and is rechecking. Full Arcade engine suite exposes the unmodified Rain Catcher sleet failure at verifyRainCatcher.test.ts:130. Source audit lists code-drawn render sites and matching durable requests, never asserts art delivery. Earlier review event expired during tool approval; this atomic claim/review pair restores a verified handoff without overriding another owner. No deployment or human acceptance claimed.
+    owner: worker
+    claimed_by: 20261127T103046Z-kr-arcade-t191-handoff-4e9b2d
+    claimed_at: '2026-11-27T10:30:46Z'
