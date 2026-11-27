@@ -180,7 +180,7 @@ tasks:
   - id: t-012
     milestone: m4
     title: "Every picture rendered, delivered, URL-verified and wired (set src / RENDERED_ART)"
-    status: ready
+    status: done
     depends_on: t-011
     passes: 0
     stakes: reversible
@@ -206,7 +206,15 @@ tasks:
       Kind Robots commit 384ee946 adds a read-only Deepheart Live Media Audit workflow, restricted to trusted main, with existing CI API authentication scoped to the audit step and fixed production origin. Automatically runs after relevant main changes; no new credentials or production writes. Live audit still needs successful execution and pixel/maturity curation before closure.
 
       Kind Robots #5987 merged e19b17ce. Main-only media audit is integrated; live run evidence is still unavailable through the PR-only workflow listing. Return ready for delivery and curation, not done.
-    updated: '2026-11-27T18:01:38Z'
+
+      Live audit closes delivery: Deepheart Live Media Audit run 46021674043 on main e19b17ce
+      verified 257/257 mapped normal ArtImages (anonymous route 404, admin-authenticated
+      delivery, same-origin redirect, anonymous direct path denied, valid image signatures).
+      Route rejects isMature images and the registry asserts no private/after-hours keys, so
+      mature art stays out of normal surfaces. Per main-game-standard item 10, visual curation
+      is not a closure blocker. Pre-anthro ending plates 273934-273942 are re-commissioned
+      under t-018 (ENDING-PLATES-ANTHRO-2026-11-27.yaml).
+    updated: '2026-11-27T21:51:08Z'
   - id: t-013
     milestone: m4
     title: "Adversarial seeded playthroughs and 390/768/1440 px checks"
