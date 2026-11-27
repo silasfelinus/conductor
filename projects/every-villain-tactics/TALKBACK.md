@@ -84,3 +84,9 @@ type: critique
 **Decision:** Latest head `67570da` passed seven workflows including four contract shards. Reviewed the canonical technical-origin catalog and selector regression, squash-merged as `35804cad1637cd8fbc6b9486cb44b85f486d0921`. 24 identities now have individually authored aftermaths and 96 earned epilogues. Partial scope; return ready.
 
 **Next:** Mutant, alien and psychic aftermaths, then fixed supporting casts and bespoke mission conversations. Do not claim complete routes from aftermath tests.
+
+## 2026-11-26 PT | Reviewer | t-010 | Kind Robots #5927
+
+**Decision:** Latest head `75c7c2a` passed all seven workflows including all four contract shards. Reviewed the actual directional-cover retreat planner, hazard avoidance, ordinary AP/reaction rules and seeded full-turn tests. Squash-merged as `e7a2a36e7277feb4b6f6a1fa99a7e2ac15d352bc`. Initial merge raced a main update; refreshed state and retried successfully without force-pushing. Partial scope; return ready.
+
+**Next:** Named crew integration and broader AI/full-run acceptance remain. Keep one-hit and bespoke lieutenant behavior distinct.
