@@ -283,8 +283,8 @@ tasks:
   - id: t-018
     milestone: m4
     title: "Complete canon-consistent scrapbook, support scenes and relationship art"
-    status: claimed
-    updated: '2026-11-27T21:47:42Z'
+    status: ready
+    updated: '2026-11-27T21:51:11Z'
     depends_on: t-007
     passes: 0
     stakes: reversible
@@ -318,6 +318,13 @@ tasks:
       Kind Robots head 3c637aff stops locked Deepheart scrapbook and ending tiles from loading their actual paintings; uses the existing key-art cover until earned. Added regression coverage for every authored moment and ending, preserves other games and existing romance settings and saves. Live authenticated delivery/visual curation still outstanding. Return ready after green merge, not done.
 
       Kind Robots #5979 merged 875b552f; all seven exact-head implementation workflows and branch janitor succeeded (Playbook Kit 45981967934). Locked artwork no longer loads before earned discovery. Return ready for actual authenticated delivery and visual curation.
+
+      Ending audit: all nine wired ending plates (jobs 69590-69598, ArtImages 273934-273942)
+      are original pre-anthro kit renders, which DESIGN-BRIEF rejects as final art. Commit
+      3c69399 adds ENDING-PLATES-ANTHRO-2026-11-27.yaml: nine private auto-submit Krea 2
+      briefs on the original ending:* nodes, current animal-folk delvers matching moment:full-
+      party, Aldric as an elderly moose, undead kept as monsters. Live prompt contract 9/9.
+      All 35 support plates and the full-party repaint are wired and live-verified (run
+      46021674043, 257/257). Return ready after merge: map the nine ending receipts in
+      renderedArt.ts, replacing 273934-273942, then close.
     owner: worker
-    claimed_by: 2026-11-27T183000Z-deepheart-t018-endings-5c3e
-    claimed_at: '2026-11-27T21:47:42Z'
