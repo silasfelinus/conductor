@@ -240,11 +240,8 @@ tasks:
   - id: t-016
     milestone: m4
     title: "Paint and integrate the full bestiary and three boss encounter plates"
-    status: review
-    owner: worker
-    claimed_by: 2026-11-27T032608Z-deepheart-t-016-c8f4a7
-    claimed_at: '2026-11-27T03:26:08Z'
-    updated: '2026-11-27T03:26:08Z'
+    status: ready
+    updated: '2026-11-27T03:34:00Z'
     depends_on: t-015
     passes: 0
     stakes: reversible
@@ -256,10 +253,12 @@ tasks:
       2026-11-26 PT: Conductor #8080 merged 483c94a6 after four successful latest-head workflows. 39 private Krea 2 requests are on main with auto_submit enabled; no new ArtJob receipts yet verified. Resume delivery, curation, integration and URL checks, preserving existing guardian and Mimic assets.
 
       Kind Robots commit 4f615697 integrates 18 DONE Krea 2 ledger receipts (jobs 77450-77467, ArtImages 280763-280780) into the private admin-only art registry. Verified unique IDs and enemy keys against runtime definitions. Actual authenticated image URLs and visual acceptance remain unverified; token absent and site DNS unavailable in runtime. Return ready after partial merge; remaining portraits and guardian plates pending. No duplicate jobs, no mature art changes.
+
+      Kind Robots #5934 merged 42076636; seven implementation workflows completed successfully. 18 ordinary portraits wired. Remaining 18 portraits and three guardian plates now have DONE receipts; integrate and test. Owner 2026-11-26 PT explicitly accepts completed render receipts as availability evidence; manual art approval is not a gate.
   - id: t-017
     milestone: m4
     title: "Distinct painted environments and significant encounters in live gameplay"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 2026-11-27T033400Z-deepheart-t-017-43bc7e
     claimed_at: '2026-11-27T03:34:00Z'
@@ -273,6 +272,8 @@ tasks:
       2026-11-26 PT: commit 4582e3fc commissions 15 missing non-court choice scenes in NONCOURT-ENCOUNTERS-2026-11-26.yaml, including all six community encounters. Existing six moment plates retained. Verified all 21 authored non-court event IDs against ledgers and checked prompt specificity (58+ unique words). CI, delivery and runtime bindings outstanding.
 
       Conductor #8101 merged b5716014 after four completed successful workflows. Fifteen missing non-court scenes are on main with auto_submit enabled. Resume after receipt and visual verification, integrating all event-specific art. No delivered-image claim.
+
+      App head 7010d7cb maps all 15 new non-court DONE receipts (jobs 77489-77503, ArtImages 280802-280816), restores three existing moment mappings (jobs 69526,69527,69530), uses distinct authored encounter plates and layer-specific ordinary combat scenery. Regression asserts 21 distinct non-court event sources. Owner-approved receipt acceptance applies; manual visual checks are not a gate. CI pending; close t-017 only after green merge.
   - id: t-018
     milestone: m4
     title: "Complete canon-consistent scrapbook, support scenes and relationship art"
