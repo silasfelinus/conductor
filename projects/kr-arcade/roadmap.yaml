@@ -1730,18 +1730,22 @@ tasks:
   - id: t-103
     milestone: m8
     title: "Hedgehog Crossing depth slice 2: Leg 1 and the scrolling engine"
-    status: review
+    status: ready
     passes: 0
     stakes: reversible
-    owner: worker
-    claimed_by: 2026-11-23T001630Z-kr-arcade-t-103-j2q9
-    claimed_at: '2026-11-23T00:16:30Z'
+    owner: null
     depends_on: t-102
     note: |-
       CABINETS.md section 16, Hedgehog Crossing (Frogger riff), slice 2 of 4: Leg 1 and the scrolling engine. The upgrade is "The Long Way Home". Spec: projects/kr-arcade/depth-pass/CABINETS.md -- read the game's section first; this slice's scope is item 2 under its '#### Slices', and 'Rules for every slice' at the top applies. Code: kind_robots utils/arcade/games/ (registry slug hedgehog-crossing). Silas, 2026-10-11: "I need an assessment done of the other arcade games. I want the same level of quality improvements, they should not just be thin veneers of the old games. But newer, better, even more awesome."
 
       2026-11-22 PT: partial Leg 1 implementation under worker/kr-arcade-t-103-market-crossings-j2q9. Park Lane levels 1-5 and Market Day levels 6-10 now have separate data-defined lane rosters; Market Day introduces shopper crowds, rolling barrels and floating canal crates with new visual silhouettes and collision contracts. Added seeded-layout and ride/bonk regression assertions to test:arcade-engine. Big Crossing vertical scrolling, special objectives, music transitions, pantry and saves are still unimplemented and this nonrecurring task must return to ready after merge.
-    updated: '2026-11-23T00:19:08.698Z'
+
+      2026-11-26 PT, Silas-directed finite-roadmap clearing: verified
+      https://github.com/silasfelinus/kind_robots/pull/5613 merged as partial scope. Big
+      Crossing scrolling/checkpoints, special events, saves, visitors, Pantry and music
+      remain. Returned to ready; no human approval or deployment inferred.
+    updated: '2026-11-27T07:00:53Z'
+    implementation_pr: 'silasfelinus/kind_robots#5613'
 
   - id: t-104
     milestone: m8
