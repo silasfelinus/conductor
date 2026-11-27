@@ -1,0 +1,5 @@
+# deepheart: project outline
+
+Three-layer art-led saga dungeon crawler with 50 presets, hero plus one to three companions, distinct combat/puzzle/treasure/choice/campfire rooms, viable nonviolent solutions, diverse bestiary and bosses, discoverable bonds, adult-only opt-in romance, painted endings, main-game standards and persistent progress. Finite remaining art: t-012 delivery audit, t-016 bestiary/guardian chambers, t-017 painted environments and authored encounters, t-018 scrapbook/support/relationship art. t-013 seeded full runs and phone/tablet/desktop QA; t-014 verified playtest graduation. Keep existing mature art privacy and current save semantics. Do not count art queue completion as runtime/visual proof.
+
+Live state: [roadmap.yaml](roadmap.yaml). Original requirements: [master issue #5256](https://github.com/silasfelinus/kind_robots/issues/5256), current CONTROL and design references. [History](ROADMAP-HISTORY-2026-11-26.md) preserves replaced text. Verify current implementation before closing any task.
