@@ -2569,11 +2569,9 @@ tasks:
   - id: t-154
     milestone: m8
     title: "Arcade audio approval-queue admin page, and cabinets that switch music scenes"
-    status: review
-    owner: worker
-    claimed_by: 2026-11-23T081000Z-kr-arcade-t154-r6m2
-    claimed_at: '2026-11-23T08:10:00Z'
-    updated: '2026-11-23T08:22:00Z'
+    status: ready
+    owner: null
+    updated: '2026-11-27T07:01:14Z'
     passes: 0
     stakes: reversible
     note: |-
@@ -2582,6 +2580,12 @@ tasks:
       2026-11-23 PT: implemented an admin-only Arcade Soundtrack Studio page with channel registration, per-cue brief list, relay readiness and existing ArtJob status, explicit approve/retry actions using the existing secured API, and client-side gating that cannot bypass server authorization. Added unit and source contract coverage to verifyArcadeSoundtrackBriefs. Kind Robots worker PR awaits final-head CI. Remaining t-154 scope includes Gloom Invaders, Ghost Trail, and Prize Show Panic soundtrack scene-switching and post-deploy browser/audio-device verification; do not mark full task done on this UI slice alone.
 
       Follow-up on open Kind Robots PR #5652 (commit 7ebdf2e): added musicScene getters to Gloom Invaders, Prize Show Panic and Zuzu Ghost Trail for pressure-based level-2 transitions, later-episode themes and live boss cues; source contracts now assert those hooks. Still pending CI, verified rendered/ingested recordings, shared playCue integration and real browser/gamepad/audio QA. No generation enabled, no publication or deployment.
+
+      2026-11-26 PT, Silas-directed finite-roadmap clearing: verified
+      https://github.com/silasfelinus/kind_robots/pull/5652 merged as partial scope. Shared
+      recorded cues, browser/controller tests and verified soundtrack playback remain.
+      Returned to ready; no human approval or deployment inferred.
+    implementation_pr: 'silasfelinus/kind_robots#5652'
   - id: t-155
     milestone: m8
     title: "Turn on ACE arcade soundtrack generation, ingest the first approved track, and listen to it in a cabinet"
