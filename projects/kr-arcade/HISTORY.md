@@ -1226,3 +1226,20 @@ Keep the game on the growing shelf until the entire finite scope is complete. Pu
 
 Silas explicitly cleared this roadmap gate on 2026-11-27. The remaining subjective visual and play checks move to post-roadmap playtesting using superkate-spectrum/PLAYTEST-CHECKLIST.md. Automated scope already verified in #5816 and #5823.
 <!-- note:end t-184 -->
+
+## t-114 — Rain Catcher depth slice 1: Reading the sky
+
+<!-- note:begin t-114 -->
+CABINETS.md section 19, Rain Catcher (Missile Command riff), slice 1 of 4: Reading the sky. The upgrade is "Gardens of the World". Spec: projects/kr-arcade/depth-pass/CABINETS.md -- read the game's section first; this slice's scope is item 1 under its '#### Slices', and 'Rules for every slice' at the top applies. Code: kind_robots utils/arcade/games/ (registry slug rain-catcher). Silas, 2026-10-11: "I need an assessment done of the other arcade games. I want the same level of quality improvements, they should not just be thin veneers of the old games. But newer, better, even more awesome."
+
+Partial Rain Catcher depth slice 1: six-garden authored forecasts, friendly rain growing five-stage beds, hail damage, two refill barrels, petal-chain cascades, sleet sliders, eight-stone moth clusters, two-hit snowballs, moving gusts, wave-pair sky palettes, larger weather art and original music. Game-engine tests added. PR to follow; CI and gameplay verification pending.
+
+2026-11-26 PT, Silas-directed finite-roadmap clearing: verified
+https://github.com/silasfelinus/kind_robots/pull/5598 merged as partial scope.
+Adversarial gameplay, balance and rendered slice-one verification remain. Returned to
+ready; no human approval or deployment inferred.
+
+Fixed a sleet slider regression reproduced on main and verified three seeded five-wave clears. Rendering verification remains open.
+
+kind_robots#6004 merged at 82e747c after 15 successful checks. Rain Catcher engine and forecast suites pass, with five Orchard Hills waves cleared on seeds 5, 15 and 42. Qt WebEngine rendered waves one and three to a real 320x240 canvas; inspected the wave-three HUD, sky, beds, barrels and launchers. Slice one complete.
+<!-- note:end t-114 -->

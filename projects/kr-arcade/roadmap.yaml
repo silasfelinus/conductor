@@ -1922,30 +1922,22 @@ tasks:
   - id: t-114
     milestone: m8
     title: "Rain Catcher depth slice 1: Reading the sky"
-    status: review
+    status: done
     passes: 0
     stakes: reversible
-    note: |-
-      CABINETS.md section 19, Rain Catcher (Missile Command riff), slice 1 of 4: Reading the sky. The upgrade is "Gardens of the World". Spec: projects/kr-arcade/depth-pass/CABINETS.md -- read the game's section first; this slice's scope is item 1 under its '#### Slices', and 'Rules for every slice' at the top applies. Code: kind_robots utils/arcade/games/ (registry slug rain-catcher). Silas, 2026-10-11: "I need an assessment done of the other arcade games. I want the same level of quality improvements, they should not just be thin veneers of the old games. But newer, better, even more awesome."
+    note: >-
+      CABINETS.md section 19, Rain Catcher (Missile Command riff), slice 1 of 4: Reading the sky.
 
-      Partial Rain Catcher depth slice 1: six-garden authored forecasts, friendly rain growing five-stage beds, hail damage, two refill barrels, petal-chain cascades, sleet sliders, eight-stone moth clusters, two-hit snowballs, moving gusts, wave-pair sky palettes, larger weather art and original music. Game-engine tests added. PR to follow; CI and gameplay verification pending.
-
-      2026-11-26 PT, Silas-directed finite-roadmap clearing: verified
-      https://github.com/silasfelinus/kind_robots/pull/5598 merged as partial scope.
-      Adversarial gameplay, balance and rendered slice-one verification remain. Returned to
-      ready; no human approval or deployment inferred.
-
-      Fixed a sleet slider regression reproduced on main and verified three seeded five-wave clears. Rendering verification remains open.
-    updated: '2026-11-27T22:20:12.208Z'
+      Full history: projects/kr-arcade/HISTORY.md#t-114
+    updated: '2026-11-27T23:05:03.486Z'
     implementation_pr: 'silasfelinus/kind_robots#5598'
-    owner: worker
     claimed_by: 20261127T221923Z-kr-arcade-t114-j1xksohkc
     claimed_at: '2026-11-27T22:19:23Z'
 
   - id: t-115
     milestone: m8
     title: "Rain Catcher depth slice 2: The first two gardens"
-    status: waiting
+    status: ready
     passes: 0
     stakes: reversible
     depends_on: t-114
