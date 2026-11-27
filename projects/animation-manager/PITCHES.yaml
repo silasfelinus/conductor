@@ -2974,3 +2974,18 @@ pitches:
         verification:
           - headless Chromium render at 1280x800, 390x844 and reduced-motion 800x500 with hover and click, no page errors, ~55-60 fps
           - vue-tsc, eslint, prettier, audit:icons and verifyAnimationCatalog clean; registered in stores/animationCatalog.ts
+  - id: sea-glass-swash
+    title: Sea Glass Swash
+    status: shipped
+    priority: 99
+    surprise: A top-down late-afternoon beach where wave sets race up the sand as lacy swash fronts built from the running maximum of overlapping runup profiles, so a fresh wave overtakes a draining one; frosted sea-glass pebbles ride the front's own velocity, tumble and settle as the backwash drains, foam lace breaks off and pops, and wet sand dries slowly behind the high-water line; walking the pointer leaves footprints the next swash erases, click calls a bigger wave around the click.
+    builds:
+      - version: 1
+        status: shipped
+        component: components/screenfx/sea-glass-swash.vue
+        pull_request: silasfelinus/kind_robots#5991
+        merge_sha: 7a68bdb
+        released_at: '2026-11-27T14:00:00Z'
+        verification:
+          - headless Chromium render at 1280x800, 390x844 and reduced-motion 800x500 with hover and click, no page errors, ~60 fps
+          - eslint, prettier, audit:icons, verifyAnimationCatalog and vue-tsc (changed files) clean; registered in stores/animationCatalog.ts
