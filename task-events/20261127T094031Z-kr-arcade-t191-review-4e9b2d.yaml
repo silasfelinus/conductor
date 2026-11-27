@@ -1,0 +1,15 @@
+version: 1
+project: kr-arcade
+task: t-191
+operation: review
+owner: worker
+session: 20261127T080542Z-kr-arcade-t191-4e9b2d
+updated: '2026-11-27T09:40:31Z'
+note: >-
+  2026-11-27 PT: implemented a per-cabinet TypeScript AST audit on
+  worker/kr-arcade-t191-art-audit-20261127. Follows all registry loaders and
+  relative imports, lists code-drawn rendering sites with source locations,
+  and matches runtime image paths to durable request IDs and ArtJob metadata.
+  Targeted tests, ESLint and full vue-tsc passed; the full Arcade suite exposes
+  the unchanged-main Rain Catcher sleet collision failure at verifyRainCatcher.test.ts:130.
+  Final-head CI and review pending; no artwork delivery, deployment or human acceptance claimed.
