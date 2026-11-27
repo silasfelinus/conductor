@@ -177,3 +177,19 @@ def test_cli_writes_output(tmp_path):
     )
     assert out.exists()
     assert "No records yet" in out.read_text()
+
+
+def test_report_is_not_rewritten_when_only_stamps_would_change(tmp_path, monkeypatch):
+    ledger = tmp_path / "LEARNING.yaml"
+    ledger.write_text("records: []\n", encoding="utf-8")
+    out = tmp_path / "LEARNING-REPORT.md"
+    argv = ["build_learning_summary.py", "--ledger", str(ledger), "--output", str(out)]
+    monkeypatch.setattr(sys, "argv", argv)
+    bls.main()
+    stale = "\n".join(
+        line.replace("Generated: ", "Generated: 1999-") if line.startswith("Generated: ") else line
+        for line in out.read_text(encoding="utf-8").splitlines()
+    ) + "\n"
+    out.write_text(stale, encoding="utf-8")
+    bls.main()
+    assert out.read_text(encoding="utf-8") == stale
