@@ -445,11 +445,11 @@ tasks:
   - id: t-021
     milestone: m3
     title: "Ship 48 power-specific playable origin opening battles"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 20261127T070300Z-evt-magic-origin-8fd1ca
     claimed_at: '2026-11-27T07:03:00Z'
-    updated: '2026-11-27T07:03:00Z'
+    updated: '2026-11-27T07:08:00Z'
     depends_on: [t-005, t-017]
     passes: 0
     stakes: reversible
@@ -463,6 +463,8 @@ tasks:
       Kind Robots commit 05fa9aa174eecfd9649c51aca0dd22b1a8b8d6a7 adds Clocktower Collapse (even-round adjacent timing intervention) and Equation That Escaped (four-tile LOS analysis intervention), two distinct maps, perspective-specific cinematic openings, consequential choice scenes and rescue endings. Shared environmental origin registry preserves Hydrant Blue and enforces identity, normal power spend, rescue gating and save invariants. 33 extracted planner/commit assertions passed with synthetic powers and unit states; full engine CI pending. Eight Accident-origin implementations upon merge; forty other origins plus dedicated art and full acceptance remain.
 
       Kind Robots #5943 merged as 7baa6fde756b3129d673d0a222a93fc2ecd60b43. Independently verified exact head 570c15fb95b899d4c87aaa2bd3b49bed9a3e7275: all seven CI workflows completed successfully, four Contract shards and verifiers green; branch janitor success. Clocktower Collapse and Equation That Escaped now join the eight playable Accident origins. Remaining 40 origins and original venue artwork/full acceptance; existing venue paintings are fallbacks, not new art delivery. Partial scope, return ready.
+
+      Kind Robots commit f1bf3be470fdca3309ad4f909e8cc9b31e2c3d46 implements Lanternwitch's The Candle That Wouldn't Die, a ninth origin arena with an adjacent two-AP one-use ritual, two gated rescues, hero/villain introduction, memory/extinguish choice with real combat effects and branching ending, menu routing and scoped save validation. Eighty-four extracted actual planner/commit/rescue and graph assertions passed using synthetic unit/tactic state, with permanent engine regressions added. Full CI and rendered QA pending; existing painted commons art is fallback only. Partial; 39 other origins, dedicated art and full acceptance remain.
   - id: t-022
     milestone: m3
     title: "Build 48 villain-owned lairs with changing tactical environments"
