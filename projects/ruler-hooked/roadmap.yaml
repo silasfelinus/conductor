@@ -943,10 +943,7 @@ tasks:
 - id: t-047
   milestone: m6
   title: Deliver and visually audit all required coronation, fish, NPC, map and ending art
-  status: review
-  owner: worker
-  claimed_by: 20261127T0421Z-ruler-hooked-t047-crier-9e53
-  claimed_at: '2026-11-27T04:21:00Z'
+  status: ready
   stakes: reversible
   passes: 0
   note: |-
@@ -955,14 +952,13 @@ tasks:
     Inspected the current art library and rainbow queue generator; no new renders or verified asset deliveries in this session. Returned task to ready for a production-capable worker.
 
     Conductor commit 4fcf62ecb2c41213905512a2b793bd53b98311f5 extends the canonical console art generator and central queue with 18 missing daily proclamation paintings (28/28 runtime event keys now covered). Added exact path/prompt contract regression; verified 18 new staged rows match the generator, have distinct paths and pending status, and retain existing queue bytes unchanged. CI pending; these are new requests, not delivered ArtJobs. Partial t-047, shared console QA t-057/t-061.
-  updated: '2026-11-27T04:24:00Z'
+
+    Conductor #8116 merged b21cf0d30e287d4ba9902dba4f46fd7dcb978bcf; all five exact-head workflows passed, including Worker PR CI 45939690752 and Alpha Audit 45939690766. Main queue verified 28 distinct event rows, ten done and 18 pending. Render delivery remains; return ready.
+  updated: '2026-11-27T04:49:00Z'
 - id: t-048
   milestone: m6
   title: Fishing first-catch fairness, input edge cases and shop/economy adversarial suite
-  status: review
-  owner: worker
-  claimed_by: 20261127T0408Z-ruler-hooked-t048-b7d91c
-  claimed_at: '2026-11-27T04:08:30Z'
+  status: ready
   stakes: reversible
   passes: 0
   note: |-
@@ -993,7 +989,9 @@ tasks:
     #5914 merged d60ebe36c72c997d32331bc2c08df1de689caaa0; all eight exact-head workflows passed on 59a62635dc5b42848c5a8c98ab70cf6f361ee4b0, including gameplay 45913052033, Contract Tests 45913052009 and branch janitor 45913947988. Timing input implementation is merged; remaining actual device input evidence is shared with t-061/t-050. Do not expand fishing features without a demonstrated defect or unmet original scope.
 
     Kind Robots commit 8e71644505007f72d6f5f30fcbb6ce5fccec086f fixes transient catch/escape reveal dismissal across console navigation and labels finale navigation correctly. Added source-contract regression and real responsive audit assertion. Partial t-048; actual live device input evidence remains outstanding. No save format changes.
-  updated: '2026-11-27T04:12:00Z'
+
+    Kind Robots #5945 merged 48004de98402d171b627e73115568163b5513528; all eight exact-head workflows and branch janitor 45941558644 passed. Catch reveal dismissal and finale label repair delivered; latest live device verification remains shared with t-061/t-050. Return ready.
+  updated: '2026-11-27T04:49:00Z'
 - id: t-049
   milestone: m6
   title: Full policy-matrix kingdom simulator and witnessed complete ending graph
@@ -1141,7 +1139,7 @@ tasks:
 - id: t-057
   milestone: m6
   title: 'Restyle the console art lane to Chronicle + Broadside, then stage and render it'
-  status: ready
+  status: done
   gate_human: false
   stakes: reversible
   passes: 0
@@ -1151,14 +1149,13 @@ tasks:
     Silas rejected the Chronicle/Broadside medieval treatment on 2026-11-06 PT. Worker restyled the generator to psychedelic rainbow fantasy with restrained screenprint grain, updated 28 console ArtJob queue rows in place (pending, force true), restyled the Kind Robots console chrome, and made the newer direction authoritative in art-direction and t-054 notes. Conductor and Kind Robots implementation PRs under review; renders and deployed visuals are not yet verified. Opaque layer compositing remains t-059.
 
     Reconciled historical review: Conductor #7114 and #7155 merged with all applicable workflows successful; Kind Robots #4857 and #4882 merged with all returned checks successful. Latest central art-prompts.yaml records 28/28 console rows done with source URLs and 28 ArtJob IDs (65298–65324 with 68336 and 68337 replacements). Rainbow direction supersedes the old title. Existing runtime chains are in artLibrary.ts. Direct media probe failed DNS in this environment; actual byte/visual inspection remains t-057/t-047/t-061. Do not resubmit these done rows; return ready for verification, not done.
-  updated: '2026-11-27T04:15:00Z'
+
+    Original 28/28 console entries are done with concrete ArtJob IDs 65298–65324 (68336 and 68337 replacements), and current main artLibrary resolves the matching backdrops, tab vignettes, original proclamations, gear and Quill portrait. Conductor #7114/#7155 and Kind Robots #4857/#4882 already merged green. Owner's 2026-11-26 main-game standard presumes completed generated art delivered; unavailable direct media inspection is not a separate graduation prerequisite. The 18 later proclamation requests from merged Conductor #8116 belong to t-047; old-build fallback observations and actual device evidence remain t-061/t-050. No current deployment or visual pass claimed.
+  updated: '2026-11-27T04:50:00Z'
 - id: t-058
   milestone: m6
   title: 'Presenter expression sets for the cast and Quill'
-  status: review
-  owner: worker
-  claimed_by: 20261127T0421Z-ruler-hooked-t058-neutral-37ce
-  claimed_at: '2026-11-27T04:21:00Z'
+  status: ready
   gate_human: false
   stakes: reversible
   passes: 0
@@ -1170,7 +1167,9 @@ tasks:
     Reconciled historical review: Kind Robots #5625 merged aaa95713 with nine successful workflows including branch janitor; Conductor #7895 merged 85b7f7b7 with six successful applicable workflows and one skipped. The rescued 48 expression rows now all record done and source URLs; 45 have ArtJobs 76738–76782. Quill neutral/pleased/concerned lack explicit job IDs; do not duplicate them. Runtime mood-specific candidates are wired. Direct media probe failed DNS; actual byte/visual delivery and fallback inspection remain. Return ready for verification, not done.
 
     App commit 0b7b70a83f98ee17e8a75c106dddd89197196c35 fixes an uncovered expression binding gap: callers omitting mood bypassed all new generated expression portraits. Default neutral now precedes legacy portrait candidates for coronation, card fallback and other callers. Added full-cast default-neutral and Quill fallback assertions. CI pending; existing art receipts remain unchanged. Actual media delivery/visual inspection remains shared with t-047/t-061.
-  updated: '2026-11-27T04:22:00Z'
+
+    Kind Robots #5948 merged 206ad7e84cdaa3ed2d46b08354323f8c70d7ed1a; all eight exact-head workflows and branch janitor 45940752373 passed. Default neutral portrait priority delivered. Remaining visual delivery and fallback verification shared with t-047/t-061; return ready.
+  updated: '2026-11-27T04:49:00Z'
 - id: t-059
   milestone: m6
   title: 'Reconcile the compositing contract with the opaque region layers that actually rendered'
@@ -1204,7 +1203,7 @@ tasks:
 - id: t-061
   milestone: m6
   title: 'Post-deploy visual QA of the console at phone, tablet and desktop widths'
-  status: claimed
+  status: review
   owner: worker
   claimed_by: 20261127T0451Z-ruler-hooked-t061-audit-6d3b
   claimed_at: '2026-11-27T04:51:00Z'
@@ -1219,7 +1218,9 @@ tasks:
     Kind Robots #5920 merged d990b67330acd03076af8975f1e0e0c9a28cf491; all six exact-head workflows on d1c8d3a6f2c0c8d486825e60a34ddd09f0269a29 and janitor 45927805806 passed. Expanded rendered audit instrumentation is delivered; actual deployed screenshots, interactions and ending evidence remain. Do not count CI source checks as browser acceptance.
 
     Recovered actual production audit 45901306030 (shard 1 job 140187464938, artifact 15156749808, checkout 8766124388272282181920711b638969549194d7, captured 2026-11-26 22:30 UTC). Downloaded ZIP and visually inspected all 36 stage screenshots: phone, tablet portrait, tablet landscape, desktop x title/settings/scrapbook/achievements/coronation/coronation-next/crier/lake-idle/fishing. Viewport JSON reports all loaded, no document flow and no clipped galleries; phone global-header tagline informationally truncated. Actual scenes use mixed art: coronation backgrounds look photorealistic/older, lake landscape is painterly rather than psychedelic, Quill tutorial thumbnail appears to show water and distinct crier proclamations reuse the same bright artwork. These are observed on the older deployed build, not proof the latest assets are absent. Recheck after current authorized build and use visible source evidence from #5920 to distinguish stale delivery versus fallback; do not duplicate generated jobs. No current-head deployment, catch/court/shop/finale or authenticated QA proven. Keep ready; coordinate t-047/t-050/t-057/t-058.
-  updated: '2026-11-27T04:51:00Z'
+
+    App commit 72d126033ed0eb2e10732c3cde8565ccfbdfd566 expands real browser audit through third coronation beat, enlarged/high-contrast/reduced-motion and mute settings persistence, nonterminal classic fishing reload with fish/beat/progress/tension parity, and pending finale handling. JavaScript syntax validation passed; scheduled browser execution and CI remain. A bounded opening without a finale logs explicitly, not a full ending pass. No live deployment claim.
+  updated: '2026-11-27T04:53:00Z'
 
 - id: t-062
   milestone: m6
