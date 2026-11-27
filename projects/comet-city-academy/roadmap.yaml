@@ -372,7 +372,7 @@ tasks:
   - id: t-016
     milestone: m2
     title: "Build playable student-hero-villain evolution, betrayal and accomplice state"
-    status: ready
+    status: claimed
     depends_on: t-003
     passes: 0
     stakes: reversible
@@ -386,7 +386,10 @@ tasks:
       Kind Robots commit 2954356bea3696f48de266d954622e46eaf2cea3 fixes New Game Plus evolution milestones: keep an already-earned heroic/villainous mantle without re-earning it, or explicitly return to student independence. New role changes still require earned values; legacy downgrade saves remain valid. Extracted committed candidate logic passed 2688 assertions across 48 identities and both roles; permanent direct and encounter/save regressions added. Full CI pending. Partial t-016: character-specific evolution/relationship scenes and full-run art/QA remain.
 
       Kind Robots #5949 merged 9bba5b59ab273e45e11c87c89cba3eb746dfefbf; all eight non-janitor workflows plus janitor passed on 2954356. Earned NG+ mantles persist at days 16 and 23, explicit student return remains possible, and different mantles still require earned values. Partial: personal arcs and relationship/art/QA remain.
-    updated: '2026-11-27T05:32:00Z'
+    updated: '2026-11-27T09:42:00Z'
+    owner: worker
+    claimed_by: 20261127T094200Z-comet-evolution-f86a21
+    claimed_at: '2026-11-27T09:42:00Z'
   - id: t-017
     milestone: m3
     title: "Deliver 48 stable-name characters, three contextual splashes and meaningful branching arcs"
