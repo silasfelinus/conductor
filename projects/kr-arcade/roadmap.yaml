@@ -1507,11 +1507,9 @@ tasks:
   - id: t-090
     milestone: m8
     title: "Glitch Garden depth slice 3: Autumn and Winter"
-    status: review
-    owner: worker
-    claimed_by: 2026-11-22T115435Z-kr-arcade-t090-winter-8b7e
-    claimed_at: '2026-11-22T11:54:35Z'
-    updated: '2026-11-22T12:00:15Z'
+    status: ready
+    owner: null
+    updated: '2026-11-27T07:00:47Z'
     passes: 0
     stakes: reversible
     depends_on: t-089
@@ -1531,6 +1529,12 @@ tasks:
       PR silasfelinus/kind_robots#5572 merged at 2026-11-22T11:47:47Z (d75deb7), adding two winter garden layouts and ten authored waves. Partial t-090 only: frost and heater interactions, icy movement, winter-specific enemies, Frost Millipede boss, deterministic regression tests and full campaign QA remain. Return to ready for implementation.
 
       Winter follow-up implemented spreading frost, four spray-lit greenhouse heaters, Warm Up objective, Snowball Hill icy inertia and shootable rolling snowballs with Snow Day special wave. Added deterministic cabinet regression tests and updated eight-garden campaign contracts. Await latest-head CI; Frost Millipede and full eight-garden QA remain before t-090 is done.
+
+      2026-11-26 PT, Silas-directed finite-roadmap clearing: verified
+      https://github.com/silasfelinus/kind_robots/pull/5575 merged as partial scope. Frost
+      sprite, Frost Millipede and eight-garden QA remain. Returned to ready; no human approval
+      or deployment inferred.
+    implementation_pr: 'silasfelinus/kind_robots#5575'
 
   - id: t-091
     milestone: m8
@@ -1726,18 +1730,22 @@ tasks:
   - id: t-103
     milestone: m8
     title: "Hedgehog Crossing depth slice 2: Leg 1 and the scrolling engine"
-    status: review
+    status: ready
     passes: 0
     stakes: reversible
-    owner: worker
-    claimed_by: 2026-11-23T001630Z-kr-arcade-t-103-j2q9
-    claimed_at: '2026-11-23T00:16:30Z'
+    owner: null
     depends_on: t-102
     note: |-
       CABINETS.md section 16, Hedgehog Crossing (Frogger riff), slice 2 of 4: Leg 1 and the scrolling engine. The upgrade is "The Long Way Home". Spec: projects/kr-arcade/depth-pass/CABINETS.md -- read the game's section first; this slice's scope is item 2 under its '#### Slices', and 'Rules for every slice' at the top applies. Code: kind_robots utils/arcade/games/ (registry slug hedgehog-crossing). Silas, 2026-10-11: "I need an assessment done of the other arcade games. I want the same level of quality improvements, they should not just be thin veneers of the old games. But newer, better, even more awesome."
 
       2026-11-22 PT: partial Leg 1 implementation under worker/kr-arcade-t-103-market-crossings-j2q9. Park Lane levels 1-5 and Market Day levels 6-10 now have separate data-defined lane rosters; Market Day introduces shopper crowds, rolling barrels and floating canal crates with new visual silhouettes and collision contracts. Added seeded-layout and ride/bonk regression assertions to test:arcade-engine. Big Crossing vertical scrolling, special objectives, music transitions, pantry and saves are still unimplemented and this nonrecurring task must return to ready after merge.
-    updated: '2026-11-23T00:19:08.698Z'
+
+      2026-11-26 PT, Silas-directed finite-roadmap clearing: verified
+      https://github.com/silasfelinus/kind_robots/pull/5613 merged as partial scope. Big
+      Crossing scrolling/checkpoints, special events, saves, visitors, Pantry and music
+      remain. Returned to ready; no human approval or deployment inferred.
+    updated: '2026-11-27T07:00:53Z'
+    implementation_pr: 'silasfelinus/kind_robots#5613'
 
   - id: t-104
     milestone: m8
@@ -1834,11 +1842,9 @@ tasks:
   - id: t-110
     milestone: m8
     title: "Repair Rampage depth slice 1: A city with something in it"
-    status: review
-    owner: worker
-    claimed_by: 20261122T203555Z-kr-arcade-t110-tools-a9e3
-    claimed_at: '2026-11-22T20:35:55.781Z'
-    updated: '2026-11-22T20:39:27.437Z'
+    status: ready
+    owner: null
+    updated: '2026-11-27T07:00:58Z'
     passes: 0
     stakes: reversible
     note: |-
@@ -1861,6 +1867,12 @@ tasks:
       Merged powered rooftops, four telegraphed hazards and seeded attract pilot in kind_robots#5591 (33fd1ab0a9ad75335a2d495cdc9a2c8a9476ab6f); all nine latest-head GitHub Actions checks passed. Partial slice 1; toolbox abilities, reserves, missing window surprises and music remain.
 
       Partial Repair Rampage slice 1: six usable toolbox powers, three backup robots with oil-break recovery, electricity windows, elevator column bonus, original chiptune loop and deterministic gameplay tests. Implementation PR opening; CI and browser verification required before merge. Remaining window scenarios and full campaign work remain open.
+
+      2026-11-26 PT, Silas-directed finite-roadmap clearing: verified
+      https://github.com/silasfelinus/kind_robots/pull/5594 merged as partial scope. Complete
+      slice-one window interactions and verify tools, threats and recovery before advancing.
+      Returned to ready; no human approval or deployment inferred.
+    implementation_pr: 'silasfelinus/kind_robots#5594'
 
   - id: t-111
     milestone: m8
@@ -1910,17 +1922,21 @@ tasks:
   - id: t-114
     milestone: m8
     title: "Rain Catcher depth slice 1: Reading the sky"
-    status: review
-    owner: worker
-    claimed_by: 20261122T205022Z-kr-arcade-t114-rain-c8f4
-    claimed_at: '2026-11-22T20:50:22.423Z'
+    status: ready
+    owner: null
     passes: 0
     stakes: reversible
     note: |-
       CABINETS.md section 19, Rain Catcher (Missile Command riff), slice 1 of 4: Reading the sky. The upgrade is "Gardens of the World". Spec: projects/kr-arcade/depth-pass/CABINETS.md -- read the game's section first; this slice's scope is item 1 under its '#### Slices', and 'Rules for every slice' at the top applies. Code: kind_robots utils/arcade/games/ (registry slug rain-catcher). Silas, 2026-10-11: "I need an assessment done of the other arcade games. I want the same level of quality improvements, they should not just be thin veneers of the old games. But newer, better, even more awesome."
 
       Partial Rain Catcher depth slice 1: six-garden authored forecasts, friendly rain growing five-stage beds, hail damage, two refill barrels, petal-chain cascades, sleet sliders, eight-stone moth clusters, two-hit snowballs, moving gusts, wave-pair sky palettes, larger weather art and original music. Game-engine tests added. PR to follow; CI and gameplay verification pending.
-    updated: '2026-11-22T20:54:30.417Z'
+
+      2026-11-26 PT, Silas-directed finite-roadmap clearing: verified
+      https://github.com/silasfelinus/kind_robots/pull/5598 merged as partial scope.
+      Adversarial gameplay, balance and rendered slice-one verification remain. Returned to
+      ready; no human approval or deployment inferred.
+    updated: '2026-11-27T07:01:03Z'
+    implementation_pr: 'silasfelinus/kind_robots#5598'
 
   - id: t-115
     milestone: m8
@@ -2199,11 +2215,9 @@ tasks:
   - id: t-133
     milestone: m8
     title: "Gloom Invaders depth slice 2: Spring and Summer"
-    status: review
-    owner: worker
-    claimed_by: 2026-11-23T120120Z-kr-arcade-t-133-k7m2
-    claimed_at: '2026-11-23T12:01:20Z'
-    updated: '2026-11-23T12:03:20Z'
+    status: ready
+    owner: null
+    updated: '2026-11-27T07:01:08Z'
     passes: 0
     stakes: reversible
     depends_on: t-132
@@ -2223,6 +2237,12 @@ tasks:
       Paper Plane courier and five buffs merged as partial Spring/Summer increment; remaining April Shower Mother and Cumulonimbus Rex, special-front mechanics, Wind Sock, Seed Shed and campaign QA.
 
       April Rainbow Hour now awards a prism shot every fourth cheered cloud during its special front; the counter resets on each front. Partial slice, with bosses, Seed Shed and other objectives remaining.
+
+      2026-11-26 PT, Silas-directed finite-roadmap clearing: verified
+      https://github.com/silasfelinus/kind_robots/pull/5669 merged as partial scope. Season
+      bosses, remaining objectives, Wind Sock, Seed Shed and half-year QA remain. Returned to
+      ready; no human approval or deployment inferred.
+    implementation_pr: 'silasfelinus/kind_robots#5669'
 
   - id: t-134
     milestone: m8
@@ -2549,11 +2569,9 @@ tasks:
   - id: t-154
     milestone: m8
     title: "Arcade audio approval-queue admin page, and cabinets that switch music scenes"
-    status: review
-    owner: worker
-    claimed_by: 2026-11-23T081000Z-kr-arcade-t154-r6m2
-    claimed_at: '2026-11-23T08:10:00Z'
-    updated: '2026-11-23T08:22:00Z'
+    status: ready
+    owner: null
+    updated: '2026-11-27T07:01:14Z'
     passes: 0
     stakes: reversible
     note: |-
@@ -2562,6 +2580,12 @@ tasks:
       2026-11-23 PT: implemented an admin-only Arcade Soundtrack Studio page with channel registration, per-cue brief list, relay readiness and existing ArtJob status, explicit approve/retry actions using the existing secured API, and client-side gating that cannot bypass server authorization. Added unit and source contract coverage to verifyArcadeSoundtrackBriefs. Kind Robots worker PR awaits final-head CI. Remaining t-154 scope includes Gloom Invaders, Ghost Trail, and Prize Show Panic soundtrack scene-switching and post-deploy browser/audio-device verification; do not mark full task done on this UI slice alone.
 
       Follow-up on open Kind Robots PR #5652 (commit 7ebdf2e): added musicScene getters to Gloom Invaders, Prize Show Panic and Zuzu Ghost Trail for pressure-based level-2 transitions, later-episode themes and live boss cues; source contracts now assert those hooks. Still pending CI, verified rendered/ingested recordings, shared playCue integration and real browser/gamepad/audio QA. No generation enabled, no publication or deployment.
+
+      2026-11-26 PT, Silas-directed finite-roadmap clearing: verified
+      https://github.com/silasfelinus/kind_robots/pull/5652 merged as partial scope. Shared
+      recorded cues, browser/controller tests and verified soundtrack playback remain.
+      Returned to ready; no human approval or deployment inferred.
+    implementation_pr: 'silasfelinus/kind_robots#5652'
   - id: t-155
     milestone: m8
     title: "Turn on ACE arcade soundtrack generation, ingest the first approved track, and listen to it in a cabinet"
@@ -2695,11 +2719,11 @@ tasks:
   - id: t-164
     milestone: m10
     title: "Cross-game responsive resolution, render-budget and character-readability contract (issue #4062)"
-    status: review
+    status: ready
     passes: 0
     stakes: reversible
     source_issue: silasfelinus/kind_robots#4062
-    updated: '2026-11-23T14:01:00Z'
+    updated: '2026-11-27T07:01:19Z'
     note: |-
       Silas-directed 2026-10-23. Begin with shared Arcade display fit and backing-pixel budget, actual height/width responsive bounds and regression tests at phone landscape/portrait, tablet and desktop DPRs. Follow with genre-specific camera and sprite legibility improvements for Save the Plumber, Rainbow Princess, Ghost Trail, Zuzu Showdown, classic cabinets and Memory Dungeon, without changing deterministic gameplay or forcing square memory boards into 16:9. Full acceptance and per-game follow-up specification: kind_robots issue #4062.
 
@@ -2731,10 +2755,13 @@ tasks:
       readability QA (issue #4062) remains, so t-164 goes back to ready.
 
       Responsive display safety slice: reject invalid resize measurements before they reach the canvas backing store; regression matrix covers zero, negative and nonfinite viewport inputs. Broader issue #4062 remains open.
-    owner: worker
-    claimed_by: 2026-11-23T135803Z-kr-arcade-t-164-k8f2
-    claimed_at: '2026-11-23T13:58:03Z'
-    implementation_pr: 'silasfelinus/kind_robots#5668'
+
+      2026-11-26 PT, Silas-directed finite-roadmap clearing: verified
+      https://github.com/silasfelinus/kind_robots/pull/5672 merged as partial scope. Cross-
+      game readability, viewport, input and measured performance acceptance remain. Returned
+      to ready; no human approval or deployment inferred.
+    owner: null
+    implementation_pr: 'silasfelinus/kind_robots#5672'
 
   - id: t-165
     milestone: m10
