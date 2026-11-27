@@ -419,11 +419,11 @@ tasks:
   - id: t-021
     milestone: m6
     title: "Gen-2 World 1: re-author Bluebell Pipeworks as a full SMB3/SMW-class world"
-    status: claimed
+    status: review
     depends_on: [t-002, t-011, t-020]
     passes: 0
     stakes: reversible
-    updated: '2026-11-27T10:52:00Z'
+    updated: '2026-11-27T10:55:00Z'
     note: |-
       Build World 1 to the GEN2-WORLDS.md graph: 6-9 nodes including a fortress, a Hush House, the first Valve Chapel and at least one secret exit, each level 3-6 minutes with sub-areas and a real secret. Wire the GEN2-ROUND-1 overworld plate and far-sky plate. Record first-clear times. This is the agent-verified production template for Worlds 2-8; human verdict is not a prerequisite. Completion checkpoints: 1-1, 1-2, 1-h and cottage, 1-3 and chapel, 1-f including Foreman Flange, 1-4 and 1-castle. Verify each authored beat, original art and route timing against GEN2-WORLDS.md.
 
@@ -454,6 +454,8 @@ tasks:
       Authored Sluicegate Steps optional dam inspection room with paired pipes, ladder descent and token alcove. Added input-driven regression for arrival, camera room, collection, climb and return before the existing checkpoint/clear test. Static geometry probe passed; runtime CI pending. App branch worker/save-the-plumber-t-021-dam-f7c39a62 at 078f2085e35405543020bc6a6a3dc48495d93c8d. Partial World 1 scope; Wildwater, Gear and full timing/art acceptance remain.
 
       PR kind_robots#5961 merged at 3b02772b; all ten implementation workflows and branch janitor succeeded on b56b2601. Sluicegate inspection room and actual-input traversal regression delivered. Remaining Wildwater, Gear, original art and course timing/acceptance.
+
+      App branch worker/save-the-plumber-t-021-wildwater-f94e12 at e72bc4c7791276e789f87e233d4f8d046afcacdb adds a Golden Gear in the optional dam inspection room, distinct 1-sluice save/album identity, map completion marker, gear totals and ending eligibility, with real-input pickup and reload assertions. Partial scope: intended falling-water route, Wildwater, original art and full timing acceptance remain. Runtime CI pending.
     owner: worker
     claimed_by: plumber-wildwater-20261127T1052Z-f94e12
     claimed_at: '2026-11-27T10:52:00Z'
