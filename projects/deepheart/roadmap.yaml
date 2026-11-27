@@ -280,11 +280,8 @@ tasks:
   - id: t-016
     milestone: m4
     title: "Paint and integrate the full bestiary and three boss encounter plates"
-    status: review
-    owner: worker
-    claimed_by: 2026-11-26T234100Z-deepheart-t-016-b73f91
-    claimed_at: '2026-11-26T23:41:00Z'
-    updated: '2026-11-26T23:43:00Z'
+    status: ready
+    updated: '2026-11-27T00:21:15Z'
     depends_on: t-015
     passes: 0
     stakes: reversible
@@ -292,6 +289,8 @@ tasks:
       Every one of the forty enemy types has unique Krea 2 artwork in target cards, including the three bosses and Mimic; reuse canon-compatible delivered assets. Each guardian also has an appropriate full-width battle plate. Record ArtJob and ArtImage IDs and verify final authenticated media URLs. No skull/crown glyphs as final combatants. Keep targeting, HP and statuses readable.
 
       2026-11-26 PT: commit 93c0c8ce adds BESTIARY-2026-11-26.yaml, auto_submit Krea 2 priority 200, 36 ordinary portraits and three distinct guardian chamber scenes. Existing guardian and Mimic ArtJobs 69511-69513 and 69523 retained. Validated all 36 runtime keys and distinct prompt wording; CI and ArtJob receipts pending. Return ready after merge for delivery and integration.
+
+      2026-11-26 PT: Conductor #8080 merged 483c94a6 after four successful latest-head workflows. 39 private Krea 2 requests are on main with auto_submit enabled; no new ArtJob receipts yet verified. Resume delivery, curation, integration and URL checks, preserving existing guardian and Mimic assets.
   - id: t-017
     milestone: m4
     title: "Distinct painted environments and significant encounters in live gameplay"
