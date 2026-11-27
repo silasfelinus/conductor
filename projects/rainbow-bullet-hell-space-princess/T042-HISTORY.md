@@ -108,4 +108,11 @@ master-roadmap scope; return to ready.
 objective now animates. Rejected flagship-phase2-v3 (static, 0.84), the third failed
 take, so the battered phase 2 stays a still. ~36 loops pending plus kelp-
 frond/charge/power/shield v3 retakes. Partial master-roadmap scope; return to ready.
+2026-11-27 PT P-01 batch 12: four loops had finished. Shipped mirror-v2 (jaw snaps, motion
+3.71, green-spill pass on a faint jaw fringe) and coral-choir-pod-v3 (bob, blink, tail wag,
+no stray notes, 8.46) in kind_robots#5955; the X1 route objective now animates. Rejected
+harbinger-v3 (2.77 only from pane shimmer, no tilt or ripple), its third failed take, so
+the harbinger stays a still; rejected salvager-v2 (static, 0.73), -v3 retake appended to
+ANIM-BACKLOG for auto-submit. ~25 loops plus lighthouse-lamp-v3 pending. Partial
+master-roadmap scope; return to ready.
 <!-- note:end t-042 -->
