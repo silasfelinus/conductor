@@ -86,7 +86,7 @@ tasks:
     depends_on: []
     updated: '2026-11-26T15:20:45Z'
     note: |-
-      Main-game standard: use STANDARD-AUDIT-2026-11-12.md and docs/agents/main-game-standard.md. Verify title, settings, persistent saves, 12+ achievements (separate task), scrapbook, multiple painted endings, customizable heroine and three replay hooks. Recorded merges #5722, #5772, #5773, #5832, #5843, #5883, #5884, #5890, #5896 and #5901 delivered settings/contrast, achievement browser, separate New Game/Continue, three endings/epilogues, reset, taunts, reading options, name entry and repaired engine tests. Latest receipt #5901 at 9debf882 reports all 17 exact-head checks passed. Remaining: rendered finale and gallery screenshots, verify ending plates and accessibility against the audit; do not repeat shipped controls. No production deployment verified. Keep ready until actual visual/acceptance evidence. Full prior note: ROADMAP-HISTORY-2026-11-26.md#t-028.
+      Main-game standard: use STANDARD-AUDIT-2026-11-12.md and docs/agents/main-game-standard.md. Verify title, settings, persistent saves, 12+ achievements (separate task), scrapbook, multiple painted endings, customizable heroine and three replay hooks. Recorded merges #5722, #5772, #5773, #5832, #5843, #5883, #5884, #5890, #5896 and #5901 delivered settings/contrast, achievement browser, separate New Game/Continue, three endings/epilogues, reset, taunts, reading options, name entry and repaired engine tests. Latest receipt #5901 at 9debf882 reports all 17 exact-head checks passed. Remaining: global account-backed saves and permanent unlocks across devices (reload, account isolation and reset), actual earned/deduplicated achievement records and generated badges, complete scrapbook including run outcomes and locked counts, distinct delivered painted ending plates, rendered finale/gallery screenshots and accessibility against the current main-game standard; do not repeat shipped controls. No production deployment verified. Keep ready until actual visual/acceptance evidence. Full prior note: ROADMAP-HISTORY-2026-11-26.md#t-028.
     implementation_pr: 'silasfelinus/kind_robots#5901'
     owner: worker
   - id: t-029
@@ -265,12 +265,12 @@ tasks:
     milestone: m5
     title: "Whole-campaign playtests, fairness and device verification"
     status: waiting
-    depends_on: [t-010, t-011, t-012]
+    depends_on: [t-005, t-010, t-011, t-012, t-021, t-022, t-023, t-024, t-025, t-026, t-027, t-028, t-029, t-030]
     owner: null
     passes: 0
     stakes: reversible
     note: >-
-      Verify all 32 stages on deterministic scripted and manual
+      Verify the entire authored Gen-2 campaign (including all 32 original stage spines, expanded courses and Upstream Sky) on deterministic scripted and interactive
       keyboard/gamepad/touch runs, save/migration/replay,
       bosses and secrets, bounded losses/retries, no impossible
       jumps, checkpoints, 375/768/1440 visual captures, frame
@@ -278,7 +278,7 @@ tasks:
       time and difficulty, not assumed Mario parity.
   - id: t-014
     milestone: m5
-    title: "Human-approved public Arcade release and final game-quality verdict"
+    title: "Separate human-approved public Arcade release (not a playtest blocker)"
     status: waiting
     depends_on: [t-013]
     owner: null
@@ -292,7 +292,7 @@ tasks:
       score and full-campaign timing. Public /play registration,
       Arcade cabinet placement and publication require Silas's
       explicit decision; separate aesthetic/gameplay acceptance
-      follows hands-on play. Merge is not a production deploy.
+      follows hands-on play. Merge is not a production deploy. Once t-013 and the finite build scope are done, perform playtest/normal handoff and close the master issue as completed without waiting on this publication task.
 
   - id: t-015
     milestone: m2
@@ -432,7 +432,7 @@ tasks:
     stakes: reversible
     updated: '2026-11-26T23:49:00Z'
     note: |-
-      Build World 1 to the GEN2-WORLDS.md graph: 6-9 nodes including a fortress, a Hush House, the first Valve Chapel and at least one secret exit, each level 3-6 minutes with sub-areas and a real secret. Wire the GEN2-ROUND-1 overworld plate and far-sky plate. Record first-clear times. This world is the template Silas plays before Worlds 2-8 are rebuilt.
+      Build World 1 to the GEN2-WORLDS.md graph: 6-9 nodes including a fortress, a Hush House, the first Valve Chapel and at least one secret exit, each level 3-6 minutes with sub-areas and a real secret. Wire the GEN2-ROUND-1 overworld plate and far-sky plate. Record first-clear times. This is the agent-verified production template for Worlds 2-8; human verdict is not a prerequisite. Completion checkpoints: 1-1, 1-2, 1-h and cottage, 1-3 and chapel, 1-f including Foreman Flange, 1-4 and 1-castle. Verify each authored beat, original art and route timing against GEN2-WORLDS.md.
 
       Authored Rustbolt Keep (1-f) key chambers with two full-height bolts, a midpoint checkpoint, optional piston/steam token routes and a normal exit gating the main road. Added actual-input overworld replay for both keys, locks, checkpoint, clear and persisted map unlock. Committed geometry probe passed; full gameplay CI pending. App branch worker/save-the-plumber-t-021-rustbolt-k9v2, head 7d7e5fdc. Partial t-021; Foreman Flange, remaining fortress beats and expanded World 1 still required.
 
@@ -454,7 +454,9 @@ tasks:
     passes: 0
     stakes: reversible
     updated: '2026-10-22T10:30:00Z'
-    note: One world per PR, same bar as t-021; each world introduces one new level type or power.
+    note: >-
+      One world per PR, same bar as t-021; each world introduces one new level type or power.
+      Finite checkpoints: World 2 Tideglass Marina (water, Gurgle, shop, spout); World 3 Lantern Orchard (dark, carry, cart); World 4 Clockwork Fair (Ballast, rides, mirror). Record each world's merged PR, route/secret/boss replay and first-clear timing in this task; close only when all three meet the World 1 template.
   - id: t-023
     milestone: m6
     title: "Gen-2 Worlds 5-8 and the Upstream Sky special zone"
@@ -467,6 +469,7 @@ tasks:
     note: >-
       One world per PR. Upstream Sky is reached only through secret exits and rewards completion
       (GEN2-STANDARD.md section 1). World 8 remixes every learned mechanic.
+      Finite checkpoints: Worlds 5 Cloudrail, 6 Crystal, 7 Night Market, 8 Stardrain, and all six Upstream Sky courses. Record each world's merged PR, route/secret/boss replay and first-clear timing; include Downstream unlock and bidirectional spout/warp verification.
   - id: t-024
     milestone: m6
     title: "Gen-2 art round 1: overworld maps, far skies, arrival vistas, level types, Pip key poses"
@@ -558,7 +561,7 @@ tasks:
       A one-screen console-style Level Maker from the Save the Plumber title screen, with icon-first categorized tools, full-size playable stage/editor preview, contextual settings, bounded scrolling for object catalog, keyboard and touch editing, undo/redo, clear and copy, local drafts, browse, edit, import and export/share by link. Shared levels must launch directly in a playable run using the real Save the Plumber physics and assets, not a dead preview, and never mutate campaign save slots. Validated level serialization with schema version and limits; title/creator/theme/darkness as settings. Completed levels have rate/review UI and meaningful sorting. Player ratings must be attributed and persisted on the server before any claim of community-wide average.
 
       ### Complexity target, and truthful parity report
-      Audit against Super Mario Maker 1 & 2: terrain, slopes, pipes/subareas, enemies, powerups, bosses, events, switches, theme/time variants, vertical stages, auto-scroll, clear conditions, checkpoints, upload/discovery/rating, edit-test iteration. Audit against Geometry Dash 2.2: grid editing, selection/grouping, copy/paste, undo/redo, keyframe/trigger/camera/effects scripting, event timing, playtesting, online publishing/rating. Show shipped, partial, absent, and planned separately. Never claim parity on tile count alone. Maintain a shared capability catalog so the maker evolves in lockstep with the runtime mechanic registry.
+      Audit against Super Mario Maker 1 & 2: terrain, slopes, pipes/subareas, enemies, powerups, bosses, events, switches, theme/time variants, vertical stages, auto-scroll, clear conditions, checkpoints, upload/discovery/rating, edit-test iteration. Audit against Geometry Dash 2.2: grid editing, selection/grouping, copy/paste, undo/redo, keyframe/trigger/camera/effects scripting, event timing, playtesting, online publishing/rating. Show shipped, partial, absent, and planned separately. Never claim parity on tile count alone. Finite acceptance is the listed four slices and original feature set, with reproducible editor, runtime, account/community and moderation tests. Commercial titles are comparison references, not an unbounded obligation to reproduce every future feature. Implement and verify the private publishing workflow without activating public release; optional additional parity ideas go to backlog. Maintain a shared capability catalog so the maker evolves in lockstep with the runtime mechanic registry.
 
       ### Slices
       1. **Playable foundation**: typed/versioned schema + strict validator; palette automatically generated from parser/engine-supported symbols; local save/list/load/edit, undo/redo; deep-link share/import, full real-engine playtest; menu navigation + bounded console maker. Source-level tests covering import attacks, duplicate starts/goals, tile validation and campaign isolation.
