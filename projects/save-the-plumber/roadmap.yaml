@@ -155,7 +155,7 @@ tasks:
   - id: t-005
     milestone: m2
     title: "Implement enemy interaction, held objects and powerup systems"
-    status: ready
+    status: claimed
     depends_on: [t-003]
     passes: 0
     stakes: reversible
@@ -187,7 +187,10 @@ tasks:
       kind_robots#5980 merged at 9a5a07ae; exact-head 2dfa6ef5 returned twelve successful implementation workflows and successful branch janitor. Mounted small-foe rewards and occlusion regressions shipped. Partial scope: scale plates, authored water courses and painted companion/prop acceptance remain. Production deployment unverified.
 
       kind_robots#5995 merged at 13b29666; all 17 exact-head checks on a549038f passed (autofix skipped). Scale plates (_) and sluice gates (Z): Ballast Boots hold a plate only while she stands on it, a parked Gurgle holds it for good, sluices lift while every plate is down and never drop onto her; both glyphs in the Maker; real-input regression verifyCabinetSavePlumberScalePlates runs in the Maker contract workflow. Partial scope: authored water courses and campaign plate placement, painted companion/plate/sluice props remain. Pre-existing: verifyCabinetSavePlumberGurgle fails locally at 'dry mount can sip nearby water', also at 2dfa6ef5 (manual soak only); needs separate follow-up. Production deployment unverified.
-    updated: '2026-11-27T19:15:00Z'
+    updated: '2026-11-27T21:17:00Z'
+    owner: worker
+    claimed_by: plumber-water-regression-20261127T2117Z-3d7c91
+    claimed_at: '2026-11-27T21:17:00Z'
   - id: t-006
     milestone: m3
     title: "Build World 1: four complete garden/pipeworks levels and boss"
