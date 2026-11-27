@@ -155,7 +155,7 @@ tasks:
   - id: t-005
     milestone: m2
     title: "Implement enemy interaction, held objects and powerup systems"
-    status: review
+    status: ready
     depends_on: [t-003]
     passes: 0
     stakes: reversible
@@ -183,10 +183,9 @@ tasks:
       PR kind_robots#5975 merged at b7892f8d; exact-head a0a46778 all 17 applicable checks passed (autofix skipped), including browser, viewport, TypeScript and contracts; branch janitor passed. Companion travels between compatible courses and saves; water charges reset. Remaining scale plates, small enemy interactions, authored water courses and painted companion/prop acceptance. Production deployment unverified.
 
       Branch worker/save-the-plumber-t-005-small-foes-8c21 at bc60958e10dad04621cf49da51c0c846f320dbc0 adds mounted Gurgle slurp for ordinary pumpbugs and cork crabs (one token) and leaping minnows (spout-hop charge); one target per press, wall occlusion and roller priority retained. Added actual-input regression assertions and guide copy. CI pending. Partial scope: scale plates, authored water courses and painted companion/prop acceptance remain.
-    updated: '2026-11-27T10:25:00Z'
-    owner: worker
-    claimed_by: plumber-small-foes-20261127T1024Z-8c21
-    claimed_at: '2026-11-27T10:24:00Z'
+
+      kind_robots#5980 merged at 9a5a07ae; exact-head 2dfa6ef5 returned twelve successful implementation workflows and successful branch janitor. Mounted small-foe rewards and occlusion regressions shipped. Partial scope: scale plates, authored water courses and painted companion/prop acceptance remain. Production deployment unverified.
+    updated: '2026-11-27T10:51:00Z'
   - id: t-006
     milestone: m3
     title: "Build World 1: four complete garden/pipeworks levels and boss"
@@ -420,11 +419,11 @@ tasks:
   - id: t-021
     milestone: m6
     title: "Gen-2 World 1: re-author Bluebell Pipeworks as a full SMB3/SMW-class world"
-    status: ready
+    status: claimed
     depends_on: [t-002, t-011, t-020]
     passes: 0
     stakes: reversible
-    updated: '2026-11-27T07:15:00Z'
+    updated: '2026-11-27T10:52:00Z'
     note: |-
       Build World 1 to the GEN2-WORLDS.md graph: 6-9 nodes including a fortress, a Hush House, the first Valve Chapel and at least one secret exit, each level 3-6 minutes with sub-areas and a real secret. Wire the GEN2-ROUND-1 overworld plate and far-sky plate. Record first-clear times. This is the agent-verified production template for Worlds 2-8; human verdict is not a prerequisite. Completion checkpoints: 1-1, 1-2, 1-h and cottage, 1-3 and chapel, 1-f including Foreman Flange, 1-4 and 1-castle. Verify each authored beat, original art and route timing against GEN2-WORLDS.md.
 
@@ -455,6 +454,9 @@ tasks:
       Authored Sluicegate Steps optional dam inspection room with paired pipes, ladder descent and token alcove. Added input-driven regression for arrival, camera room, collection, climb and return before the existing checkpoint/clear test. Static geometry probe passed; runtime CI pending. App branch worker/save-the-plumber-t-021-dam-f7c39a62 at 078f2085e35405543020bc6a6a3dc48495d93c8d. Partial World 1 scope; Wildwater, Gear and full timing/art acceptance remain.
 
       PR kind_robots#5961 merged at 3b02772b; all ten implementation workflows and branch janitor succeeded on b56b2601. Sluicegate inspection room and actual-input traversal regression delivered. Remaining Wildwater, Gear, original art and course timing/acceptance.
+    owner: worker
+    claimed_by: plumber-wildwater-20261127T1052Z-f94e12
+    claimed_at: '2026-11-27T10:52:00Z'
   - id: t-022
     milestone: m6
     title: "Gen-2 Worlds 2-4: Tideglass Marina, Lantern Orchard, Clockwork Fair"

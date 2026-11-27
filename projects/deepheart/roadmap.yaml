@@ -270,11 +270,8 @@ tasks:
   - id: t-018
     milestone: m4
     title: "Complete canon-consistent scrapbook, support scenes and relationship art"
-    status: review
-    owner: worker
-    claimed_by: 2026-11-27T102400Z-deepheart-t018-6a0f47c2
-    claimed_at: '2026-11-27T10:24:00Z'
-    updated: '2026-11-27T10:26:00Z'
+    status: ready
+    updated: '2026-11-27T10:51:00Z'
     depends_on: t-007
     passes: 0
     stakes: reversible
@@ -306,3 +303,5 @@ tasks:
       Kind Robots #5973 merged 8cbc9996 after all seven exact-head workflows passed. All 35 support paintings now wired and regression-tested. Remaining authenticated media and visual curation checks are not yet verified.
 
       Kind Robots head 3c637aff stops locked Deepheart scrapbook and ending tiles from loading their actual paintings; uses the existing key-art cover until earned. Added regression coverage for every authored moment and ending, preserves other games and existing romance settings and saves. Live authenticated delivery/visual curation still outstanding. Return ready after green merge, not done.
+
+      Kind Robots #5979 merged 875b552f; all seven exact-head implementation workflows and branch janitor succeeded (Playbook Kit 45981967934). Locked artwork no longer loads before earned discovery. Return ready for actual authenticated delivery and visual curation.
