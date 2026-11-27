@@ -11,7 +11,9 @@ Conductor is a private, single-owner, Git-native project manager for Silas's pro
 3. **Verification:** check latest-head CI, fix failures, merge reversible ungated work and reconcile completion. Human approvals remain separate.
 4. **Maintenance:** Actions handle deterministic checks, task events, dependencies, generated views and digest plumbing. Agents diagnose exceptions, not duplicate every scan.
 
-Six specialist assignments are developer, reviewer, content, art, QA and daily creative. Existing medic roles handle exceptions. No routine model-provider API calls from Actions.
+Six specialist assignments are developer, reviewer, content, art, QA and daily creative. The live selector and generated task locators share role hints; medic roles handle exceptions. No routine model-provider API calls from Actions.
+
+**Working on one project:** use [agent context](docs/agents/agent-context.md) for scoped source ranges. **Preparing a project for completion:** follow [roadmap polishing](projects/README.md); don't rewrite unrelated roadmaps.
 
 See [SOURCE_OF_TRUTH.md](SOURCE_OF_TRUTH.md) for ownership, [CONTROL.md](CONTROL.md) for current direction, and the [connector protocol](docs/github-connector-worker.md) for live claims and transitions.
 
@@ -65,12 +67,12 @@ Edit `notes_from_silas` in any project's `roadmap.yaml` to give direction. Chang
 
 Tasks can declare `depends_on` to form a pipeline — a task stays `waiting` until its upstreams are done. If an upstream task has `gate_human: true`, it also needs `approved_by_human: true` before dependents unlock. This is how multi-stage flows work: research → Silas picks a direction → create → review → ship, each stage only proceeding with explicit sign-off.
 
-The Worker healthcheck runs `scripts/resolve_deps.py --dry-run` so dependency changes are visible without mutating roadmaps from Actions.
+The serialized task-event workflow applies dependency transitions; the Worker healthcheck runs `scripts/resolve_deps.py --dry-run` for diagnosis. Generated pickup hints are advisory, and live claims still verify eligibility.
 
 ## Repo layout
 
 ```
-AGENTS.md                           operating manual for all agents
+AGENTS.md                           shared contract, once per session
 CONTROL.md                          Silas's current intent — overrides roadmaps
 projects/<name>/roadmap.yaml        one task queue per project; this is where Silas steers
 projects/priority.yaml              which project leads
@@ -78,6 +80,9 @@ pitches/                            proposals waiting for Silas's vote
 intake/                             new project requests before they're scaffolded
 scripts/resolve_deps.py             unblocks pipeline tasks each cycle
 scripts/build_status.py             regenerates STATUS.md
+scripts/build_agent_context.py      generates scoped source locators
+ops/agent-context/<slug>.json       derived task/control ranges; never edit
+docs/agents/roles/                  specialist cards and exception procedures
 scripts/build_digest.py             builds the daily digest JSON
 scripts/build_workspace.py          regenerates workspace.html
 scripts/topology.py                 prints dependency graphs
@@ -89,16 +94,7 @@ workspace.html                      auto-generated dashboard — do not edit
 
 ## Current projects
 
-| Project | What it is | Kind |
-|---|---|---|
-| humboldt-scoop | Existing site — adding the codebase under /site | software |
-| humboldt-scoop-cms | Customer management, scheduling, visit records, billing drafts, and Android-first mapped route planning | software |
-| model-builder | Resumable gated recipe runner for upgrading or creating Kind Robots records; Marketing Deck is one preset | software |
-| digital-storefront | Research → create → market → advertise pipeline; nothing publishes unattended | content |
-| approval-portal | The console Silas lives in: pick pitches, validate upgrades, confirm updates | software |
-| kind-robots | Apps consuming the shared KR backend (read-only) | software |
-| coat-dance | Content project, awaiting Silas's direction | content |
-| mermaids-of-venice | Content project, awaiting Silas's direction | content |
+See the generated [STATUS.md](STATUS.md) for live lifecycle, progress and eligible work. The authoritative project order and lifecycle are in [priority.yaml](projects/priority.yaml) and [project-overrides.yaml](project-overrides.yaml). No manually maintained duplicate list.
 
 ## Pitches
 

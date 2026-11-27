@@ -42,9 +42,10 @@ Flow: owner direction + roadmap -> deterministic selection -> live claim -> scop
 
 - #8075 merged: shared contract and compact pickup hints; original instruction blobs archived, finite-scope review policy.
 - #8077 merged: scope global/project direction and daily creative; preserve original CONTROL and runbook.
-- #8078 merged: specialist cards and Git-native task locators. Real-repository CI generated 39 locators and found zero structural roadmap errors; the next status refresh must publish them before agents rely on them.
-- #8079: smaller SessionStart hook and single parsed queue snapshot. Check its live PR/CI status; don't assume it merged from this document.
-- Remaining: make specialist selection consistent across harnesses; audit maintenance ownership/cadence and consolidate exceptions; measure preparation/throughput; remove proven redundancy; then redesign individual roadmaps.
+- #8078 merged (fa563ca): specialist cards and Git-native task locators. Real-repository CI generated 39 locators and found zero structural roadmap errors. The Deep Heart locator was subsequently retrieved from main.
+- #8079 merged (40e148f): smaller SessionStart hook, single parsed queue snapshot and architecture review entrypoint. The owner merged while the full Worker PR CI was still running; check its final result before claiming green.
+- This closeout increment aligns live selection with locator role/dependency rules and documents the [roadmap polishing procedure](../../projects/README.md). See PR/CI for verification.
+- Remaining follow-up: independent architecture review, production throughput measurement, and evidence-based maintenance consolidation. These do not prevent starting individual roadmap polishing once the shared changes pass CI. No new scheduler or speculative rewrite.
 
 ### Questions for independent reviewers
 
@@ -58,3 +59,17 @@ Review from the perspective of a low-token personal project manager, not a multi
 6. Are acceptance metrics measurable from real sessions rather than inferred from file length? Propose a minimal benchmark and stop condition.
 
 Do not propose additional services, public publication, project roadmap rewrites or new tasks by default. Read-only critique first; return concise findings with evidence, tradeoffs and a bounded change proposal.
+
+## Maintenance ownership and next-stage boundary
+
+| Responsibility | Existing owner | Agent involvement |
+| --- | --- | --- |
+| Claims, expiration, dependencies | serialized Process task events; live claim helper | verify own task and repair genuine failures |
+| PRs, CI and branch state | GitHub checks, selector, branch janitor | inspect latest head; repair or review actionable exceptions |
+| Structural roadmap audit | Roadmap Audit workflow | fix reported defects, don't repeat portfolio-wide audit for directed work |
+| Art queue, receipts and recovery | existing art workflows and ops reports | evaluate actual media, resolve exceptions |
+| Project/task snapshots | Refresh Status | read only; check live source before writes |
+| Daily creative/digest | existing daily workflows and explicit creative assignments | author/evaluate/deliver, don't duplicate writers |
+| Full diagnostic sweep | scripts/session_sweep.py | on demand; do not require all 26 checks per session |
+
+Keep the existing diagnostic scripts until coverage and real run results justify deletion. A directed finisher starts with its own task, not a full portfolio audit. Independent critiques should be evaluated as finite follow-up proposals rather than blocking all roadmap work.

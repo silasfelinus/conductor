@@ -42,6 +42,8 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from daily_gate import already_recorded_today  # noqa: E402
 from roadmap_claims import task_is_claimable  # noqa: E402
 from roadmap_deps import zero_diff_close_hint  # noqa: E402
+from next_ready_task import task_is_unblocked  # noqa: E402
+from project_triage import role_hint  # noqa: E402
 from project_lifecycle import (  # noqa: E402
     WORKABLE_PROJECT_STATUSES,
     lifecycle_status,
@@ -118,6 +120,8 @@ def iter_ready_tasks(
             # only after an hourly reconciliation rewrites them to ready.
             if not task_is_claimable(task, tasks_by_id=tasks_by_id, now=now):
                 continue
+            if not task_is_unblocked(task, tasks_by_id):
+                continue
             if already_recorded_today(task, now=now):
                 # Same-day-gated recurring task (e.g. mermaids-of-venice/t-013) whose
                 # note already records today's Pacific-date outcome -- claiming it now
@@ -130,6 +134,7 @@ def iter_ready_tasks(
                 'task_id': task.get('id'),
                 'title': task.get('title'),
                 'roadmap_path': roadmap.get('_path'),
+                'role_hint': role_hint(task, roadmap.get('kind', 'software')),
                 'audit_candidate': 'likely a zero-diff close' if hint else None,
                 'audit_candidate_reason': hint.get('reason') if hint else None,
             }
@@ -153,6 +158,8 @@ def roadmap_has_claimable_task(roadmap: dict[str, Any]) -> bool:
     }
     return any(
         task_is_claimable(task, tasks_by_id=tasks_by_id)
+        and task_is_unblocked(task, tasks_by_id)
+        and not already_recorded_today(task)
         for task in tasks
         if isinstance(task, dict)
     )

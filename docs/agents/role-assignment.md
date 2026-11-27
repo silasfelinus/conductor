@@ -16,7 +16,7 @@ than a no-op report. The platform-level trigger *schedule* is still outside this
 repo's control — but the SESSION's behavior no longer has to depend on it.
 
 **Every session, regardless of what a trigger happened to name it, decides its own
-role from live state on arrival:**
+role from live state on arrival unless directly assigned:**
 
 1. Run `python scripts/select_role.py` (composes seven existing, no-model-call state
    checks into one recommendation, in priority order). It returns one of:
@@ -179,13 +179,13 @@ next session and the digest can see the ladder working.
 
 ### Role playbooks — read only the one you were assigned
 
-The per-role step lists live in `docs/agents/roles/` so a session loads only its own.
-`select_role.py` names the file in its `playbook` field. Re-read the new playbook whenever
-you re-run `select_role.py` and the role changes.
+The per-role cards live in `docs/agents/roles/`. Read the file named by the selector's `playbook` field once per distinct assignment type per session. A new task in the same role does not require reloading the card. The locator and live worker share `project_triage.role_hint`; routing hints do not alter gate, claim or exception priority.
 
 | Role | Playbook |
 | --- | --- |
-| Worker (`role: worker`, `stale-recurring`, `daily-creative`) | [`docs/agents/roles/worker.md`](docs/agents/roles/worker.md) |
+| Worker (`role: worker`) | [developer](roles/developer.md), [content](roles/content.md), [art](roles/art.md), [QA](roles/qa.md), or [daily creative](roles/daily-creative.md), as named by `playbook`; [worker procedure](roles/worker.md) for exceptions |
+| `daily-creative` | [daily creative](roles/daily-creative.md) |
+| `stale-recurring` | [worker procedure](roles/worker.md) |
 | Reviewer (`role: reviewer`, `reviewer-uncertain`) | [`docs/agents/roles/reviewer.md`](docs/agents/roles/reviewer.md) |
 | `role: workflow-medic` | [`docs/agents/roles/workflow-medic.md`](docs/agents/roles/workflow-medic.md) |
 | `role: pr-medic` | [`docs/agents/roles/pr-medic.md`](docs/agents/roles/pr-medic.md) |

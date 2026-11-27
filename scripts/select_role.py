@@ -1278,7 +1278,7 @@ def select_role(
     return {
         'role': role,
         'reason': reason,
-        'playbook': ROLE_PLAYBOOKS.get(role),
+        'playbook': assigned_playbook(role, ready_task),
         'underlying_role': underlying_role,
         'underlying_reason': underlying_reason,
         'repos_checked': repos,
@@ -1324,7 +1324,7 @@ def select_role(
 # ladder, which stays in the core file and is emitted as `idle_ladder`.
 ROLE_PLAYBOOKS = {
     'worker': 'docs/agents/roles/worker.md',
-    'daily-creative': 'docs/agents/roles/worker.md',
+    'daily-creative': 'docs/agents/roles/daily-creative.md',
     'stale-recurring': 'docs/agents/roles/worker.md',
     'reviewer': 'docs/agents/roles/reviewer.md',
     'reviewer-uncertain': 'docs/agents/roles/reviewer.md',
@@ -1337,6 +1337,20 @@ ROLE_PLAYBOOKS = {
     'gate-triage': 'docs/agents/roles/gate-triage.md',
     'idle': None,
 }
+
+
+SPECIALIST_PLAYBOOKS = {
+    name: f'docs/agents/roles/{name}.md'
+    for name in ('developer', 'content', 'art', 'qa', 'daily-creative')
+}
+
+
+def assigned_playbook(role: str, ready_task: dict | None = None) -> str | None:
+    # Keep the established role names for downstream callers and preserve
+    # exception routing. Only the ordinary worker's reading assignment changes.
+    if role == 'worker' and ready_task:
+        return SPECIALIST_PLAYBOOKS.get(ready_task.get('role_hint')) or ROLE_PLAYBOOKS[role]
+    return ROLE_PLAYBOOKS.get(role)
 
 
 def main() -> None:

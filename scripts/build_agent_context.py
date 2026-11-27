@@ -15,14 +15,14 @@ try:
     from daily_gate import already_recorded_today
     from next_ready_task import task_is_unblocked
     from project_lifecycle import lifecycle_status, load_project_overrides, ordered_workable_slugs
-    from project_triage import lane_of
+    from project_triage import role_hint
     from roadmap_claims import task_is_claimable
     from show_control import GLOBAL_RE, PER_PROJECT_RE, BLOCK_RE
 except ModuleNotFoundError:
     from scripts.daily_gate import already_recorded_today
     from scripts.next_ready_task import task_is_unblocked
     from scripts.project_lifecycle import lifecycle_status, load_project_overrides, ordered_workable_slugs
-    from scripts.project_triage import lane_of
+    from scripts.project_triage import role_hint
     from scripts.roadmap_claims import task_is_claimable
     from scripts.show_control import GLOBAL_RE, PER_PROJECT_RE, BLOCK_RE
 
@@ -74,22 +74,6 @@ def task_ranges(text: str) -> dict[str, list[int]]:
         last = mark.line + (1 if mark.column and (node.flow_style or mark.index == len(text)) else 0)
         ranges[task_id] = [first, max(first, last)]
     return ranges
-
-
-def role_hint(task: dict, kind: str) -> str:
-    """An advisory specialization, never a gate or authorization decision."""
-    if task.get("status") == "review":
-        return "reviewer"
-    if task.get("daily_commitment"):
-        return "daily-creative"
-    lane = lane_of(task)
-    if lane == "art":
-        return "art"
-    if lane == "qa":
-        return "qa"
-    if kind in ("content", "proposal"):
-        return "content"
-    return "developer"
 
 
 def project_packet(root: Path, slug: str, lifecycle: str, source_commit: str,
