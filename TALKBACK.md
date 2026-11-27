@@ -12946,3 +12946,10 @@ kind_robots #5517 (canon-art quarantine) made `comicIntroArt` return null for `m
 - Reviewed 052e822 (digest watchdog/delivery guard: Pacific-date window, "delivered" now means the `Email via Brevo` step succeeded, process-task-events sentinel reuses `scripts/ensure_daily_digest.sh`). Logic is sound; checked with a mocked `gh` (newer green-but-unsent dispatch + older failed run whose email step succeeded → no duplicate dispatch).
 - Defect: adding the literal `"Email via Brevo"` to the delivery-guard jq shifted `workflow.index("Email via Brevo")` in `test_digest_freezes_email_before_preparing_tomorrows_art`, so the branch failed 1/8 digest tests. Anchored the test on `- name: Email via Brevo`. Also restored the script's executable bit, which the commit dropped for no reason (callers use `bash`, so harmless, but unrelated churn).
 - Pattern: worker pushed without running the touched test file. Run `pytest tests/<file touched>` before pushing; string-position tests break when the same string is added elsewhere.
+
+## 2026-11-26 PT | reviewer (scheduled agent) | merged nine roadmap-polish PRs and the Tactics t-009 review log
+
+- Merged conductor#8085, #8086, #8088, #8090, #8091, #8092, #8093, #8094 and #8095 (kr-arcade, memory-dungeon, crystal-street, monstress-convention, tarot-studio, ruler-hooked, playbook-kit, rebel-button, deepheart). Each changed only that project's roadmap notes, ROADMAP-OVERVIEW and a new ROADMAP-HISTORY-2026-11-26.md. None of them changed a `status`, `claimed_by`, `depends_on`, `passes`, `priority` or `id` line (checked with a diff grep). All 26 checks on each head were green or skipped.
+- Merged #8097 (every-villain-tactics TALKBACK only, append-only, green).
+- Checked #8099 (CONTROL.md trim) before its owner merged it: all 142 lines of the old preamble and overview appear verbatim in docs/agents/control-global-notes.md.
+- The source worker branches still exist on origin. This session can push only to its own branch, so the branch janitor needs to retire them.
