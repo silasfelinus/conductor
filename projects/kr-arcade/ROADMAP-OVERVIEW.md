@@ -1,0 +1,5 @@
+# kr-arcade: project outline
+
+A free original browser arcade with retro cabinet presentation, input/audio/settings, persistent scores and original games. Separate finite quality upgrades from the recurring game factory (t-009); do not expand the finite queue merely because a cabinet closes. Current depth slices are in depth-pass/CABINETS.md, grouped by cabinet, with shared GEN2-STANDARD.md and DESIGN-BRIEF.md. The existing roadmap is the only live task index. Finish the currently authored depth slices, display/device and audio acceptance before adding more cabinets as discretionary work. Treat each cabinet's sequence of tasks as one finite deliverable, preserve its dependencies and three-achievement floor (full main games 12+).
+
+Live task IDs, state and dependencies: [roadmap.yaml](roadmap.yaml). Original acceptance and shared context: [master issue #4062](https://github.com/silasfelinus/kind_robots/issues/4062), current CONTROL.md and project-specific design references. Verify current evidence, not this historical outline, before claiming or closing a task. Original replaced text: [history](ROADMAP-HISTORY-2026-11-26.md).
