@@ -12,7 +12,7 @@ Silas, 2026-11-11 PT, in session:
 
 **Current direction (2026-11-26 PT):** fully develop the intended game before handing it to humans for playtesting. This is an agent-owned evidence standard, not another subjective approval gate. Publication and final human acceptance remain separate.
 
-**Owner direction (2026-11-26 PT):** Completed generated art is presumed present for roadmap acceptance. Do not retain subjective human approval, manual art inspection or human playtesting as finite build tasks or graduation prerequisites, including older project-specific acceptance wording (e.g. Deepheart t-012 and t-016–018). Finish integration and agent-owned automated QA, then graduate; record unavailable live checks as handoff observations rather than requiring a human to perform them. Known concrete failures still require repair. Independent release/publication and security-sensitive approvals remain separate and unchanged.
+**Owner direction (2026-11-26 PT):** Completed generated art is presumed present for roadmap acceptance. Do not retain subjective human approval, manual art inspection or human playtesting as finite build tasks or graduation prerequisites, including older project-specific acceptance wording (e.g. Deepheart t-012 and t-016–018). Finish integration and agent-owned automated QA, then graduate; record unavailable manual art checks as handoff observations rather than requiring a human to perform them. Known concrete failures still require repair. Independent release/publication and security-sensitive approvals remain separate and unchanged.
 
 ## Which games
 
