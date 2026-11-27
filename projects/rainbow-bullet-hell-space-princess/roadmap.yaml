@@ -557,37 +557,10 @@ tasks:
     passes: 0
     stakes: reversible
     depends_on: [t-020]
-    note: |-
-      Silas, 2026-10-14 PT: "yes, open the Kontext pass as its own task", following t-020's finding that txt2img has plateaued on multi-element scenes and stubborn colours (see t-020 note and art/ART-ROUND-1..8). Write art/ART-ROUND-9-KONTEXT.yaml and drive it with scripts/enqueue_art_requests.py (engine: kontext lanes, source_image_id / reference_image_id / source_pad / mask_box are already supported). Keep the house look: Arthemy Western v3 + western-toon tags; every source must be an approved ArtImage from the t-020 ledgers. (1) RECOLOUR, masked where possible: Azure coat to powder cyan from 246431 (select) and 246147/246149 (comms/neutral); Vivi's purple and coral streaks onto 246439/246440; Halo Fin hull to butter yellow and gold from 246443/246445; Comet Crown to a clean three-prong lilac arrowhead from 246448. Pass bar: canon colours per CAST-BIBLE.md, face and body unchanged. (2) COMPOSE: group key art from the four approved pilots as references (Maribel 246424, Azure recolour from (1), Solenne 246155, Vivi 246439) with heights and builds preserved; title key art from backdrop 246126 plus the four ship sources (246198, 246201, recoloured Halo Fin and Comet Crown); cutscenes C01-C03, C05-C09 and C14-C17 restaged from approved cast, boss and enemy ArtImages instead of txt2img; the B09 Eclipse Crown boss; and the Comet Parade super (246570 drew a woman) built from the Comet Crown ship plus drone trails. (3) STAGE PLANES: for S01-S09 x far/mid/near/fore, script a flat-colour layout guide (horizontal bands, edge-to-edge silhouettes, empty top third, nothing centred) and Kontext-paint it, keeping the 246449 and 246453 far plates as style anchors; then test tiling and parallax in the real cabinet at 390/768/1440. (4) Pickups u04, u11, u12 redrawn to their WORLD-BIBLE shapes. Do not reroll anything t-020 already kept. Generated art is pre-approved internal work (AGENTS.md); public release stays gated by t-014.
-      2026-11-01 PT claim-staleness assessment (Silas: stale claims are more likely finished- but-unrecorded than abandoned): no round-9 Kontext completion found; related art PRs (#3772-#3794) landed but the ledger items are unverified. Claim released; verify against art/ART-ROUND-9-KONTEXT.yaml before redoing.
+    note: >-
+      Silas, 2026-10-14 PT: "yes, open the Kontext pass as its own task", following t-020's finding that txt2img has plateaued on multi-element scenes and stubborn colours (see t-020 note and art/ART-ROUND-1..8).
 
-      Partial stage-depth milestone: implementation adds two distinct mirrored painted parallax layers with safe reviewed-art fallbacks and viewport coverage contracts; companion art ledger requests 16 source-backed far/mid panoramas for Acts I-VIII at priority 1000. Generation, review and media integration remain pending.
-
-      2026-11-23 PT: layout-guided stage planes delivered: seven reviewed DOODLE-STAGE-DEPTH-
-      PLANES (s01 far/mid, s02/s06/s08 far, s07 far/mid) replace the coral-crop stand-ins in
-      kind_robots#5685; the other nine were refused (jets/rockets read as enemies; s04
-      watermark) and keep the reviewed crop. Remaining t-022 scope is the round-9 off-model
-      recolour and cutscene/group composition, folded into t-030's moving-cutscene work.
-
-      2026-11-24 PT: P-04 painted sky, far and mid planes for all eight main Acts in both
-      looks (kind_robots#5761, #5762, #5764, #5767), plus the finale's Crown-interior planes
-      (#5767). Detour skies drift (#5742). Still rendering: the s09 card (P-07) and the Fever
-      Dream detour twins (P-14), conductor ART-BACKLOG-2026-11-24.
-
-      2026-11-25 PT: kind_robots#5767 merged: the finale's own card, strip and planes (P-04,
-      P-07) and X1-X3 Fever Dream detour twins (P-14); X4 sky in #5774. Retakes on a green key
-      for X1 far, X2 far, X3 mid/near and X4 far/near are rendering.
-
-      2026-11-26 PT intent audit: partial, so back to ready. The planes, cards and detour
-      twins shipped (#5767, #5774). The X1-X4 green-key retakes are still rendering (ART-
-      BACKLOG-2026-11-24). The 11-22 claim had expired.
-
-      2026-11-27 PT close: full scope verified. The X1-X4 green-key retakes the 11-26 audit
-      listed as rendering all rendered, were reviewed keep (ART-BACKLOG-2026-11-24 doodle-
-      alt-x*-2, 'Closes P-14') and shipped in kind_robots#5810 (merged 2026-11-25); all 14
-      doodle/alt planes are on kind_robots main. Stage planes: #5685, #5767, #5774, #5810.
-      Round-9 recolour and group/cutscene composition were folded into t-030 on 2026-11-23 and
-      stay tracked there; pickups u04/u11/u12 were redrawn in ART-ROUND-10-VOLUME.
+      Full history: projects/rainbow-bullet-hell-space-princess/HISTORY.md#t-022
     owner: worker
     updated: '2026-11-27T08:48:57Z'
     implementation_pr: 'silasfelinus/kind_robots#5810'
