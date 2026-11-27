@@ -1507,9 +1507,8 @@ tasks:
   - id: t-090
     milestone: m8
     title: "Glitch Garden depth slice 3: Autumn and Winter"
-    status: review
-    owner: worker
-    updated: '2026-11-27T23:29:30Z'
+    status: ready
+    updated: '2026-11-27T23:44:41Z'
     passes: 0
     stakes: reversible
     depends_on: t-089
@@ -1536,9 +1535,8 @@ tasks:
       or deployment inferred.
 
       Implemented a seeded moving Frost Sprite that freezes exposed lamps, respects lit heaters, can be sprayed for points, and resets across waves and deaths. Added targeted winter regression coverage. Partial scope; Frost Millipede and full campaign QA remain.
-    implementation_pr: 'silasfelinus/kind_robots#5575'
-    claimed_by: krarcade090-20261127T2328Z-8f2c7b
-    claimed_at: '2026-11-27T23:28:30Z'
+
+      kind_robots#6014 merged after all substantive latest-head checks passed. Frost Sprite shipped; Frost Millipede and full eight-garden QA remain.
 
   - id: t-091
     milestone: m8
@@ -1941,11 +1939,8 @@ tasks:
   - id: t-115
     milestone: m8
     title: "Rain Catcher depth slice 2: The first two gardens"
-    status: review
-    owner: worker
-    claimed_by: rain115-1795820854714-8gmzhjj
-    claimed_at: '2026-11-27T23:07:34.714Z'
-    updated: '2026-11-27T23:08:42.423Z'
+    status: ready
+    updated: '2026-11-27T23:44:41Z'
     passes: 0
     stakes: reversible
     depends_on: t-114
@@ -1953,6 +1948,8 @@ tasks:
       CABINETS.md section 19, Rain Catcher (Missile Command riff), slice 2 of 4: The first two gardens. The upgrade is "Gardens of the World". Spec: projects/kr-arcade/depth-pass/CABINETS.md -- read the game's section first; this slice's scope is item 2 under its '#### Slices', and 'Rules for every slice' at the top applies. Code: kind_robots utils/arcade/games/ (registry slug rain-catcher). Silas, 2026-10-11: "I need an assessment done of the other arcade games. I want the same level of quality improvements, they should not just be thin veneers of the old games. But newer, better, even more awesome."
 
       Implemented two playable special forecasts, three paddy barrels and monsoon bands. Partial: bosses, terraces, harvest, greenhouse and save/resume remain.
+
+      kind_robots#6010 merged after all substantive latest-head checks passed. Garden objectives and monsoon mechanics shipped; bosses, terraces, Harvest, Greenhouse and save/resume remain.
 
   - id: t-116
     milestone: m8
