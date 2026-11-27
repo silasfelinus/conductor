@@ -802,6 +802,13 @@ vendor API order fulfillment.
   is a personal gift; never presume authorization to use a real portrait likeness.
 - Product publication, checkout, external printing, vendor accounts/keys, and
   money require an explicit human gate. Reversible internal tools may merge.
+- Silas, 2026-11-27 PT: add one public front-end reader page in Projects
+  (`/play/tarot`) with automatic readings, horoscope tracking (sun, moon,
+  ascendant from birth time) and in-depth chart analysis, plus an admin-only
+  link to the studio. Studio flow: render front/back samples per design
+  (majors and minors), approve a design, then generate the full set with
+  per-card prompt edits, revisions and default-art switching. The reader shows
+  only approved art from decks marked public; SuperKate stays private.
 
 ### hybridizer (software)
 

@@ -72,12 +72,17 @@ tasks:
   - id: t-004
     milestone: m2
     title: 'ArtJobs submit, retry, observe and approve card face/back with provenance'
-    status: ready
-    owner: null
+    status: review
+    owner: worker
     passes: 0
     stakes: reversible
     depends_on: t-003
-    note: 'Use existing queue with a stable request key and explicit queued/rendered/reviewed transitions. Need image preview, resubmission and all 78 faces + deck back.'
+    updated: '2026-11-27T22:30:00Z'
+    implementation_pr: 'silasfelinus/kind_robots#6003'
+    note: >-
+      Use existing queue with a stable request key and explicit queued/rendered/reviewed transitions. Need image preview, resubmission and all 78 faces + deck back.
+
+      2026-11-27 PT (direct Silas request, session claude/kind-robots-tarot-tufzz2): kind_robots#6003 adds TarotDesign/TarotArt (additive migration), five seeded designs per deck, sample generation (back + 2 majors + 2 minors), design approval, full-set generation, per-card revisions, default-art switching, approve/reject and back choice. Request key tarot-art:<id>; /api/tarot/art/sync reconciles by job id or key. Every composed prompt is tested against checkArtPromptContract. No art enqueued yet; done after merge, deploy and a verified first sample render.
   - id: t-005
     milestone: m2
     title: 'Finish bespoke deck bibles and printable content for SuperKate, Kind Robots and Zuzu'
@@ -142,3 +147,14 @@ tasks:
     claimed_at: '2026-11-26T03:53:03Z'
     updated: '2026-11-26T04:08:19Z'
     implementation_pr: 'silasfelinus/kind_robots#5879'
+  - id: t-011
+    milestone: m2
+    title: 'Public Kind Tarot reader in Projects: automatic readings, horoscope tracking and natal chart analysis'
+    status: review
+    owner: worker
+    passes: 0
+    stakes: reversible
+    updated: '2026-11-27T22:30:00Z'
+    implementation_pr: 'silasfelinus/kind_robots#6003'
+    note: >-
+      Silas, 2026-11-27 PT: one front-end page in Projects with an admin-visible link to the studio; a reader that does multiple automatic reads; horoscope tracking including sun, moon and ascendant from birth time; in-depth chart analysis; multiple front and back designs. Shipped in kind_robots#6003 as /play/tarot (Projects tab tarot): three daily spreads from the full 78-card Kind Oracle (authored content for all cards), browser-local birth profiles, astronomy-engine natal chart with Placidus houses, aspects, balance, wheel, daily transit horoscope, weekly Moon ingresses and birth cards. Visitors only ever see APPROVED art from decks marked public (Kind Robots by default; SuperKate stays private).
