@@ -82,12 +82,12 @@ tasks:
     direction, and the offline-at-runtime rule.
 - id: t-067
   title: 'Main-game standard: audit and close the gaps for The Ruler Is Hooked'
-  status: claimed
+  status: review
   milestone: m6
   stakes: reversible
   passes: 0
   depends_on: []
-  updated: '2026-11-27T10:52:00Z'
+  updated: '2026-11-27T10:54:00Z'
   note: |-
     Silas 2026-11-11 PT, in session: "Our games should all have a base standard of quality ... We want our main games to have 12 plus achievements." Standard: docs/agents/main-game-standard.md; CONTROL.md global overview.
 
@@ -142,6 +142,8 @@ tasks:
     App commit c59c0464108bf70cbf86acdae7794933538e584e recovers suspended, interrupted and closed audio contexts on user gestures and adds a mocked lifecycle regression in Ruler Hooked CI. Actual browser playback and CI remain unverified.
 
     Verified Kind Robots #5960 merged at 01a6fd610eaaa4cd5652df9dde17975fbb278dbe. All eight exact-head PR workflows and branch janitor succeeded on c59c0464108bf70cbf86acdae7794933538e584e (Ruler Hooked 45947491289, Contract Tests 45947491404, janitor 45951410751). Audio recovery delivered; actual audible playback and authenticated cross-device evidence remain. Return ready; no deployment claimed.
+
+    Kind Robots 708b16913031412229459de575b21f93d5f147e3 repairs failed initial account archive reads and uncertain writes: bounded retries at 1.5 and 31 seconds, invalid revisions rejected, and a fresh revision read before retrying a write. Committed store logic executed with mocked network, state and timers (11 assertions passed); added retry schedule regression assertions to console.selftest.ts. CI and authenticated live-device verification pending; partial t-067.
   owner: worker
   claimed_by: 20261127T1052Z-ruler-t067-sync-89dd31
   claimed_at: '2026-11-27T10:52:00Z'
