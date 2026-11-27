@@ -1,0 +1,332 @@
+# MONSTRIQUE Chapter One cast and Last Call Motor Lodge art, general edition, round 1 (2026-11-27 PT).
+# Task monstress-convention/t-014: the first scoped motel/cast batch. Silas authorized submitting art requests
+# this session. Queued is not delivered: t-014 closes only after each cell has a DONE ArtJob, an ArtImage id
+# and a verified final URL, and Silas reviews before anything ships (t-013 gate unchanged).
+# Cast identity follows the 2026-11-22 PT redesign in CHARACTER-LOOKBOOK.md "The two leads" and Kind Robots
+# utils/monstrique/characterModels.ts (iris, norb, odette, violet, marta, dolores, gavin). FRONT-SPLASH-* and
+# ENDINGS-* rounds carry the OUTDATED Iris/Norb look; do not copy them. Identity LoRAs are not trained, so
+# cast_loras is false and every prompt carries the full identity prose (ART-PIPELINE.md LoRA plan).
+# Lanes: krea2 paints the 2D point-and-click style (artStyles.ts adventure-2d) for portraits, stage figures and
+# room backgrounds; flux2-sheet paints style-neutral turnarounds on plain grey (artStyles.ts model-sheet) so
+# Silas can pick the lead faces before the ten-shot LoRA datasets are requested.
+# Not duplicated: the 2026-11-11 series-bible bust portraits (RECOVERED-2026-11-11.yaml) of Odette, Violet,
+# Marta, Dolores and Gavin; this round asks for ghost expression sheets and full-body stage figures instead.
+# Room backgrounds are unpeopled so sprites can stand in them; composition follows the hotspot positions in
+# Kind Robots utils/monstressConvention/prologue.ts HOTEL_ROOMS. Room 205 is non-graphic: both victims are
+# covered by sheets. Spoiler rule: Draculina and any culprit stay off the art. General edition: is_mature
+# false, fully clothed, comedy, adults only. Private. priority 60 (game art). auto_submit: true.
+round: monstrique-ch1-cast-motel-1
+series: monstrique-ch1-cast-motel
+project_slug: monstress-convention
+designer: Monstrique Studio
+is_public: false
+is_mature: false
+cast_loras: false
+priority: 60
+auto_submit: true
+lanes:
+- key: krea2
+  label: Krea 2, painted 2D point-and-click adventure art
+  engine: krea2
+  prompt: prose
+- key: flux2-sheet
+  label: Flux 2, style-neutral model sheet on plain grey
+  engine: flux2
+  prompt: prose
+subjects:
+- key: mc-ch1-iris-portrait-sass
+  lane: krea2
+  entity: monstrique-cast
+  title: 'Iris Quill dialogue portrait, sass (2026-11-22 redesign)'
+  asset: monstress-convention/cast/iris/portrait-sass
+  size: 832x1216
+  seed: 1141001
+  prompt_prose: >-
+    Hand-painted 2D point-and-click adventure game character portrait, 1990s comedy adventure meets modern HD
+    cartoon, bold ink outlines, caricature proportions, flat cel shading. Waist-up dialogue portrait of Iris Quill,
+    a sassy streetwise adult human woman about thirty with a warm open face. She is zaftig and curvy, a
+    full-figured hourglass with a full bust, wide hips and a soft little belly, well-padded and confident. A big
+    messy shoulder-length mane of jet-black hair with swept bangs and one thick bold white streak running back
+    from the front hairline. Bright wide curious eyes with smudged black winged eyeliner, one arched eyebrow
+    cocked high, a wide crooked grin mid-wisecrack, bold berry lipstick, big gold hoop earrings and a small
+    flesh-coloured sticking plaster on the side of her neck. She wears a belted rose-and-plum trench coat cinched
+    tight at the waist over a black crop top, one hand on her hip with chipped nail polish, a chunky vintage
+    press camera with a flash bulb swinging on its strap and a press pass clipped to her belt. Behind her a
+    softly blurred rainy motel balcony glows with magenta and teal neon. Cheeky, warm and fearless mood.
+- key: mc-ch1-norb-portrait-unblinking
+  lane: krea2
+  entity: monstrique-cast
+  title: 'Norb Vale dialogue portrait, unblinking (2026-11-22 redesign)'
+  asset: monstress-convention/cast/norb/portrait-unblinking
+  size: 832x1216
+  seed: 1141002
+  prompt_prose: >-
+    Hand-painted 2D point-and-click adventure game character portrait, drawn as a rubbery 1990s TV cartoon
+    caricature with squash-and-stretch distortion, bold ink outlines and flat cel shading. Waist-up dialogue
+    portrait of Norb Vale, a middle-aged adult man about forty-five with dwarfism, a little person who looks like
+    a hunchbacked bell-ringer crossed with a mad scientist's lab assistant. A huge lumpy lopsided misshapen head
+    thrust forward on almost no neck, a big hump rising over one shoulder and a stooped back. Sallow skin, grey
+    stubble, almost no chin, an enormous bulbous doorknob nose and a wide froggy mouth with crooked buck teeth
+    pulled into a nervous wheedling grin. His eyes are huge, bulging and mismatched, the left eye much larger and
+    set higher than the right, both under heavy drooping half-lowered eyelids with dark bags beneath, staring
+    unblinking. Small round wire spectacles, the thick left lens magnifying the big eye even bigger. A few greasy
+    strands combed over a bald lumpy scalp. He wears an oversized hot-pink convention T-shirt under a grey suit
+    jacket too small for the hump and a crooked bow tie, and holds up two bright yellow latex-gloved hands like a
+    surgeon. Behind him a softly blurred motel room with a can of disinfectant on the desk. The ugliest face in
+    the room and the most expressive, saturated neon noir palette.
+- key: mc-ch1-iris-turnaround
+  lane: flux2-sheet
+  entity: monstrique-model-sheet
+  title: 'Iris Quill full-body turnaround, plain grey (face pick before LoRA dataset)'
+  asset: monstress-convention/model-sheets/iris-turnaround
+  size: 1344x768
+  seed: 1141003
+  prompt_prose: >-
+    Clean character model sheet render on a plain light grey background, even studio lighting, neutral colour
+    grading, full colour, consistent design. Four full-body views of the same curvy adult woman standing side by
+    side in a row, front view in a neutral A-pose, three-quarter view, side profile view and back view, each
+    head to toe at the same scale. Iris Quill, a sassy streetwise adult human woman about thirty, zaftig
+    full-figured hourglass with a full bust, wide hips, thick thighs and a soft little belly. A big messy
+    shoulder-length mane of jet-black hair with swept bangs and one thick white streak from the front hairline.
+    Bright wide eyes with smudged winged eyeliner, arched eyebrows, a wide crooked grin, berry lipstick, big gold
+    hoop earrings and a small plaster on her neck. Belted rose-and-plum trench coat cinched at the waist over a
+    black crop top and a high-waisted black pencil skirt, laddered fishnet tights, scuffed black ankle boots, a
+    press pass clipped to the belt and a chunky vintage press camera on a strap across her body.
+- key: mc-ch1-norb-turnaround
+  lane: flux2-sheet
+  entity: monstrique-model-sheet
+  title: 'Norb Vale full-body turnaround, plain grey (face pick before LoRA dataset)'
+  asset: monstress-convention/model-sheets/norb-turnaround
+  size: 1344x768
+  seed: 1141004
+  prompt_prose: >-
+    Clean character model sheet render on a plain light grey background, even studio lighting, neutral colour
+    grading, full colour, consistent design. Four full-body views of the same short middle-aged adult man
+    standing side by side in a row, front view, three-quarter view, side profile view and back view, each head to
+    toe at the same scale. Norb Vale, an adult man about forty-five with dwarfism, about four feet tall and
+    roughly two and a half heads tall, a huge lumpy lopsided head on almost no neck, a big hump on one shoulder
+    clearly visible in the profile and back views, an Igor stoop, short bowed legs and stubby arms ending in
+    oversized hands in bright yellow latex gloves. Sallow stubbled face with almost no chin, a bulbous doorknob
+    nose, crooked buck teeth, mismatched bulging eyes with the left one larger and higher under heavy drooping
+    lids, small round wire spectacles with a thick left lens, greasy strands combed over a bald scalp. Oversized
+    hot-pink convention T-shirt tucked into high-waisted rumpled grey trousers, a grey jacket too small for the
+    hump, a crooked bow tie and black rubber galoshes. A comic caricature, lopsided and asymmetrical.
+- key: mc-ch1-odette-ghost-expressions
+  lane: krea2
+  entity: monstrique-cast
+  title: Odette Harker ghost expression sheet
+  asset: monstress-convention/cast/odette/expressions
+  size: 1344x768
+  seed: 1141005
+  prompt_prose: >-
+    Hand-painted 2D cartoon character expression sheet on a plain light grey background, bold ink outlines and
+    flat cel shading, four head-and-shoulders studies of the same glamorous adult woman ghost side by side. First
+    a cool neutral look, second narrowed eyes and a dealmaker's cold smile, third a comic double-take with eyes
+    wide and jaw dropped, fourth a deadpan annoyed glare over a raised cigarette holder. Odette Harker, a sharp
+    showbiz talent agent who looks about thirty-five, glowing translucent silver-blue from head to toe, a sleek
+    platinum chignon, arched painted brows, red lipstick, a string of pearls, a shoulder-padded silver power
+    suit and diamond rings on every finger. Wisps of pale blue ectoplasm curl off her shoulders. Comic, sly and
+    imperious.
+- key: mc-ch1-violet-ghost-expressions
+  lane: krea2
+  entity: monstrique-cast
+  title: Violet Wisp ghost expression sheet
+  asset: monstress-convention/cast/violet/expressions
+  size: 1344x768
+  seed: 1141006
+  prompt_prose: >-
+    Hand-painted 2D cartoon character expression sheet on a plain light grey background, bold ink outlines and
+    flat cel shading, four head-and-shoulders studies of the same wry adult woman ghost side by side. First a
+    calm neutral look, second a flat professional deadpan with one eyebrow up, third a comic double-take with
+    eyes wide, fourth her head thrown back laughing. Violet Wisp, a professional companion about thirty hired to
+    play a vampire for one night, glowing with a soft lavender light, a black costume wig in a sharp bob sitting
+    slightly askew, cheap plastic vampire fangs, wry observant eyes, a rented red-and-black satin vampire cape
+    with a tall stand-up collar over a little black dress. Lavender mist drifts around her collar. Dry, funny and
+    unimpressed by the afterlife.
+- key: mc-ch1-odette-ghost-stage
+  lane: krea2
+  entity: monstrique-cast
+  title: Odette Harker ghost, full-body stage figure
+  asset: monstress-convention/cast/odette/stage
+  size: 832x1216
+  seed: 1141007
+  prompt_prose: >-
+    Hand-painted 2D point-and-click adventure game stage figure, full body head to toe, standing alone on a plain
+    light grey background, bold ink outlines and flat cel shading. Odette Harker, a glamorous adult woman ghost
+    who looks about thirty-five, glowing translucent silver-blue, floating an inch above the floor in silver
+    stilettos. Sleek platinum chignon, arched painted brows, pearls, a shoulder-padded silver power suit, diamond
+    rings on every finger. She waves a fanned stack of contracts like a weapon in one hand and points a long
+    cigarette holder in the other, chin up, mid-negotiation with a dealmaker's cold smile. A faint trail of pale
+    blue ectoplasm curls beneath her feet. Comic, imperious and shady.
+- key: mc-ch1-violet-ghost-stage
+  lane: krea2
+  entity: monstrique-cast
+  title: Violet Wisp ghost, full-body stage figure
+  asset: monstress-convention/cast/violet/stage
+  size: 832x1216
+  seed: 1141008
+  prompt_prose: >-
+    Hand-painted 2D point-and-click adventure game stage figure, full body head to toe, standing alone on a plain
+    light grey background, bold ink outlines and flat cel shading. Violet Wisp, a curvy adult woman ghost about
+    thirty glowing with a soft lavender light, floating just above the floor with one shoe on and one stockinged
+    foot. A black costume wig in a sharp bob slightly askew, cheap plastic vampire fangs, a rented red-and-black
+    satin vampire cape with a tall stand-up collar over a little black dress and fishnet tights. Arms folded, one
+    hip out, a flat professional deadpan with one eyebrow up, counting the exits. Lavender mist drifts around the
+    hem of her cape. Dry, confident and funny.
+- key: mc-ch1-marta-stage
+  lane: krea2
+  entity: monstrique-cast
+  title: Marta, night manager, full-body stage figure
+  asset: monstress-convention/cast/marta/stage
+  size: 832x1216
+  seed: 1141009
+  prompt_prose: >-
+    Hand-painted 2D point-and-click adventure game stage figure, full body head to toe, standing alone on a plain
+    light grey background, bold ink outlines and flat cel shading. Marta, the stout night manager of a 1960s
+    roadside motel, an adult woman who looks about sixty. A silk headscarf in deep wine red tied under the chin,
+    oversized black sunglasses, a thick layer of matte foundation, elbow-length cream opera gloves, a sage-green
+    cardigan over a 1960s shift dress and a jangling key ring on a lanyard. She cradles a frosty silver ice
+    bucket in one arm and leans on one hip as if propped on an invisible counter, dry and unhurried, like
+    she owns the decade. Mysterious, deadpan and a little uncanny.
+- key: mc-ch1-dolores-stage
+  lane: krea2
+  entity: monstrique-cast
+  title: Dolores, superfan in Room 204, full-body stage figure
+  asset: monstress-convention/cast/dolores/stage
+  size: 832x1216
+  seed: 1141010
+  prompt_prose: >-
+    Hand-painted 2D point-and-click adventure game stage figure, full body head to toe, standing alone on a plain
+    light grey background, bold ink outlines and flat cel shading. Dolores, a cheerful nosy seventy-four-year-old
+    retired fan, a sturdy lively adult woman with pink foam curlers in lavender-grey hair, cat-eye glasses on a
+    beaded chain, a quilted pink housecoat covered in shiny fan-club pins and fuzzy pink slippers. She aims a TV
+    remote control like a pistol in one hand and tilts her head with one ear cocked, as if pressing it to a thin
+    motel wall, mid-gossip with a delighted grin. Spry, sharp-eyed and funny.
+- key: mc-ch1-gavin-stage
+  lane: krea2
+  entity: monstrique-cast
+  title: Gavin, fan with the long lens, full-body stage figure
+  asset: monstress-convention/cast/gavin/stage
+  size: 832x1216
+  seed: 1141011
+  prompt_prose: >-
+    Hand-painted 2D point-and-click adventure game stage figure, full body head to toe, standing alone on a plain
+    light grey background, bold ink outlines and flat cel shading. Gavin, a scrawny adult man about thirty-five,
+    hunched and shifty, greasy hair under a backwards baseball cap, patchy stubble, a rain-soaked blue windbreaker
+    hung with a tangle of convention lanyards, cargo shorts, white socks with sandals. He clutches a camera with
+    a telephoto lens longer than his arm, peering sideways with a sweaty, over-eager guilty grin, caught
+    skulking. Creepy, awkward and comic.
+- key: mc-ch1-bg-motel-exterior
+  lane: krea2
+  entity: monstrique-room
+  title: 'Background: Last Call Motor Lodge exterior, night rain (motel-exterior)'
+  asset: monstress-convention/rooms/motel-exterior
+  size: 1344x768
+  seed: 1141012
+  prompt_prose: >-
+    Hand-painted 2D point-and-click adventure game background painting, 1990s comedy adventure meets modern HD
+    cartoon, bold ink outlines, painted detail, saturated neon noir palette. Wide establishing view of the Last
+    Call Motor Lodge at night in pouring rain, a shabby two-storey 1960s roadside motel in Midnight City. A tall
+    pink and teal neon motel sign with one burnt-out letter buzzes at the top centre. At the upper left a giant
+    weathered billboard shows seven glamorous adult monster starlets in retro costumes posing together. A row of
+    turquoise doors on the ground floor, a second-floor balcony with an iron railing and a concrete stair, a lit
+    front-office window on the left, a glowing blue ice-machine alcove tucked beside the stairs, a puddled
+    parking lot with a rusty finned sedan reflecting the neon, rain streaks and steam curling from a storm drain.
+    The wet asphalt of the foreground lies open and deserted, an unpeopled stage for characters to walk across.
+    Seedy, moody and funny.
+- key: mc-ch1-bg-front-office
+  lane: krea2
+  entity: monstrique-room
+  title: 'Background: motel front office (front-office)'
+  asset: monstress-convention/rooms/front-office
+  size: 1344x768
+  seed: 1141013
+  prompt_prose: >-
+    Hand-painted 2D point-and-click adventure game background painting, bold ink outlines, painted detail, warm
+    lamplight against magenta neon. Interior of a cramped 1960s motel front office at night. A long wood-veneer
+    counter sticky with sixty years of spilled cocktails runs across the middle, with a brass service bell and a
+    fat open guest register at its lower left end. Behind it a wall-mounted key rack of dangling room keys on
+    plastic fobs and a humming wall clock. At the upper right a dusty glass shrine case devoted to a 1964
+    beach-party movie line-up of glamorous adult monster starlets, faded publicity photos, a tiki cocktail glass,
+    a seashell and a tiny plastic surfboard. Wood panelling, flamingo-patterned carpet, a wobbling ceiling fan and
+    a rain-streaked window full of pink neon. The space behind the counter is unpeopled and waiting. Shabby,
+    nostalgic and comic.
+- key: mc-ch1-bg-ice-alcove
+  lane: krea2
+  entity: monstrique-room
+  title: 'Background: ice machine alcove (ice-alcove)'
+  asset: monstress-convention/rooms/ice-alcove
+  size: 1344x768
+  seed: 1141014
+  prompt_prose: >-
+    Hand-painted 2D point-and-click adventure game background painting, bold ink outlines, painted detail, cold
+    teal fluorescent light. A narrow concrete ice-machine alcove under a motel staircase at night. In the centre a
+    battered avocado-green 1970s ice machine with a dented lid, frost spilling from its chute and a puddle of
+    melting cubes on the floor. On the left wall a clipboard maintenance log hangs from a rusty nail. At the
+    lower right a round iron sewer hatch set in the floor, chained shut with a heavy padlock. At the far right a
+    garish vending machine glows hot pink, stocked with novelty snacks and souvenir trinkets. A flickering
+    fluorescent tube, cracked tiles, peeling wallpaper and rain dripping from the stairs above. Deserted, eerie
+    and comic.
+- key: mc-ch1-bg-balcony
+  lane: krea2
+  entity: monstrique-room
+  title: 'Background: second-floor balcony corridor (balcony)'
+  asset: monstress-convention/rooms/balcony
+  size: 1344x768
+  seed: 1141015
+  prompt_prose: >-
+    Hand-painted 2D point-and-click adventure game background painting, bold ink outlines, painted detail,
+    saturated neon noir palette. The second-floor balcony walkway of a shabby 1960s roadside motel at night in
+    the rain. Wet concrete underfoot, an iron railing beaded with raindrops, a long row of turquoise motel doors
+    with brass room numbers and flickering porch lights receding into the distance. Through one curtained window
+    an old black-and-white beach movie flickers on a television. A trail of wet footprints crosses the concrete
+    at the lower left, and a door just right of centre is crossed with a strip of plain yellow tape. Pink neon
+    bleeds up from the parking lot below. Thin walls, a deserted walkway and a row of doors with stories.
+- key: mc-ch1-bg-room-205
+  lane: krea2
+  entity: monstrique-room
+  title: 'Background: Room 205 crime room, victims covered, general edition (odette-room)'
+  asset: monstress-convention/rooms/odette-room
+  size: 1344x768
+  seed: 1141016
+  prompt_prose: >-
+    Hand-painted 2D point-and-click adventure game background painting for a comedy mystery, bold ink outlines,
+    painted detail, moody magenta and teal palette. Interior of motel Room 205 at night, a quiet, tidy and
+    bloodless discovery scene. Faded flamingo wallpaper peeling at the seams, a sagging double bed with a satin
+    bedspread where two still shapes lie under crisp white sheets, covered from head to toe, one across the lower
+    left and one across the lower right. On the carpet between them lies one ornate jewelled 1960s stage-prop
+    dagger, glittering under the lamp. A rented red-and-black satin vampire cape draped over a chair, a bottle of
+    good gin and two glasses on the nightstand, a silver ice bucket, a designer handbag on the far left, a
+    dresser mirror glinting with a faint cold blue shimmer, a lamp with a tilted shade and pink neon slicing
+    through rain-streaked blinds. Eerie, hushed and darkly comic.
+- key: mc-ch1-bg-room-207
+  lane: krea2
+  entity: monstrique-room
+  title: 'Background: Room 207, The Unwashed Truth field office (investigators-room)'
+  asset: monstress-convention/rooms/investigators-room
+  size: 1344x768
+  seed: 1141017
+  prompt_prose: >-
+    Hand-painted 2D point-and-click adventure game background painting, bold ink outlines, painted detail, warm
+    lamplight and pink neon. Motel Room 207 turned into the scruffy field office of an investigative gossip
+    blog at night. One cramped sagging double bed in the lower middle with a freshly sprayed bedspread and an
+    empty can of disinfectant on the floor beside it. Two battered suitcases, one sealed in plastic wrap, the
+    other bursting with clothes and camera gear. At the lower left an evidence desk covered in glossy
+    photographs, red string, a laptop, a box of yellow rubber gloves and a magnifying glass, under a corkboard
+    pinned with clippings. Flamingo wallpaper, a rattling wall air-conditioner and a sliding door to the rainy
+    balcony. Unpeopled, cluttered and comic.
+- key: mc-ch1-bg-room-204
+  lane: krea2
+  entity: monstrique-room
+  title: 'Background: Room 204, Dolores next door (neighbor-room)'
+  asset: monstress-convention/rooms/neighbor-room
+  size: 1344x768
+  seed: 1141018
+  prompt_prose: >-
+    Hand-painted 2D point-and-click adventure game background painting, bold ink outlines, painted detail,
+    lamplight against cool neon. Motel Room 204 at night, the cosy cluttered home-away-from-home of a retired
+    superfan. A big boxy 1990s television flickers with an old black-and-white beach movie, with a round wall
+    clock beside it at the upper left. A floral armchair with crocheted doilies, a teacup and a box of
+    chocolates on a folding TV tray, shelves crammed with vintage monster-starlet dolls, fan-club pennants and
+    glossy publicity photos, and a drinking glass pressed upside down against the shared wall. Pink curtains, a
+    hooked rug and rain on the window. Unpeopled, warm and nosy.
