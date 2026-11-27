@@ -155,7 +155,7 @@ tasks:
   - id: t-005
     milestone: m2
     title: "Implement enemy interaction, held objects and powerup systems"
-    status: claimed
+    status: review
     depends_on: [t-003]
     passes: 0
     stakes: reversible
@@ -187,7 +187,9 @@ tasks:
       kind_robots#5980 merged at 9a5a07ae; exact-head 2dfa6ef5 returned twelve successful implementation workflows and successful branch janitor. Mounted small-foe rewards and occlusion regressions shipped. Partial scope: scale plates, authored water courses and painted companion/prop acceptance remain. Production deployment unverified.
 
       kind_robots#5995 merged at 13b29666; all 17 exact-head checks on a549038f passed (autofix skipped). Scale plates (_) and sluice gates (Z): Ballast Boots hold a plate only while she stands on it, a parked Gurgle holds it for good, sluices lift while every plate is down and never drop onto her; both glyphs in the Maker; real-input regression verifyCabinetSavePlumberScalePlates runs in the Maker contract workflow. Partial scope: authored water courses and campaign plate placement, painted companion/plate/sluice props remain. Pre-existing: verifyCabinetSavePlumberGurgle fails locally at 'dry mount can sip nearby water', also at 2dfa6ef5 (manual soak only); needs separate follow-up. Production deployment unverified.
-    updated: '2026-11-27T21:17:00Z'
+
+      App branch worker/save-the-plumber-t-005-water-regression-3d7c91 at 29838fa2b13d1cc07a03b820a3ae5d855baa36f7 fixes the documented dry Gurgle sip regression: check the exposed waterline instead of tracing into the middle of a water tile through the intervening ground. Mirrored geometric probe confirmed both clear paths and wall occlusion. Add the existing complete companion replay to Maker contract CI. Runtime CI pending. Partial scope: authored water courses and campaign scale-plate placement, painted art acceptance remain.
+    updated: '2026-11-27T21:20:00Z'
     owner: worker
     claimed_by: plumber-water-regression-20261127T2117Z-3d7c91
     claimed_at: '2026-11-27T21:17:00Z'
@@ -424,11 +426,11 @@ tasks:
   - id: t-021
     milestone: m6
     title: "Gen-2 World 1: re-author Bluebell Pipeworks as a full SMB3/SMW-class world"
-    status: review
+    status: ready
     depends_on: [t-002, t-011, t-020]
     passes: 0
     stakes: reversible
-    updated: '2026-11-27T10:55:00Z'
+    updated: '2026-11-27T21:16:00Z'
     note: |-
       Build World 1 to the GEN2-WORLDS.md graph: 6-9 nodes including a fortress, a Hush House, the first Valve Chapel and at least one secret exit, each level 3-6 minutes with sub-areas and a real secret. Wire the GEN2-ROUND-1 overworld plate and far-sky plate. Record first-clear times. This is the agent-verified production template for Worlds 2-8; human verdict is not a prerequisite. Completion checkpoints: 1-1, 1-2, 1-h and cottage, 1-3 and chapel, 1-f including Foreman Flange, 1-4 and 1-castle. Verify each authored beat, original art and route timing against GEN2-WORLDS.md.
 
@@ -461,9 +463,8 @@ tasks:
       PR kind_robots#5961 merged at 3b02772b; all ten implementation workflows and branch janitor succeeded on b56b2601. Sluicegate inspection room and actual-input traversal regression delivered. Remaining Wildwater, Gear, original art and course timing/acceptance.
 
       App branch worker/save-the-plumber-t-021-wildwater-f94e12 at e72bc4c7791276e789f87e233d4f8d046afcacdb adds a Golden Gear in the optional dam inspection room, distinct 1-sluice save/album identity, map completion marker, gear totals and ending eligibility, with real-input pickup and reload assertions. Partial scope: intended falling-water route, Wildwater, original art and full timing acceptance remain. Runtime CI pending.
-    owner: worker
-    claimed_by: plumber-wildwater-20261127T1052Z-f94e12
-    claimed_at: '2026-11-27T10:52:00Z'
+
+      Verified kind_robots#5986 merged at 45ff1ae1; all ten reported workflows completed successfully on exact head 366be131. Sluicegate inspection chamber Gear, distinct persistence, map and collection counts and ending eligibility delivered. Partial scope: Wildwater, remaining authored challenges, original art and timing acceptance. Production deployment unverified.
   - id: t-022
     milestone: m6
     title: "Gen-2 Worlds 2-4: Tideglass Marina, Lantern Orchard, Clockwork Fair"

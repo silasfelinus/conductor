@@ -82,12 +82,12 @@ tasks:
     direction, and the offline-at-runtime rule.
 - id: t-067
   title: 'Main-game standard: audit and close the gaps for The Ruler Is Hooked'
-  status: review
+  status: ready
   milestone: m6
   stakes: reversible
   passes: 0
   depends_on: []
-  updated: '2026-11-27T10:54:00Z'
+  updated: '2026-11-27T21:15:00Z'
   note: |-
     Silas 2026-11-11 PT, in session: "Our games should all have a base standard of quality ... We want our main games to have 12 plus achievements." Standard: docs/agents/main-game-standard.md; CONTROL.md global overview.
 
@@ -144,9 +144,8 @@ tasks:
     Verified Kind Robots #5960 merged at 01a6fd610eaaa4cd5652df9dde17975fbb278dbe. All eight exact-head PR workflows and branch janitor succeeded on c59c0464108bf70cbf86acdae7794933538e584e (Ruler Hooked 45947491289, Contract Tests 45947491404, janitor 45951410751). Audio recovery delivered; actual audible playback and authenticated cross-device evidence remain. Return ready; no deployment claimed.
 
     Kind Robots 708b16913031412229459de575b21f93d5f147e3 repairs failed initial account archive reads and uncertain writes: bounded retries at 1.5 and 31 seconds, invalid revisions rejected, and a fresh revision read before retrying a write. Committed store logic executed with mocked network, state and timers (11 assertions passed); added retry schedule regression assertions to console.selftest.ts. CI and authenticated live-device verification pending; partial t-067.
-  owner: worker
-  claimed_by: 20261127T1052Z-ruler-t067-sync-89dd31
-  claimed_at: '2026-11-27T10:52:00Z'
+
+    Kind Robots #5985 squash-merged e233f75f533ccf86f400c581e2f047db97bf7129. All eight exact-head workflows on 2dbdf7825a48437dfeaf7ca929f3fbd8abce62b2 completed successfully, including Ruler Hooked 45986384865 and Contract Tests 45986384921. Archive retry recovery delivered; actual authenticated cross-device and audible playback evidence remain. Return ready; no deployment claimed.
 
 - id: t-068
   title: 'The Ruler Is Hooked achievement upgrade: 12 or more live achievements'
@@ -930,7 +929,7 @@ tasks:
 - id: t-048
   milestone: m6
   title: Fishing first-catch fairness, input edge cases and shop/economy adversarial suite
-  status: claimed
+  status: review
   stakes: reversible
   passes: 0
   note: |-
@@ -973,7 +972,9 @@ tasks:
     Kind Robots #5976 merged 2c13168f69dccbe8876cf0140e3e6582a3d9eae3; all eight exact-head workflows on 5afe252563c649f54e5c312f1e312d3a47bdb274 succeeded, including Ruler Hooked 45982894351 and Contract Tests 45982894213. Branch janitor 45985105604 passed. Gamepad edge-state repair and fourteen input regressions delivered; remaining actual device input evidence is shared with t-061/t-050. No deployment claimed.
 
     Kind Robots #5976 merged 2c13168f69dccbe8876cf0140e3e6582a3d9eae3; all eight latest-head workflows and branch janitor passed on 5afe252563c649f54e5c312f1e312d3a47bdb274 (Ruler Hooked 45982894351, TypeScript 45982894250, Contract Tests 45982894213, janitor 45985105604). Gamepad disconnect, controller switch and opening input regression tests delivered. Remaining real-device verification shared with t-061/t-050; return ready. No deployment claimed.
-  updated: '2026-11-27T21:18:00Z'
+
+    Kind Robots c45d99433e6e2fa45fcd1515c81360aa5bcbfd62 fixes Learning mode's nonfunctional advertised controller Answer action. Directional navigation and confirm now operate visible enabled quiz controls, including review/continue and retry, without selecting an answer on first focus. Eleven committed helper regression assertions passed in an isolated mocked-DOM JavaScript runner. Full CI and real device verification pending; partial t-048.
+  updated: '2026-11-27T21:20:00Z'
   owner: worker
   claimed_by: 20261127T2118Z-ruler-t048-quizpad-a7e642
   claimed_at: '2026-11-27T21:18:00Z'
