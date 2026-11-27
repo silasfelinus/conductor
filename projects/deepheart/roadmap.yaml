@@ -192,7 +192,7 @@ tasks:
   - id: t-013
     milestone: m4
     title: "Adversarial seeded playthroughs and 390/768/1440 px checks"
-    status: waiting
+    status: cancelled
     depends_on: [t-006, t-015, t-016, t-017, t-018, t-012]
     owner: null
     passes: 0
@@ -200,6 +200,13 @@ tasks:
     note: |-
       Exploit, neglect and refusal runs; saves survive reload; no page overflow; the hand,
       builder and fight deck usable on a phone.
+
+      Silas, 2026-11-27 PT: t-013 and t-014 are the same post-human-gate playtest requirement;
+      once the art is done, Deepheart is done. Adversarial runs and phone/tablet/desktop
+      checks belong to human playtesting, not the build roadmap (hourly-playtest-
+      advancement.md Graduation step 1). Existing CI seeded delves, all-ending traces and save
+      tests remain the agent evidence.
+    updated: '2026-11-27T23:37:51Z'
   - id: t-014
     milestone: m4
     title: "Playtest graduation: readiness gate, status playtest at normal priority, flag the hub"
