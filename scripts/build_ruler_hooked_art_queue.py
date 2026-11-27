@@ -1714,6 +1714,166 @@ CONSOLE_EVENTS = [
         f"Utter peace, deserted and quiet. {TIME_MOD['dawn']}",
         [],
     ),
+    (
+        "nursery-reeds",
+        "The Nursery Reed Parade",
+        "Three reed-keepers kneeling in shallow turquoise water, planting "
+        "upright green reed shoots in rows, woven baskets of seedlings on the "
+        "muddy bank, small golden koi visible beneath the water, pink morning "
+        "light",
+        [],
+    ),
+    (
+        "orchard-basket",
+        "Robin and Ash's Floating Orchard",
+        "Two orchard workers in bright tunics on a low wooden dock lower a "
+        "broad wicker basket of red and yellow apples into the lake, a spotted "
+        "perch beneath the ripples, flowering apple trees on the opposite bank",
+        [],
+    ),
+    (
+        "bridge-watch",
+        "A Bridge Made of Promises",
+        "Three carpenters in rolled sleeves replace wooden planks on a narrow "
+        "arched footbridge, hammers and a stack of fresh boards at their feet, "
+        "a broad silver sturgeon visible below the bridge in clear water, "
+        "strong afternoon sunlight",
+        [],
+    ),
+    (
+        "quill-correction",
+        "A Correction from Quill",
+        "A royal messenger in a violet coat pins a large clean cream sheet to "
+        "a wooden noticeboard beside the castle gate, villagers in colorful "
+        "clothing watching with relieved faces, small wax seals, bright "
+        "morning light",
+        [],
+    ),
+    (
+        "fen-seventeen-encores",
+        "Fen's Seventeenth Encore",
+        "A busy tavern with a lute player on a raised wooden platform, "
+        "villagers clapping and laughing at long tables, a tipped open coin "
+        "pouch and tankards on the nearest table, magenta lanterns and amber "
+        "light",
+        [],
+    ),
+    (
+        "mossy-moon",
+        "Mossy's Moonwater",
+        "A gloved gardener pours glowing pale-blue liquid from a round glass "
+        "bottle onto a row of enormous turnips with violet leaves, low stone "
+        "garden wall, full moon in a deep indigo sky, two astonished druids "
+        "nearby",
+        [],
+    ),
+    (
+        "cordelia-lanterns",
+        "Cordelia's Lantern Drill",
+        "A line of castle guards in blue tunics holding colored glass lanterns "
+        "above their heads in a cobbled alley, one raises an emerald lantern "
+        "and another a red lantern, townspeople watching from open doorways at "
+        "twilight",
+        [],
+    ),
+    (
+        "gristle-abacus",
+        "Gristle's Emergency Abacus",
+        "A close view of a large wooden abacus with six brass coins arranged "
+        "in a row beside it, closed ledgers stacked on a counting desk, two "
+        "clerks in plain brown coats looking at the coins, warm yellow desk "
+        "lamp",
+        [],
+    ),
+    (
+        "vex-millwheel",
+        "Vex's Very Efficient Wheel",
+        "A wooden waterwheel raised just above the turquoise river, brass "
+        "gears and a taut drive belt attached to a small mill, two merchants "
+        "examining the mechanism on a grassy bank, flattened reeds below, "
+        "bright coral and cyan daylight",
+        [],
+    ),
+    (
+        "bakers-truce",
+        "The Bakers' Flour Truce",
+        "Two flour-covered bakers with rolled sleeves shake hands across a low "
+        "market table piled with fresh loaves, two rolling pins resting beside "
+        "an open sack of flour, smiling villagers around them, warm yellow "
+        "awnings",
+        [],
+    ),
+    (
+        "ink-delivery",
+        "The Royal Ink Shipment",
+        "A wooden delivery crate open on a castle writing desk, round glass "
+        "jars of bright red, blue and emerald ink nestled in straw, an "
+        "oversized quill and blank parchment beside the crate, pink and blue "
+        "light from a tall window",
+        [],
+    ),
+    (
+        "crown-gone-missing",
+        "The Missing Crown",
+        "An open round biscuit tin on a castle kitchen counter, a small "
+        "jeweled gold crown nestled among golden biscuits, a cook in an apron "
+        "and a uniformed guard peering into the tin, a new brass padlock on "
+        "the counter",
+        [],
+    ),
+    (
+        "mooring-rations",
+        "Biscuit Crumbs at the Mooring",
+        "Boat workers sitting on a lakeside pier crumble biscuits into clear "
+        "blue water, a school of silvery mullet gathering beneath floating "
+        "crumbs, moored wooden boats with coiled ropes, pink sunrise reflected "
+        "on the surface",
+        [],
+    ),
+    (
+        "border-bells",
+        "The Bell Beneath the Ferry",
+        "A wooden ferry with a ferryman leaning over its rail, clear turquoise "
+        "water revealing a broad sturgeon and a small bronze bell among "
+        "submerged stones beneath the hull, a striped ferry shelter on the "
+        "distant shore",
+        [],
+    ),
+    (
+        "lamplighter",
+        "A Light in the Fog",
+        "A lamplighter holding a bright amber lantern on a narrow foggy dock, "
+        "another amber light glowing from a large fish just beneath the dark "
+        "teal water, violet fog and distant roofs, wide view at dusk",
+        [],
+    ),
+    (
+        "rainbow-bunting",
+        "Bunting for Every Weather",
+        "Villagers in bright coats stretch strings of red, orange, yellow, "
+        "green, blue and violet fabric pennants across a village square, rain "
+        "droplets on the cloth, puddles reflecting the colors, sunlit clouds "
+        "behind the rooftops",
+        [],
+    ),
+    (
+        "dry-bank",
+        "The Exposed Lakebed",
+        "Two shore workers kneel beside a receding lake, laying smooth stones "
+        "and bundles of reeds along cracked mud, old iron anchors exposed in "
+        "the foreground, ducks standing on the remaining waterline, strong "
+        "afternoon light",
+        [],
+    ),
+    (
+        "ferry-rest",
+        "An Hour Without a Bell",
+        "A ferry crew in simple bright tunics rests on wooden benches beside a "
+        "moored boat, one worker sleeps against a coil of rope, another "
+        "repairs a paddle, an empty brass bell hangs above the quiet landing, "
+        "pink sunset",
+        [],
+    ),
 ]
 
 STILL_LIFE = (

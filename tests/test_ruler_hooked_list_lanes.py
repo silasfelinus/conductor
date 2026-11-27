@@ -138,6 +138,12 @@ CONSOLE_PATHS = (
         "market-day", "heron-festival", "druid-procession", "tax-audit",
         "guard-parade", "soft-rain", "bards-contest", "duck-census",
         "lost-boot", "quiet-day",
+        "nursery-reeds", "orchard-basket", "bridge-watch",
+        "quill-correction", "fen-seventeen-encores", "mossy-moon",
+        "cordelia-lanterns", "gristle-abacus", "vex-millwheel",
+        "bakers-truce", "ink-delivery", "crown-gone-missing",
+        "mooring-rations", "border-bells", "lamplighter",
+        "rainbow-bunting", "dry-bank", "ferry-rest",
     )]
     + [f"gear/{k}" for k in (
         "reinforced-rod", "silk-line", "balanced-lure", "riverbank-market",
@@ -182,3 +188,14 @@ def test_console_events_stage_named_cast_from_bundle():
 def test_console_event_with_unknown_cast_fails_loudly():
     with pytest.raises(SystemExit):
         _real_console([c for c in FAKE_CAST if c["slug"] != "bard-fen"])
+
+
+def test_all_console_event_prompts_are_staged():
+    entries = [e for e in _real_console(FAKE_CAST) if "/events/" in e["image_path"]]
+    # The hermetic fixture substitutes ART_PROMPTS; read the actual tracked queue.
+    from pathlib import Path
+
+    rows = bruq.staged_rows(Path("projects/art-prompts.yaml").read_text(encoding="utf-8"))
+    assert len(entries) == 28
+    assert {e["id"] for e in entries} <= set(rows)
+    assert bruq.stale_rows(entries, rows) == []
