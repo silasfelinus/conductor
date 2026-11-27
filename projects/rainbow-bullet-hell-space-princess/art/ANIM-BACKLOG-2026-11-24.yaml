@@ -2397,6 +2397,7 @@ subjects:
       status: DONE
       art_image_id: 280889
 - key: idle-prism-lance-v2
+  verdict: 'reject: 2026-11-27 PT review, second take; on model but near-static, no hover and the thruster barely pulses (keyed motion 3.8 against 67.6 for the kept guardian-salvager-v3 on the same scale); retake as v3 with a bigger hover and bank'
   lane: wan-mp4
   entity: sprite-animation
   title: prism-lance idle loop
@@ -3717,6 +3718,7 @@ subjects:
       status: DONE
       art_image_id: 280892
 - key: idle-guardian-urchin-v3
+  verdict: 'reject: 2026-11-27 PT review, third take; it finally moves (motion 26.2) but as one sudden leap mid-loop, and on the leap the back spikes dissolve into a pink and green scribble above the shell that breaks the sticker outline; final retake as v4 with the spikes held solid and a low squat-and-stomp in place'
   lane: wan-mp4
   entity: sprite-animation
   title: guardian-urchin idle loop
@@ -3740,6 +3742,7 @@ subjects:
       status: DONE
       art_image_id: 280893
 - key: idle-comet-crown-v3
+  verdict: 'reject: 2026-11-27 PT review, second take; it moves (motion 54.1) but morphs off model, the swept wings fold into a different jet with a tall tail fin mid-loop (silhouette coverage swings 0.15 to 0.25); final retake as v4 with the wing shape locked'
   lane: wan-mp4
   entity: sprite-animation
   title: comet-crown idle loop
@@ -3762,6 +3765,7 @@ subjects:
       status: DONE
       art_image_id: 280894
 - key: idle-halo-fin-v3
+  verdict: 'keep: 2026-11-27 PT review, the saucer bobs and rocks its rim side to side, dome and outline on model (keyed motion 74.7 against 67.6 for the kept guardian-salvager-v3); rim lights do not visibly chase; eight cells keyed with despill on one shared crop, sized to the 204x114 still, shipped as doodle/anim/halo-fin-idle (kind_robots#5994)'
   lane: wan-mp4
   entity: sprite-animation
   title: halo-fin idle loop
@@ -3853,3 +3857,54 @@ subjects:
     wan-mp4:
       status: PENDING
       art_image_id: null
+- key: idle-prism-lance-v3
+  lane: wan-mp4
+  entity: sprite-animation
+  title: prism-lance idle loop
+  asset: rainbow-princess-art/doodle/anim/prism-lance-idle
+  size: 832x464
+  seed: 1127601
+  source_url: /rainbow-princess-art/doodle/ships/prism-lance.webp
+  last_image_id: /rainbow-princess-art/doodle/ships/prism-lance.webp
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: The whole navy delta jet rises high and dips low in a big slow hover, banking its wings clearly one
+    way then the other, while its gold thruster flares long and short and its white wing edges flash. Locked view,
+    exact outline and the same navy and gold in every frame, flat lime-green backdrop all around, glossy airbrushed
+    doodle.
+- key: idle-guardian-urchin-v4
+  lane: wan-mp4
+  entity: sprite-animation
+  title: guardian-urchin idle loop
+  asset: rainbow-princess-art/doodle/anim/guardian-urchin-idle
+  size: 832x752
+  seed: 1127602
+  source_url: /rainbow-princess-art/doodle/enemies/guardian-urchin.webp
+  last_image_id: /rainbow-princess-art/doodle/enemies/guardian-urchin.webp
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: The white armoured beetle walker stays on the ground and rocks its heavy body from side to side,
+    stamping its stubby feet in place one after another, its one yellow eye glowing brighter and dimmer and the
+    yellow flash at its side pulsing. Every purple spike stays solid and sharp. Locked view, exact outline and
+    colours in every frame, flat lime-green backdrop all around, glossy airbrushed doodle.
+- key: idle-comet-crown-v4
+  lane: wan-mp4
+  entity: sprite-animation
+  title: comet-crown idle loop
+  asset: rainbow-princess-art/doodle/anim/comet-crown-idle
+  size: 832x720
+  seed: 1127603
+  source_url: /rainbow-princess-art/doodle/ships/comet-crown.webp
+  last_image_id: /rainbow-princess-art/doodle/ships/comet-crown.webp
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: The lavender swept-wing jet floats up and down in a slow steady bob and tilts gently nose up then
+    nose down, a bright pink engine flame pulsing long and short out of its tail. Its two swept wings keep the exact
+    same shape and size in every frame. Locked view, exact outline and colours, flat lime-green backdrop all
+    around, glossy airbrushed doodle.
