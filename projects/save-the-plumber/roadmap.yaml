@@ -156,7 +156,7 @@ tasks:
   - id: t-005
     milestone: m2
     title: "Implement enemy interaction, held objects and powerup systems"
-    status: ready
+    status: claimed
     depends_on: [t-003]
     passes: 0
     stakes: reversible
@@ -178,7 +178,10 @@ tasks:
       Mounted Wrench now slurps one reachable power/heart pickup or replenishes the water hop charge from nearby water. Reuses standard pickup collection, prioritizes rollers, preserves course water and blocks supplies behind walls. Added real-input supply/occlusion regressions and control guide. Branch worker/save-the-plumber-t-005-sip-e92f at f33a3441c58282d6fa6dce4eb3c2fe8bfadaa0a0. CI pending; scale plates, further small enemies, cross-course persistence, art and campaign water course acceptance remain.
 
       PR kind_robots#5965 merged at 16f8b926; twelve implementation workflows and all relevant individual checks passed on 61a86938. Gurgle supply slurp and wall occlusion delivered. Remaining other small enemies, scale plates, inter-course persistence, painted art and water-course acceptance. Production deployment unverified.
-    updated: '2026-11-27T07:15:00Z'
+    updated: '2026-11-27T08:53:00Z'
+    owner: worker
+    claimed_by: plumber-gurgle-20261127T0853Z-f5d81a
+    claimed_at: '2026-11-27T08:53:00Z'
   - id: t-006
     milestone: m3
     title: "Build World 1: four complete garden/pipeworks levels and boss"
