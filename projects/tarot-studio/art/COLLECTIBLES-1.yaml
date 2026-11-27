@@ -4,11 +4,12 @@
 # 100 collectible cards and 12 unlockable card backs. Subject keys
 # are catalog item keys; POST /api/collectibles/<set>/art-sync links each DONE
 # job to its item by request key. Generated art is pre-approved (AGENTS.md).
-# auto_submit: true. Queued is not rendered; rendered is not linked.
+# Public ArtImages: the scrapbook shows them to everyone. auto_submit: true.
+# Queued is not rendered; rendered is not linked.
 round: tarot-studio-collectibles-1
 project_slug: tarot-studio
 designer: "Kind Tarot Collection art bay"
-is_public: false
+is_public: true
 is_mature: false
 cast_loras: false
 auto_submit: true
