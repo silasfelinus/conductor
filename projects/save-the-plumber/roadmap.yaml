@@ -443,14 +443,14 @@ tasks:
   - id: t-021
     milestone: m6
     title: "Gen-2 World 1: re-author Bluebell Pipeworks as a full SMB3/SMW-class world"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 20261127T054108Z-plumber-t021-f7c39a62
     claimed_at: '2026-11-27T05:41:08Z'
     depends_on: [t-002, t-011, t-020]
     passes: 0
     stakes: reversible
-    updated: '2026-11-27T05:41:08Z'
+    updated: '2026-11-27T05:43:00Z'
     note: |-
       Build World 1 to the GEN2-WORLDS.md graph: 6-9 nodes including a fortress, a Hush House, the first Valve Chapel and at least one secret exit, each level 3-6 minutes with sub-areas and a real secret. Wire the GEN2-ROUND-1 overworld plate and far-sky plate. Record first-clear times. This is the agent-verified production template for Worlds 2-8; human verdict is not a prerequisite. Completion checkpoints: 1-1, 1-2, 1-h and cottage, 1-3 and chapel, 1-f including Foreman Flange, 1-4 and 1-castle. Verify each authored beat, original art and route timing against GEN2-WORLDS.md.
 
@@ -477,6 +477,8 @@ tasks:
       Added Buried Meter's optional pipe-linked meter shaft, lower token alcove and return ladder. Geometry checked for collisions with existing authored cells and rectangular rows; real-input regression enters, descends, collects, climbs and returns without opening the chapel. Branch worker/save-the-plumber-t-021-meter-7c4ea9 head 88b218744d129754f929cd5b7688798fdcfa9fb7. CI not yet run; partial scope, Wildwater and remaining course acceptance still required.
 
       Verified kind_robots#5946 merged at 3013022d after all ten implementation workflows and branch janitor passed on 88b21874. Buried Meter optional shaft and traversal regression shipped. Wildwater, remaining authored beats, delivered art and full timing acceptance remain. Production deployment unverified.
+
+      Authored Sluicegate Steps optional dam inspection room with paired pipes, ladder descent and token alcove. Added input-driven regression for arrival, camera room, collection, climb and return before the existing checkpoint/clear test. Static geometry probe passed; runtime CI pending. App branch worker/save-the-plumber-t-021-dam-f7c39a62 at 078f2085e35405543020bc6a6a3dc48495d93c8d. Partial World 1 scope; Wildwater, Gear and full timing/art acceptance remain.
   - id: t-022
     milestone: m6
     title: "Gen-2 Worlds 2-4: Tideglass Marina, Lantern Orchard, Clockwork Fair"
