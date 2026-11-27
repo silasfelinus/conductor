@@ -180,10 +180,7 @@ tasks:
   - id: t-012
     milestone: m4
     title: "Every picture rendered, delivered, URL-verified and wired (set src / RENDERED_ART)"
-    status: review
-    owner: worker
-    claimed_by: 2026-11-27T110800Z-deepheart-t012-8db6f1a4
-    claimed_at: '2026-11-27T11:08:00Z'
+    status: ready
     depends_on: t-011
     passes: 0
     stakes: reversible
@@ -207,7 +204,9 @@ tasks:
       Kind Robots #5984 merged fd7c854e after all seven implementation workflows and branch janitor passed (Playbook Kit 45985738848). All 95 distinct scrapbook art sources pass coverage; full-party job 77563 / ArtImage 280883 wired. Return ready solely for actual delivery, visual curation and remaining maturity verification.
 
       Kind Robots commit 384ee946 adds a read-only Deepheart Live Media Audit workflow, restricted to trusted main, with existing CI API authentication scoped to the audit step and fixed production origin. Automatically runs after relevant main changes; no new credentials or production writes. Live audit still needs successful execution and pixel/maturity curation before closure.
-    updated: '2026-11-27T11:10:00Z'
+
+      Kind Robots #5987 merged e19b17ce. Main-only media audit is integrated; live run evidence is still unavailable through the PR-only workflow listing. Return ready for delivery and curation, not done.
+    updated: '2026-11-27T18:01:38Z'
   - id: t-013
     milestone: m4
     title: "Adversarial seeded playthroughs and 390/768/1440 px checks"
