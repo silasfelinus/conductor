@@ -83,19 +83,18 @@ tasks:
       Full history: projects/every-villain-tactics/HISTORY.md#t-001
   - id: t-025
     title: 'Main-game standard: audit and close the gaps for Every Villain Tactics'
-    status: review
-    owner: worker
-    claimed_by: 20261127T041700Z-evt-achievable-529e
-    claimed_at: '2026-11-27T04:16:53.382Z'
+    status: ready
     milestone: m4
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-27T04:17:42.338Z'
+    updated: '2026-11-27T05:32:00Z'
     note: |-
       Main-game standard: start with STANDARD-AUDIT-2026-11-12.md and docs/agents/main-game-standard.md. Verify title/settings, persistent saves, 12+ achievements, scrapbook, painted endings, customization and three replay hooks. Historical #5626/#5631 merged; latter b15a4afe, eight green checks, named captain portraits ArtImages 277789/277793/277797 (ArtJobs 74396/74400/74404). Twelve DONE combat-pose ArtImages 278823–278834 and twelve telegraphs have an authored atlas integration slice; verify merge and runtime rather than infer approval. Remaining: re-audit all standard rows, attach/verify outstanding original art, rendered QA. Coordinate with t-018/t-012 and avoid duplicating those tasks. Full prior note: ROADMAP-HISTORY-2026-11-26.md#t-025.
 
       Kind Robots commit 0ad5ac1000d53c5cf2ff65b2a93ba72a392fa173 repairs the unreachable Everyone's Villain achievement: use the actual HERO/VILLAIN launcher roles and require First Bell victories; legacy supporting-role results cannot substitute. Update obsolete eight-stage award copy without changing earned codes. Extracted actual award condition passed 48 assertions; permanent regression added, full CI pending. Partial t-025: original art and full-game/device acceptance remain.
+
+      Kind Robots #5947 merged 9917625aaee36b75c2e5beb7dc95beb269edeaa9; all seven substantive workflows completed successfully on 228acced; branch janitor cancelled, cleanup not verified. Everyone's Villain now requires actual hero and villain First Bell wins. Partial: original art and full-game/device standard acceptance remain.
   - id: t-026
     title: 'Every Villain Tactics achievement upgrade: 12 or more live achievements'
     status: done
@@ -227,10 +226,7 @@ tasks:
   - id: t-009
     milestone: m3
     title: "Author 48 bespoke six-level fixed-cast personal routes"
-    status: review
-    owner: worker
-    claimed_by: 20261127T043400Z-evt-science-7d3b1c
-    claimed_at: '2026-11-27T04:34:00Z'
+    status: ready
     depends_on: t-008
     passes: 0
     stakes: reversible
@@ -266,7 +262,9 @@ tasks:
       Kind Robots #5941 merged as 71d9d6452c45e30f84549ca46e75822a0e21307f. Exact head c97ce060fbcca30b5ef8db86776bbcdc0b7c4052: seven completed successful PR workflows, all four contract shards and verifiers green. All 48 fixed supporting casts now fielded from First Bell through finale, preserving version 1 and unmarked saves. Partial scope: bespoke triggered and closing mission conversations and actual full-run acceptance remain.
 
       Kind Robots commit c050c15e1fda1c92143750bb15ccdef3bcde6691 adds 88 authored Science Wing lines (11 nodes for each of the eight Accident identities) across both allegiances, decision, rescue/evidence, mercy and closing scenes. New fixed-cast campaign presentation binds personal statements to the lead and available squad support; no change to scene graph, effects, save format or legacy/one-shot/editor behavior. Extracted actual candidate selector and stage script passed 1905 assertions; permanent full-runtime coverage added. CI pending. Partial t-009: other origins and chapters, remaining bespoke nodes and full-run acceptance remain.
-    updated: '2026-11-27T04:36:00Z'
+
+      Kind Robots #5950 merged 13155aedad5ff7a2aa3a06ded2cb5de13cbf1b28; seven substantive workflows and janitor passed on d54cf1a. Eight Accident leads have 88 bespoke Science Wing lines. Partial: other origins and chapters, remaining bespoke nodes and full-run acceptance.
+    updated: '2026-11-27T05:32:00Z'
 
   - id: t-010
     milestone: m3
