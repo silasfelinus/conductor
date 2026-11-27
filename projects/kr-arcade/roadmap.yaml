@@ -1842,11 +1842,9 @@ tasks:
   - id: t-110
     milestone: m8
     title: "Repair Rampage depth slice 1: A city with something in it"
-    status: review
-    owner: worker
-    claimed_by: 20261122T203555Z-kr-arcade-t110-tools-a9e3
-    claimed_at: '2026-11-22T20:35:55.781Z'
-    updated: '2026-11-22T20:39:27.437Z'
+    status: ready
+    owner: null
+    updated: '2026-11-27T07:00:58Z'
     passes: 0
     stakes: reversible
     note: |-
@@ -1869,6 +1867,12 @@ tasks:
       Merged powered rooftops, four telegraphed hazards and seeded attract pilot in kind_robots#5591 (33fd1ab0a9ad75335a2d495cdc9a2c8a9476ab6f); all nine latest-head GitHub Actions checks passed. Partial slice 1; toolbox abilities, reserves, missing window surprises and music remain.
 
       Partial Repair Rampage slice 1: six usable toolbox powers, three backup robots with oil-break recovery, electricity windows, elevator column bonus, original chiptune loop and deterministic gameplay tests. Implementation PR opening; CI and browser verification required before merge. Remaining window scenarios and full campaign work remain open.
+
+      2026-11-26 PT, Silas-directed finite-roadmap clearing: verified
+      https://github.com/silasfelinus/kind_robots/pull/5594 merged as partial scope. Complete
+      slice-one window interactions and verify tools, threats and recovery before advancing.
+      Returned to ready; no human approval or deployment inferred.
+    implementation_pr: 'silasfelinus/kind_robots#5594'
 
   - id: t-111
     milestone: m8
