@@ -145,7 +145,7 @@ tasks:
   - id: t-005
     milestone: m2
     title: "Implement enemy interaction, held objects and powerup systems"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 2026-11-27T004400Z-plumber-t005-kick-46bc
     claimed_at: '2026-11-27T00:44:00Z'
@@ -154,6 +154,8 @@ tasks:
     stakes: reversible
     note: |-
       Enemy interactions, meaningful movement powers and traversal: retain patrol/chase/ambush/flyer AI, held/throwable enemies and objects, moving platforms, slopes, ladders/lifts, switches/destructibles, damage/i-frames, lives/continues, checkpoint and softlock tests. GEN2-STANDARD.md section 4 requires 5–7 powers, reserve, map inventory and original ride companion. Recorded merges #3758, #4804, #5615, #5617, #5633, #5806, #5833, #5840, #5850, #5886, #5899 and #5910 cover six powers (Springstep, Bottled Storm, Pocket Lift, Sailwing, Ballast Boots, Tidecoat), ladder/key/ramp, carry/throw Rivet Rollers, reserve, map inventory/save isolation and regressions. Latest receipt #5910 at 835f9aca: 11 implementation workflows plus janitor passed. Remaining: ride companion, authored water courses and campaign traversal placement/reachability, painted Ballast/Tidecoat and other pending power props; verify full interaction and softlock regressions. Do not resubmit existing art requests (#8035/#8062) without checking delivery. Production deployment unverified. Full prior note: ROADMAP-HISTORY-2026-11-26.md#t-005.
+
+      Implemented Tidecoat submerged B-button kick burst, bounded cooldown, reverse cancellation and wall-safe collision. Added all-roster, both-direction replay, cooldown, wall and dry-land regressions. App branch worker/save-the-plumber-t-005-kick-46bc head ca88fed7; exact-head CI pending. Partial scope; Gurgle and authored water courses remain.
     updated: '2026-11-27T00:44:00Z'
   - id: t-006
     milestone: m3
