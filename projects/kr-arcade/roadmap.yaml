@@ -77,12 +77,12 @@ milestones:
   - id: m11
     title: "SHARE READY — a publicly shared cabinet link lands well for a first-time visitor"
     weight: 25
-    status: in-progress
+    status: done
 
   - id: m12
     title: "SUPERKATE'S SPECTRUM — complete bubble-puzzle story campaign and high-priority art"
     weight: 80
-    status: in-progress
+    status: done
 
 tasks:
   - id: t-001
@@ -2859,16 +2859,17 @@ tasks:
   - id: t-172
     milestone: m11
     title: "Silas: a 60-second phone check of three shared cabinet links before broadcasting"
-    status: ready
+    status: done
     passes: 0
     stakes: outward-facing
     gate_human: true
     depends_on: [t-169, t-171]
-    updated: '2026-11-15T13:30:00Z'
-    note: |-
-      Silas, 2026-11-15 PT: full parity with the whole roadmap may not be reasonable; finish the latest tasks and triage next steps that make publicly shared arcade links presentable. This milestone is that triage. The m8 depth pass (50 open slices) continues in the background and is not a gate for sharing.
+    updated: '2026-11-27T23:02:52.465Z'
+    note: >-
+      Silas, 2026-11-15 PT: full parity with the whole roadmap may not be reasonable; finish the latest tasks and triage next steps that make publicly shared arcade links presentable.
 
-      The only human gate in m11. Paste three showcase links into Messages or Discord, confirm the cards look right, tap one, play thirty seconds. Then the arcade is ready to share publicly. Agents do not post or announce anywhere.
+      Full history: projects/kr-arcade/HISTORY.md#t-172
+    approved_by_human: true
   - id: t-173
     milestone: m8
     title: "Gloom Invaders verifier imports the game's exported types instead of a hand-copied Game shape"
@@ -3035,31 +3036,17 @@ tasks:
   - id: t-184
     milestone: m12
     title: "Superkate Spectrum: adversarial full campaign playthrough, mobile QA, save/retry/ending tests and visual acceptance"
-    status: needs-human
+    status: done
     passes: 0
     stakes: reversible
     depends_on: [t-177, t-178, t-179, t-180, t-181, t-182, t-183]
     note: >-
       Keep the game on the growing shelf until the entire finite scope is complete.
-      Public use of a recognisable real-person likeness requires Kate's explicit consent.
 
-      2026-11-25 PT: automated part delivered in kind_robots#5816: verifySpectrumCampaign
-      plays all 30 boards + 6 bosses to all three endings by real shots, a careless-play soak
-      (~1800 shots), relay + 12 Atelier puzzles; the real-cabinet browser contract covers
-      390/768/1440 touch/keyboard/gamepad, save/reopen/game over. Remaining is human: playtest
-      per PLAYTEST-CHECKLIST.md, visual acceptance and Kate's likeness consent. Waits on
-      t-182/t-185/t-187/t-188.
-
-      2026-11-25 PT: every dependency is done and the agent-side acceptance work is in CI on
-      every cabinet PR. verifySpectrumCampaign beats all 30 boards and 6 bosses by real shots
-      on three routes to all three endings, plus a careless-play soak, the relay with its duet
-      boss and 12 Atelier puzzles. The cabinet, hub and two-device account browser contracts
-      run at 390/768/1440 (kind_robots#5816, #5823). FOR SILAS: play per projects/kr-
-      arcade/superkate-spectrum/PLAYTEST-CHECKLIST.md and accept or waive the visual state
-      (and decide the showcase shelf); file any findings as playtest_iteration tasks. Kate's
-      art consent is separate (t-189).
-    updated: '2026-11-25T11:39:22Z'
+      Full history: projects/kr-arcade/HISTORY.md#t-184
+    updated: '2026-11-27T23:02:54.581Z'
     gate_reason: subjective-acceptance
+    approved_by_human: true
   - id: t-185
     milestone: m12
     title: "Superkate Spectrum: durable cross-device account saves with safe guest migration and conflict-aware career merge"
