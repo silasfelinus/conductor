@@ -914,7 +914,7 @@ tasks:
 - id: t-047
   milestone: m6
   title: Deliver and visually audit all required coronation, fish, NPC, map and ending art
-  status: claimed
+  status: review
   stakes: reversible
   passes: 0
   note: |-
@@ -925,7 +925,9 @@ tasks:
     Conductor commit 4fcf62ecb2c41213905512a2b793bd53b98311f5 extends the canonical console art generator and central queue with 18 missing daily proclamation paintings (28/28 runtime event keys now covered). Added exact path/prompt contract regression; verified 18 new staged rows match the generator, have distinct paths and pending status, and retain existing queue bytes unchanged. CI pending; these are new requests, not delivered ArtJobs. Partial t-047, shared console QA t-057/t-061.
 
     Conductor #8116 merged b21cf0d30e287d4ba9902dba4f46fd7dcb978bcf; all five exact-head workflows passed, including Worker PR CI 45939690752 and Alpha Audit 45939690766. Main queue verified 28 distinct event rows, ten done and 18 pending. Render delivery remains; return ready.
-  updated: '2026-11-27T21:43:22Z'
+
+    Kind Robots 1b2cbd8bf7a177b0dec1d29907172900520757a5 repairs runtime vista candidates using authored region time variants. The Reed Shallows now binds its timeless paintings (ArtJobs 68378-68380); unpainted golden variants are no longer requested and player portraits cannot enter vista candidates. Ran exact committed resolver logic against current canonical queue blob 31ea0cef84c6b411f8926c2c94c0a731b6f3ace4: all 120 region-state-time cases pass and all 52 distinct candidate paintings have done ArtJob receipts. 299 total ledger rows marked done; five missing explicit job IDs; no new requests. Both live media and app probes failed DNS from this environment, so no new visual delivery claim. Full CI pending; partial t-047.
+  updated: '2026-11-27T21:44:31Z'
   owner: worker
   claimed_by: ruler-t047-art-audit-20261127-e91b7f
   claimed_at: '2026-11-27T21:43:22Z'
@@ -933,7 +935,7 @@ tasks:
 - id: t-048
   milestone: m6
   title: Fishing first-catch fairness, input edge cases and shop/economy adversarial suite
-  status: review
+  status: ready
   stakes: reversible
   passes: 0
   note: |-
@@ -978,10 +980,9 @@ tasks:
     Kind Robots #5976 merged 2c13168f69dccbe8876cf0140e3e6582a3d9eae3; all eight latest-head workflows and branch janitor passed on 5afe252563c649f54e5c312f1e312d3a47bdb274 (Ruler Hooked 45982894351, TypeScript 45982894250, Contract Tests 45982894213, janitor 45985105604). Gamepad disconnect, controller switch and opening input regression tests delivered. Remaining real-device verification shared with t-061/t-050; return ready. No deployment claimed.
 
     Kind Robots c45d99433e6e2fa45fcd1515c81360aa5bcbfd62 fixes Learning mode's nonfunctional advertised controller Answer action. Directional navigation and confirm now operate visible enabled quiz controls, including review/continue and retry, without selecting an answer on first focus. Eleven committed helper regression assertions passed in an isolated mocked-DOM JavaScript runner. Full CI and real device verification pending; partial t-048.
-  updated: '2026-11-27T21:20:00Z'
-  owner: worker
-  claimed_by: 20261127T2118Z-ruler-t048-quizpad-a7e642
-  claimed_at: '2026-11-27T21:18:00Z'
+
+    Kind Robots #5998 merged 8304ddc565a11166adef029475fa593798d3b68d. All eight exact-head workflows on 03a4ce096fa05e95e6797eb382480f80831506d7 passed, including Ruler Hooked 46069974783, Contract Tests 46069975012, and branch janitor 46071956916. Learning controller input repair delivered. Remaining actual device input verification shared with t-061/t-050. Return ready; no deployment claimed.
+  updated: '2026-11-27T21:44:48Z'
 
 - id: t-049
   milestone: m6
