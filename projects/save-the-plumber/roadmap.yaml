@@ -145,10 +145,7 @@ tasks:
   - id: t-005
     milestone: m2
     title: "Implement enemy interaction, held objects and powerup systems"
-    status: review
-    owner: worker
-    claimed_by: plumber-t005-gurgle-20261127-b6d4
-    claimed_at: '2026-11-27T02:28:38.297Z'
+    status: ready
     depends_on: [t-003]
     passes: 0
     stakes: reversible
@@ -160,7 +157,9 @@ tasks:
       kind_robots#5915 merged at f724e64e after all eleven exact-head workflows passed on 0238b659. Tidecoat kick, collision/cooldown and all-roster tests plus guide and Maker labels shipped. Remaining companion, authored water courses and painted prop acceptance. Deployment unverified.
 
       App branch worker/save-the-plumber-t005-gurgle-b6d4 head 21951354 implements Gurgle mounting, surface swimming, water-charge hop, hit/puddle recovery, park/remount and checkpoint return. Added actual-input pool regression and control guide. Dedicated art, slurp/spit, scale plates and inter-course persistence remain; no full task closure. CI pending.
-    updated: '2026-11-27T02:29:31.728Z'
+
+      Verified kind_robots#5926 merged at 9fac0f20; twelve implementation workflows and branch janitor completed successfully on a09f27ea. Gurgle mounting, swimming, water hop and recovery shipped. Remaining slurp/spit, scale plates, cross-course persistence, art and campaign acceptance. Partial scope; production deployment unverified.
+    updated: '2026-11-27T04:09:09Z'
   - id: t-006
     milestone: m3
     title: "Build World 1: four complete garden/pipeworks levels and boss"
@@ -435,14 +434,14 @@ tasks:
   - id: t-021
     milestone: m6
     title: "Gen-2 World 1: re-author Bluebell Pipeworks as a full SMB3/SMW-class world"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: plumber-t021-meter-20261127-7c4ea9
     claimed_at: '2026-11-27T04:09:30Z'
     depends_on: [t-002, t-011, t-020]
     passes: 0
     stakes: reversible
-    updated: '2026-11-27T04:09:30Z'
+    updated: '2026-11-27T04:10:00Z'
     note: |-
       Build World 1 to the GEN2-WORLDS.md graph: 6-9 nodes including a fortress, a Hush House, the first Valve Chapel and at least one secret exit, each level 3-6 minutes with sub-areas and a real secret. Wire the GEN2-ROUND-1 overworld plate and far-sky plate. Record first-clear times. This is the agent-verified production template for Worlds 2-8; human verdict is not a prerequisite. Completion checkpoints: 1-1, 1-2, 1-h and cottage, 1-3 and chapel, 1-f including Foreman Flange, 1-4 and 1-castle. Verify each authored beat, original art and route timing against GEN2-WORLDS.md.
 
@@ -465,6 +464,8 @@ tasks:
       Authored Rustbolt Keep's Foreman Flange arena and two-phase roller-return boss. Castle achievements and victory handoff remain separate; revised overworld replay must defeat Flange with real input before the dam unlocks. App branch worker/save-the-plumber-t-021-flange-c8e2 head 2145ef90; CI and original boss art delivery pending. Partial World 1 scope.
 
       kind_robots#5922 merged at 43b56d73, eleven implementation workflows and branch janitor passed on final head 69d8caf0. Rustbolt roller counter encounter and map progression regression delivered. Remaining painted boss art, Wildwater and full World 1 acceptance. Production unverified.
+
+      Added Buried Meter's optional pipe-linked meter shaft, lower token alcove and return ladder. Geometry checked for collisions with existing authored cells and rectangular rows; real-input regression enters, descends, collects, climbs and returns without opening the chapel. Branch worker/save-the-plumber-t-021-meter-7c4ea9 head 88b218744d129754f929cd5b7688798fdcfa9fb7. CI not yet run; partial scope, Wildwater and remaining course acceptance still required.
   - id: t-022
     milestone: m6
     title: "Gen-2 Worlds 2-4: Tideglass Marina, Lantern Orchard, Clockwork Fair"
