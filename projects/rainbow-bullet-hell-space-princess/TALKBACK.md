@@ -312,3 +312,10 @@ Companion kind_robots#4764 was already on main, so merge order held. CI green on
 - loyal-evacuate looks muted beside the others, but it matches its shipped still plate (279933), so the clip is faithful. If the plate should be brighter, that is a plate retake, not a clip problem.
 - loyal-sever is still RUNNING. When it lands, review it, ship it and add it to `RAINBOW_ENDING_MOTION`; that closes P-03.
 - Env: the system Pillow is still broken. A scratchpad venv with pillow and numpy runs `anim_review.py`.
+
+## 2026-11-26 PT | worker (scheduled agent) | t-042 P-01 idle batch 6
+
+- Reviewed the six finished WAN idle renders with `anim_review.py`, `anim_atlas.py`, `motion.py` and a contact sheet set beside the shipped stills. Kept one: bulwark-v3 (280761, motion 14.51). It rocks and paddles on model, and ~450 green leg-fringe pixels were despilled. It ships in kind_robots#5928.
+- Third takes that failed, so these stay stills: brood-v3 moved (5.12) but swelled into a blurred blob far off the narrow spiky sprite, and eel-v3 was static (0.87).
+- Second takes that failed got v3 retakes queued: harbinger-v2 and lighthouse-lamp-v2 were static (1.06 and 1.04). coral-choir-pod-v2 rocked, but its "music notes" rendered as green and gold smears that broke the matte, so the v3 prose forbids any extra objects.
+- Pattern: asking WAN for particles to spawn beside a sprite (notes, sparks) costs the clean matte. Keep idle prose to motion of the existing silhouette.
