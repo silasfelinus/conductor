@@ -3149,10 +3149,13 @@ tasks:
   - id: t-191
     milestone: m12
     title: "Add a per-cabinet audit listing every rendered art slot that is still code-drawn, so painted replacements are queued systematically."
-    status: ready
+    status: claimed
+    owner: worker
+    claimed_by: 20261127T080542Z-kr-arcade-t191-4e9b2d
+    claimed_at: '2026-11-27T08:05:42Z'
     passes: 0
     stakes: reversible
     depends_on: []
-    updated: '2026-11-27T06:22:18Z'
+    updated: '2026-11-27T08:05:42Z'
     note: |-
       Reviewer kaizen from conductor#8039 (and #8037): Silas, 2026-11-25 PT, wants painted art to replace every SVG/canvas-drawn slot. Build a small script or test that lists, per arcade cabinet, the visual slots still drawn in code with no painted request in projects/art-prompts.yaml, so the remaining replacements are found by a tool and not by hand.
