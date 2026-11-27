@@ -1150,7 +1150,10 @@ tasks:
 - id: t-058
   milestone: m6
   title: 'Presenter expression sets for the cast and Quill'
-  status: ready
+  status: claimed
+  owner: worker
+  claimed_by: 20261127T0421Z-ruler-hooked-t058-neutral-37ce
+  claimed_at: '2026-11-27T04:21:00Z'
   gate_human: false
   stakes: reversible
   passes: 0
@@ -1160,7 +1163,7 @@ tasks:
     Implemented mood-aware presenter art lookups, Quill tutorial reactions and ten authored decree expression outcomes in the Kind Robots worker branch. Staged 48 high-priority Krea2 neutral/pleased/concerned/alarmed portrait requests for the full 12-character cast through the canonical YAML queue. Paints are pending and not counted as rendered; branch PRs and CI follow.
 
     Reconciled historical review: Kind Robots #5625 merged aaa95713 with nine successful workflows including branch janitor; Conductor #7895 merged 85b7f7b7 with six successful applicable workflows and one skipped. The rescued 48 expression rows now all record done and source URLs; 45 have ArtJobs 76738–76782. Quill neutral/pleased/concerned lack explicit job IDs; do not duplicate them. Runtime mood-specific candidates are wired. Direct media probe failed DNS; actual byte/visual delivery and fallback inspection remain. Return ready for verification, not done.
-  updated: '2026-11-27T04:15:00Z'
+  updated: '2026-11-27T04:21:00Z'
 - id: t-059
   milestone: m6
   title: 'Reconcile the compositing contract with the opaque region layers that actually rendered'
