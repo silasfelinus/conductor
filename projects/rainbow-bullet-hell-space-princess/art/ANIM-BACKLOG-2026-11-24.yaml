@@ -2447,6 +2447,7 @@ subjects:
       status: DONE
       art_image_id: 280915
 - key: idle-b07-phase2-v2
+  verdict: 'reject: 2026-11-27 PT review (art 280923), first rendered take; on model but near-static (keyed motion 6.4, silhouette IoU 0.996 against 77.0 for the kept halo-fin-v3), the coils never move and only the fracture sparks shimmer; retake as v3 with the head and jaw driving bigger motion'
   lane: wan-mp4
   entity: sprite-animation
   title: b07-phase2 idle loop
@@ -2469,6 +2470,7 @@ subjects:
       status: DONE
       art_image_id: 280923
 - key: idle-b07-phase3-v2
+  verdict: 'reject: 2026-11-27 PT review (art 280924), first rendered take; on model and the magenta chest starburst pulses, but the serpent itself never rears or moves (keyed motion 5.6, IoU 0.996); retake as v3 with the head rearing and the jaw gaping'
   lane: wan-mp4
   entity: sprite-animation
   title: b07-phase3 idle loop
@@ -2491,6 +2493,7 @@ subjects:
       status: DONE
       art_image_id: 280924
 - key: idle-b09-phase1-v2
+  verdict: 'reject: 2026-11-27 PT review (art 280925), first rendered take; on model but near-static (keyed motion 6.2, IoU 0.997), the ridges and tail do not sweep; retake as v3 with a strong tail beat and fin strokes'
   lane: wan-mp4
   entity: sprite-animation
   title: b09-phase1 idle loop
@@ -2513,6 +2516,7 @@ subjects:
       status: DONE
       art_image_id: 280925
 - key: idle-b09-phase2-v2
+  verdict: 'reject: 2026-11-27 PT review (art 280926), first rendered take; the constellations twinkle but the body and fins hold still (keyed motion 7.6, IoU 0.997); retake as v3 with the fins flaring and the tail beating'
   lane: wan-mp4
   entity: sprite-animation
   title: b09-phase2 idle loop
@@ -2535,6 +2539,7 @@ subjects:
       status: DONE
       art_image_id: 280926
 - key: idle-b09-phase3-v2
+  verdict: 'reject: 2026-11-27 PT review (art 280927), first rendered take; the golden heart glows but the leviathan does not surge or sag (keyed motion 5.6, IoU 0.998); retake as v3 with a visible heave and fluttering torn fins'
   lane: wan-mp4
   entity: sprite-animation
   title: b09-phase3 idle loop
@@ -2557,6 +2562,7 @@ subjects:
       status: DONE
       art_image_id: 280927
 - key: idle-motherdrone-v2
+  verdict: 'keep: 2026-11-27 PT review (art 280928), the drone tilts nose up and down and the pink thruster flares, with fins, trim and outline on model (keyed motion 51.2, loop seam 5.1); eight cells keyed with despill on one shared crop, sized to the 129x66 still, shipped as doodle/anim/motherdrone-idle in kind_robots#5996'
   lane: wan-mp4
   entity: sprite-animation
   title: motherdrone idle loop
@@ -2579,6 +2585,7 @@ subjects:
       status: DONE
       art_image_id: 280928
 - key: idle-pistol-v2
+  verdict: 'reject: 2026-11-27 PT review (art 280929), second take; it now holds one spot at one size but is near-static (keyed motion 3.7, IoU 0.998), and the cog barely turns; final retake as v3 with the whole fish bobbing and the cog spinning visibly'
   lane: wan-mp4
   entity: sprite-animation
   title: pistol idle loop
@@ -4007,3 +4014,87 @@ subjects:
     wan-mp4:
       status: PENDING
       art_image_id: null
+- key: idle-b07-phase2-v3
+  lane: wan-mp4
+  entity: sprite-animation
+  title: b07-phase2 idle loop
+  asset: rainbow-princess-art/doodle/anim/b07-phase2-idle
+  size: 832x560
+  seed: 1127901
+  source_url: /rainbow-princess-art/doodle/bosses/b07-phase2.webp
+  last_image_id: /rainbow-princess-art/doodle/bosses/b07-phase2.webp
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: 'The cracked glassy blue sea serpent keeps its coils pinned in place while its head swings up and back down in a big slow nod, its jaw snapping open and shut and sparks crackling along the fractures. Locked view, exact outline, the same blue glass and dark net scales in every frame, flat lime-green backdrop all around, glossy airbrushed doodle.'
+- key: idle-b07-phase3-v3
+  lane: wan-mp4
+  entity: sprite-animation
+  title: b07-phase3 idle loop
+  asset: rainbow-princess-art/doodle/anim/b07-phase3-idle
+  size: 832x560
+  seed: 1127902
+  source_url: /rainbow-princess-art/doodle/bosses/b07-phase3.webp
+  last_image_id: /rainbow-princess-art/doodle/bosses/b07-phase3.webp
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: 'The wounded glassy blue serpent rears its head high and drops it back down, its jaw gaping wide as the magenta starburst at its chest blazes and fades, coils pinned in place. Locked view, exact outline, the same blue glass and dark net scales in every frame, flat lime-green backdrop all around, glossy airbrushed doodle.'
+- key: idle-b09-phase1-v3
+  lane: wan-mp4
+  entity: sprite-animation
+  title: b09-phase1 idle loop
+  asset: rainbow-princess-art/doodle/anim/b09-phase1-idle
+  size: 832x592
+  seed: 1127903
+  source_url: /rainbow-princess-art/doodle/bosses/b09-phase1.webp
+  last_image_id: /rainbow-princess-art/doodle/bosses/b09-phase1.webp
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: 'The dark navy leviathan outlined in white swims in place with big strokes: its tail fin beats up and down widely, its lower fins paddle and its back spikes ripple in a wave. Body stays at one spot and one size. Locked view, exact outline and palette in every frame, flat lime-green backdrop all around, neon school-folder airbrush.'
+- key: idle-b09-phase2-v3
+  lane: wan-mp4
+  entity: sprite-animation
+  title: b09-phase2 idle loop
+  asset: rainbow-princess-art/doodle/anim/b09-phase2-idle
+  size: 832x592
+  seed: 1127904
+  source_url: /rainbow-princess-art/doodle/bosses/b09-phase2.webp
+  last_image_id: /rainbow-princess-art/doodle/bosses/b09-phase2.webp
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: 'The starry navy leviathan swims in place with big strokes: its jagged lower fins flare wide and fold back, its tail beats up and down and its body flexes, while the constellations inside it twinkle. Body stays at one spot and one size. Locked view, exact outline and palette in every frame, flat lime-green backdrop all around, glossy 1980s sticker style.'
+- key: idle-b09-phase3-v3
+  lane: wan-mp4
+  entity: sprite-animation
+  title: b09-phase3 idle loop
+  asset: rainbow-princess-art/doodle/anim/b09-phase3-idle
+  size: 832x592
+  seed: 1127905
+  source_url: /rainbow-princess-art/doodle/bosses/b09-phase3.webp
+  last_image_id: /rainbow-princess-art/doodle/bosses/b09-phase3.webp
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: 'The battered navy leviathan heaves in place, its body rising and sinking in a big slow surge, its torn fins flapping hard and its tail beating while the golden heart in its chest pulses bright. Body stays at one size. Locked view, exact outline and palette in every frame, flat lime-green backdrop all around, airbrushed neon doodle.'
+- key: idle-pistol-v3
+  lane: wan-mp4
+  entity: sprite-animation
+  title: pistol idle loop
+  asset: rainbow-princess-art/doodle/anim/pistol-idle
+  size: 832x704
+  seed: 1127906
+  source_url: /rainbow-princess-art/doodle/enemies/pistol.webp
+  last_image_id: /rainbow-princess-art/doodle/enemies/pistol.webp
+  source_matte: '#08f408'
+  source_margin: 0.2
+  duration: 2
+  loop: true
+  prompt_prose: 'The blue barrel fish with a yellow cog mouth and pink core bobs up and down in place in a steady rhythm, its yellow cog spinning round visibly, its pink core throbbing and its little fins flapping hard. It stays at one size. Locked view, exact outline and palette in every frame, flat lime-green backdrop all around, glossy 1980s sticker style.'
