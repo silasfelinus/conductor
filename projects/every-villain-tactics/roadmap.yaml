@@ -465,11 +465,11 @@ tasks:
   - id: t-021
     milestone: m3
     title: "Ship 48 power-specific playable origin opening battles"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 20261127T040600Z-evt-accident-final-74e6
     claimed_at: '2026-11-27T04:06:00.711Z'
-    updated: '2026-11-27T04:06:00.711Z'
+    updated: '2026-11-27T04:08:16.419Z'
     depends_on: [t-005, t-017]
     passes: 0
     stakes: reversible
@@ -479,6 +479,8 @@ tasks:
       Kind Robots commit 14fae9d790b1295165027ac84304097a012b5adf adds Hydrant Blue, the sixth distinct origin battle. Tidewarden targets a broken main directly using her one-use signature and ordinary AP/attack restrictions, then evacuates two trapped fire crews. Separate cinematic hero/villain introduction, allocation choice, rescue and ending scenes; save validates identity, signature-spend and rescue gate. Environmental target remains usable if rivals are defeated. Existing painted foundry fallback, dedicated venue art outstanding. Extracted committed preview/commit and blocker passed 15 assertions; full CI pending. Partial scope: 42 other origins and full visual/route acceptance remain.
 
       Kind Robots #5937 merged adb2c2209927110b88d0fd7994879a7a52fb3927; seven latest-head workflows and four contract shards passed. Six playable origins on main. Remaining 42 origin battles, dedicated arena art and full-route acceptance.
+
+      Kind Robots commit 05fa9aa174eecfd9649c51aca0dd22b1a8b8d6a7 adds Clocktower Collapse (even-round adjacent timing intervention) and Equation That Escaped (four-tile LOS analysis intervention), two distinct maps, perspective-specific cinematic openings, consequential choice scenes and rescue endings. Shared environmental origin registry preserves Hydrant Blue and enforces identity, normal power spend, rescue gating and save invariants. 33 extracted planner/commit assertions passed with synthetic powers and unit states; full engine CI pending. Eight Accident-origin implementations upon merge; forty other origins plus dedicated art and full acceptance remain.
   - id: t-022
     milestone: m3
     title: "Build 48 villain-owned lairs with changing tactical environments"
