@@ -79,16 +79,18 @@ tasks:
       images asserted as live.
   - id: t-028
     title: 'Main-game standard: audit and close the gaps for Save the Plumber'
-    status: claimed
+    status: review
     claimed_by: plumber-t028-cloud-20261127-4e8c2d
     claimed_at: '2026-11-27T04:41:00Z'
     milestone: m6
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-27T04:41:00Z'
+    updated: '2026-11-27T04:43:00Z'
     note: |-
       Main-game standard: use STANDARD-AUDIT-2026-11-12.md and docs/agents/main-game-standard.md. Verify title, settings, persistent saves, 12+ achievements (separate task), scrapbook, multiple painted endings, customizable heroine and three replay hooks. Recorded merges #5722, #5772, #5773, #5832, #5843, #5883, #5884, #5890, #5896 and #5901 delivered settings/contrast, achievement browser, separate New Game/Continue, three endings/epilogues, reset, taunts, reading options, name entry and repaired engine tests. Latest receipt #5901 at 9debf882 reports all 17 exact-head checks passed. Remaining: global account-backed saves and permanent unlocks across devices (reload, account isolation and reset), actual earned/deduplicated achievement records and generated badges, complete scrapbook including run outcomes and locked counts, distinct delivered painted ending plates, rendered finale/gallery screenshots and accessibility against the current main-game standard; do not repeat shipped controls. No production deployment verified. Keep ready until actual visual/acceptance evidence. Full prior note: ROADMAP-HISTORY-2026-11-26.md#t-028.
+
+      Added strict canonical v3 Plumber file validation and enabled the existing authenticated revisioned Arcade save endpoint for the Plumber slug, retaining user-scoped CAS and size limits. Added regression coverage for migrations, malformed files, property ordering, and album retention after slot erasure. Branch worker/save-the-plumber-t-028-cloud-4e8c2d head b30a8cf031f2ce36967b827d0218683ea264e7fa. CI pending. Partial scope: client account sync, owner isolation/reset/conflict tests and other main-game acceptance remain.
     implementation_pr: 'silasfelinus/kind_robots#5901'
     owner: worker
   - id: t-029
@@ -441,14 +443,11 @@ tasks:
   - id: t-021
     milestone: m6
     title: "Gen-2 World 1: re-author Bluebell Pipeworks as a full SMB3/SMW-class world"
-    status: review
-    owner: worker
-    claimed_by: plumber-t021-meter-20261127-7c4ea9
-    claimed_at: '2026-11-27T04:09:30Z'
+    status: ready
     depends_on: [t-002, t-011, t-020]
     passes: 0
     stakes: reversible
-    updated: '2026-11-27T04:10:00Z'
+    updated: '2026-11-27T04:35:00Z'
     note: |-
       Build World 1 to the GEN2-WORLDS.md graph: 6-9 nodes including a fortress, a Hush House, the first Valve Chapel and at least one secret exit, each level 3-6 minutes with sub-areas and a real secret. Wire the GEN2-ROUND-1 overworld plate and far-sky plate. Record first-clear times. This is the agent-verified production template for Worlds 2-8; human verdict is not a prerequisite. Completion checkpoints: 1-1, 1-2, 1-h and cottage, 1-3 and chapel, 1-f including Foreman Flange, 1-4 and 1-castle. Verify each authored beat, original art and route timing against GEN2-WORLDS.md.
 
@@ -473,6 +472,8 @@ tasks:
       kind_robots#5922 merged at 43b56d73, eleven implementation workflows and branch janitor passed on final head 69d8caf0. Rustbolt roller counter encounter and map progression regression delivered. Remaining painted boss art, Wildwater and full World 1 acceptance. Production unverified.
 
       Added Buried Meter's optional pipe-linked meter shaft, lower token alcove and return ladder. Geometry checked for collisions with existing authored cells and rectangular rows; real-input regression enters, descends, collects, climbs and returns without opening the chapel. Branch worker/save-the-plumber-t-021-meter-7c4ea9 head 88b218744d129754f929cd5b7688798fdcfa9fb7. CI not yet run; partial scope, Wildwater and remaining course acceptance still required.
+
+      Verified kind_robots#5946 merged at 3013022d after all ten implementation workflows and branch janitor passed on 88b21874. Buried Meter optional shaft and traversal regression shipped. Wildwater, remaining authored beats, delivered art and full timing acceptance remain. Production deployment unverified.
   - id: t-022
     milestone: m6
     title: "Gen-2 Worlds 2-4: Tideglass Marina, Lantern Orchard, Clockwork Fair"
