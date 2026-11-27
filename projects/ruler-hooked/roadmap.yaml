@@ -1136,33 +1136,31 @@ tasks:
 - id: t-057
   milestone: m6
   title: 'Restyle the console art lane to Chronicle + Broadside, then stage and render it'
-  status: review
+  status: ready
   gate_human: false
-  owner: worker
   stakes: reversible
   passes: 0
   note: |-
     build_ruler_hooked_art_queue.py has a `console` lane: 28 entries whose image_path keys match what kind_robots utils/rulerHooked/artLibrary.ts loads. They are 5 screen backdrops, 5 nav-tab vignettes, 10 daily-proclamation scenes, 7 gear/kingdom still lifes, and a real Quill the Steward portrait (character-steward-quill.webp rendered as a literal feather pen; the console skips it). The lane was written in the storybook register and DELIBERATELY NOT STAGED, because Silas picked Chronicle (world) + Broadside (documents) the same day (t-054). Re-voice CONSOLE_FINISH and the prompts: backdrops, tabs and the map in Chronicle; proclamations and gear notices in Broadside. Then stage with `--write --lane console` and spot-check in place. Coordinate with t-054 so the frame and backdrops agree.
 
     Silas rejected the Chronicle/Broadside medieval treatment on 2026-11-06 PT. Worker restyled the generator to psychedelic rainbow fantasy with restrained screenprint grain, updated 28 console ArtJob queue rows in place (pending, force true), restyled the Kind Robots console chrome, and made the newer direction authoritative in art-direction and t-054 notes. Conductor and Kind Robots implementation PRs under review; renders and deployed visuals are not yet verified. Opaque layer compositing remains t-059.
-  updated: '2026-11-06T12:57:00Z'
-  claimed_by: 2026-11-06T124650Z-ruler-hooked-t057-rainbow-7e92f
-  claimed_at: '2026-11-06T12:46:50Z'
+
+    Reconciled historical review: Conductor #7114 and #7155 merged with all applicable workflows successful; Kind Robots #4857 and #4882 merged with all returned checks successful. Latest central art-prompts.yaml records 28/28 console rows done with source URLs and 28 ArtJob IDs (65298–65324 with 68336 and 68337 replacements). Rainbow direction supersedes the old title. Existing runtime chains are in artLibrary.ts. Direct media probe failed DNS in this environment; actual byte/visual inspection remains t-057/t-047/t-061. Do not resubmit these done rows; return ready for verification, not done.
+  updated: '2026-11-27T04:15:00Z'
 - id: t-058
   milestone: m6
   title: 'Presenter expression sets for the cast and Quill'
-  status: review
+  status: ready
   gate_human: false
-  owner: worker
-  claimed_by: 20261123T031335727Z-ruler-hooked-t058-v4b7
-  claimed_at: '2026-11-23T03:13:35.727Z'
   stakes: reversible
   passes: 0
   note: |-
     The court now stands the presenting character's portrait beside each petition, and Quill coaches the tutorial from a portrait, but each character has one neutral render. characterArt.ts already defines character-<slug>-<expression>.webp keys and advisor.ts computes moods. Render neutral/pleased/concerned/alarmed in the t-054 Chronicle style, have the court portrait react to the chosen decree and the coach follow advisor mood.
 
     Implemented mood-aware presenter art lookups, Quill tutorial reactions and ten authored decree expression outcomes in the Kind Robots worker branch. Staged 48 high-priority Krea2 neutral/pleased/concerned/alarmed portrait requests for the full 12-character cast through the canonical YAML queue. Paints are pending and not counted as rendered; branch PRs and CI follow.
-  updated: '2026-11-23T03:17:47.962Z'
+
+    Reconciled historical review: Kind Robots #5625 merged aaa95713 with nine successful workflows including branch janitor; Conductor #7895 merged 85b7f7b7 with six successful applicable workflows and one skipped. The rescued 48 expression rows now all record done and source URLs; 45 have ArtJobs 76738–76782. Quill neutral/pleased/concerned lack explicit job IDs; do not duplicate them. Runtime mood-specific candidates are wired. Direct media probe failed DNS; actual byte/visual delivery and fallback inspection remain. Return ready for verification, not done.
+  updated: '2026-11-27T04:15:00Z'
 - id: t-059
   milestone: m6
   title: 'Reconcile the compositing contract with the opaque region layers that actually rendered'

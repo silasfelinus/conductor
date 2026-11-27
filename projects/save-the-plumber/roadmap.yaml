@@ -145,7 +145,7 @@ tasks:
   - id: t-005
     milestone: m2
     title: "Implement enemy interaction, held objects and powerup systems"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: plumber-t005-slurp-20261127-9af12d
     claimed_at: '2026-11-27T04:13:00Z'
@@ -162,7 +162,9 @@ tasks:
       App branch worker/save-the-plumber-t005-gurgle-b6d4 head 21951354 implements Gurgle mounting, surface swimming, water-charge hop, hit/puddle recovery, park/remount and checkpoint return. Added actual-input pool regression and control guide. Dedicated art, slurp/spit, scale plates and inter-course persistence remain; no full task closure. CI pending.
 
       Verified kind_robots#5926 merged at 9fac0f20; twelve implementation workflows and branch janitor completed successfully on a09f27ea. Gurgle mounting, swimming, water hop and recovery shipped. Remaining slurp/spit, scale plates, cross-course persistence, art and campaign acceptance. Partial scope; production deployment unverified.
-    updated: '2026-11-27T04:13:00Z'
+
+      Mounted X can slurp a nearby live or stunned normal Rivet Roller, then spit it using existing kicked-roller physics. Wall occlusion and dismount guard added; ordinary wrench and unmounted carry behavior retained. Existing real-input Gurgle regression extended for capture, spit, target hit and wall rejection. Branch worker/save-the-plumber-t-005-slurp-9af12d at 6416468ff918f9cd82b97bf72fef2824a7705848; runtime CI pending. Partial scope; other slurp targets, scale plates, cross-course persistence, art and authored water courses remain.
+    updated: '2026-11-27T04:14:00Z'
   - id: t-006
     milestone: m3
     title: "Build World 1: four complete garden/pipeworks levels and boss"
