@@ -211,7 +211,7 @@ tasks:
     milestone: m4
     title: "Playtest graduation: readiness gate, status playtest at normal priority, flag the hub"
     status: waiting
-    depends_on: [t-007, t-008, t-009, t-010, t-012, t-013, t-015, t-016, t-017, t-018]
+    depends_on: t-018
     owner: null
     passes: 0
     stakes: reversible
@@ -219,6 +219,10 @@ tasks:
       Silas, 2026-11-16 PT: once complete including art, mark ready for human testing and
       swap to playtest with normal priority. Follow docs/agents/hourly-playtest-advancement.md
       "Graduation". Public /play release stays a separate human gate.
+
+      Silas, 2026-11-27 PT: "Once the art is done, we are done." t-013 is cancelled as the same
+      post-human-gate playtest requirement; this task now waits only on t-018 (nine ending
+      plates, ENDING-PLATES-ANTHRO-2026-11-27.yaml). When t-018 closes, graduate immediately.
   - id: t-015
     milestone: m3
     title: "Expand enemy roster to 40 distinct types and recalibrate seeded encounter variety"
