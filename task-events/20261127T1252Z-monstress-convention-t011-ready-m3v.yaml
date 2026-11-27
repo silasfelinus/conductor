@@ -1,0 +1,17 @@
+version: 1
+project: monstress-convention
+task: t-011
+operation: ready
+updated: '2026-11-27T12:52:00Z'
+note: >-
+  2026-11-27 PT: kind_robots#5990 merged (squash 655b824) after all 14 checks were green, including TypeScript, content-visibility verify and
+  the four contract shards. Added server/utils/monstriqueAccess.ts monstriqueAudienceFor(auth): JWT + real viewerShowsMature, used by
+  /api/monstrique/audience. The splash route keeps the audit-recognised inline viewerShowsMature. The new contract test
+  verifyMonstriqueSecurity.test.ts runs the real predicate across a matrix:
+  mature only for opted-in adult or adult ADMIN with a JWT; general for opted-out, no preference and string "true", and for CHILD
+  as primary role, roles, the UserRoles join, the lowercase alias and CHILD+ADMIN; general for delegation, beta-admin, user API key, agent
+  credential, guest and invalid. It also pins no-store and Vary on the public routes and their independence from the request, the Studio
+  gate (404) on every Bible route, mature splash ids staying out of every client directory, general-edition hotspots/verbs/shortcuts, and
+  per-edition per-account save slots. Mutation-checked. Remaining t-011 (needs a live DB or production, no deploy): authenticated production
+  behaviour, direct /api/art delivery of the mature splash ArtImage rows, SSR/hydration per audience, nav/highlights/search exclusion, and
+  server-side cross-account saves (saves are browser-local today). Returned to ready, not done.
