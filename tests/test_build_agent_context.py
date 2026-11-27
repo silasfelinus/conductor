@@ -68,3 +68,25 @@ def test_generation_uses_canonical_blob_and_filters_candidates(tmp_path):
     (out / "paused.json").write_text("{}")
     generate(tmp_path, "a" * 40, NOW)
     assert not (out / "paused.json").exists()
+
+
+def test_unchanged_packet_keeps_its_recorded_source_commit(tmp_path):
+    (tmp_path / "projects/demo").mkdir(parents=True)
+    (tmp_path / "CONTROL.md").write_text("## Global overview\nglobal\n## Per-project direction\n### demo\ndirection\n")
+    (tmp_path / "projects/priority.yaml").write_text("order: [demo]\n")
+    (tmp_path / "project-overrides.yaml").write_text("overrides: [{slug: demo, status: active}]\n")
+    roadmap = tmp_path / "projects/demo/roadmap.yaml"
+    roadmap.write_text(yaml.safe_dump({"kind": "software", "tasks": [{"id": "t-001", "status": "ready"}]}))
+    locator = tmp_path / "ops/agent-context/demo.json"
+
+    generate(tmp_path, "a" * 40, NOW)
+    first = locator.read_bytes()
+    # A later commit that leaves every referenced source byte-identical must
+    # not rewrite the locator: the old commit is still a valid ref.
+    generate(tmp_path, "b" * 40, NOW)
+    assert locator.read_bytes() == first
+
+    roadmap.write_text(yaml.safe_dump({"kind": "software", "tasks": [{"id": "t-001", "status": "review"}]}))
+    generate(tmp_path, "c" * 40, NOW)
+    packet = json.loads(locator.read_text())
+    assert packet["source_commit"] == "c" * 40 and packet["review"] == ["t-001"]

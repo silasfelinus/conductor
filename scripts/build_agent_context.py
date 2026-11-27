@@ -118,6 +118,28 @@ def project_packet(root: Path, slug: str, lifecycle: str, source_commit: str,
     }
 
 
+def write_packet(path: Path, packet: dict) -> bool:
+    """Write a locator unless only its source_commit would change.
+
+    Every field that names source content (roadmap/CONTROL blobs, line ranges,
+    statuses) is part of the packet, so an otherwise-identical packet means the
+    previously recorded commit still holds byte-identical sources and remains a
+    valid ref. Rewriting it anyway touched every locator on every refresh.
+    """
+    if path.is_file():
+        try:
+            previous = json.loads(path.read_text(encoding="utf-8"))
+        except ValueError:
+            previous = None
+        if isinstance(previous, dict) and previous.get("source_commit"):
+            strip = lambda d: {k: v for k, v in d.items() if k != "source_commit"}
+            if strip(previous) == strip(json.loads(json.dumps(packet, default=str))):
+                return False
+    path.write_text(json.dumps(packet, ensure_ascii=False, separators=(",", ":"), default=str) + "\n",
+                    encoding="utf-8")
+    return True
+
+
 def generate(root: Path, source_commit: str, now: datetime) -> int:
     raw = (root / "CONTROL.md").read_bytes()
     global_range, blocks = control_ranges(raw.decode("utf-8"))
@@ -137,8 +159,7 @@ def generate(root: Path, source_commit: str, now: datetime) -> int:
                                  "project_lines": blocks.get(slug)}, issues.get(slug), now)
         name = slug + ".json"
         expected.add(name)
-        (out / name).write_text(json.dumps(packet, ensure_ascii=False, separators=(",", ":"), default=str) + "\n",
-                                encoding="utf-8")
+        write_packet(out / name, packet)
     # This directory is exclusively generated, never a canonical record.
     for file in out.glob("*.json"):
         if file.name not in expected:

@@ -126,3 +126,26 @@ def test_pickup_hints_bound_review_ids_without_hiding_count() -> None:
         now=datetime(2026, 11, 26, tzinfo=timezone.utc),
     )
     assert rows == ["| live | active | t-001, t-002, t-003, t-004, t-005, t-006 (+2 more) | — |"]
+
+
+def test_status_is_not_rewritten_when_only_the_stamp_would_change(tmp_path: Path, monkeypatch) -> None:
+    projects = tmp_path / "projects"
+    (projects / "demo").mkdir(parents=True)
+    (tmp_path / "pitches").mkdir()
+    (tmp_path / "project-overrides.yaml").write_text("overrides:\n  - slug: demo\n    status: active\n", encoding="utf-8")
+    roadmap = projects / "demo" / "roadmap.yaml"
+    roadmap.write_text("project: demo\nkind: software\ntasks:\n- id: t-001\n  status: ready\n", encoding="utf-8")
+    status = tmp_path / "STATUS.md"
+    for name, value in (("REPO_ROOT", tmp_path), ("PROJECTS_DIR", projects), ("PITCHES_DIR", tmp_path / "pitches"),
+                        ("STATUS_FILE", status), ("OVERRIDES_FILE", tmp_path / "project-overrides.yaml")):
+        monkeypatch.setattr(build_status, name, value)
+
+    build_status.build_status()
+    stale = status.read_text(encoding="utf-8").replace("<!-- Last generated: ", "<!-- Last generated: 1999-")
+    status.write_text(stale, encoding="utf-8")
+    build_status.build_status()
+    assert status.read_text(encoding="utf-8") == stale
+
+    roadmap.write_text("project: demo\nkind: software\ntasks:\n- id: t-001\n  status: done\n", encoding="utf-8")
+    build_status.build_status()
+    assert status.read_text(encoding="utf-8") != stale

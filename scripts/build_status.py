@@ -151,6 +151,11 @@ def pickup_rows(project_tasks: dict, overrides: dict, order: list[str], *, now: 
     return rows
 
 
+def _without_stamp(text: str) -> str:
+    # The "Last generated" line alone must not create a commit on main.
+    return "\n".join(l for l in text.splitlines() if not l.startswith("<!-- Last generated:"))
+
+
 def build_status():
     generated_at = datetime.now(timezone.utc)
     now = generated_at.strftime("%Y-%m-%dT%H:%M:%SZ")
@@ -251,7 +256,11 @@ def build_status():
         *(pitch_rows if pitch_rows else ["| (none) | — | — |"]),
     ]
 
-    STATUS_FILE.write_text("\n".join(lines) + "\n")
+    text = "\n".join(lines) + "\n"
+    if STATUS_FILE.is_file() and _without_stamp(STATUS_FILE.read_text()) == _without_stamp(text):
+        print("STATUS.md unchanged apart from its generation stamp; not rewritten")
+        return
+    STATUS_FILE.write_text(text)
     print(f"STATUS.md written ({len(project_rows)} projects, {len(pitches)} pitches)")
 
 
