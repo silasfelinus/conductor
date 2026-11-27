@@ -250,24 +250,18 @@ tasks:
   - id: t-010
     milestone: m3
     title: "Henchmen, lackeys, guests and smart tactical enemy behavior"
-    status: claimed
+    status: review
     claimed_by: 20261127T023000Z-evt-ai-5fe2
     claimed_at: '2026-11-27T02:29:54.034Z'
-    updated: '2026-11-27T02:29:54.034Z'
+    updated: '2026-11-27T02:30:49.366Z'
     depends_on: t-007
     owner: worker
     passes: 0
     stakes: reversible
-    note: >-
-      Named motivated lackeys and special guests, power-specific attacks,
-      recruitment/reversal, role-specific responses and enemy AI that flanks,
-      retreats, uses cover/overwatch and follows same LOS/chance rules.
-      Import the exact 48 one-hit SPECIES crews by villain signature from Kind
-      Robots utils/cometAcademy/villainHenchmen.json and the paired Conductor
-      VILLAIN-HENCHMEN.md. Keep the original villain hero identities stable;
-      each crew has a named spokesperson, readable telegraph, signature move,
-      actionable counter and loyalty/defection beat. Do not substitute these
-      minions for major named accomplices or call static data playable.
+    note: |-
+      Named motivated lackeys and special guests, power-specific attacks, recruitment/reversal, role-specific responses and enemy AI that flanks, retreats, uses cover/overwatch and follows same LOS/chance rules. Import the exact 48 one-hit SPECIES crews by villain signature from Kind Robots utils/cometAcademy/villainHenchmen.json and the paired Conductor VILLAIN-HENCHMEN.md. Keep the original villain hero identities stable; each crew has a named spokesperson, readable telegraph, signature move, actionable counter and loyalty/defection beat. Do not substitute these minions for major named accomplices or call static data playable.
+
+      Kind Robots commit 05c24f32c0e547ca60f4f7284a034f1f81b67b5c adds deterministic critical-health rival retreat using real path/AP, LOS, directional cover and live hazard checks. Retreat reserves guard or overwatch if possible and triggers normal movement reactions; one-hit crews preserve existing behavior. Extracted committed planner/combat geometry passed 14 assertions; seeded endTurn regression added, full CI pending. Partial t-010: named crew integration and wider AI/QA remain.
   - id: t-011
     milestone: m3
     title: "Save, fork, share and browse versioned community levels"
