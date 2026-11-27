@@ -553,7 +553,7 @@ tasks:
   - id: t-022
     milestone: m4
     title: "Kontext pass: recolour off-model frames, compose cutscenes and group art, and build layout-guided stage planes"
-    status: ready
+    status: done
     passes: 0
     stakes: reversible
     depends_on: [t-020]
@@ -581,9 +581,16 @@ tasks:
       2026-11-26 PT intent audit: partial, so back to ready. The planes, cards and detour
       twins shipped (#5767, #5774). The X1-X4 green-key retakes are still rendering (ART-
       BACKLOG-2026-11-24). The 11-22 claim had expired.
+
+      2026-11-27 PT close: full scope verified. The X1-X4 green-key retakes the 11-26 audit
+      listed as rendering all rendered, were reviewed keep (ART-BACKLOG-2026-11-24 doodle-
+      alt-x*-2, 'Closes P-14') and shipped in kind_robots#5810 (merged 2026-11-25); all 14
+      doodle/alt planes are on kind_robots main. Stage planes: #5685, #5767, #5774, #5810.
+      Round-9 recolour and group/cutscene composition were folded into t-030 on 2026-11-23 and
+      stay tracked there; pickups u04/u11/u12 were redrawn in ART-ROUND-10-VOLUME.
     owner: worker
-    updated: '2026-11-27T05:52:36Z'
-    implementation_pr: 'silasfelinus/kind_robots#5767'
+    updated: '2026-11-27T08:48:57Z'
+    implementation_pr: 'silasfelinus/kind_robots#5810'
   - id: t-023
     milestone: m4
     title: "Recut Acts II-VIII to the playtest pacing: shorter, denser, obstacles, repeat fire, callouts"
