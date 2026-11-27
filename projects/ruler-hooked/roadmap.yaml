@@ -82,15 +82,12 @@ tasks:
     direction, and the offline-at-runtime rule.
 - id: t-067
   title: 'Main-game standard: audit and close the gaps for The Ruler Is Hooked'
-  status: review
-  owner: worker
-  claimed_by: 20261127T054008Z-ruler-t067-audio-5e8c2a
-  claimed_at: '2026-11-27T05:40:08Z'
+  status: ready
   milestone: m6
   stakes: reversible
   passes: 0
   depends_on: []
-  updated: '2026-11-27T05:43:08Z'
+  updated: '2026-11-27T07:00:00Z'
   note: |-
     Silas 2026-11-11 PT, in session: "Our games should all have a base standard of quality ... We want our main games to have 12 plus achievements." Standard: docs/agents/main-game-standard.md; CONTROL.md global overview.
 
@@ -143,6 +140,8 @@ tasks:
     Kind Robots c59c0464108bf70cbf86acdae7794933538e584e repairs gesture-based audio recovery when a previously unlocked browser context is interrupted, suspended or closed. Recreates a closed context without duplicate timers; preserves settings and muted/hidden behavior. Added audio lifecycle self-test to the Ruler Hooked workflow. Exact committed audio logic and test passed 28 assertions in an isolated JS runner with simulated AudioContext. Real audible/browser and authenticated cross-device QA remain; partial t-067.
 
     App commit c59c0464108bf70cbf86acdae7794933538e584e recovers suspended, interrupted and closed audio contexts on user gestures and adds a mocked lifecycle regression in Ruler Hooked CI. Actual browser playback and CI remain unverified.
+
+    Verified Kind Robots #5960 merged at 01a6fd610eaaa4cd5652df9dde17975fbb278dbe. All eight exact-head PR workflows and branch janitor succeeded on c59c0464108bf70cbf86acdae7794933538e584e (Ruler Hooked 45947491289, Contract Tests 45947491404, janitor 45951410751). Audio recovery delivered; actual audible playback and authenticated cross-device evidence remain. Return ready; no deployment claimed.
 
 - id: t-068
   title: 'The Ruler Is Hooked achievement upgrade: 12 or more live achievements'
