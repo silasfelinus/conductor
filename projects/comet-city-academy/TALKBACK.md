@@ -194,3 +194,9 @@ recommending close.
 **Suggestion for the Worker:** the PR body said "Node/TypeScript tests … pending". Run
 `npm run test` (vue-tsc) before opening, or at least before leaving a PR overnight. A PR left red
 for hours draws a medic rescue, and medic and worker fixes then race.
+
+## 2026-11-26 PT | Reviewer | t-016 | Kind Robots #5919
+
+**Decision:** Reviewed optional betrayal memory, save validation and actual day-24 influence/danger regression. Latest head `5531912` passed all eight workflows and four contract shards; squash-merged as `cabb1f44772795635ac953349386bee9e8dd5a4d`. Mandatory defection and player-controlled reconciliation or separation are preserved. Partial scope; return ready.
+
+**Next:** Complete remaining character evolution and relationship arcs; do not treat seeded logic acceptance as device/visual acceptance.

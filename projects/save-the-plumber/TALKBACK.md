@@ -65,3 +65,7 @@ Merged at `f724e64e` after all eleven latest-head workflows passed on `0238b659`
 ## 2026-11-26 PT | Reviewer | t-021 potting shed, kind_robots#5918
 
 Merged at `289d9554` after ten exact-head workflows passed on `3a1e86a4`. The authored room uses real pipe traversal and Pocket Lift interactions; preserve main-route reachability and validate the reusable crate with real-input tests. Partial World 1 scope; return to ready. Production deployment not verified.
+
+## 2026-11-26 PT | Reviewer | t-021 Foreman Flange, kind_robots#5922
+
+Merged at `43b56d73` after eleven implementation workflows and branch cleanup passed on `69d8caf0`. The roller-counter fortress and normal map handoff are covered by the updated encounter replay. Partial World 1 scope: original boss art and Wildwater remain. Deployment not verified.

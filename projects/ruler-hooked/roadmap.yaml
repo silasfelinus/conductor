@@ -63,7 +63,7 @@ milestones:
   status: done
 
 - id: m6
-  title: "COMPLETE GAME — kingdom branches, delivered art, console QA, adversarial runs and final verdict"
+  title: "COMPLETE GAME — kingdom branches, delivered art, console QA, adversarial runs and verified playtest readiness"
   weight: 120
   status: in-progress
 
@@ -82,15 +82,12 @@ tasks:
     direction, and the offline-at-runtime rule.
 - id: t-067
   title: 'Main-game standard: audit and close the gaps for The Ruler Is Hooked'
-  status: review
-  owner: worker
-  claimed_by: 20261127T004500Z-ruler-hooked-t067-account-5e8d
-  claimed_at: '2026-11-27T00:45:00Z'
+  status: ready
   milestone: m6
   stakes: reversible
   passes: 0
   depends_on: []
-  updated: '2026-11-27T00:51:00Z'
+  updated: '2026-11-27T01:19:00Z'
   note: |-
     Silas 2026-11-11 PT, in session: "Our games should all have a base standard of quality ... We want our main games to have 12 plus achievements." Standard: docs/agents/main-game-standard.md; CONTROL.md global overview.
 
@@ -137,6 +134,8 @@ tasks:
     Verified Kind Robots #5875 merged at 5145c12d01cd88369d192ef715a667b39f68a18b. All eight exact-head PR workflows on 202edbaf39627f03ab82f2b939d26f3caf21b809 passed, including Ruler Hooked 45747642890 and Contract Tests 45747642838; branch janitor 45748831846 also succeeded. Quiz checkpoint slice delivered. Return to ready for remaining live signed-in account and device standards verification; no deployed visual or account pass claimed.
 
     Kind Robots 8612663 adds automatic private archive pull and debounced backup, account-scoped local save namespaces, explicit legacy-device import, revision retry and reconnect handling, account-switch guards, and headless owner-isolation/restore regressions. Original guest saves preserved. CI and actual authenticated device QA remain; this is not final standard acceptance.
+
+    Kind Robots #5917 merged 2799e7fe723d139710b1aebf99763948e4a43cdc after all eight exact-head workflows on 11423901592e4f644ddcd7f932aaee6518f7f79b completed success (Ruler Hooked 45920709205, TypeScript 45920709211, Contract Tests 45920709118). Account autosync, scoped device storage, explicit legacy import and restore/isolation regressions delivered. Actual authenticated cross-device, audio playback and remaining standards evidence still required; no production deployment or live account mutation performed.
 
 - id: t-068
   title: 'The Ruler Is Hooked achievement upgrade: 12 or more live achievements'
@@ -627,8 +626,8 @@ tasks:
 - id: t-032
   milestone: m4
   title: 'FINAL HUMAN GATE ONLY: approve Ruler Hooked final design or request rewrites'
-  status: waiting
-  gate_human: true
+  status: cancelled
+  gate_human: false
   stakes: reversible
   passes: 0
   depends_on:
@@ -672,9 +671,13 @@ tasks:
     Request Rewrites from Silas. Old 'play and judge worth scaling' paragraphs
     above remain historical, NOT a gate to trigger now.
 
-  updated: '2026-10-25T00:54:00Z'
-  gate_reason: subjective-acceptance
-  gate_rechecked: '2026-09-30'
+    2026-11-26 PT SUPERSESSION: Silas agreed to retire this obsolete subjective
+    prerequisite in favor of the current CONTROL.md and main-game-standard.md.
+    Cancel this historical gate, not as an approval or playtest pass. t-051
+    owns verified readiness and the playtest/normal handoff. Human feedback,
+    creative signoff, deployment and publication remain separate approvals.
+
+  updated: '2026-11-27T01:30:00Z'
 - id: t-033
   milestone: m4
   title: Per-species visual theming of the timing bar
@@ -1035,6 +1038,10 @@ tasks:
     - t-048
     - t-049
     - t-050
+    - t-057
+    - t-058
+    - t-061
+    - t-067
   note: >-
     Master completion issue kind_robots#4144. Reconcile all previous tasks,
     art, quest story sources, world/fish ecology graph, saves, and app code.
@@ -1045,8 +1052,11 @@ tasks:
     art/text improvement and no queued mandatory art. Publish an inspectable
     final design readiness package with all legal ending witnesses, rendered
     screenshots, asset/quest/fish ledger, PRs, ArtJobs, CI and remaining risks.
-    Only once finished may the legacy t-032 become Silas's final gate.
-  updated: '2026-10-25T00:54:00Z'
+    When every finite build/art/QA task is verified and this dossier is complete,
+    follow CONTROL.md: move to playtest/normal and flag and close master issue
+    #4144. Do not require a subjective verdict before handoff; do not deploy or
+    publish without the separate authorization.
+  updated: '2026-11-27T01:30:00Z'
 - id: t-052
   milestone: m6
   title: 'Playbook Forge upgrade: literal Krea 2 prompts for 87 beats and the missing encounters and quests'
