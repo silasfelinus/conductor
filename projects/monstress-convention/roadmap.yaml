@@ -347,18 +347,15 @@ tasks:
   - id: t-020
     milestone: m3
     title: "Rig the Chapter 1 cast: Odette and Violet ghosts, Marta, Dolores, Gavin, Cleo"
-    status: claimed
-    owner: worker
+    status: ready
     passes: 0
     stakes: reversible
     depends_on: [t-018]
-    updated: '2026-11-28T08:55:02Z'
-    note: >-
-      Apply the t-018 rig to every Chapter 1 NPC with idle, talk and signature gestures (ghost
-      float, Marta's gloves, Gavin's long lens), queue any missing source art, retire the
-      vector sprites from gameplay. Later chapters rig their own cast in t-022..t-026.
-    claimed_by: 20261128T0840Z-t020-castart-p6d
-    claimed_at: '2026-11-28T08:55:02Z'
+    updated: '2026-11-28T09:07:48Z'
+    note: |-
+      Apply the t-018 rig to every Chapter 1 NPC with idle, talk and signature gestures (ghost float, Marta's gloves, Gavin's long lens), queue any missing source art, retire the vector sprites from gameplay. Later chapters rig their own cast in t-022..t-026.
+
+      Chapter 1 cast rig source art QUEUED, not delivered: conductor#8166 (squash d75bd366, all 24 head checks completed green) adds projects/monstress-convention/art/CH1-CAST-RIG-R1.yaml, round monstrique-cast-rig-1, krea2, general edition, private, priority 60, auto_submit. 12 cells, an A-pose (832x1216) and a talk/blink head sheet (1344x768) for each of Odette, Violet, Marta, Dolores, Gavin and Cleo (mc-rig-<name>-apose / -heads, seeds 1146001-1146012), matched to the CH1-CAST-AND-MOTEL-R1 designs; ghosts are solid pale figures so they cut, with glow and float added in engine. Marta's head sheet uses a brow dip in the blink cell behind her canon sunglasses. Remaining: ArtJob receipts and DONE ArtImages, then in kind_robots cut the parts with scripts/cut_monstrique_rig_parts.py, wire the rigs for idle, talk and signature gestures (ghost float, Marta's gloves, Gavin's long lens), and retire the vector sprites from gameplay.
   - id: t-021
     milestone: m3
     title: "Render the shipped cutscenes: painted 2D panels and animated key shots"
