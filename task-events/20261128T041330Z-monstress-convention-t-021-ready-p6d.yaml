@@ -1,0 +1,15 @@
+version: 1
+project: monstress-convention
+task: t-021
+operation: ready
+updated: '2026-11-28T04:13:30Z'
+note: >-
+  Panel art QUEUED (not delivered) via PR #8160 (merge ae1ed3a), krea2 1344x768, private, priority 60, auto_submit.
+  General: projects/monstress-convention/art/CUTSCENES-GENERAL-R1.yaml, 9 cells, one per general shot:
+  mc-cut-cold-open-1..4 (1145001-1145004), mc-cut-client-1/2 (1145005-1145006), mc-cut-elbow-1/2 (1145007-1145008),
+  mc-cut-car-1 (1145009); the murder shot is non-graphic (door and floating prop knife only). Mature, separate ledger
+  projects/monstress-convention/art/CUTSCENES-MATURE-R1.yaml (is_mature true), 3 cells: mc-cut-m-cold-open-2 "Bite Me"
+  (1145101), mc-cut-m-kiss-1 (1145102), mc-cut-m-kiss-2 (1145103). Mature cold-open shots 1, 3, 4 differ only in
+  caption and reuse the general paintings. Remaining: ArtJob receipts and DONE ArtImages, wiring the panels into the
+  cutscene player with captions and skip (mature panels served only through the server-gated route), optional
+  image-to-video for key shots, and tests that general and mature art never mix and nothing replays on load.
