@@ -1,0 +1,96 @@
+# MONSTRIQUE Chapter One ending plates, general edition, round 2 (2026-11-28 PT).
+# Task monstress-convention/t-015 (main-game standard item 6: every ending has its own painted plate).
+# One new plate and two repaints:
+#   fifth-hexblade  "The Fifth Hexblade", the third earned ending (kind_robots utils/monstressConvention/prologue.ts
+#                   CaseEnding). The lead is filed AND the bucket trail is followed: the knife carries the 1964
+#                   Beach Hex stamp, the lobby shrine holds four Hexblades over five dents in the velvet, the
+#                   missing ice bucket has a skin-tone greasepaint smear and Violet remembers cold cream. Norb:
+#                   "Chapter One is filed in full. Tomorrow we find out who made five knives." Reached in both
+#                   editions with the same general-safe text. Until this cell is delivered the game shows its
+#                   image-shaped fallback slot; the kit spec carries the brief and no src.
+#   lead-earned-r2, reckless-r2  repaints of ArtImages 270458 and 270459 (ENDINGS-STANDARD-ROUND-1.yaml), which
+#                   show the pre-2026-11-22 lead looks. Same scenes, canonical faces.
+# Canonical faces (CHARACTER-LOOKBOOK.md, Silas 2026-11-28 PT): the krea2 dialogue portraits Iris ArtImage 280896
+# and Norb ArtImage 280897. Every prompt below describes those designs in the same words as CH1-LEADS-RIG-R1.
+# Identity LoRAs are not trained, so cast_loras is false. Spoiler rule: Draculina and any culprit stay off the
+# art. General edition: is_mature false, fully clothed, comedy, adults only. Private. priority 60 (game art).
+# auto_submit: true. Delivery: public/monstress-convention/endings/<ending id>.webp in kind_robots, 1344x768 like
+# round 1; the repaints replace the round-1 files only after review of the delivered images.
+round: monstrique-endings-2
+series: monstrique-endings
+project_slug: monstress-convention
+designer: Monstrique Studio
+is_public: false
+is_mature: false
+cast_loras: false
+priority: 60
+auto_submit: true
+lanes:
+- key: krea2
+  label: Krea 2, painted 2D point-and-click adventure art
+  engine: krea2
+  prompt: prose
+subjects:
+- key: mc-ending-fifth-hexblade
+  lane: krea2
+  entity: monstrique-ending
+  title: 'Ending: The Fifth Hexblade (general)'
+  asset: monstress-convention/endings/fifth-hexblade
+  size: 1344x768
+  seed: 1144001
+  prompt_prose: Hand-painted 2D point-and-click adventure game ending illustration, bold ink outlines and flat cel
+    shading, warm lamplight and teal neon through rain-streaked blinds. Late night in a cramped roadside motel room
+    with flamingo wallpaper, where a big cork board covers one wall. Pinned to it in a neat fan are instant photos
+    of a glass lobby display case holding four jewelled daggers on purple velvet with an empty fifth dent glowing
+    under a camera flash, a dented metal ice bucket with a tan greasepaint smear on its handle, a pair of cheap
+    plastic vampire fangs, a close-up of a tiny maker's stamp on a dagger guard, and a glossy photo of seven glamorous
+    monster starlets on a stage. Bright red
+    string runs from every photo to a chalk outline of a fifth jewelled dagger drawn in the centre of the board. Iris
+    Quill, a sassy curvy adult woman about thirty, stands at the board pinning the last photo with a triumphant crooked
+    grin, a big messy shoulder-length mane of jet-black hair with one thick bold white streak, winged eyeliner, berry
+    lipstick, big gold hoop earrings, a belted rose-and-plum trench coat over a black crop top and a high-waisted black
+    pencil skirt, a chunky vintage press camera with a flash bulb on a strap across her body. Beside her Norb Vale,
+    a short stocky adult man about forty-five with a big round head, untidy brown hair greying at the temples, a round
+    bulbous pink nose, grey stubble and small round wire spectacles with a thick magnifying left lens that makes his
+    left eye look huge, wears a hot-pink T-shirt under a rumpled charcoal-grey suit jacket, a grey bow tie and bright
+    yellow rubber gloves, and points at the chalk dagger with a long wooden pointer held at arm's length, thrilled
+    and slightly queasy. Magenta, teal and violet neon noir palette, cheeky detective triumph.
+- key: mc-ending-lead-earned-r2
+  lane: krea2
+  entity: monstrique-ending
+  title: 'Ending: The Convention Lead (general), repaint with canonical faces'
+  asset: monstress-convention/endings/lead-earned-r2
+  size: 1344x768
+  seed: 1144002
+  prompt_prose: Hand-painted 2D point-and-click adventure game ending illustration, bold ink outlines and flat cel
+    shading. Night in a glittering convention hall lobby decorated with rubber bats and cobwebs. Iris Quill, a sassy
+    curvy adult woman about thirty with a big messy shoulder-length mane of jet-black hair with one thick bold white
+    streak, winged eyeliner, berry lipstick, big gold hoop earrings, a belted rose-and-plum trench coat over a black
+    crop top, a high-waisted black pencil skirt and scuffed black ankle boots, aims a chunky vintage press camera
+    with a popping flash bulb at a towering promotional display of seven glamorous adult monster starlets in costumes
+    from different decades, a werewolf woman, a lagoon woman, a mummy woman and four more. Beside her Norb Vale,
+    a short stocky adult man about forty-five with a big round head, untidy brown hair greying at the temples, a round
+    bulbous pink nose, grey stubble and small round wire spectacles with a thick magnifying left lens that makes his
+    left eye look huge, in a hot-pink T-shirt under a rumpled charcoal-grey suit jacket, a grey bow tie and bright
+    yellow rubber gloves, holds up a clear plastic evidence bag containing a jewelled 1960s stage prop dagger at arm's
+    length, triumphant and queasy, a neatly folded beach towel tucked under his arm. Magenta, teal and violet neon
+    noir palette, cheeky, victorious mood.
+- key: mc-ending-reckless-r2
+  lane: krea2
+  entity: monstrique-ending
+  title: 'Ending: A Headline Too Early (general), repaint with canonical faces'
+  asset: monstress-convention/endings/reckless-r2
+  size: 1344x768
+  seed: 1144003
+  prompt_prose: Hand-painted 2D point-and-click adventure game ending illustration, bold ink outlines and flat cel
+    shading. Late night in a shabby roadside motel room with flamingo wallpaper. On the desk a chunky beige 1990s
+    computer monitor blasts the room with harsh red light, the desk telephone rattles off its hook, and a wastepaper
+    basket beside the desk smokes with a small flame. Iris Quill, a sassy curvy adult woman about thirty with a big
+    messy shoulder-length mane of jet-black hair with one thick bold white streak, winged eyeliner, berry lipstick,
+    big gold hoop earrings and a belted rose-and-plum trench coat over a black crop top, stands with one hand over
+    her mouth, worried, her press camera hanging at her hip. Norb Vale, a short stocky adult man about forty-five
+    with a big round head, untidy brown hair greying at the temples, a round bulbous pink nose, grey stubble and small
+    round wire spectacles with a thick magnifying left lens that makes his left eye look huge, in a hot-pink T-shirt
+    under a rumpled charcoal-grey suit jacket, a grey bow tie and bright yellow rubber gloves, recoils from the keyboard
+    in horror, knocking over his chair. Through the rain-streaked window an angry crowd of monster fans in rubber masks
+    waves flashlights and foam pitchforks in the parking lot. Magenta, teal and violet neon noir palette, comic dismay.
