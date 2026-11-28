@@ -77,7 +77,7 @@ tasks:
     passes: 0
     stakes: reversible
     depends_on: t-003
-    updated: '2026-11-28T01:45:00Z'
+    updated: '2026-11-28T10:05:00Z'
     implementation_pr: 'silasfelinus/kind_robots#6003'
     note: >-
       Use existing queue with a stable request key and explicit queued/rendered/reviewed transitions. Need image preview, resubmission and all 78 faces + deck back.
@@ -87,6 +87,8 @@ tasks:
       2026-11-27 PT: merged in kind_robots#6003 (merge 311c4816; all 22 checks green on its head). Merged is not deployed. Remaining after deploy: in /admin/tarot generate one design sample set, confirm the ArtJobs render and link (Sync art), approve a design and verify a card variant at its final URL.
 
       2026-11-28 PT: deployed and live (/play/tarot 200; /api/tarot/reader and /api/collectibles/tarot respond). Decks bootstrapped in production (3 decks x 78 cards, 5 seeded designs each). Checkpoint style test added on kind-robots: designs 16-19 (Z-Image, Flux 2, DreamShaper XL SDXL, Arthemy Western Illustrious). Samples queued for all 19 designs: 95 ArtJobs 77627-77721 (0 enqueue failures), each linked to its TarotArt row. Remaining: renders finish, /api/tarot/art/sync links them, Silas compares and approves a design per deck, then the full set.
+
+      2026-11-28 09:35 UTC: 75 of 95 samples rendered, 0 failed; all 15 krea2 designs (5 styles x 3 decks) are done and the checkpoint tests (designs 16-19) are still queued. Gilded Art Nouveau reads strongest in all three decks. One recurring flaw: Kind Robots and Zuzu backgrounds fill with crowds, traced to the seed recipe ending on each deck's plural style lead; kind_robots#6069 stages one named cast per face, makes SuperKate's figure explicitly adult, and upgrades untouched stored prompts via the admin bootstrap (edited prompts kept). After it deploys, run the bootstrap and re-sample one design to compare. Remaining: Silas approves a design per deck, then the full set.
   - id: t-005
     milestone: m2
     title: 'Finish bespoke deck bibles and printable content for SuperKate, Kind Robots and Zuzu'
