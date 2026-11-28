@@ -123,12 +123,12 @@ tasks:
       Full history: projects/crystal-street/HISTORY.md#t-001
   - id: t-024
     title: 'Main-game standard: audit and close the gaps for Terrors on Crystal Street'
-    status: review
+    status: ready
     milestone: m3
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-28T00:26:00Z'
+    updated: '2026-11-28T01:46:35Z'
     note: |-
       Silas 2026-11-11 PT, in session: "Our games should all have a base standard of quality ... We want our main games to have 12 plus achievements." Standard: docs/agents/main-game-standard.md; CONTROL.md global overview.
 
@@ -158,10 +158,8 @@ tasks:
       and t-026 rendered coverage remain. Return to ready.
 
       Scoped console settings/achievements slice: persistent effects and music volume, immediate mixer gain and title achievements entry, with regression assertions. Remaining t-024 account saves and other standard evidence stay open; return to ready after merge.
-    owner: worker
-    claimed_by: 20261128T0021Z-crystal-street-t024-f4c19a
-    claimed_at: '2026-11-28T00:21:00Z'
-    implementation_pr: 'silasfelinus/kind_robots#5252'
+
+      Merged kind_robots#6021 (459343a) settings/title achievements; stale trailer attribute assertion fixed by merged #6022 with green latest CI. Account-backed saves and reading speed remain; return to ready.
   - id: t-025
     title: 'Terrors on Crystal Street achievement upgrade: 12 or more live achievements'
     status: done
@@ -218,18 +216,17 @@ tasks:
   - id: t-004
     milestone: m2
     title: "Art round 2: encounter scene plates (every lead, signature, finale, beat, deck card and meeting)"
-    status: review
+    status: ready
     depends_on: t-003
-    owner: worker
     passes: 0
     stakes: reversible
     note: |-
       Round 2 encounter scene plates. art/ROUND-2-SCENES.yaml: 466 missing scene prompts, 33 already delivered as of Nov 2. Historical first 180: 96 keep/exported, 84 redo. Check current ledger/job receipts first; curate actual pixels (text/signage, signature props, monster/head counts), repair rejects once genuinely needed, export approved scenes to public/crystal-street/scenes/<id>.webp using export_crystal_street_art.py and verify runtime. No new queue or approval assumed. Full prior note: ROADMAP-HISTORY-2026-11-26.md#t-004.
 
       Reconciled six ledgers against Kind Robots main: all 466 scene requests have DONE receipts; 96 present, 84 explicitly rejected, 286 missing with usable receipt candidates. Round three has 2728 outcome and 17 item render IDs and nine ending retakes missing from runtime paths. Prepared authenticated private preview linkage for 3040 existing ArtImages, preserving existing files and excluding known rejects; no new jobs. Partial scope: physical durable delivery, known rejects, live verification and t-005 completion remain.
-    updated: '2026-11-28T00:33:00Z'
-    claimed_by: 20261128T0027Z-crystal-street-t004-c08ab1
-    claimed_at: '2026-11-28T00:27:00Z'
+
+      Merged kind_robots#6022 (63c99f6), latest pre-merge check suite green. Recovered 3040 existing private ArtImage runtime paths; known scene rejects and durable non-admin delivery remain. Return to ready for targeted correction, do not re-render recovered assets.
+    updated: '2026-11-28T01:46:35Z'
 
   - id: t-005
     milestone: m2
