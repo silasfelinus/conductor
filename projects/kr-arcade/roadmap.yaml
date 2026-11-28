@@ -1541,11 +1541,11 @@ tasks:
   - id: t-092
     milestone: m8
     title: "Glitch Garden depth slice 5: Two sprayers and the modes"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: krarcade092-20261128-coop-6cfb28
     claimed_at: '2026-11-28T09:42:48.666Z'
-    updated: '2026-11-28T09:42:48.666Z'
+    updated: '2026-11-28T09:43:59.766Z'
     passes: 0
     stakes: reversible
     depends_on: t-091
@@ -1555,6 +1555,8 @@ tasks:
       Implemented first t-092 tranche: Endless Lawn seasonal five-wave rollover with main ranked board; UTC-seeded Daily Garden with deterministic layout and personal daily best; campaign save isolation; permanent per-wave medal masks and medal board; eight mastery goals and focused contracts. Branch worker/kr-arcade-t092-modes-8d926a head d307e7d0. Runtime CI pending. Remaining t-092: independently controlled two sprayers, Crossfire, split-bed Garden Rivals, integration and campaign regression QA. No human gate.
 
       #6059 merged 3ddf63a4; all substantive checks passed, including actual full campaign workflow 140929864195. Endless Lawn, seeded Daily Garden, save isolation, medals and mastery complete. Remaining two-player co-op, Crossfire, Garden Rivals and multiplayer contracts.
+
+      Two seated players now move and fire independently on the shared garden, share prisms and lives, and earn Crossfire when different players fix segments of the same worm lineage within 30 ticks. Garden Rivals is a local 90-second or wave-clear match with mirrored lamp layout, split bed, independent segment totals and respawn shields, isolated from campaign and ranked scores. Added multiplayer contracts and two-seat registry wiring. Branch worker/kr-arcade-t092-coop-6cfb28 head 905c086b. Runtime CI pending; verify full Glitch Garden workflow and multiplayer integration before final closure.
 
   - id: t-093
     milestone: m8
