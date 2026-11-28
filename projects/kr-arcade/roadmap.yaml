@@ -1541,11 +1541,8 @@ tasks:
   - id: t-092
     milestone: m8
     title: "Glitch Garden depth slice 5: Two sprayers and the modes"
-    status: review
-    owner: worker
-    claimed_by: krarcade092-20261128-modes-8d926a
-    claimed_at: '2026-11-28T08:59:03.541Z'
-    updated: '2026-11-28T09:00:30.235Z'
+    status: ready
+    updated: '2026-11-28T09:41:57.304Z'
     passes: 0
     stakes: reversible
     depends_on: t-091
@@ -1553,6 +1550,8 @@ tasks:
       CABINETS.md section 13, Glitch Garden (Centipede riff), slice 5 of 5: Two sprayers and the modes. The upgrade is "The Four Seasons of the Glitch". Spec: projects/kr-arcade/depth-pass/CABINETS.md -- read the game's section first; this slice's scope is item 5 under its '#### Slices', and 'Rules for every slice' at the top applies. Code: kind_robots utils/arcade/games/ (registry slug glitch-garden). Silas, 2026-10-11: "I need an assessment done of the other arcade games. I want the same level of quality improvements, they should not just be thin veneers of the old games. But newer, better, even more awesome."
 
       Implemented first t-092 tranche: Endless Lawn seasonal five-wave rollover with main ranked board; UTC-seeded Daily Garden with deterministic layout and personal daily best; campaign save isolation; permanent per-wave medal masks and medal board; eight mastery goals and focused contracts. Branch worker/kr-arcade-t092-modes-8d926a head d307e7d0. Runtime CI pending. Remaining t-092: independently controlled two sprayers, Crossfire, split-bed Garden Rivals, integration and campaign regression QA. No human gate.
+
+      #6059 merged 3ddf63a4; all substantive checks passed, including actual full campaign workflow 140929864195. Endless Lawn, seeded Daily Garden, save isolation, medals and mastery complete. Remaining two-player co-op, Crossfire, Garden Rivals and multiplayer contracts.
 
   - id: t-093
     milestone: m8
