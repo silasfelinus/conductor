@@ -20,7 +20,7 @@ milestones:
   - id: m1
     title: "MOTEL CASE OPEN — shipped Chapter 1, strengthen Iris-first interaction"
     weight: 20
-    status: in-progress
+    status: done
   - id: m2
     title: "MOTEL AND CITY — dual ghost evidence and a fair branching investigation"
     weight: 45
@@ -95,19 +95,15 @@ tasks:
   - id: t-003
     milestone: m1
     title: "Motel and city room graph, Iris-first hotspots, verbs, inventory and persistent save"
-    status: ready
+    status: done
     depends_on: t-001
-    updated: '2026-11-27T12:30:00Z'
+    updated: '2026-11-28T03:39:13Z'
     passes: 0
     stakes: reversible
-    note: |-
-      Build deterministic 2D Iris-led point-and-click scene engine (not a card-choice engine). Walk/Look/Talk/Take/Use/Combine/Photograph/Consult Norb; touch, mouse and keyboard parity; bounded notebook/map sheets and versioned save. Baseline hotel rooms, verb actions and a versioned save already exist in the merged Chapter 1 (kind_robots#4867/#4979): audit and extend, do not reimplement them. Remaining acceptance: real spatial click-to-walk, keyboard/touch parity, inventory combine, reachable map shortcuts, reload and edge-case regressions.
+    note: >-
+      Build deterministic 2D Iris-led point-and-click scene engine (not a card-choice engine).
 
-      2026-11-11 PT: Submitted a first t-003 movement and inventory increment in kind_robots: point-to-walk, keyboard hotspot cycling, and deterministic item-to-item combination with general/mature audience guards and regression coverage. Remaining t-003 acceptance (full pathfinding, shortcuts and exhaustive cross-width QA) stays open after this slice.
-
-      2026-11-11 PT: First t-003 slice shipped in kind_robots#5029 (squash 7ad1136). The scene now supports tap-to-walk and arrow-key hotspot cycling; the engine supports guarded item-to-item combining and a new optional saved fang-photo clue. General/mature access and Norb restrictions have regression coverage. All six latest-head GitHub workflows passed, including TypeScript and all contract shards. Remaining t-003: full 2D pathfinding, more substantive combination puzzles, convenient room shortcuts, explicit cross-width visual QA and reload edge cases. Return task to ready rather than falsely mark complete.
-
-      2026-11-27 PT: kind_robots#5989 merged (squash 7c49479) after all eleven checks were green, including TypeScript and the four contract shards. Shipped: per-room walk areas with deterministic grid A* and line-of-sight smoothing (utils/monstressConvention/navigation.ts). Iris walks x/y multi-segment paths around furniture and bodies with depth scaling; Norb follows at a germ-safe distance; WASD walking for keyboard parity (arrows still cycle hotspots); a map drawer Shortcuts list that routes door by door through travel/travelForAudience, so every gate and edition filter applies. Also an optional unscored camera+purse compact-shade comparison (needs the bucket smear; max stays 205), and restoreCase repairs (gated rooms fall back, unknown items/clues/topics dropped, duplicates removed, camera restored, empty transcript reseeded). Contract test verifyMonstriqueNavigation.test.ts. Local nuxi dev plus Playwright on /play/monstrique at 390/768/1440: walk, WASD, hotspot approach and shortcut all worked, with no page errors or horizontal overflow. Remaining t-003: per-exit entry points and re-fitting WALK_AREAS to the painted backgrounds once t-014/t-009 art lands. Puzzle webs stay in t-006. Returned to ready, not done.
+      Full history: projects/monstress-convention/HISTORY.md#t-003
   - id: t-004
     milestone: m2
     title: "Iris field agency, Norb deductions and shared dual-ghost reactive topics"
