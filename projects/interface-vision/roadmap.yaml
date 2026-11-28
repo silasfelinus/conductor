@@ -2394,7 +2394,10 @@ tasks:
 - id: t-143
   milestone: m6
   title: "Viewport-first sweep of public games and interactive play surfaces"
-  status: ready
+  status: review
+  owner: worker
+  claimed_by: 20261127T232600Z-interface-vision-t143-fc81b7
+  claimed_at: '2026-11-27T23:26:00Z'
   passes: 0
   stakes: reversible
   note: |-
@@ -2424,7 +2427,9 @@ tasks:
     Silas reported the Arcade header and content retaining portrait width after rotating an iPad to landscape. Scoped shared-shell fix sizes width directly from dynamic viewport units with a legacy vw fallback. Added same-document WebKit portrait/landscape/portrait regression to the existing responsive audit, checks viewport/shell/header/main/hall geometry and card grid reflow, and tests the stale-width failure fixture. Kind Robots commit 11dcf17314fc846996a5d705d659e104026c8ee1; CI and post-deploy actual WebKit proof pending. No gameplay, schema or deployment changes. Partial t-143; return to ready after merge.
 
     pr-medic 2026-11-24: kind_robots#5726 (tablet-rotation shared-shell width fix + WebKit rotation audit) was red on Contract shard 2/4 because verifyWorkflowPaths flagged the runtime screenshot dir audit-shots/tablet-rotation; allowlisted it (commit 2833dff5), all checks green, squash-merged as f2ad46aa. Partial t-143 per the PR handoff; released to ready. Real-iPad / post-deploy WebKit geometry proof still outstanding.
-  updated: '2026-11-24 12:05:00+00:00'
+
+    Scoped tablet regression follow-up: Kind Robots commit a453e852 adds measured live viewport width with rotation settling, shared shell/root sizing and regression assertions for stale dimensions. Prior production WebKit audit passed despite physical iPad report. Return to ready after scoped merge; physical-device verification outstanding.
+  updated: '2026-11-27T23:30:00Z'
 
 - id: t-144
   milestone: m6

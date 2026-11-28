@@ -6,6 +6,7 @@ autonomous: true
 goal: >-
   Ship MONSTRIQUE, an original art-led point-and-click mystery: Iris investigates Odette and Violet's murders with Norb and two ghost witnesses, fair evidence/verb puzzles, connected city sites, optional consensual adult romance and evidence-driven endings. Keep a safe general edition and strictly server-authorized mature opt-in extras; verify saves, full story, art, security and device QA. Existing route approval remains scoped; further publication separately gated.
 notes_from_silas: |
+  2026-11-27 PT ANIMATION AND REPLAN: "I like the cut out rig. And yes on replan and art" — characters animate in-engine as 2D cut-out rigs (layered parts: head, torso, limbs, mouth/eye shapes with pivots) for walk/idle/talk/gesture; cutscenes may use rendered video separately. Roadmap re-planned into per-chapter tasks (t-022..t-026) and explicit art-integration, rig, object-state and cutscene tasks (t-017..t-021); delivered Chapter 1 art goes into the game now (t-017).
   2026-11-22 PT LEAD REDESIGN: "The two leads are vitally important to the flavor of the game, and both are falling short." Iris: black hair with a white streak, sassy tramp vibe but positive, open hearted, curious, sharp tongue, brave. Norb: a little person, ugly misshapen features, wide open eyes one larger than the other, heavy lids, Quasimodo x Igor x Peter Lorre drawn like a 1990s TV cartoon. Each act deals with a former member who had an issue with the agent; a bayou trailer park where the fish lady lives, pregnant with tadpole-to-teen younglings and helpful adult daughters. See CHARACTER-LOOKBOOK.md "The two leads" and "Laguna Brine and the bayou brood", STORY-BIBLE.md "Act spine".
   2026-11-07 PT LATEST ACCESS DIRECTIVE: MONSTRIQUE is one point-and-click game with two editions. General edition is playable by guests, mature-off adults and CHILD accounts with covered, non-graphic murder aftermath, public-safe dialogue/locations/art, no sexual/romance interactions or adult scrapbook; retain all required clues, witnesses and endings. Mature extras unlock only for signed-in non-CHILD adults with persisted `showMature: true`, server-enforced on APIs and ArtImage delivery. Separate save and progress namespaces; new content defaults hidden from general until explicitly safe-listed. Keep /admin/monstrique a restricted creator studio. Public Play route and external publication await actual visual/security human approval. See DESIGN-BRIEF.md "Access and release" and kind_robots PR #4903.\n  2026-11-07 PT LATEST CAST DIRECTIVE: Draculina is an original charter member but appears about 20, younger-looking than every other star; her clique-leader/high-school mean-girl demeanor hides centuries of calculation. Siobhan MacRae (The Pack) is the second-youngest in apparent age, a Scottish former were-pop singer with an unresolved frenemy rivalry against were-panther Nyx Sable. Cleo Pappatra appears and behaves among the oldest, with real mature mummy-star gravitas. Albina / Allie Gator is NOT a never-hired wannabe: she was a billed 1963 founding Monstrique performer removed before Beach Hex, now a huge fully reptilian albino alligator hiding in the motel sewers, staging tragic old-star comebacks amid rotting memorabilia. Preserve the seven official album-era expulsions in addition to this secret pre-album erasure. See FRANCHISE-HISTORY.md and CHARACTER-LOOKBOOK.md; art prompts, dialogue, scrapbook clues must reflect this.
   2026-11-07 PT: "I like draculina for the villain. But in the last act. The mummy should be named Cleo Pappatra" — Draculina is the killer, revealed in Chapter 6 (Marta the invisible drummer is the misdirect); the mummy star is Cleo Pappatra, replacing Celestine Veil / Nefertari everywhere. See STORY-BIBLE.md "The case".
@@ -52,9 +53,11 @@ tasks:
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-12T03:41:01Z'
+    updated: '2026-11-27T23:25:00Z'
     note: |-
       Main-game standard: STANDARD-AUDIT-2026-11-12.md and docs/agents/main-game-standard.md. #5061 merged 22da02d after six green workflows: title Achievements sheet, endings scrapbook, truthful browser-local settings and double-confirmed edition-scoped reset, other edition/account achievements untouched. Remaining account-backed saves, sound/music volume, finished-run history, delivered painted ending plates, additional earned endings, replay/customization and full acceptance. Verify 12+ achievements, accessibility and scope against audit; preserve edition/CHILD gates. Full prior note: ROADMAP-HISTORY-2026-11-26.md#t-015.
+
+      2026-11-27 PT: three main-game-standard gaps closed, each merged after every latest-head check was green. (1) Account-backed saves, kind_robots#6005 (squash 407ae1e): GET/PUT /api/monstrique/account-save on the shared ArcadeCabinetSave table. The slot is monstrique-general or monstrique-mature, chosen server-side by monstriqueAudienceFor. Human sessions only; revisioned writes with 409 on conflict; edition mismatch refused; the general slot rejects mature-only flags and items; 512 KB cap. The public store syncs automatically (newest wins, a fresh device adopts the account copy, scrapbook unlocks merge permanently), and the title sheet shows sync status. (2) Sound and music, kind_robots#6006 (squash 385e91e): seven original procedural WebAudio themes, a rain bed and comic cues; gesture unlock; persisted master/music/effects/mute sliders on the title settings sheet; the kit Sound setting honoured. Real-Chromium check at 390/1440: the AudioContext runs after the first tap and the slider persists. (3) Ending plates, kind_robots#6007 (squash 4c62090): delivered ArtImages 270458 (lead-earned) and 270459 (reckless), both isMature false, committed as static webp and wired as src/alt in both editions' endings and on the ending card. They show the pre-2026-11-22 lead looks; a repaint is optional. Remaining t-015: finished-run history, a third earned ending, replay/customization (or Silas's character-customization exception, per the audit's B), a cross-device save round trip on the deployed build after Force Update, and full acceptance. Returned to ready, not done.
   - id: t-016
     title: 'MONSTRIQUE achievement upgrade: 12 or more live achievements'
     status: done
@@ -102,8 +105,8 @@ tasks:
   - id: t-004
     milestone: m2
     title: "Iris field agency, Norb deductions and shared dual-ghost reactive topics"
-    status: waiting
-    depends_on: t-003
+    status: ready
+    depends_on: []
     owner: null
     passes: 0
     stakes: reversible
@@ -111,11 +114,14 @@ tasks:
       Iris physical agency and Norb contact aversion, dual ghost branches and shared discovery,
       clue/evidence comparisons, replay transcript, protagonist inventory and agency.
       Current Chapter 1 already has Iris/Norb switching and two independently interrogable ghosts. Extend the shared notebook, clue comparisons and dialogue exhaustion for later chapters; validate every required topic has a secondary route and that Norb cannot physically manipulate objects.
+
+      2026-11-27 PT replan: the shared engine this needs shipped (kind_robots#4867/#4979/#5029/#5989); t-003's remainder is art refit, now in t-017. Ready for Chapter 1 depth: shared notebook comparisons, dialogue exhaustion, a Norb-only deduction per room.
+
   - id: t-005
     milestone: m2
     title: "Agent and companion double murder, two ghost witnesses and knife opening"
-    status: waiting
-    depends_on: t-003
+    status: ready
+    depends_on: []
     owner: null
     passes: 0
     stakes: reversible
@@ -123,11 +129,14 @@ tasks:
       Replace old Celestine-murder prologue with OPENING-SLICE.md, two bodies and two ghosts.
       At least two crime-room access paths, double-murder timeline, two ghost witnesses, red herring
       exoneration and a self-contained prototype ending. The shipped opening already has two victims, two ghosts and a Gavin exoneration route (kind_robots#4867/#4903). Finish the alternative ice/knife paths and fail-forward mini-case in OPENING-SLICE.md, test both audience editions, and avoid replacing working content wholesale. All paths graph-tested.
+
+      2026-11-27 PT replan: two victims, two ghosts and the Gavin exoneration already ship; remaining here is the alternative ice/knife access paths and the fail-forward mini-case from OPENING-SLICE.md.
+
   - id: t-006
     milestone: m2
     title: "Expand motel then unlock the separate convention, joke shop, mansion and sewers"
     status: waiting
-    depends_on: t-005
+    depends_on: [t-022, t-023, t-024, t-025, t-026]
     owner: null
     passes: 0
     stakes: reversible
@@ -138,11 +147,14 @@ tasks:
       Hex & Giggles. Chapter hubs return to Room 205; unlocks follow clue progress.
       Build item-puzzle webs, reactivity, map shortcuts and authored object look lines.
       No empty filler room or arbitrary inventory combinations.
+
+      2026-11-27 PT replan: UMBRELLA. Each chapter's locations, cast, puzzles and art are now their own task (t-022 Ch2 to t-026 Ch6). Closes when they do.
+
   - id: t-007
     milestone: m2
     title: "Two-ghost testimony, agent-deals clue graph and exoneration of the stalker"
     status: waiting
-    depends_on: [t-004, t-006]
+    depends_on: [t-004, t-026]
     owner: null
     passes: 0
     stakes: reversible
@@ -154,6 +166,9 @@ tasks:
       order and re-interview in Chapter 6. Never name Draculina as culprit in
       player-facing material before the last-act reveal. Evidence and bad
       accusations must fail forward; every route is graph-tested.
+
+      2026-11-27 PT replan: cross-chapter fair-play validation (two routes to every required clue, Marta misdirect then reversal) once Chapter 6 exists.
+
   - id: t-008
     milestone: m3
     title: "Consensual opt-in romances, dual ghosts, MONSTRIQUE idol arcs and scrapbook"
@@ -170,7 +185,7 @@ tasks:
     milestone: m3
     title: "Attach delivered character/scene art, cutscenes and audio to playable environments"
     status: waiting
-    depends_on: [t-005, t-014]
+    depends_on: [t-017, t-019, t-020, t-021]
     owner: null
     passes: 0
     stakes: reversible
@@ -182,11 +197,14 @@ tasks:
       mature-only entitlements and missing-art fallbacks. Do not requeue approved
       title/Play hero or mature splash: kind_robots#4992/#5012 already shipped.
       This is GAME INTEGRATION; t-014 owns the independent initial render batch.
+
+      2026-11-27 PT replan: UMBRELLA. Chapter 1 art integration is t-017, cut-out rig t-018, object states t-019, cast rigs t-020, cutscene rendering t-021; later chapters integrate their own art in t-022..t-026.
+
   - id: t-010
     milestone: m3
     title: "Evidence-driven conclusions and Monstrique character/art scrapbook"
     status: waiting
-    depends_on: [t-007, t-008]
+    depends_on: [t-007, t-008, t-026]
     owner: null
     passes: 0
     stakes: reversible
@@ -199,6 +217,9 @@ tasks:
       reviewed change against STORY-BIBLE.md and FRANCHISE-HISTORY.md, never
       an automatic silent sync. Include a spoiler-free title trailer and a
       playtest-backed Saga growth budget.
+
+      2026-11-27 PT replan: Chapter 6 (t-026) builds the finale scenes; this task owns the five endings' consequences, plates and the full scrapbook.
+
   - id: t-011
     milestone: m4
     title: "Security regression suite for mature opt-in and CHILD restrictions across all discovery and direct access"
@@ -226,22 +247,21 @@ tasks:
       All known production art actually verified before reporting fully done.
   - id: t-013
     milestone: m4
-    title: "Silas final-game visual acceptance and distinct approval for additional public promotion"
+    title: "Verified MONSTRIQUE production playtest handoff"
     status: waiting
     depends_on: t-012
-    gate_human: true
-    gate_reason: publish
     owner: null
     passes: 0
-    stakes: outward-facing
+    stakes: reversible
     note: >-
-      FOR SILAS: The general Play route and dual editions were explicitly approved and merged
-      in kind_robots#4903; do not re-gate or hide that already authorized general
-      experience. Review the COMPLETE chapter arc, delivered art and both audience
-      modes at phone/tablet/desktop. Separately approve any new public marketing,
-      home promotion, launch claim or broader mature-content publishing; the
-      Studio and mature-only assets stay ADMIN/opt-in restricted as appropriate.
-      Never infer full-game creative acceptance from approval of a prior PR.
+      Verify the complete chapter arc, delivered art, both audience modes at phone/tablet/desktop
+      and all finite QA, including t-011 mature/CHILD security. Follow CONTROL.md for
+      playtest/normal and flag and close the master issue without a human verdict. The general
+      Play route and dual editions were approved in kind_robots#4903; do not re-gate them. New
+      public marketing, home promotion, launch claims or broader mature-content publishing remain
+      separately gated; preserve all ADMIN/opt-in/age restrictions. No new publication is
+      authorized. Prior gate wording is preserved in Git history; no approval is inferred.
+
   - id: t-014
     milestone: m3
     title: "Produce first motel/cast art batch with verified ArtJob and ArtImage ledger"
@@ -273,3 +293,141 @@ tasks:
       ice alcove, balcony, Room 205 with covered victims, 207, 204). Remaining: record
       ArtJob/ArtImage ids and verified final URLs, Silas's face pick, then LoRA datasets.
     updated: '2026-11-27T11:55:25Z'
+  - id: t-017
+    milestone: m3
+    title: "Chapter 1 delivered art in the game: painted rooms, cast figures, walk areas refit"
+    status: done
+    passes: 0
+    stakes: reversible
+    depends_on: []
+    updated: '2026-11-28T01:15:31Z'
+    note: >-
+      Replace the hand-coded SVG room paintings and vector cast with round CH1-CAST-AND-MOTEL-R1 (ArtImages 280896-280913, all DONE): seven painted backgrounds, stage figures cut out with transparent backgrounds, ghost expression sheets for dialogue portraits.
+
+      Full history: projects/monstress-convention/HISTORY.md#t-017
+    claimed_by: 20261127T2350Z-t017-ch1-art-p6d
+    claimed_at: '2026-11-27T23:47:40Z'
+  - id: t-018
+    milestone: m3
+    title: "Cut-out character rig: layered parts, pivots and in-engine walk, idle, talk and gesture"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: []
+    updated: '2026-11-27T23:45:00Z'
+    note: >-
+      Silas 2026-11-27 PT chose the cut-out rig. Define a rig format (part images or clip regions
+      over a neutral A-pose cutout, pivots, z-order, mouth and eye swaps), an animation player
+      (idle breathe and blink, two-direction walk cycle synced to path speed, talk mouth flaps,
+      point, reach/pick-up, recoil) with reduced-motion fallbacks, and queue the source art
+      (neutral A-pose full bodies plus mouth/eye shape sheets). Iris and Norb first, replacing
+      their vector rigs; regression tests on pivots, frame timing and fallbacks.
+  - id: t-019
+    milestone: m3
+    title: "Interactive object states and interaction animation"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: [t-017, t-018]
+    updated: '2026-11-27T23:45:00Z'
+    note: >-
+      Objects drawn as their own layers with states driven by case flags: Room 205 door
+      opening, ice machine shudder on the double clank, taken items leaving the scene, the
+      purse and knife bagged, vending machine dispense. Iris reaches/uses in sync with verb
+      results; Norb recoils on contact jokes. Both editions; tests per state.
+  - id: t-020
+    milestone: m3
+    title: "Rig the Chapter 1 cast: Odette and Violet ghosts, Marta, Dolores, Gavin, Cleo"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: [t-018]
+    updated: '2026-11-27T23:45:00Z'
+    note: >-
+      Apply the t-018 rig to every Chapter 1 NPC with idle, talk and signature gestures (ghost
+      float, Marta's gloves, Gavin's long lens), queue any missing source art, retire the
+      vector sprites from gameplay. Later chapters rig their own cast in t-022..t-026.
+  - id: t-021
+    milestone: m3
+    title: "Render the shipped cutscenes: painted 2D panels and animated key shots"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: [t-017]
+    updated: '2026-11-27T23:45:00Z'
+    note: >-
+      Cold Open, Your New Client, Elbow Deep, A Cold Kiss (mature only) and Get the Car:
+      queue painted panel art per shot from utils/monstrique/cutscenes.ts, optionally
+      image-to-video for key shots, and play them in the cutscene player with captions and
+      a skip. General and mature art never mixed; never replays on load.
+  - id: t-022
+    milestone: m2
+    title: "Chapter 2, Beach Hex: drive-in and Francesca's science-cinema"
+    status: ready
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: []
+    updated: '2026-11-27T23:45:00Z'
+    note: >-
+      STORY-BIBLE.md chapter plan row 2 and act spine (Francesca Stein, cut 1964). Queue the
+      chapter's art round first (backgrounds, cast figures, rig sources), then build the
+      locations, cast topics and dialogue, the 1964 reel / prop invoice / scratched sleeve
+      puzzles with two routes per required clue, Room 205 ghost reactions and the next Harker
+      File, score/achievement hooks and both editions. Ends "I made five knives".
+  - id: t-023
+    milestone: m2
+    title: "Chapter 3, Brine Bottoms: bayou trailer park, bait shop, airboat, bar, Velvet Crypt"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: [t-022]
+    updated: '2026-11-27T23:45:00Z'
+    note: >-
+      Chapter plan row 3 and the Laguna Brine bayou brood (CHARACTER-LOOKBOOK.md). Same
+      shape as t-022: art round first, locations, cast, the reversed 1974 credit, fish-stick
+      licensing and 2017 look-alike contract puzzles, pawned Hexblade, Room 205 return.
+  - id: t-024
+    milestone: m2
+    title: "Chapter 4, Silver Bite: Cleo's couture house, Draculina's mansion, the hot tub"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: [t-023]
+    updated: '2026-11-27T23:45:00Z'
+    note: >-
+      Chapter plan row 4: 1986 credit erasure, the makeup "shade for people with no shade",
+      Draculina's on-camera alibi that seems to clear her, Vespa and Blobzo. Never reveal
+      Draculina as culprit. Mature hot-tub content stays opt-in; general edition keeps every clue.
+  - id: t-025
+    milestone: m2
+    title: "Chapter 5, Six Decades of Screams: convention, NEXT stage, dive bar, sewers"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: [t-024]
+    updated: '2026-11-27T23:45:00Z'
+    note: >-
+      Chapter plan row 5: Siobhan's alibi, Albina in the sewers and the hatch, the five
+      Hexblades; ends with everything pointing at Marta (the misdirect, accusable as Little
+      Miss Scapegoat).
+  - id: t-026
+    milestone: m2
+    title: "Chapter 6, Last Call Again: clear Marta, break the alibi, unmask Draculina"
+    status: waiting
+    owner: null
+    passes: 0
+    stakes: reversible
+    depends_on: [t-025]
+    updated: '2026-11-27T23:45:00Z'
+    note: >-
+      Chapter plan row 6 and STORY-BIBLE "The case": mist photo, alibi tape, Marta's
+      testimony, the costume order, Violet re-asked; the confrontation and the five endings'
+      scenes (consequences and plates in t-010). Fair-play validation in t-007.

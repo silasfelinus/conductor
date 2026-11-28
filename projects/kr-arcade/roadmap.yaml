@@ -77,12 +77,12 @@ milestones:
   - id: m11
     title: "SHARE READY — a publicly shared cabinet link lands well for a first-time visitor"
     weight: 25
-    status: in-progress
+    status: done
 
   - id: m12
     title: "SUPERKATE'S SPECTRUM — complete bubble-puzzle story campaign and high-priority art"
     weight: 80
-    status: in-progress
+    status: done
 
 tasks:
   - id: t-001
@@ -1507,9 +1507,11 @@ tasks:
   - id: t-090
     milestone: m8
     title: "Glitch Garden depth slice 3: Autumn and Winter"
-    status: ready
-    owner: null
-    updated: '2026-11-27T07:00:47Z'
+    status: review
+    owner: worker
+    claimed_by: krarcade090-20261127T2346Z-e82d71
+    claimed_at: '2026-11-27T23:46:00Z'
+    updated: '2026-11-27T23:47:00Z'
     passes: 0
     stakes: reversible
     depends_on: t-089
@@ -1534,7 +1536,12 @@ tasks:
       https://github.com/silasfelinus/kind_robots/pull/5575 merged as partial scope. Frost
       sprite, Frost Millipede and eight-garden QA remain. Returned to ready; no human approval
       or deployment inferred.
-    implementation_pr: 'silasfelinus/kind_robots#5575'
+
+      Implemented a seeded moving Frost Sprite that freezes exposed lamps, respects lit heaters, can be sprayed for points, and resets across waves and deaths. Added targeted winter regression coverage. Partial scope; Frost Millipede and full campaign QA remain.
+
+      kind_robots#6014 merged after all substantive latest-head checks passed. Frost Sprite shipped; Frost Millipede and full eight-garden QA remain.
+
+      Implemented the fourth seasonal boss at wave 44: three frost-armored phases, reflected heater attacks, collision in the final coil, and campaign progression. Updated four test suites. Remaining full campaign and rendered QA; no task completion claimed.
 
   - id: t-091
     milestone: m8
@@ -1922,38 +1929,32 @@ tasks:
   - id: t-114
     milestone: m8
     title: "Rain Catcher depth slice 1: Reading the sky"
-    status: claimed
+    status: done
     passes: 0
     stakes: reversible
-    note: |-
-      CABINETS.md section 19, Rain Catcher (Missile Command riff), slice 1 of 4: Reading the sky. The upgrade is "Gardens of the World". Spec: projects/kr-arcade/depth-pass/CABINETS.md -- read the game's section first; this slice's scope is item 1 under its '#### Slices', and 'Rules for every slice' at the top applies. Code: kind_robots utils/arcade/games/ (registry slug rain-catcher). Silas, 2026-10-11: "I need an assessment done of the other arcade games. I want the same level of quality improvements, they should not just be thin veneers of the old games. But newer, better, even more awesome."
+    note: >-
+      CABINETS.md section 19, Rain Catcher (Missile Command riff), slice 1 of 4: Reading the sky.
 
-      Partial Rain Catcher depth slice 1: six-garden authored forecasts, friendly rain growing five-stage beds, hail damage, two refill barrels, petal-chain cascades, sleet sliders, eight-stone moth clusters, two-hit snowballs, moving gusts, wave-pair sky palettes, larger weather art and original music. Game-engine tests added. PR to follow; CI and gameplay verification pending.
-
-      2026-11-26 PT, Silas-directed finite-roadmap clearing: verified
-      https://github.com/silasfelinus/kind_robots/pull/5598 merged as partial scope.
-      Adversarial gameplay, balance and rendered slice-one verification remain. Returned to
-      ready; no human approval or deployment inferred.
-    updated: '2026-11-27T22:15:37Z'
+      Full history: projects/kr-arcade/HISTORY.md#t-114
+    updated: '2026-11-27T23:05:03.486Z'
     implementation_pr: 'silasfelinus/kind_robots#5598'
-    owner: worker
-    claimed_by: 20261127T221534Z-kr-arcade-t-114-4e9b2d
-    claimed_at: '2026-11-27T22:15:37Z'
+    claimed_by: 20261127T221923Z-kr-arcade-t114-j1xksohkc
+    claimed_at: '2026-11-27T22:19:23Z'
 
   - id: t-115
     milestone: m8
     title: "Rain Catcher depth slice 2: The first two gardens"
-    status: waiting
+    status: ready
+    updated: '2026-11-27T23:44:41Z'
     passes: 0
     stakes: reversible
     depends_on: t-114
-    note: >-
-      CABINETS.md section 19, Rain Catcher (Missile Command riff), slice 2 of 4: The first two gardens. The
-      upgrade is "Gardens of the World". Spec: projects/kr-arcade/depth-pass/CABINETS.md -- read the game's
-      section first; this slice's scope is item 2 under its '#### Slices', and 'Rules for every slice' at the
-      top applies. Code: kind_robots utils/arcade/games/ (registry slug rain-catcher). Silas, 2026-10-11: "I
-      need an assessment done of the other arcade games. I want the same level of quality improvements, they
-      should not just be thin veneers of the old games. But newer, better, even more awesome."
+    note: |-
+      CABINETS.md section 19, Rain Catcher (Missile Command riff), slice 2 of 4: The first two gardens. The upgrade is "Gardens of the World". Spec: projects/kr-arcade/depth-pass/CABINETS.md -- read the game's section first; this slice's scope is item 2 under its '#### Slices', and 'Rules for every slice' at the top applies. Code: kind_robots utils/arcade/games/ (registry slug rain-catcher). Silas, 2026-10-11: "I need an assessment done of the other arcade games. I want the same level of quality improvements, they should not just be thin veneers of the old games. But newer, better, even more awesome."
+
+      Implemented two playable special forecasts, three paddy barrels and monsoon bands. Partial: bosses, terraces, harvest, greenhouse and save/resume remain.
+
+      kind_robots#6010 merged after all substantive latest-head checks passed. Garden objectives and monsoon mechanics shipped; bosses, terraces, Harvest, Greenhouse and save/resume remain.
 
   - id: t-116
     milestone: m8
@@ -2735,7 +2736,7 @@ tasks:
 
       Browser DPR 1/2/3 cabinet viewport matrix, dedicated CI screenshot artifacts, and four-budget display contract staged in worker/kr-arcade-4062-viewport-matrix-a71b. This is another engineering slice, not complete acceptance of issue #4062.
 
-      PR silasfelinus/kind_robots#4138 merged as b5e9063d795494d86f086612e49e69a6908e9032 after all 14 checks completed successfully on its final merged branch; viewport tests 21/21 passed and 21 screenshot artifacts uploaded. Source issue #4062 deliberately remains open. Remaining required work: improve small-phone sprite/ship readability, audit camera/telegraph/controls on every game, test Showdown and Memory Dungeon with real browser/zoom, profile active render p50/p95 performance and quality fallbacks, and complete device and human acceptance. Requeue t-164 rather than marking it done.
+      PR silasfelinus/kind_robots#4138 merged as b5e9063d795494d86f086612e49e69a6908e9032 after all 14 checks completed successfully on its final merged branch; viewport tests 21/21 passed and 21 screenshot artifacts uploaded. Source issue #4062 deliberately remains open. Remaining required work: improve small-phone sprite/ship readability, audit camera/telegraph/controls on every game, test Showdown and Memory Dungeon with real browser/zoom, profile active render p50/p95 performance and quality fallbacks, and complete agent-owned device and accessibility acceptance; human playtest feedback follows the finite roadmap. Requeue t-164 rather than marking it done.
 
       2026-11-15 PT: Brick Bloom mobile touch-control slice committed on worker/kr-arcade-t-164-brick-bloom-touch-bb61ae (376a93a). Swipe/drag paddle input, no gameplay D-pad or permanent A/B cluster, contextual action buttons, mobile browser viewport test. This is one slice of the broader t-164 cross-game audit; requeue after safe PR merge.
 
@@ -2857,16 +2858,17 @@ tasks:
   - id: t-172
     milestone: m11
     title: "Silas: a 60-second phone check of three shared cabinet links before broadcasting"
-    status: ready
+    status: done
     passes: 0
     stakes: outward-facing
     gate_human: true
     depends_on: [t-169, t-171]
-    updated: '2026-11-15T13:30:00Z'
-    note: |-
-      Silas, 2026-11-15 PT: full parity with the whole roadmap may not be reasonable; finish the latest tasks and triage next steps that make publicly shared arcade links presentable. This milestone is that triage. The m8 depth pass (50 open slices) continues in the background and is not a gate for sharing.
+    updated: '2026-11-27T23:02:52.465Z'
+    note: >-
+      Silas, 2026-11-15 PT: full parity with the whole roadmap may not be reasonable; finish the latest tasks and triage next steps that make publicly shared arcade links presentable.
 
-      The only human gate in m11. Paste three showcase links into Messages or Discord, confirm the cards look right, tap one, play thirty seconds. Then the arcade is ready to share publicly. Agents do not post or announce anywhere.
+      Full history: projects/kr-arcade/HISTORY.md#t-172
+    approved_by_human: true
   - id: t-173
     milestone: m8
     title: "Gloom Invaders verifier imports the game's exported types instead of a hand-copied Game shape"
@@ -3033,31 +3035,17 @@ tasks:
   - id: t-184
     milestone: m12
     title: "Superkate Spectrum: adversarial full campaign playthrough, mobile QA, save/retry/ending tests and visual acceptance"
-    status: needs-human
+    status: done
     passes: 0
     stakes: reversible
     depends_on: [t-177, t-178, t-179, t-180, t-181, t-182, t-183]
     note: >-
       Keep the game on the growing shelf until the entire finite scope is complete.
-      Public use of a recognisable real-person likeness requires Kate's explicit consent.
 
-      2026-11-25 PT: automated part delivered in kind_robots#5816: verifySpectrumCampaign
-      plays all 30 boards + 6 bosses to all three endings by real shots, a careless-play soak
-      (~1800 shots), relay + 12 Atelier puzzles; the real-cabinet browser contract covers
-      390/768/1440 touch/keyboard/gamepad, save/reopen/game over. Remaining is human: playtest
-      per PLAYTEST-CHECKLIST.md, visual acceptance and Kate's likeness consent. Waits on
-      t-182/t-185/t-187/t-188.
-
-      2026-11-25 PT: every dependency is done and the agent-side acceptance work is in CI on
-      every cabinet PR. verifySpectrumCampaign beats all 30 boards and 6 bosses by real shots
-      on three routes to all three endings, plus a careless-play soak, the relay with its duet
-      boss and 12 Atelier puzzles. The cabinet, hub and two-device account browser contracts
-      run at 390/768/1440 (kind_robots#5816, #5823). FOR SILAS: play per projects/kr-
-      arcade/superkate-spectrum/PLAYTEST-CHECKLIST.md and accept or waive the visual state
-      (and decide the showcase shelf); file any findings as playtest_iteration tasks. Kate's
-      art consent is separate (t-189).
-    updated: '2026-11-25T11:39:22Z'
+      Full history: projects/kr-arcade/HISTORY.md#t-184
+    updated: '2026-11-27T23:02:54.581Z'
     gate_reason: subjective-acceptance
+    approved_by_human: true
   - id: t-185
     milestone: m12
     title: "Superkate Spectrum: durable cross-device account saves with safe guest migration and conflict-aware career merge"

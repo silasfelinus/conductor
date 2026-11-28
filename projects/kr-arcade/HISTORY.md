@@ -1206,3 +1206,40 @@ Reviewer kaizen from conductor#8039 (and #8037): Silas, 2026-11-25 PT, wants pai
 
 2026-11-27 PT: completed in Kind Robots PR #5981, merged e099cb3444e0ac94e93d7fcec944777d63d31de3. The read-only AST audit reports per-cabinet code-drawn sites and exact ledger request/job matches; source locations, unresolved sites, functional-UI candidates and mixed renderers remain inspectable. Fixture tests, ESLint, formatting and full final-branch vue-tsc passed; latest-head CI completed green. Original Arcade baseline Rain Catcher defects are tracked under t-114, not hidden or weakened. No artwork delivery or deployment claimed.
 <!-- note:end t-191 -->
+
+## t-172 — Silas: a 60-second phone check of three shared cabinet links before broadcasting
+
+<!-- note:begin t-172 -->
+Silas, 2026-11-15 PT: full parity with the whole roadmap may not be reasonable; finish the latest tasks and triage next steps that make publicly shared arcade links presentable. This milestone is that triage. The m8 depth pass (50 open slices) continues in the background and is not a gate for sharing.
+
+The only human gate in m11. Paste three showcase links into Messages or Discord, confirm the cards look right, tap one, play thirty seconds. Then the arcade is ready to share publicly. Agents do not post or announce anywhere.
+
+Silas explicitly cleared this roadmap gate on 2026-11-27. Phone preview of three shared cabinet links moves to post-roadmap playtesting. Public sharing remains a separate decision.
+<!-- note:end t-172 -->
+
+## t-184 — Superkate Spectrum: adversarial full campaign playthrough, mobile QA, save/retry/ending tests and visual acceptance
+
+<!-- note:begin t-184 -->
+Keep the game on the growing shelf until the entire finite scope is complete. Public use of a recognisable real-person likeness requires Kate's explicit consent.
+2026-11-25 PT: automated part delivered in kind_robots#5816: verifySpectrumCampaign plays all 30 boards + 6 bosses to all three endings by real shots, a careless-play soak (~1800 shots), relay + 12 Atelier puzzles; the real-cabinet browser contract covers 390/768/1440 touch/keyboard/gamepad, save/reopen/game over. Remaining is human: playtest per PLAYTEST-CHECKLIST.md, visual acceptance and Kate's likeness consent. Waits on t-182/t-185/t-187/t-188.
+2026-11-25 PT: every dependency is done and the agent-side acceptance work is in CI on every cabinet PR. verifySpectrumCampaign beats all 30 boards and 6 bosses by real shots on three routes to all three endings, plus a careless-play soak, the relay with its duet boss and 12 Atelier puzzles. The cabinet, hub and two-device account browser contracts run at 390/768/1440 (kind_robots#5816, #5823). FOR SILAS: play per projects/kr- arcade/superkate-spectrum/PLAYTEST-CHECKLIST.md and accept or waive the visual state (and decide the showcase shelf); file any findings as playtest_iteration tasks. Kate's art consent is separate (t-189).
+
+Silas explicitly cleared this roadmap gate on 2026-11-27. The remaining subjective visual and play checks move to post-roadmap playtesting using superkate-spectrum/PLAYTEST-CHECKLIST.md. Automated scope already verified in #5816 and #5823.
+<!-- note:end t-184 -->
+
+## t-114 — Rain Catcher depth slice 1: Reading the sky
+
+<!-- note:begin t-114 -->
+CABINETS.md section 19, Rain Catcher (Missile Command riff), slice 1 of 4: Reading the sky. The upgrade is "Gardens of the World". Spec: projects/kr-arcade/depth-pass/CABINETS.md -- read the game's section first; this slice's scope is item 1 under its '#### Slices', and 'Rules for every slice' at the top applies. Code: kind_robots utils/arcade/games/ (registry slug rain-catcher). Silas, 2026-10-11: "I need an assessment done of the other arcade games. I want the same level of quality improvements, they should not just be thin veneers of the old games. But newer, better, even more awesome."
+
+Partial Rain Catcher depth slice 1: six-garden authored forecasts, friendly rain growing five-stage beds, hail damage, two refill barrels, petal-chain cascades, sleet sliders, eight-stone moth clusters, two-hit snowballs, moving gusts, wave-pair sky palettes, larger weather art and original music. Game-engine tests added. PR to follow; CI and gameplay verification pending.
+
+2026-11-26 PT, Silas-directed finite-roadmap clearing: verified
+https://github.com/silasfelinus/kind_robots/pull/5598 merged as partial scope.
+Adversarial gameplay, balance and rendered slice-one verification remain. Returned to
+ready; no human approval or deployment inferred.
+
+Fixed a sleet slider regression reproduced on main and verified three seeded five-wave clears. Rendering verification remains open.
+
+kind_robots#6004 merged at 82e747c after 15 successful checks. Rain Catcher engine and forecast suites pass, with five Orchard Hills waves cleared on seeds 5, 15 and 42. Qt WebEngine rendered waves one and three to a real 320x240 canvas; inspected the wave-three HUD, sky, beds, barrels and launchers. Slice one complete.
+<!-- note:end t-114 -->

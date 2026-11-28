@@ -217,6 +217,9 @@ tasks:
     milestone: m3
     title: "Author 48 bespoke six-level fixed-cast personal routes"
     status: review
+    owner: worker
+    claimed_by: 20261128T002230Z-evt-crosswalk-ef731b
+    claimed_at: '2026-11-28T00:22:30Z'
     depends_on: t-008
     passes: 0
     stakes: reversible
@@ -268,10 +271,15 @@ tasks:
       Kind Robots #5988 squash-merged as dba62f1f6294eeafb9642f46415441447a824968 after seven completed successful workflows on exact head c9a3b4d5311e45e3727a3c7db6bd53e5b14973ac. All 48 leads now have 528 distinct Science Wing scene lines. Partial scope: other chapter-specific scenes and full-run acceptance remain.
 
       Kind Robots commit 87ee7e01b56f42c20808bf191817b4e23a43b22a adds 120 bespoke Rooftop Broadcast dialogue lines for eight Accident-origin leads across 15 stable nodes, both allegiance openings, warning/jamming branches, objective and secret triggers and victory/defeat. Runtime fixed-cast selector preserves graph, mechanics, old saves and studio/one-shot isolation. Unique catalog count verified; integrated regressions added, CI pending. Partial t-009; return ready after green merge for remaining 40 Rooftop identities, other chapters and full-run acceptance.
-    updated: '2026-11-27T22:24:00Z'
-    owner: worker
-    claimed_by: 20261127T221600Z-evt-chapter-dialogue-3d62af
-    claimed_at: '2026-11-27T22:16:00Z'
+
+      Kind Robots #6001 merged 692b7b9fadce133ca7eb36017e577836bdf24aad. All eight latest-head workflows including branch janitor succeeded on 96972e3d786086a63b5572679e5d76faac4870da. Eight Accident-origin leads now have 120 bespoke Rooftop Broadcast lines on main. Partial; remaining 40 Rooftop identities, other chapters and full-run acceptance.
+
+      Kind Robots e2e446f2bf90a8d3e673d1162c7b1d61011883c8 adds 240 unique lines for all 16 Magic and Technology leads, bringing Rooftop Broadcast to 24/48 leads and 360 lines across 15 stable nodes. 7274 isolated assertions passed on the exact committed selector and actual scene graph with synthetic squads, including dead-ally fallback, no graph or state changes and legacy/editor isolation. Permanent integrated regression expanded; full CI pending. Partial t-009; return ready after green merge for remaining 24 rooftop leads, other chapters and full-run acceptance.
+
+      Kind Robots #6015 merged 50630f5a7d12b6831d5676c06319053ea46a5569; seven completed successful substantive checks on 7a1c2b6, branch janitor running. Rooftop all 48 leads, 720 unique lines, fully shipped. Remaining other chapter-specific scripts and full-run QA.
+
+      Kind Robots 537702aa84270638ae0ccb601a8215f7f42ebb25 adds 768 distinct dialogue lines across all 48 canonical leads and 16 character-spoken Crosswalk Crisis nodes. Both allegiance openings, actual eight-round rescue objective, one-action-point escorts, medics/jam decision, first rescue, mascots, secret and win/loss scenes preserved. 16755 isolated assertions passed against exact committed catalog, canonical roster and actual graph with synthetic living/dead allies; permanent full-runtime regression added. Shared scene narration and all choice effects, IDs and saves unchanged. Full CI pending. Partial t-009: First Bell, Under-Comet Breach and Prom finale bespoke dialogue/whole-run acceptance remain.
+    updated: '2026-11-28T00:26:00Z'
 
   - id: t-010
     milestone: m3
@@ -362,30 +370,33 @@ tasks:
       full cinematic stage at 390/768/1440/XL, touch/gamepad/reduced motion.
   - id: t-014
     milestone: m4
-    title: "Human gameplay and AAA-console visual acceptance"
+    title: "Verified Every Villain Tactics production playtest handoff"
     status: waiting
     depends_on: [t-013, t-029]
-    gate_human: true
-    gate_reason: creative-approval
     owner: null
     passes: 0
     stakes: reversible
     note: >-
-      FOR SILAS: Only after all engineering, authored content and art QA, accept
-      the finished game/editor visual quality and tactical feel.
+      Verify all engineering, authored content, art, game/editor QA, tactical fairness and full
+      device/run evidence. When every finite task passes, follow CONTROL.md for playtest/normal
+      and flag and close the master issue. Human gameplay and visual acceptance belongs to the
+      subsequent playtest; any public game release or community publishing requires separate
+      authorization. Prior gate wording is preserved in Git history; no approval is inferred.
+
   - id: t-015
     milestone: m4
     title: "Separate approval for public Play route and community publishing"
-    status: waiting
+    status: cancelled
     depends_on: t-014
     gate_human: true
     gate_reason: publish
     owner: null
     passes: 0
     stakes: outward-facing
+    cancelled_reason: silas-moved-post-roadmap
     note: >-
       FOR SILAS: Explicitly approve any public game release, external access to
-      community level gallery or publishing; admin previews are internal only.
+      community level gallery or publishing; admin previews are internal only. Owner direction 2026-11-27 PT: moved outside the finite roadmap, not approved or completed; public publishing still requires explicit authorization.
 
   - id: t-016
     milestone: m2

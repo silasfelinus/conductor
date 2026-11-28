@@ -450,7 +450,7 @@ tasks:
     title: "Author at least 36 good/evil/rogue patrol cases with meaningful results"
     status: ready
     depends_on: t-003
-    updated: '2026-11-27T05:30:00Z'
+    updated: '2026-11-28T00:22:00Z'
     passes: 0
     stakes: reversible
     note: |-
@@ -459,6 +459,10 @@ tasks:
       Kind Robots commit 782e392c4ec733fbf54262fce11dba38170b4280 adds full-term canonical patrol regression: 48 identities, 1392 intended legal nightly traces, all district zones, at least 36 resolved case IDs, four grades, save round trips and finale arrival. Full runtime CI required; no acceptance or art delivery asserted. Partial t-004.
 
       Kind Robots #5953 squash-merged ebbfd8779d66cfc704520bdee13ab161d77b1a4e after seven completed green workflows on a0ac6c5. Seeded gameplay contract passed 48 canonical runs, 1392 nights, at least 36 resolved cases and all four grades. Partial: identity-specific consequences and verified patrol art remain.
+
+      Kind Robots commit cf082a3952a425b9f4235ef15a497261057a835a authors 240 distinct next-school-day patrol consequences (48 signatures by five actual saved outcome grades), preserving the authored case callback, injury logic, existing balance, unsigned legacy behavior and save format. 1250 isolated assertions passed against the exact committed catalog and selector; full 48-character 1392-night regression now checks the actual morning callback and save round trip when a personal patrol story is resolved. Full CI pending. Partial t-004: verified patrol art and final acceptance remain.
+
+      Kind Robots #6012 merged 6cdaae29091a87fefa4695c41fefcc5c3d7071bd; nine successful workflows including janitor on 5d4465e. All 240 identity-specific aftermath lines and full-term regression shipped. Remaining verified patrol art and final acceptance.
   - id: t-005
     milestone: m3
     title: "Author 30 daily anchors, 60 location cards and relationship scenes"
@@ -583,18 +587,19 @@ tasks:
       retest.
   - id: t-011
     milestone: m4
-    title: "Final human design acceptance after all agent-owned QA and separate release authorization"
+    title: "Verified Prom of Doom production playtest handoff"
     status: waiting
     depends_on: [t-010, t-018, t-049]
-    gate_human: true
-    gate_reason: subjective-acceptance
     owner: null
     passes: 0
     stakes: reversible
     note: >-
-      Not a current obstacle. Only after all content, art, playtests, fixes and responsive reviews
-      pass should master issue become awaiting final human verdict. Final design approval does not
-      imply publish or deploy.
+      After all original content, art, agent playtests, fixes and responsive QA pass, assemble the
+      readiness evidence and follow CONTROL.md for playtest/normal and flag and close master issue
+      #4181. Human design acceptance is subsequent feedback, not a dependency. Publication and
+      deployment remain separately authorized. Prior gate wording is preserved in Git history; no
+      approval is inferred.
+
   - id: t-019
     milestone: m3
     title: "Author identity portrait prompts: 48 people plus 2 guests, student form first, as an auto_submit round"
@@ -986,7 +991,7 @@ tasks:
     source_issue: "silasfelinus/kind_robots#4181"
     updated: '2026-11-27T21:23:00Z'
     note: |-
-      FROM GITHUB ISSUE silasfelinus/kind_robots#4181 (https://github.com/silasfelinus/kind_robots/issues/4181), opened by @silasfelinus on 2026-10-25. Imported by scripts/sync_github_issues.py. Reference the canonical roadmap in implementation PRs with `Refs silasfelinus/kind_robots#4181`, never `Closes`. Keep #4181 open throughout finite build, art and QA work. Only the verified playtest handoff workflow may prefix `[FLAGGED FOR HUMAN TESTING]` and close the single master issue after Conductor lifecycle, priority, evidence and genuine `needs-human` subjective-acceptance gate are confirmed; closing the issue is not human approval or permission to publish.
+      FROM GITHUB ISSUE silasfelinus/kind_robots#4181 (https://github.com/silasfelinus/kind_robots/issues/4181), opened by @silasfelinus on 2026-10-25. Imported by scripts/sync_github_issues.py. Reference the canonical roadmap in implementation PRs with `Refs silasfelinus/kind_robots#4181`, never `Closes`. Keep #4181 open throughout finite build, art and QA work. Only the verified playtest handoff workflow may prefix `[FLAGGED FOR HUMAN TESTING]` and close the single master issue after Conductor lifecycle, priority and verified finite production evidence are confirmed (no subjective verdict required); closing the issue is not human approval or permission to publish.
 
       # Prom of Doom (Capes & Tassels series) | Master Completion Roadmap
 

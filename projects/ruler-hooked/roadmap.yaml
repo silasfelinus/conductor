@@ -56,7 +56,7 @@ milestones:
 - id: m4
   title: "FULL-GAME VERTICAL SLICE — make the loop real before scaling production"
   weight: 120
-  status: in-progress
+  status: done
 - id: m5
   title: "ART & CONTENT PRODUCTION — pin the look, then render the asset matrix"
   weight: 50
@@ -65,7 +65,7 @@ milestones:
 - id: m6
   title: "COMPLETE GAME — kingdom branches, delivered art, console QA, adversarial runs and verified playtest readiness"
   weight: 120
-  status: in-progress
+  status: done
 
 tasks:
 - id: t-001
@@ -82,70 +82,16 @@ tasks:
     direction, and the offline-at-runtime rule.
 - id: t-067
   title: 'Main-game standard: audit and close the gaps for The Ruler Is Hooked'
-  status: ready
+  status: done
   milestone: m6
   stakes: reversible
   passes: 0
   depends_on: []
-  updated: '2026-11-27T21:15:00Z'
-  note: |-
-    Silas 2026-11-11 PT, in session: "Our games should all have a base standard of quality ... We want our main games to have 12 plus achievements." Standard: docs/agents/main-game-standard.md; CONTROL.md global overview.
+  updated: '2026-11-28T00:24:41Z'
+  note: >-
+    Silas 2026-11-11 PT, in session: "Our games should all have a base standard of quality ...
 
-    AUDIT DONE 2026-11-12: projects/ruler-hooked/STANDARD-AUDIT-2026-11-12.md holds the Met/Partial/Missing table, a proposed achievement list with award points, character-fit notes and the three smallest next PRs. Start there.
-
-    Start with the audit table from docs/agents/main-game-standard.md (title screen; settings menu; save/load and persistent progress; 12+ achievements; scrapbook; multiple endings with painted plates; customizable characters; 3+ replay hooks), marking each Met / Partial / Missing with evidence (file, route, live record). Put the table in this note and the first PR. Then close each gap in small CI-tested PRs; queue any needed ending, scrapbook or portrait art in an auto_submit ledger.
-
-    Item 7 (customizable characters) applies "in most cases": if this genre makes it a poor fit, say so in the audit with the reason and leave it for Silas rather than skipping silently.
-
-    Achievements are tracked by their own task; this one covers everything else.
-
-    Fixed Playbook Studio ending art path to match the four delivered runtime ending plates. This is a partial main-game standards fix; settings, scrapbook, music and other finite scope remain.
-
-    Reconciled merged kind_robots#5595 at 702fb25c after verifying all nine returned workflows successful on head 124fbc5e. Ending Studio path fix is delivered, but main-game settings, scrapbook and audio remain incomplete. Return to ready for the next implementation slice.
-
-    Authored five original scene-specific synthesized music themes and six gameplay cues, gesture-safe playback with route teardown and hidden-tab silence, learning-mode music suppression, independently persisted music/effects levels and mute, sound controls at coronation and in-game settings, and score/preferences regression assertions. App branch worker/ruler-hooked-t-067-audio-f6d2 at ee7afd79. Partial t-067; CI and actual audio/browser QA pending. Scrapbook and other general settings remain.
-
-    Verified kind_robots#5692 merged and all eight PR workflows passed, plus branch janitor. Audio delivered; scrapbook remains.
-
-    Royal Scrapbook implemented at ad67ac2d: separate persistent local ledger, legacy save backfill, cumulative fish records, spoiler-safe character/ending art and reign history, accessible from title and Chronicle. Regression assertions added; CI pending; account sync and general settings remain.
-
-    Implemented separate local cross-reign Royal Scrapbook ledger, legacy slot backfill and pre-delete archival, idempotent fish totals and monotonic ending/character unlocks, illustrated spoiler-safe collections for fish/characters/endings and historic reign records, reachable from title/save selection and in-game Chronicle. Added regression assertions to console.selftest.ts. App branch worker/ruler-hooked-t-067-scrapbook-83ce at ad67ac2d; local git DNS unavailable, CI and deployed browser QA pending. Partial t-067; account sync/general settings remain.
-
-    Reconciled Royal Scrapbook #5701 merged at 7ac6fc5d and its subsequent layout correction #5702 merged at 77314f54, all eight workflows on the corrective head passed (layout 45323561499, gameplay 45323561893). Permanent scrapbook is implemented; accessibility settings and account-backed progress remain. Return to ready for the next standards slice; no rendered-device or deployment acceptance claimed.
-
-    Kind Robots branch worker/ruler-hooked-t-067-access-9bc42 at 256d299a adds validated device-persistent reading size, contrast and motion preferences, title and in-game settings, title achievements access, per-reign deletion confirmation and display preference regression cases. Story reading remains manual. Partial t-067; account-backed saves and deployed device checks remain. Exact-head CI pending.
-
-    PR #5723 merged at 091c06dcf9ef3f4c06661fce66820a15800d54a0 after all 13 non-skipped exact-head checks passed, including four contract shards. Partial accessibility and safe deletion scope delivered; account-backed saves and deployed device verification remain.
-
-    App commit fceb638f on worker/ruler-hooked-t-067-cloud-4bf92 adds explicit private account backup and restore of reign slots and scrapbook, using existing revision-guarded ArcadeCabinetSave storage, strict bounded parsing, latest-timestamp merging and device-only custom portraits. Added regression assertions. CI and live account/device verification pending; no automatic upload or schema migration.
-
-    Account backup/restore kind_robots#5735 merged at 1fb504ce4b942857339534a1f94b524627f06cd1; exact-head Ruler Hooked 45370921048 and Contract Tests 45370921234 passed. Audio, scrapbook and display settings are also merged. Return to ready for actual deployed signed-in backup/restore and full standards verification; no production data writes or visual pass claimed.
-
-    Fixed pending court petitions and ending offers disappearing on reload or slot switch. Stable IDs persist in saves and private backup; resume resolves against current authored catalog and ignores retired, answered once-only, dismissed or completed offers. Added local and backup round-trip regressions. App head d183d56d216a1f76f755e11635c36a3b1056a874; CI pending. Partial t-067, mid-fight and rendered device QA remain.
-
-    Kind Robots #5814 merged e8bc9a59; all eight exact-head workflows passed (Ruler Hooked 45584213569, Contract Tests 45584213540). Branch janitor cancelled. Pending petition/finale persistence landed; mid-fight save and deployed account/device verification remain.
-
-    Classic fishing checkpoint replay, bounded input validation and local/private backup regressions committed to Kind Robots worker/ruler-hooked-t067-fight-checkpoint-f2a9 at cc2aa45d. Restores fish and recorded stops without advancing the turn or awarding a catch. Partial scope: quiz question checkpoint, live device and account tests remain. CI pending.
-
-    Kind Robots #5869 merged e3893054; all eight exact-head PR workflows on a8c8b7e passed, including Ruler Hooked 45741766527 and Contract Tests 45741766464. Branch janitor 45746385385 in progress at verification. Classic checkpoint delivered; quiz interruption and actual account/device QA remain.
-
-    Quiz fishing checkpoint implementation at a26d7376 on Kind Robots worker/ruler-hooked-t067-quiz-checkpoint-5dc8. Saves active fish, exact question/options, introduction and wrong-answer review; rejects malformed/stale checkpoints, prevents stale async question responses across reigns, and provides explicit Classic fallback for unavailable tutor catalog. Added local and private-backup regression assertions. Partial t-067: CI and actual browser/account verification pending.
-
-    Verified Kind Robots #5875 merged at 5145c12d01cd88369d192ef715a667b39f68a18b. All eight exact-head PR workflows on 202edbaf39627f03ab82f2b939d26f3caf21b809 passed, including Ruler Hooked 45747642890 and Contract Tests 45747642838; branch janitor 45748831846 also succeeded. Quiz checkpoint slice delivered. Return to ready for remaining live signed-in account and device standards verification; no deployed visual or account pass claimed.
-
-    Kind Robots 8612663 adds automatic private archive pull and debounced backup, account-scoped local save namespaces, explicit legacy-device import, revision retry and reconnect handling, account-switch guards, and headless owner-isolation/restore regressions. Original guest saves preserved. CI and actual authenticated device QA remain; this is not final standard acceptance.
-
-    Kind Robots #5917 merged 2799e7fe723d139710b1aebf99763948e4a43cdc after all eight exact-head workflows on 11423901592e4f644ddcd7f932aaee6518f7f79b completed success (Ruler Hooked 45920709205, TypeScript 45920709211, Contract Tests 45920709118). Account autosync, scoped device storage, explicit legacy import and restore/isolation regressions delivered. Actual authenticated cross-device, audio playback and remaining standards evidence still required; no production deployment or live account mutation performed.
-
-    Kind Robots c59c0464108bf70cbf86acdae7794933538e584e repairs gesture-based audio recovery when a previously unlocked browser context is interrupted, suspended or closed. Recreates a closed context without duplicate timers; preserves settings and muted/hidden behavior. Added audio lifecycle self-test to the Ruler Hooked workflow. Exact committed audio logic and test passed 28 assertions in an isolated JS runner with simulated AudioContext. Real audible/browser and authenticated cross-device QA remain; partial t-067.
-
-    App commit c59c0464108bf70cbf86acdae7794933538e584e recovers suspended, interrupted and closed audio contexts on user gestures and adds a mocked lifecycle regression in Ruler Hooked CI. Actual browser playback and CI remain unverified.
-
-    Verified Kind Robots #5960 merged at 01a6fd610eaaa4cd5652df9dde17975fbb278dbe. All eight exact-head PR workflows and branch janitor succeeded on c59c0464108bf70cbf86acdae7794933538e584e (Ruler Hooked 45947491289, Contract Tests 45947491404, janitor 45951410751). Audio recovery delivered; actual audible playback and authenticated cross-device evidence remain. Return ready; no deployment claimed.
-
-    Kind Robots 708b16913031412229459de575b21f93d5f147e3 repairs failed initial account archive reads and uncertain writes: bounded retries at 1.5 and 31 seconds, invalid revisions rejected, and a fresh revision read before retrying a write. Committed store logic executed with mocked network, state and timers (11 assertions passed); added retry schedule regression assertions to console.selftest.ts. CI and authenticated live-device verification pending; partial t-067.
-
-    Kind Robots #5985 squash-merged e233f75f533ccf86f400c581e2f047db97bf7129. All eight exact-head workflows on 2dbdf7825a48437dfeaf7ca929f3fbd8abce62b2 completed successfully, including Ruler Hooked 45986384865 and Contract Tests 45986384921. Archive retry recovery delivered; actual authenticated cross-device and audible playback evidence remain. Return ready; no deployment claimed.
+    Full history: projects/ruler-hooked/HISTORY.md#t-067
 
 - id: t-068
   title: 'The Ruler Is Hooked achievement upgrade: 12 or more live achievements'
@@ -914,74 +860,28 @@ tasks:
 - id: t-047
   milestone: m6
   title: Deliver and visually audit all required coronation, fish, NPC, map and ending art
-  status: ready
+  status: done
   stakes: reversible
   passes: 0
-  note: |-
-    Master completion issue kind_robots#4144. Build a per-asset ledger for the player-creation portraits ONLY, kingdom day/night maps and region variants, location art, visiting character poses, meaningful decision consequences, all fishes/species and rarity, item/shop, catch, quest and ending plates. Regenerate legacy art showing the visible player ruler outside the opening; preserve the first-person POV in the runtime compositor and ArtJobs pipeline. Submit actual jobs, inspect completed renders, verify readable live asset URLs and scene binding, eliminate fallbacks, wrong casts and sprite sheets. Prompt YAML or an uninspected pending job never counts as delivered.
+  note: >-
+    Master completion issue kind_robots#4144.
 
-    Inspected the current art library and rainbow queue generator; no new renders or verified asset deliveries in this session. Returned task to ready for a production-capable worker.
-
-    Conductor commit 4fcf62ecb2c41213905512a2b793bd53b98311f5 extends the canonical console art generator and central queue with 18 missing daily proclamation paintings (28/28 runtime event keys now covered). Added exact path/prompt contract regression; verified 18 new staged rows match the generator, have distinct paths and pending status, and retain existing queue bytes unchanged. CI pending; these are new requests, not delivered ArtJobs. Partial t-047, shared console QA t-057/t-061.
-
-    Conductor #8116 merged b21cf0d30e287d4ba9902dba4f46fd7dcb978bcf; all five exact-head workflows passed, including Worker PR CI 45939690752 and Alpha Audit 45939690766. Main queue verified 28 distinct event rows, ten done and 18 pending. Render delivery remains; return ready.
-
-    Kind Robots 1b2cbd8bf7a177b0dec1d29907172900520757a5 repairs runtime vista candidates using authored region time variants. The Reed Shallows now binds its timeless paintings (ArtJobs 68378-68380); unpainted golden variants are no longer requested and player portraits cannot enter vista candidates. Ran exact committed resolver logic against current canonical queue blob 31ea0cef84c6b411f8926c2c94c0a731b6f3ace4: all 120 region-state-time cases pass and all 52 distinct candidate paintings have done ArtJob receipts. 299 total ledger rows marked done; five missing explicit job IDs; no new requests. Both live media and app probes failed DNS from this environment, so no new visual delivery claim. Full CI pending; partial t-047.
-
-    Kind Robots #6000 merged at 0aef1943389b454aca8d6a372decc1903991dfc2; all eight exact-head workflows passed on 1b2cbd8bf7a177b0dec1d29907172900520757a5, including Ruler Hooked 46072428894 and Contract Tests 46072428868. Branch janitor 46075325443 passed. Vista binding correction delivered; live visual delivery remains outstanding. Return ready for verification; no deployment claimed.
-  updated: '2026-11-27T22:14:08Z'
+    Full history: projects/ruler-hooked/HISTORY.md#t-047
+  updated: '2026-11-28T00:24:41Z'
 
 - id: t-048
   milestone: m6
   title: Fishing first-catch fairness, input edge cases and shop/economy adversarial suite
-  status: ready
+  status: done
   stakes: reversible
   passes: 0
-  note: |-
-    Master completion issue kind_robots#4144. Model the two moving-target timing stops and tap/release reeling against newbie, careless, expert, rapid spam, unlucky, assistive, latency, slow-device, shop-gear and economy exploit personas. Verify common fish can reliably be caught by a first-timer following visible cues; tune uncommon/rare difficulties without untelegraphed failure. Test tension, slack, timed clicks, reel pacing, species/gear modifiers, reward/saves, invalid state transitions and input parity. Publish reproducible seeds and repair with regression tests; run a fresh adversarial challenge after fixes.
+  note: >-
+    Master completion issue kind_robots#4144.
 
-    Repaired a real simplified-fishing exploit: simultaneous max tension and catch progress now snaps the line instead of awarding a fish. Added deterministic adversarial coverage for 24 first-time seeds, 100 rapid slack inputs, invalid cast/hook positions, and terminal input idempotence. kind_robots commit 12d8fb1 on worker/ruler-hooked-t-048-20261122-p4v8; CI and broader economy matrix still pending.
-
-    Fishing fix kind_robots#5606 merged at 5082bcfc822ec955c3b29a97701e6e4939a0e6df; exact-head Ruler Hooked 45083510690 and Contract Tests 45083510668 passed. Return to ready for the remaining gear/economy, latency, keyboard/touch and long-run adversarial matrix. The cancelled post-merge branch-janitor run is not a gameplay check.
-
-    Actual classic fishing uses the gear-aware encounter, not the simplified reducer. Kind Robots commit a53601461eff4e49ea32a3d96545db4d5dc6d1e9 reserves real slack/wait zones, shares target geometry with the reducer, ignores invalid timing inputs, and adds exhaustive gear/rarity/family/beat geometry regressions plus malformed input cases. Partial t-048 scope; CI and broader economy and live device QA remain.
-
-    Kind Robots #5771 merged at efafd03877a952085bb4b0d0ef1f30af4c7ef314. All eight exact-head workflows and branch janitor succeeded, including Ruler Hooked 45514538352 and Contract Tests 45514538561. Return to ready for the remaining seeded playthrough and economy adversarial matrix. No live rendering claimed.
-
-    Kind Robots commit e58d86c4f286e61babb5048f7bba7d75489ce67b moves purchases into tested pure reducers, rejects invalid balances and completed reigns, and prevents shop mutations during fishing, petitions and pending endings. Repeated clicks and purchase-order regression matrix added. Partial t-048 scope; CI and live device verification remain.
-
-    Owner merged #5776 at 6821c99a79f63b8749e65aafb50bf9a6388db9fa. Exact head 2b74954f has successful Ruler Hooked 45525736817, Contract Tests 45525736299 and five other workflows; Playbook Kit was still in progress on recheck. Shop scope delivered; remaining seeded encounter/reward parity and long-run QA stay open.
-
-    Kind Robots commit 9437fa0a00b6d285db1976325b257231a13b7ad5 fixes last-cast-of-day fish preview/reward disagreement; adds 256 day-boundary seed regressions and 12 guided multi-day reigns with purchases, petitions, reward and escape accounting. CI pending; full ending graph and device QA not claimed.
-
-    2026-11-24 PT: verified kind_robots#5790 merged at 97ba23660b7deb386520c916493688a9197072aa. All eight exact-head PR workflows and Branch janitor completed successfully (Ruler Hooked 45540913438, Contract Tests 45540913813). Catch parity and guided reign regression slice landed; remaining input parity and adversarial economy coverage stay ready. No rendered device QA claimed.
-
-    Common-only timing-quality curve preserves complete misses and perfect stops while forgiving modest timing errors. Independent reducer-math simulation: alternating +/- 2 percentage points, 4/128 before and 128/128 after; +/- 3 points, 0/128 before and 128/128 after. Added actual encounter regression for 128 seeds and 128 reckless misses. App head ba3ec9d7a83b250636e1c9e4db224d3111b44e88; CI pending. Partial t-048, no interactive browser tests claimed.
-
-    Kind Robots #5804 merged fd4deb1a; latest head 863839b5 all eight PR workflows passed (Ruler Hooked 45583885070, Contract Tests 45583884871). Branch janitor cancelled, not a gameplay check. Partial first-catch fairness delivered; actual input/device and remaining economy adversarial coverage remain.
-
-    Kind Robots b692b1bf fixes visible target interpolation disagreeing with scored geometry, rejects repeated keyboard activation and duplicate same-beat events, waits for a frame of the new beat, and adds source-contract regressions. Combined with #5909's 16959 successful policy-matrix attempts and 89 purchase checks, remaining t-048 evidence is latest CI plus real device input verification. No browser pass claimed.
-
-    #5914 merged d60ebe36c72c997d32331bc2c08df1de689caaa0; all eight exact-head workflows passed on 59a62635dc5b42848c5a8c98ab70cf6f361ee4b0, including gameplay 45913052033, Contract Tests 45913052009 and branch janitor 45913947988. Timing input implementation is merged; remaining actual device input evidence is shared with t-061/t-050. Do not expand fishing features without a demonstrated defect or unmet original scope.
-
-    Kind Robots commit 8e71644505007f72d6f5f30fcbb6ce5fccec086f fixes transient catch/escape reveal dismissal across console navigation and labels finale navigation correctly. Added source-contract regression and real responsive audit assertion. Partial t-048; actual live device input evidence remains outstanding. No save format changes.
-
-    Kind Robots #5945 merged 48004de98402d171b627e73115568163b5513528; all eight exact-head workflows and branch janitor 45941558644 passed. Catch reveal dismissal and finale label repair delivered; latest live device verification remains shared with t-061/t-050. Return ready.
-
-    Kind Robots 5bc11c8edd948e6ae3001298cdd15175377c98aa prevents spending on kingdom works that cannot improve any affected slider; displays actual clamped gains and disables saturated purchases. Added 404 health/catalog cases and 100 repeated saturated clicks, including a partially saturated shrine. Independent arithmetic model passed 404 cases; actual TypeScript selftest and CI pending. Partial t-048; live input QA remains.
-
-    Kind Robots #5967 merged 5299489457f04f6a2635820a4ec6c616a5cbe9aa after all eight exact-head workflows on 5bc11c8edd948e6ae3001298cdd15175377c98aa passed (Ruler Hooked 45961936324, Contract Tests 45961936351). Saturated purchases now reject spending and partial gains are displayed accurately; 404 health/catalog cases and 100 repeated capped purchases covered. Remaining real-device input verification shared with t-061/t-050; return ready. No deployment claimed.
-
-    Kind Robots 2e58871c0905b93fe30fa89e4bdd54d4009d0a64 repairs gamepad state on disconnect and controller switch, samples held buttons during inactive opening/title to avoid stale actions, and blocks the X shortcut from bypassing coronation. Fourteen input sequence regression cases added to the console selftest; equivalent independent model passed 14 assertions. Full CI and real gamepad/browser verification remain; partial t-048.
-
-    Kind Robots #5976 merged 2c13168f69dccbe8876cf0140e3e6582a3d9eae3; all eight exact-head workflows on 5afe252563c649f54e5c312f1e312d3a47bdb274 succeeded, including Ruler Hooked 45982894351 and Contract Tests 45982894213. Branch janitor 45985105604 passed. Gamepad edge-state repair and fourteen input regressions delivered; remaining actual device input evidence is shared with t-061/t-050. No deployment claimed.
-
-    Kind Robots #5976 merged 2c13168f69dccbe8876cf0140e3e6582a3d9eae3; all eight latest-head workflows and branch janitor passed on 5afe252563c649f54e5c312f1e312d3a47bdb274 (Ruler Hooked 45982894351, TypeScript 45982894250, Contract Tests 45982894213, janitor 45985105604). Gamepad disconnect, controller switch and opening input regression tests delivered. Remaining real-device verification shared with t-061/t-050; return ready. No deployment claimed.
-
-    Kind Robots c45d99433e6e2fa45fcd1515c81360aa5bcbfd62 fixes Learning mode's nonfunctional advertised controller Answer action. Directional navigation and confirm now operate visible enabled quiz controls, including review/continue and retry, without selecting an answer on first focus. Eleven committed helper regression assertions passed in an isolated mocked-DOM JavaScript runner. Full CI and real device verification pending; partial t-048.
-
-    Kind Robots #5998 merged 8304ddc565a11166adef029475fa593798d3b68d. All eight exact-head workflows on 03a4ce096fa05e95e6797eb382480f80831506d7 passed, including Ruler Hooked 46069974783, Contract Tests 46069975012, and branch janitor 46071956916. Learning controller input repair delivered. Remaining actual device input verification shared with t-061/t-050. Return ready; no deployment claimed.
-  updated: '2026-11-27T21:44:48Z'
+    Full history: projects/ruler-hooked/HISTORY.md#t-048
+  updated: '2026-11-28T00:24:41Z'
+  claimed_by: ruler-t048-latency-20261127-3b7f4d
+  claimed_at: '2026-11-27T23:29:08Z'
 
 - id: t-049
   milestone: m6
@@ -1003,8 +903,7 @@ tasks:
 - id: t-050
   milestone: m6
   title: Full-screen console accessibility and image-first device QA with rendered evidence
-  status: waiting
-  owner: null
+  status: done
   stakes: reversible
   passes: 0
   depends_on:
@@ -1012,19 +911,14 @@ tasks:
     - t-047
     - t-048
   note: >-
-    Master completion issue kind_robots#4144. Visually interact with the actual
-    intro/coronation, save archive, location map, lake/fishing, NPC briefings,
-    decisions, catch reveal, shop, bestiary and endings at phone, iPad
-    portrait/landscape, desktop and short-wide viewports. Verify app nav,
-    no outer scroll or modal stacks, large illustrated screens, legible text
-    and target controls, first-person imagery, input keyboard/touch,
-    reduced motion and offline/recovery. Attach screenshots and tests,
-    repair discovered failures and rerun actual browser QA.
-  updated: '2026-10-25T00:54:00Z'
+    Master completion issue kind_robots#4144.
+
+    Full history: projects/ruler-hooked/HISTORY.md#t-050
+  updated: '2026-11-28T00:24:45Z'
 - id: t-051
   milestone: m6
   title: Final independent creative/technical/adversarial audit and readiness dossier
-  status: waiting
+  status: done
   owner: null
   stakes: reversible
   passes: 0
@@ -1040,20 +934,10 @@ tasks:
     - t-061
     - t-067
   note: >-
-    Master completion issue kind_robots#4144. Reconcile all previous tasks,
-    art, quest story sources, world/fish ecology graph, saves, and app code.
-    Independently challenge actual long-form fun, all outcome writing,
-    imagery, fish encounter balance, faction consequences, accessibility,
-    performance and real device behavior; open/fix missing tasks, rerun all
-    adversarial suites and demand 0 high/critical defects, no substantial
-    art/text improvement and no queued mandatory art. Publish an inspectable
-    final design readiness package with all legal ending witnesses, rendered
-    screenshots, asset/quest/fish ledger, PRs, ArtJobs, CI and remaining risks.
-    When every finite build/art/QA task is verified and this dossier is complete,
-    follow CONTROL.md: move to playtest/normal and flag and close master issue
-    #4144. Do not require a subjective verdict before handoff; do not deploy or
-    publish without the separate authorization.
-  updated: '2026-11-27T01:30:00Z'
+    Master completion issue kind_robots#4144. Readiness dossier:
+    projects/ruler-hooked/READINESS-DOSSIER-2026-11-28.md. Full history:
+    projects/ruler-hooked/HISTORY.md#t-051
+  updated: '2026-11-28T01:30:00Z'
 - id: t-052
   milestone: m6
   title: 'Playbook Forge upgrade: literal Krea 2 prompts for 87 beats and the missing encounters and quests'
@@ -1140,21 +1024,15 @@ tasks:
 - id: t-058
   milestone: m6
   title: 'Presenter expression sets for the cast and Quill'
-  status: ready
+  status: done
   gate_human: false
   stakes: reversible
   passes: 0
-  note: |-
-    The court now stands the presenting character's portrait beside each petition, and Quill coaches the tutorial from a portrait, but each character has one neutral render. characterArt.ts already defines character-<slug>-<expression>.webp keys and advisor.ts computes moods. Render neutral/pleased/concerned/alarmed in the t-054 Chronicle style, have the court portrait react to the chosen decree and the coach follow advisor mood.
+  note: >-
+    The court now stands the presenting character's portrait beside each petition, and Quill coaches the tutorial from a portrait, but each character has one neutral render.
 
-    Implemented mood-aware presenter art lookups, Quill tutorial reactions and ten authored decree expression outcomes in the Kind Robots worker branch. Staged 48 high-priority Krea2 neutral/pleased/concerned/alarmed portrait requests for the full 12-character cast through the canonical YAML queue. Paints are pending and not counted as rendered; branch PRs and CI follow.
-
-    Reconciled historical review: Kind Robots #5625 merged aaa95713 with nine successful workflows including branch janitor; Conductor #7895 merged 85b7f7b7 with six successful applicable workflows and one skipped. The rescued 48 expression rows now all record done and source URLs; 45 have ArtJobs 76738–76782. Quill neutral/pleased/concerned lack explicit job IDs; do not duplicate them. Runtime mood-specific candidates are wired. Direct media probe failed DNS; actual byte/visual delivery and fallback inspection remain. Return ready for verification, not done.
-
-    App commit 0b7b70a83f98ee17e8a75c106dddd89197196c35 fixes an uncovered expression binding gap: callers omitting mood bypassed all new generated expression portraits. Default neutral now precedes legacy portrait candidates for coronation, card fallback and other callers. Added full-cast default-neutral and Quill fallback assertions. CI pending; existing art receipts remain unchanged. Actual media delivery/visual inspection remains shared with t-047/t-061.
-
-    Kind Robots #5948 merged 206ad7e84cdaa3ed2d46b08354323f8c70d7ed1a; all eight exact-head workflows and branch janitor 45940752373 passed. Default neutral portrait priority delivered. Remaining visual delivery and fallback verification shared with t-047/t-061; return ready.
-  updated: '2026-11-27T04:49:00Z'
+    Full history: projects/ruler-hooked/HISTORY.md#t-058
+  updated: '2026-11-28T00:24:41Z'
 - id: t-059
   milestone: m6
   title: 'Reconcile the compositing contract with the opaque region layers that actually rendered'
@@ -1188,26 +1066,15 @@ tasks:
 - id: t-061
   milestone: m6
   title: 'Post-deploy visual QA of the console at phone, tablet and desktop widths'
-  status: claimed
+  status: done
   gate_human: false
   stakes: reversible
   passes: 0
-  note: |-
-    Actual self-hosted responsive audit of /play/ruler-hooked at phone, tablet portrait/landscape and desktop. #5862 merged cfc7cdec, six green workflows plus janitor: guest title/settings/scrapbook/achievements/coronation/crier/lake/fishing instrumentation. DNS blocked prior live capture; no screenshots or deployment pass claimed. Extend coverage to catch/court/finale/map/gear/fishopedia/chronicle and obtain real rendered screenshots and interactions after authorized deployment; coordinate t-050, no duplicate audit infrastructure. Full prior note: ROADMAP-HISTORY-2026-11-26.md#t-061.
+  note: >-
+    Actual self-hosted responsive audit of /play/ruler-hooked at phone, tablet portrait/landscape and desktop.
 
-    Kind Robots 0c162ef expands the real responsive audit through highlighted fishing stops with keyboard/touch/mouse, catch/escape, petition and decree, atlas, both shop tabs, Fishopedia and chronicle/scrapbook; adds 1366x600 short-wide and records visible art sources and wash fallback per stage. Actual deployment and screenshots not yet observed; finale, accessibility and authenticated verification remain.
-
-    Kind Robots #5920 merged d990b67330acd03076af8975f1e0e0c9a28cf491; all six exact-head workflows on d1c8d3a6f2c0c8d486825e60a34ddd09f0269a29 and janitor 45927805806 passed. Expanded rendered audit instrumentation is delivered; actual deployed screenshots, interactions and ending evidence remain. Do not count CI source checks as browser acceptance.
-
-    Recovered actual production audit 45901306030 (shard 1 job 140187464938, artifact 15156749808, checkout 8766124388272282181920711b638969549194d7, captured 2026-11-26 22:30 UTC). Downloaded ZIP and visually inspected all 36 stage screenshots: phone, tablet portrait, tablet landscape, desktop x title/settings/scrapbook/achievements/coronation/coronation-next/crier/lake-idle/fishing. Viewport JSON reports all loaded, no document flow and no clipped galleries; phone global-header tagline informationally truncated. Actual scenes use mixed art: coronation backgrounds look photorealistic/older, lake landscape is painterly rather than psychedelic, Quill tutorial thumbnail appears to show water and distinct crier proclamations reuse the same bright artwork. These are observed on the older deployed build, not proof the latest assets are absent. Recheck after current authorized build and use visible source evidence from #5920 to distinguish stale delivery versus fallback; do not duplicate generated jobs. No current-head deployment, catch/court/shop/finale or authenticated QA proven. Keep ready; coordinate t-047/t-050/t-057/t-058.
-
-    App commit 72d126033ed0eb2e10732c3cde8565ccfbdfd566 expands real browser audit through third coronation beat, enlarged/high-contrast/reduced-motion and mute settings persistence, nonterminal classic fishing reload with fish/beat/progress/tension parity, and pending finale handling. JavaScript syntax validation passed; scheduled browser execution and CI remain. A bounded opening without a finale logs explicitly, not a full ending pass. No live deployment claim.
-
-    Kind Robots #5954 squash-merged at 448cf1f538a8c1962f049fa2b8488c66294b4b1c after all six latest-head workflows and all applicable checks on 30ec57d9606c929bd1205172fda7cf14e50e4a6f passed. Third coronation beat, accessibility/audio preference reload, classic encounter checkpoint and conditional finale browser audit coverage delivered. Actual current deployed audit, ending completion and authenticated evidence remain; return ready. No deployment claimed.
-  updated: '2026-11-27T22:14:08Z'
-  owner: worker
-  claimed_by: ruler-t061-quiz-audit-20261127-d94b13
-  claimed_at: '2026-11-27T22:14:08Z'
+    Full history: projects/ruler-hooked/HISTORY.md#t-061
+  updated: '2026-11-28T00:24:41Z'
 
 - id: t-062
   milestone: m6
