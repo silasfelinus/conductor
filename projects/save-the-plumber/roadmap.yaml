@@ -327,21 +327,19 @@ tasks:
       time and difficulty, not assumed Mario parity.
   - id: t-014
     milestone: m5
-    title: "Separate human-approved public Arcade release (not a playtest blocker)"
+    title: "Verified production playtest handoff (public release separate)"
     status: waiting
     depends_on: [t-013]
     owner: null
     passes: 0
-    stakes: outward-facing
-    gate_human: true
-    gate_reason: publish
+    stakes: reversible
     note: >-
-      Present verified full private playthrough, world map, secret
-      checklist, captured final fight, art/controls/device evidence,
-      score and full-campaign timing. Public /play registration,
-      Arcade cabinet placement and publication require Silas's
-      explicit decision; separate aesthetic/gameplay acceptance
-      follows hands-on play. Merge is not a production deploy. Once t-013 and the finite build scope are done, perform playtest/normal handoff and close the master issue as completed without waiting on this publication task.
+      Present the verified full private playthrough, world map, secrets, final fight,
+      art/controls/device evidence, score and full-campaign timing. Once t-013 and every finite
+      build/art/QA scope are verified, follow CONTROL.md for playtest/normal and flag and close
+      the master issue. Human creative feedback and any new public Play registration, Arcade
+      placement or publication are separate post-roadmap decisions; no deployment or publication
+      is authorized. Prior gate wording is preserved in Git history; no approval is inferred.
 
   - id: t-015
     milestone: m2

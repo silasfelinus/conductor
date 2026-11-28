@@ -426,20 +426,19 @@ tasks:
     implementation_pr: 'silasfelinus/kind_robots#5689'
   - id: t-014
     milestone: m5
-    title: "Human-approved public /play Arcade launch and final quality verdict"
+    title: "Verified production playtest handoff (public release separate)"
     status: waiting
     depends_on: [t-013]
     owner: null
     passes: 0
-    stakes: outward-facing
-    gate_human: true
-    gate_reason: publish
+    stakes: reversible
     note: >-
-      Present tested admin preview, art delivery record, video of four-player
-      combat, full-run timing, performance/device captures and scores.
-      Await Silas's explicit approval for the public /play and Arcade
-      cabinet, outward-facing promotion/deployment, and separate aesthetic
-      acceptance. Do not silently mark live when merged to GitHub.
+      Assemble the tested preview, art delivery record, local four-player combat, full-run timing,
+      performance/device captures and scores. Verify all finite original build, art, audio and QA
+      tasks; follow CONTROL.md for playtest/normal and flag and close master issue #4146. Human
+      gameplay/visual feedback and any new public Play registration, promotion or deployment are
+      post-roadmap decisions requiring separate authorization. No human verdict is a prerequisite.
+      Prior gate wording is preserved in Git history; no approval is inferred.
 
   - id: t-015
     milestone: m2
@@ -965,7 +964,7 @@ tasks:
     claimed_at: '2026-10-24T06:10:37Z'
     implementation_pr: 'silasfelinus/kind_robots#4105'
   - id: t-042
-    title: "Rainbow Bullet Hell Space Princess — Master Roadmap to Final Creative Approval"
+    title: "Rainbow Bullet Hell Space Princess — Master Roadmap to Verified Playtest Readiness"
     status: ready
     stakes: reversible
     passes: 0
@@ -974,7 +973,7 @@ tasks:
     note: |-
       FROM GITHUB ISSUE silasfelinus/kind_robots#4146 (https://github.com/silasfelinus/kind_robots/issues/4146). Master coordination task, not a second campaign specification. Keep the issue open through verified finite playtest readiness; reference it with Refs, not Closes. CONTROL.md's 2026-11-15 handoff rule and 2026-11-19 local-only co-op decision supersede older issue language.
 
-      Remaining scope: reconcile t-044 main-game standard, t-012 narrative/comms/audio, t-013 full local 1–4-player fairness/device QA, t-022 painted planes/retakes, and t-030 animation. Review the live art ledgers before submitting anything; P-03 all six ending clips shipped per recorded #5904, P-01 batch 14 reports ~29 pending loops and bulwark-v3/eel-v3 retakes. Keep rejected third attempts as stills only where accepted by the existing quality contract; never imply animation or visual verification from a ledger alone. Verify the latest evidence, attach accepted media and close each finite task only when its own scope passes. t-014 is separate human release/approval, not a prerequisite verdict for playtest. Refer to ROADMAP-OVERVIEW.md and the master issue for acceptance; earlier exact task note is in ROADMAP-HISTORY-2026-11-26.md#t-042. Existing T042-HISTORY.md remains intact.
+      Remaining scope: reconcile t-044 main-game standard, t-012 narrative/comms/audio, t-013 full local 1–4-player fairness/device QA, t-022 painted planes/retakes, and t-030 animation. Review the live art ledgers before submitting anything; P-03 all six ending clips shipped per recorded #5904, P-01 batch 14 reports ~29 pending loops and bulwark-v3/eel-v3 retakes. Keep rejected third attempts as stills only where accepted by the existing quality contract; never imply animation or visual verification from a ledger alone. Verify the latest evidence, attach accepted media and close each finite task only when its own scope passes. t-014 is the agent-owned readiness handoff; human feedback and publication are subsequent decisions. Refer to ROADMAP-OVERVIEW.md and the master issue for acceptance; earlier exact task note is in ROADMAP-HISTORY-2026-11-26.md#t-042. Existing T042-HISTORY.md remains intact.
 
       2026-11-27 P-01 idle batch 6: bulwark-v3 kept and shipped (kind_robots#5928); brood and eel stay stills after three takes; harbinger, coral-choir-pod and lighthouse-lamp v3 retakes queued in ANIM-BACKLOG. Master task stays ready for the next review batch.
       2026-11-27 PT P-01 idle batch 12: kept mirror-v2 (3.71) and coral-choir-pod-v3 (8.46), shipped in kind_robots#5955; harbinger stays a still after a third static take; salvager-v2 static (0.73), v3 retake queued. ~25 loops plus lighthouse-lamp-v3 pending.

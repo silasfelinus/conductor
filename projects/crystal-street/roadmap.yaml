@@ -313,29 +313,21 @@ tasks:
 
   - id: t-011
     milestone: m3
-    title: "Visual acceptance and public release to /play/crystal-street"
+    title: "Verified Crystal Street production playtest handoff"
     status: waiting
     depends_on: [t-003, t-005, t-006, t-007, t-008, t-009, t-010, t-016]
     owner: null
     passes: 0
-    stakes: outward-facing
-    gate_human: true
-    gate_reason: publish
+    stakes: reversible
     note: >-
-      Release gate. After art delivery, balance and the narrative audit, screenshot phone,
-      tablet and desktop, then ask Silas to accept the visual state and approve moving the game
-      from the admin preview to a public /play route and arcade tab.
-      Tracking issue (Silas, 2026-10-25 PT): silasfelinus/kind_robots#4143 holds the full roadmap,
-      adversarial testing included. When every box there is checked and no art or text improvement
-      is left, rename the issue to "[Waiting for human gate] Terrors on Crystal Street: approve
-      final design or submit rewrites" and move this task to needs-human; rewrites reopen the
-      relevant phase.
-
-      2026-10-25 PT: t-007 done. At the final gate Silas also decides the creative calls in
-      RED-TEAM-2026-10-25.md: The Shape's Mickey/June, Chip's outing (bio and the Fuzzbutton
-      request-line card), Goody Hale's Nisenan credit, Jess's adult form, Roz's 1966 death,
-      Mr. Pruitt, Madame Zorova and the Rialto history.
-    updated: '2026-10-25T04:45:28Z'
+      After art delivery, balance and narrative audit, verify phone/tablet/desktop, all finite
+      build scopes and the adversarial acceptance contract in #4143. Resolve concrete
+      narrative/art defects as agent-owned work, including the relevant RED-TEAM-2026-10-25.md
+      observations; preserve unresolved subjective creative choices for post-handoff feedback.
+      Then follow CONTROL.md for playtest/normal and flag and close #4143. No human visual verdict
+      is required. Moving to a new public Play route, Arcade placement, promotion or publication
+      requires separate authorization. Prior gate wording is preserved in Git history; no approval
+      is inferred.
 
   - id: t-012
     milestone: m2

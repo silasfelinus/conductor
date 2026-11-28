@@ -247,22 +247,21 @@ tasks:
       All known production art actually verified before reporting fully done.
   - id: t-013
     milestone: m4
-    title: "Silas final-game visual acceptance and distinct approval for additional public promotion"
+    title: "Verified MONSTRIQUE production playtest handoff"
     status: waiting
     depends_on: t-012
-    gate_human: true
-    gate_reason: publish
     owner: null
     passes: 0
-    stakes: outward-facing
+    stakes: reversible
     note: >-
-      FOR SILAS: The general Play route and dual editions were explicitly approved and merged
-      in kind_robots#4903; do not re-gate or hide that already authorized general
-      experience. Review the COMPLETE chapter arc, delivered art and both audience
-      modes at phone/tablet/desktop. Separately approve any new public marketing,
-      home promotion, launch claim or broader mature-content publishing; the
-      Studio and mature-only assets stay ADMIN/opt-in restricted as appropriate.
-      Never infer full-game creative acceptance from approval of a prior PR.
+      Verify the complete chapter arc, delivered art, both audience modes at phone/tablet/desktop
+      and all finite QA, including t-011 mature/CHILD security. Follow CONTROL.md for
+      playtest/normal and flag and close the master issue without a human verdict. The general
+      Play route and dual editions were approved in kind_robots#4903; do not re-gate them. New
+      public marketing, home promotion, launch claims or broader mature-content publishing remain
+      separately gated; preserve all ADMIN/opt-in/age restrictions. No new publication is
+      authorized. Prior gate wording is preserved in Git history; no approval is inferred.
+
   - id: t-014
     milestone: m3
     title: "Produce first motel/cast art batch with verified ArtJob and ArtImage ledger"
