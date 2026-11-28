@@ -1559,7 +1559,11 @@ tasks:
   - id: t-091
     milestone: m8
     title: "Glitch Garden depth slice 4: The Midnight Garden and the endings"
-    status: waiting
+    status: claimed
+    owner: worker
+    claimed_by: krarcade091-20261128-midnight-a4c619
+    claimed_at: '2026-11-28T03:49:15.065Z'
+    updated: '2026-11-28T03:49:15.065Z'
     passes: 0
     stakes: reversible
     depends_on: t-090
@@ -1571,6 +1575,8 @@ tasks:
       utils/arcade/games/ (registry slug glitch-garden). Silas, 2026-10-11: "I need an assessment done of the
       other arcade games. I want the same level of quality improvements, they should not just be thin veneers
       of the old games. But newer, better, even more awesome."
+
+      Owner explicitly directed starting t-091 before t-090's independent CI-only PR merges. Retain the dependency for final acceptance; winter implementation is already on main.
 
   - id: t-092
     milestone: m8
