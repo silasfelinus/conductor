@@ -438,14 +438,14 @@ tasks:
   - id: t-021
     milestone: m6
     title: "Gen-2 World 1: re-author Bluebell Pipeworks as a full SMB3/SMW-class world"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: plumber-overgrowth-20261128T024340Z-58bfe2
     claimed_at: '2026-11-28T02:44:09Z'
     depends_on: [t-002, t-011, t-020]
     passes: 0
     stakes: reversible
-    updated: '2026-11-28T02:44:09Z'
+    updated: '2026-11-28T02:45:23Z'
     note: |-
       Build World 1 to the GEN2-WORLDS.md graph: 6-9 nodes including a fortress, a Hush House, the first Valve Chapel and at least one secret exit, each level 3-6 minutes with sub-areas and a real secret. Wire the GEN2-ROUND-1 overworld plate and far-sky plate. Record first-clear times. This is the agent-verified production template for Worlds 2-8; human verdict is not a prerequisite. Completion checkpoints: 1-1, 1-2, 1-h and cottage, 1-3 and chapel, 1-f including Foreman Flange, 1-4 and 1-castle. Verify each authored beat, original art and route timing against GEN2-WORLDS.md.
 
@@ -492,6 +492,8 @@ tasks:
       App branch worker/save-the-plumber-t-021-boiler-a9c72e at 7888c461da82c06e27fd745dd9108c9773d85a21 adds Rustbolt Keep optional press duct after first key lock, duck-only low clearance, token reward and return; Pump Tower boiler loop with recovery heart, tokens and non-farmable return. Added real-input gameplay regression for both rooms to Maker CI. Static geometry and three-file diff verified; runtime CI pending. Partial World 1 scope.
 
       Verified kind_robots#6024 merged at cdd4c4a4; all ten implementation workflows and branch janitor passed on exact head 7888c461. Rustbolt crouch duct and Pump Tower boiler loop delivered with real-input regression. Remaining Wildwaters, other authored beats and art/timing acceptance; production unverified.
+
+      App branch worker/save-the-plumber-t-021-overgrowth-58bfe2 at 2aae6cc750305f255326ea1d5845e6db4b3e0c92 authors three Copper Greenhouses pistons, shed Wild Tap, temporary vine step, piston-to-bloom bounce chain and Wild Pearl at the summit. Actual-input regression exercises entry, activation, normal/active piston motion, two automatic bounces, pearl, reset and save filtering. Verified all three piston sweeps and the vine occupy empty cells in a rectangular grid. Runtime CI pending; dedicated flower art, other authored beats and timing acceptance remain. Partial scope.
   - id: t-022
     milestone: m6
     title: "Gen-2 Worlds 2-4: Tideglass Marina, Lantern Orchard, Clockwork Fair"
