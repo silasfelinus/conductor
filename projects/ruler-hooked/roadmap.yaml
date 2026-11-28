@@ -934,7 +934,7 @@ tasks:
 - id: t-048
   milestone: m6
   title: Fishing first-catch fairness, input edge cases and shop/economy adversarial suite
-  status: claimed
+  status: review
   stakes: reversible
   passes: 0
   note: |-
@@ -981,7 +981,9 @@ tasks:
     Kind Robots c45d99433e6e2fa45fcd1515c81360aa5bcbfd62 fixes Learning mode's nonfunctional advertised controller Answer action. Directional navigation and confirm now operate visible enabled quiz controls, including review/continue and retry, without selecting an answer on first focus. Eleven committed helper regression assertions passed in an isolated mocked-DOM JavaScript runner. Full CI and real device verification pending; partial t-048.
 
     Kind Robots #5998 merged 8304ddc565a11166adef029475fa593798d3b68d. All eight exact-head workflows on 03a4ce096fa05e95e6797eb382480f80831506d7 passed, including Ruler Hooked 46069974783, Contract Tests 46069975012, and branch janitor 46071956916. Learning controller input repair delivered. Remaining actual device input verification shared with t-061/t-050. Return ready; no deployment claimed.
-  updated: '2026-11-27T23:29:08Z'
+
+    Kind Robots 2b204a8e7277521c2bffe2ac61041b98e0bdd913 fixes hidden-tab scoring and stale markers on resume, treats RAF timestamp zero as valid, and preserves visible-marker scoring and debounce across frame delays. Executed the exact proposed component timing block and committed regression assertions in an isolated JS runner: all 16 sweep-speed/frame-interval scenarios passed, including 1600 same-beat spam inputs, stale beat/visibility transitions and 240ms delayed input. Full CI and physical device verification remain; partial t-048, no deployment or save-format change.
+  updated: '2026-11-28T00:06:08Z'
   owner: worker
   claimed_by: ruler-t048-latency-20261127-3b7f4d
   claimed_at: '2026-11-27T23:29:08Z'
@@ -1191,7 +1193,7 @@ tasks:
 - id: t-061
   milestone: m6
   title: 'Post-deploy visual QA of the console at phone, tablet and desktop widths'
-  status: review
+  status: ready
   gate_human: false
   stakes: reversible
   passes: 0
@@ -1209,10 +1211,9 @@ tasks:
     Kind Robots #5954 squash-merged at 448cf1f538a8c1962f049fa2b8488c66294b4b1c after all six latest-head workflows and all applicable checks on 30ec57d9606c929bd1205172fda7cf14e50e4a6f passed. Third coronation beat, accessibility/audio preference reload, classic encounter checkpoint and conditional finale browser audit coverage delivered. Actual current deployed audit, ending completion and authenticated evidence remain; return ready. No deployment claimed.
 
     Kind Robots f3faaddcdbb0f24b695918c9ab03352e47e39b5e adds actual browser audit flows for geography Learning and Mandarin animals, with fresh reigns, persisted quiz identity/options across reload, keyboard/touch/mouse answer controls and conditional answer-guide reload or catch evidence. Inserted async block parsed successfully; committed source inspected. Scheduled production audit 46071531242 was cancelled, so no rendered acceptance claimed. Partial t-061; full CI and actual browser execution remain.
-  updated: '2026-11-27T23:08:03Z'
-  owner: worker
-  claimed_by: ruler-t061-quiz-audit-20261127-d94b13
-  claimed_at: '2026-11-27T22:14:08Z'
+
+    Kind Robots #6008 merged at c3c4594fed21a8fd0c664d9f601c713b41947668. Six exact-head workflows on ae432bd210f172a33f1daef18825aa815bc00cb3 passed, including Contract Tests 46081463783, TypeScript 46081463765 and Layout Contract 46081463753; branch janitor 46084043315 passed. Geography and Mandarin quiz device audit instrumentation delivered. Actual deployed browser run, finale and authenticated evidence remain; return ready. No deployment claimed.
+  updated: '2026-11-27T23:43:08Z'
 
 - id: t-062
   milestone: m6

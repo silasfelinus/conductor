@@ -1,8 +1,0 @@
-version: 1
-project: ruler-hooked
-task: t-048
-operation: review
-session: ruler-t048-latency-20261127-3b7f4d
-updated: '2026-11-28T00:06:08Z'
-note: >-
-  Kind Robots 2b204a8e7277521c2bffe2ac61041b98e0bdd913 fixes hidden-tab scoring and stale markers on resume, treats RAF timestamp zero as valid, and preserves visible-marker scoring and debounce across frame delays. Executed the exact proposed component timing block and committed regression assertions in an isolated JS runner: all 16 sweep-speed/frame-interval scenarios passed, including 1600 same-beat spam inputs, stale beat/visibility transitions and 240ms delayed input. Full CI and physical device verification remain; partial t-048, no deployment or save-format change.

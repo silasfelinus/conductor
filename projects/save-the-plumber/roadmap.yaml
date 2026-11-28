@@ -155,7 +155,7 @@ tasks:
   - id: t-005
     milestone: m2
     title: "Implement enemy interaction, held objects and powerup systems"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: plumber-plate-20261128T000600Z-5b8c21
     claimed_at: '2026-11-28T00:06:00Z'
@@ -198,7 +198,9 @@ tasks:
       App branch worker/save-the-plumber-t-005-wharf-9c2f7e at 24fcbba3deedd12d6b497006fa038d4e9c6efebd adds a shallow four-tile water practice pool immediately after the Floating Wharves Gurgle barrel and Tidecoat pickup, with real-input mount, swim, charge and safe bank traversal regression. Verified 24 by 355 rectangular grid, empty approach and solid bottom, scoped two-file diff. Full gameplay CI pending; partial scope, other authored traversal and art acceptance remain.
 
       Merged kind_robots#6009 at 5a8b06e4 after all ten exact-head workflows completed successfully on 24fcbba3, including the actual Gurgle input replay and full contracts. Floating Wharves safe introductory swimming pool delivered. Partial scope: additional authored water courses, campaign plate placement and original art remain. Production deployment unverified.
-    updated: '2026-11-28T00:06:00Z'
+
+      App branch worker/save-the-plumber-t-005-rootcellar-5b8c21 at 207c596ccf056d00a8fbfbeea795f832182e4c3c adds a pipe-linked optional Rootcellar sluice tunnel with a companion scale plate, low gate, token cache and a safe exit for solo players. Real-input regression tests unweighted gate, Gurgle parking, reward collection, remount and exit using a test barrel to represent arriving with companion. Geometry verified rectangular and previously empty, two-file diff. CI pending; partial traversal scope.
+    updated: '2026-11-28T00:07:10Z'
   - id: t-006
     milestone: m3
     title: "Build World 1: four complete garden/pipeworks levels and boss"
@@ -432,14 +434,11 @@ tasks:
   - id: t-021
     milestone: m6
     title: "Gen-2 World 1: re-author Bluebell Pipeworks as a full SMB3/SMW-class world"
-    status: review
-    owner: worker
-    claimed_by: plumber-chimney-20261127T233010Z-f19c4e
-    claimed_at: '2026-11-27T23:30:10Z'
+    status: ready
     depends_on: [t-002, t-011, t-020]
     passes: 0
     stakes: reversible
-    updated: '2026-11-27T23:31:20Z'
+    updated: '2026-11-28T00:05:10Z'
     note: |-
       Build World 1 to the GEN2-WORLDS.md graph: 6-9 nodes including a fortress, a Hush House, the first Valve Chapel and at least one secret exit, each level 3-6 minutes with sub-areas and a real secret. Wire the GEN2-ROUND-1 overworld plate and far-sky plate. Record first-clear times. This is the agent-verified production template for Worlds 2-8; human verdict is not a prerequisite. Completion checkpoints: 1-1, 1-2, 1-h and cottage, 1-3 and chapel, 1-f including Foreman Flange, 1-4 and 1-castle. Verify each authored beat, original art and route timing against GEN2-WORLDS.md.
 
@@ -480,6 +479,8 @@ tasks:
       Verified kind_robots#6002 merged at f4f3a500; eleven implementation workflows and branch janitor completed successfully on final head 2d103413. Rain Stands Still optional Wildwater route, collectible persistence and original music delivered. Partial scope: remaining authored beats, original art and complete World 1 timing/acceptance. Production unverified.
 
       App branch worker/save-the-plumber-t-021-chimney-f19c4e at 211ab07fc7d826478034264b4cffc44c804c2b63 adds a separate pipe-linked Copper Greenhouses chimney inspection chamber with vertical ladder, enclosed camera and token alcove. Extends potting-shed real-input regression for both chambers and runs it in the Maker gameplay workflow. Verified rectangular grid, empty prior geometry and three-file diff. Runtime CI pending; partial World 1 scope.
+
+      Verified kind_robots#6013 merged at 74475423 with ten implementation workflows successful on exact head 614fd066. Chimney chamber and real-input token collection, climb and return delivered. Branch janitor cancelled; cleanup unverified. Partial World 1 scope; remaining Wildwaters, authored course beats and timing/art acceptance remain. Production unverified.
   - id: t-022
     milestone: m6
     title: "Gen-2 Worlds 2-4: Tideglass Marina, Lantern Orchard, Clockwork Fair"
