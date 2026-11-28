@@ -39,7 +39,30 @@
 #
 # Status values: pending, needs-prompt (no prompt written yet; never rendered)
 
-images: []
+images:
+  - project: tarot-studio
+    priority: 60
+    card:
+      status: pending
+      image_path: projects/images/tarot-studio-card.webp
+      size: 512x768
+      engine: krea2
+      prompt: >-
+        A friendly brass robot fortune teller seated at a round velvet table inside a starry violet tent,
+        fanning out a spread of glowing painted tarot cards decorated with suns and moons, a crystal orb and
+        three candles casting warm gold light, a softly glowing wheel of twelve constellations on the canvas
+        wall behind, luminous storybook illustration, jewel-tone palette, tall vertical framing.
+    hero:
+      status: pending
+      image_path: projects/images/tarot-studio-hero.webp
+      size: 1280x720
+      engine: krea2
+      prompt: >-
+        A wide moonlit observatory garden where a tall woman with bright rainbow-dyed hair and a small round
+        teal robot sit together at a stone table laid with a glowing three-card tarot spread, a great brass
+        orrery of turning planets rising overhead, zodiac constellations shimmering across a deep violet sky,
+        paper lanterns and wildflowers lining the garden path, luminous storybook illustration, cinematic wide
+        landscape.
 requests:
 - id: creation-burst-tom-tomtum-the-monastery-of-the-long-quiet
   last_art_job_id: 21617
