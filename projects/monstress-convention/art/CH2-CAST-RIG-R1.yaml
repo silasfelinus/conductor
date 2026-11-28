@@ -1,0 +1,68 @@
+# MONSTRIQUE Chapter 2 cast rig source art, general edition, round 1 (2026-11-28 PT).
+# Task monstress-convention/t-022 (Francesca rig sources once the t-018 rig format landed). The cut-out rig
+# (kind_robots utils/monstrique/rig.ts, scripts/cut_monstrique_rig_parts.py) cuts layered parts from two images
+# per character: a full-body A-pose (832x1216, plain flat grey, limbs clear of the body) and a head sheet
+# (1344x768) of four cells in a fixed order: neutral, open ah mouth, closed-eye blink, oh mouth. This round asks
+# for both images for Francesca Stein, matched to her delivered krea2 design from CH2-BEACH-HEX-R1 (stage figure
+# ArtImage 281132, expression sheet 281133, both now in the game as a static cut-out and dialogue portraits):
+# pale green patchwork skin with neat surgical stitches, small silver neck bolts, a towering black beehive with
+# white lightning-bolt streaks over short black curls, brass safety goggles pushed up into the beehive, plum
+# lipstick, small gold stud earrings, a white lab coat with rolled sleeves over a knee-length purple 1960s
+# cocktail dress, and black heels. Lessons from CH1-LEADS-RIG-R2 and CH1-CAST-RIG-R1 applied: the head sheet
+# names the same skin, jaw and fixed props as the A-pose and keeps the goggles pushed up in the same place in all
+# four cells (the delivered expression sheet wore them down over her eyes, which hides a blink), and draws the
+# blink as its own cell with the lids as curved lash lines. Her soldering iron and blueprint are left out of the
+# A-pose so both hands hang open and clear and the figure cuts cleanly; the engine adds props. Clem and Dee Dee
+# stay as static cut-outs for now. Same krea2 lane, style and grey ground as the Chapter 1 rig rounds (Silas
+# 2026-11-28 PT: krea2 gives the best designs). Identity LoRAs are not trained, so cast_loras is false. General
+# edition only. is_mature false, fully clothed, comedy, adults only. Private. priority 60 (game art). auto_submit: true.
+round: monstrique-ch2-cast-rig-1
+series: monstrique-ch2-beach-hex
+project_slug: monstress-convention
+designer: Monstrique Studio
+is_public: false
+is_mature: false
+cast_loras: false
+priority: 60
+auto_submit: true
+lanes:
+- key: krea2
+  label: Krea 2, painted 2D point-and-click adventure art
+  engine: krea2
+  prompt: prose
+subjects:
+- key: mc-rig-francesca-apose
+  lane: krea2
+  entity: monstrique-cast
+  title: Francesca Stein rig source, neutral A-pose full body (matches ArtImages 281132 and 281133)
+  asset: monstress-convention/rig/francesca/apose
+  size: 832x1216
+  seed: 1147001
+  prompt_prose: Hand-painted 2D point-and-click adventure game character figure for a cut-out animation rig, full
+    body head to toe, standing alone on a plain light grey background, bold ink outlines and flat cel shading, even
+    flat lighting. Francesca Stein, a tall stitched-together scientist actress, an adult woman who looks about
+    forty-five, with pale green patchwork skin joined by neat surgical stitches across her cheek, neck and forearms,
+    two small silver bolts at the sides of her neck and a towering black beehive hairdo shot through with white
+    lightning-bolt streaks over short black curls at her temples. Sharp dark eyes, arched brows, plum lipstick, small
+    gold stud earrings and brass safety goggles pushed up into the beehive. She wears a crisp white lab coat with the
+    sleeves rolled to the elbow over a knee-length purple 1960s cocktail dress and sensible black heels. She stands
+    in a relaxed neutral A-pose in three-quarter view turned toward the right, feet planted a little apart, both arms
+    hanging slightly away from her sides with open empty hands, the lab coat hanging straight, every limb clearly
+    separated from her body, chin up with one eyebrow raised. Witty, proud and impatient.
+- key: mc-rig-francesca-heads
+  lane: krea2
+  entity: monstrique-cast
+  title: Francesca Stein rig source, talk and blink head sheet matched to the A-pose
+  asset: monstress-convention/rig/francesca/heads
+  size: 1344x768
+  seed: 1147002
+  prompt_prose: Hand-painted 2D cartoon character head sheet for lip-sync animation on a plain light grey background,
+    bold ink outlines and flat cel shading, four head-and-shoulders studies of the same stitched adult woman side by
+    side, all at the same size and angle in three-quarter view turned toward the right. First a cool calm face with
+    her plum lips closed in a small knowing smile, second mid-word with her mouth open wide on an ah sound, third
+    with both eyelids fully closed in a blink, the lids drawn as two curved lash lines under her arched brows, and
+    fourth a startled oh with round plum lips and raised brows. Francesca Stein, who looks about forty-five, pale
+    green patchwork skin with neat surgical stitches across her cheek and neck, small silver neck bolts, a towering
+    black beehive with white lightning-bolt streaks, small gold stud earrings, the same brass safety goggles pushed
+    up into the beehive above her brows in every study, and the collar of a white lab coat over a purple dress.
+    Brilliant, prickly and expressive.
