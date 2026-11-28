@@ -368,30 +368,33 @@ tasks:
       full cinematic stage at 390/768/1440/XL, touch/gamepad/reduced motion.
   - id: t-014
     milestone: m4
-    title: "Human gameplay and AAA-console visual acceptance"
+    title: "Verified Every Villain Tactics production playtest handoff"
     status: waiting
     depends_on: [t-013, t-029]
-    gate_human: true
-    gate_reason: creative-approval
     owner: null
     passes: 0
     stakes: reversible
     note: >-
-      FOR SILAS: Only after all engineering, authored content and art QA, accept
-      the finished game/editor visual quality and tactical feel.
+      Verify all engineering, authored content, art, game/editor QA, tactical fairness and full
+      device/run evidence. When every finite task passes, follow CONTROL.md for playtest/normal
+      and flag and close the master issue. Human gameplay and visual acceptance belongs to the
+      subsequent playtest; any public game release or community publishing requires separate
+      authorization. Prior gate wording is preserved in Git history; no approval is inferred.
+
   - id: t-015
     milestone: m4
     title: "Separate approval for public Play route and community publishing"
-    status: waiting
+    status: cancelled
     depends_on: t-014
     gate_human: true
     gate_reason: publish
     owner: null
     passes: 0
     stakes: outward-facing
+    cancelled_reason: silas-moved-post-roadmap
     note: >-
       FOR SILAS: Explicitly approve any public game release, external access to
-      community level gallery or publishing; admin previews are internal only.
+      community level gallery or publishing; admin previews are internal only. Owner direction 2026-11-27 PT: moved outside the finite roadmap, not approved or completed; public publishing still requires explicit authorization.
 
   - id: t-016
     milestone: m2

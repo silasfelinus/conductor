@@ -118,16 +118,16 @@ Existing scopes to reconcile, not another task ledger. Live roadmaps own task st
 
 | Project | Existing completion scopes |
 | --- | --- |
-| Rainbow Bullet Hell Space Princess | t-044 standard, t-012 story/audio, t-022/030 art, t-013 full local co-op QA, t-042 reconciliation; t-014 human release |
-| Save the Plumber | t-028 standard, t-005 traversal, t-021–023 worlds, t-012/024–026 art/audio, t-027 Maker, t-013 QA; t-014 release |
+| Rainbow Bullet Hell Space Princess | t-044 standard, t-012 story/audio, t-022/030 art, t-013 full local co-op QA, t-042 reconciliation; t-014 verified handoff; release separate |
+| Save the Plumber | t-028 standard, t-005 traversal, t-021–023 worlds, t-012/024–026 art/audio, t-027 Maker, t-013 QA; t-014 verified handoff; release separate |
 | Kind Robots Arcade | Finite cabinet depth slices and existing display/audio/device tasks; 3 achievements per small cabinet; t-009 recurring factory not a finite blocker |
 | Memory Dungeon | t-068 standard, t-025–028/047/077 maps/dungeons, t-075/076 art, t-079 opening, t-078 endings, t-080 delivery/device readiness, existing balance tests |
-| Prom of Doom | t-034 standard, t-002/004–006/016–017/021–027 campaign/identity, t-007/008/031/033/046/051 art, t-009/010/018 QA, t-032 reconciliation; t-049 audio done; t-011 human gate |
-| Terrors on Crystal Street | t-024 standard, t-004/005 art, t-016 Jess slice plus complete-game coverage, t-011 human gate |
-| Every Villain Tactics | t-025 standard, t-009–011/018/020–024 routes/AI/editor/identity, t-012 art, t-013 QA; t-029 audio done, t-014/015 human gates |
-| MONSTRIQUE | t-015 standard, t-003–010 story/rooms/art/endings, t-014 art, t-011 security, t-012 QA; t-013 human gate |
+| Prom of Doom | t-034 standard, t-002/004–006/016–017/021–027 campaign/identity, t-007/008/031/033/046/051 art, t-009/010/018 QA, t-032 reconciliation; t-049 audio done; t-011 verified handoff; release separate |
+| Terrors on Crystal Street | t-024 standard, t-004/005 art, t-016 Jess slice plus complete-game coverage, t-011 verified handoff; release separate |
+| Every Villain Tactics | t-025 standard, t-009–011/018/020–024 routes/AI/editor/identity, t-012 art, t-013 QA; t-029 audio done, t-014 verified handoff; t-015 publication moved post-roadmap |
+| MONSTRIQUE | t-015 standard, t-003–010 story/rooms/art/endings, t-014 art, t-011 security, t-012 QA; t-013 verified handoff; release separate |
 | Tarot Studio | Non-game production tool: t-004/005 decks, t-006 print exports, t-009 accessible workflow; generated visuals/icons, global private deck state/settings. t-007/008 commerce gated |
-| The Ruler Is Hooked | t-067 standard, t-047/057/058 art, t-048 fairness/economy, t-050/061 device QA, t-051 readiness; t-032 human gate |
+| The Ruler Is Hooked | t-067 standard, t-047/057/058 art, t-048 fairness/economy, t-050/061 device QA, t-051 readiness; t-032 cancelled obsolete human gate |
 | Playbook Kit | Shared infrastructure: t-003–007 adoptions, t-008/013 adapter, t-009/017 art, t-026 review. Provide standard through shared components, preserve engines/saves. No revived daily challenge |
 | Rebel Button | Small game: t-001 brief, t-003/004 foundation, t-005 finale/full 100-press loop; 3 achievements, global progress, generated icons, front/settings, audio and discovery/history equivalent. t-002 soft gate |
 | Deep Heart | t-012 delivery audit, t-016–018 bestiary/environments/relationships, t-013 adversarial/device QA, t-014 graduation. Recheck all standard rows against existing build tasks |
