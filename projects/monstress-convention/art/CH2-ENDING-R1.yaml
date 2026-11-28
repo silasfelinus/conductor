@@ -1,0 +1,55 @@
+# MONSTRIQUE Chapter Two ending plate, general edition, round 1 (2026-11-28 PT).
+# Task monstress-convention/t-022 (main-game standard item 6: every ending has its own painted plate).
+#   five-knives  "I Made Five Knives", Chapter Two's ending (kind_robots utils/monstressConvention/chapterTwo.ts).
+#                With the 1964 reel, the Starlite prop invoice and the scratched-out sleeve in hand, Francesca Stein
+#                admits in her lab behind the Bolt Street science-cinema: "I made five knives. Four went on the
+#                poster. The fifth went to a girl nobody ever photographed." Reached in both editions with the same
+#                general-safe text. Until this cell is delivered the game shows its image-shaped fallback slot; the
+#                kit spec carries the brief and no src.
+# Faces: Iris and Norb in the same words as ENDINGS-R2.yaml; Francesca as CH2-BEACH-HEX-R1.yaml mc-ch2-francesca-stage;
+# the lab as mc-ch2-bg-francesca-lab. Identity LoRAs are not trained, so cast_loras is false. Spoiler rule: Draculina,
+# Marta and any culprit stay off the art; the fifth knife is only an empty velvet slot. General edition: is_mature
+# false, fully clothed, comedy, adults only. Private. priority 60 (game art). auto_submit: true. Delivery:
+# public/monstress-convention/endings/five-knives.webp in kind_robots, 1344x768 like the Chapter One plates.
+round: monstrique-ch2-ending-1
+series: monstrique-endings
+project_slug: monstress-convention
+designer: Monstrique Studio
+is_public: false
+is_mature: false
+cast_loras: false
+priority: 60
+auto_submit: true
+lanes:
+- key: krea2
+  label: Krea 2, painted 2D point-and-click adventure art
+  engine: krea2
+  prompt: prose
+subjects:
+- key: mc-ending-five-knives
+  lane: krea2
+  entity: monstrique-ending
+  title: 'Ending: I Made Five Knives (general)'
+  asset: monstress-convention/endings/five-knives
+  size: 1344x768
+  seed: 1144011
+  prompt_prose: Hand-painted 2D point-and-click adventure game ending illustration, bold ink outlines and flat cel
+    shading, crackling electric blue light against warm lamplight. A mad-science prop workshop on the stage behind
+    a small cinema's movie screen, two tall Tesla coils at the edges throwing arcs of blue lightning, a big faded
+    blueprint of five ornate jewelled 1960s stage daggers numbered one to five pinned on the wall. In the centre
+    Francesca Stein, a tall stitched-together scientist actress, an adult woman who looks about forty-five with pale
+    green patchwork skin joined by neat surgical stitches, two small silver neck bolts and a towering black beehive
+    with white lightning-bolt streaks, in a white lab coat over a purple 1960s cocktail dress with brass goggles
+    pushed up, holds open a walnut presentation case lined with red velvet showing five empty dagger-shaped hollows,
+    a proud rueful half-smile on her plum lips. At the left Iris Quill, a sassy curvy adult woman about thirty with
+    a big messy shoulder-length mane of jet-black hair with one thick bold white streak, winged eyeliner, berry
+    lipstick, big gold hoop earrings and a belted rose-and-plum trench coat over a black crop top, leans in with
+    a chunky vintage press camera raised, delighted. At the right Norb Vale, a short stocky adult man about forty-five
+    with a big round head, untidy brown hair greying at the temples, a round bulbous pink nose and small round wire
+    spectacles with a thick magnifying left lens, in a hot-pink T-shirt under a rumpled charcoal-grey suit jacket,
+    a grey bow tie and bright yellow rubber gloves, peeks out from behind a half-built tin robot costume, horrified
+    and fascinated. Electric blue, violet and warm amber palette, cheeky detective revelation.
+  art:
+    krea2:
+      status: PENDING
+      art_image_id: null
