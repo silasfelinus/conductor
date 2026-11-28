@@ -1,0 +1,61 @@
+# MONSTRIQUE Chapter One missing room backgrounds, general edition, round 1 (2026-11-28 PT).
+# Task monstress-convention/t-017 put round CH1-CAST-AND-MOTEL-R1 (ArtImages 280900-280913) into the game
+# (kind_robots utils/monstrique/stageArt.ts). Two Chapter 1 rooms still had no painting and keep the vector
+# fallback: the Midnight City map (room id city-map) and the convention center (convention-center). This round
+# asks for those two backgrounds in the same lane, size and style as CH1-CAST-AND-MOTEL-R1 so a later worker can
+# add them to ROOM_BACKDROPS, refit hotspots and WALK_AREAS the same way, and retire the last SVG stage art.
+# Silas approved the art replan in session ("yes on replan and art", 2026-11-27 PT). Queued is not delivered:
+# each cell needs a DONE ArtJob, an ArtImage id and a verified final URL before it ships.
+# Composition follows the current hotspot positions in Kind Robots utils/monstressConvention/prologue.ts
+# HOTEL_ROOMS (percent of the 1344x768 frame): city-map drive-in (18,70), joke shop (35,49), mansion (78,22),
+# sewer entrance (66,82); convention-center tour poster (51,42), signing table (64-86, 66-74). The lower
+# third stays open floor so cut-out figures can stand on it. Unpeopled. Spoiler rule: Draculina and any
+# culprit stay off the art (her mansion is a building only). General edition: is_mature false, comedy, adults
+# only. Private. priority 60 (game art). auto_submit: true.
+round: monstrique-ch1-city-convention-1
+series: monstrique-ch1-cast-motel
+project_slug: monstress-convention
+designer: Monstrique Studio
+is_public: false
+is_mature: false
+cast_loras: false
+priority: 60
+auto_submit: true
+lanes:
+- key: krea2
+  label: Krea 2, painted 2D point-and-click adventure art
+  engine: krea2
+  prompt: prose
+subjects:
+- key: mc-ch1-bg-city-map
+  lane: krea2
+  entity: monstrique-room
+  title: 'Background: Midnight City map lookout at night (city-map)'
+  asset: monstress-convention/rooms/city-map
+  size: 1344x768
+  seed: 1142001
+  prompt_prose: Hand-painted 2D point-and-click adventure game background painting, 1990s comedy adventure meets
+    modern HD cartoon, bold ink outlines, painted detail, saturated neon noir palette. A wide night view of Midnight
+    City seen from a rain-wet hillside lookout, laid out like an illustrated tourist map come to life. At the lower
+    left a retro drive-in movie screen glows beside a dark beach under a neon star sign. Left of centre a crooked
+    little joke shop with a grinning neon mask over its door. At the upper right a gothic hilltop mansion with one
+    lit tower window and bats circling the moon. Right of centre near the bottom a round iron sewer grate steams in
+    the street. Between them winding streets, tiny glowing windows, a monster-movie marquee and a distant
+    convention hall banner. The lookout's cracked concrete platform with a coin-operated telescope fills the lower
+    third, open and deserted, an unpeopled stage for characters to walk across. Moody, funny and inviting.
+- key: mc-ch1-bg-convention-center
+  lane: krea2
+  entity: monstrique-room
+  title: 'Background: MONSTRIQUE convention center lobby with signing table (convention-center)'
+  asset: monstress-convention/rooms/convention-center
+  size: 1344x768
+  seed: 1142002
+  prompt_prose: Hand-painted 2D point-and-click adventure game background painting, 1990s comedy adventure meets
+    modern HD cartoon, bold ink outlines, painted detail, warm stage lights against magenta neon. The crowded-looking
+    but empty lobby of a fan convention celebrating sixty years of a classic monster-movie franchise. A giant
+    painted cut-out of screaming vintage movie monsters looms high on the back wall at the top centre. Velvet banners in magenta hang down both side
+    walls. At the right an autograph signing table draped in loose linen bandages, stacked glossy headshots, a
+    gold pen and a little folded reserved placard, with an empty folding chair behind it. Display cases of vintage dolls,
+    idols and framed contracts line the back wall, with merchandise racks, a velvet rope queue line and a popcorn
+    cart. A polished patterned carpet fills the lower third, open and deserted, an unpeopled stage for characters
+    to walk across. Festive, slightly seedy and comic.
