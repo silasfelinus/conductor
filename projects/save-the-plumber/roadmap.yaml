@@ -155,7 +155,10 @@ tasks:
   - id: t-005
     milestone: m2
     title: "Implement enemy interaction, held objects and powerup systems"
-    status: ready
+    status: claimed
+    owner: worker
+    claimed_by: plumber-boneyard-20261128T020315Z-92f81a
+    claimed_at: '2026-11-28T02:03:15Z'
     depends_on: [t-003]
     passes: 0
     stakes: reversible
@@ -199,7 +202,7 @@ tasks:
       App branch worker/save-the-plumber-t-005-rootcellar-5b8c21 at 207c596ccf056d00a8fbfbeea795f832182e4c3c adds a pipe-linked optional Rootcellar sluice tunnel with a companion scale plate, low gate, token cache and a safe exit for solo players. Real-input regression tests unweighted gate, Gurgle parking, reward collection, remount and exit using a test barrel to represent arriving with companion. Geometry verified rectangular and previously empty, two-file diff. CI pending; partial traversal scope.
 
       Verified kind_robots#6020 merged at ee3bd413; all ten implementation workflows and branch janitor passed on exact head 207c596c. Rootcellar companion sluice tunnel and input replay delivered. Partial scope: remaining water courses, fruit weight interaction and original art acceptance. Production unverified.
-    updated: '2026-11-28T00:31:27Z'
+    updated: '2026-11-28T02:03:15Z'
   - id: t-006
     milestone: m3
     title: "Build World 1: four complete garden/pipeworks levels and boss"
