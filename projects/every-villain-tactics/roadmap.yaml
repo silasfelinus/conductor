@@ -469,11 +469,11 @@ tasks:
   - id: t-021
     milestone: m3
     title: "Ship 48 power-specific playable origin opening battles"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: 20261128T034600Z-evt-origins-wind-oath-f726bc
     claimed_at: '2026-11-28T03:46:00Z'
-    updated: '2026-11-28T03:46:00Z'
+    updated: '2026-11-28T03:51:00Z'
     depends_on: [t-005, t-017]
     passes: 0
     stakes: reversible
@@ -495,6 +495,8 @@ tasks:
       Kind Robots commit c30d11f33088a4f082509aa668407b0380e8e386 implements The Orchard Under Asphalt and The Future in the Glass. Distinct 9x6 arenas, root-tile self ritual versus three-tile clear-sightline water ritual, both two AP, gated evacuations, Hero/Villain intros, two choices with heal/suppress effects, branching endings and scoped existing save receipt rules. 166 isolated assertions passed on actual extracted planner, geometry, reachability, rescue gate and scene graph with synthetic units/tactics and outcome stub; permanent integrated regressions added. Full CI and rendered QA pending. Existing painted locations are fallback only. Partial scope: eleven implemented origins upon merge, 37 others and dedicated art/full acceptance remain.
 
       Kind Robots #5969 merged 0988245c6f7694383b04bf57ca5ca7b73a9ce999. Verified all seven workflows on exact head 9bfd033773027be5f580911e4b0e77d4f65ba675 and branch janitor succeeded. Granny Mayhem and Reflection origins are on main; eleven of 48 implemented. Remaining 37 origins, dedicated art and full-run acceptance. Partial, return ready.
+
+      Kind Robots 69272026f29eb76f5a6aa379b57f4d0d38c523ea implements Overdue Thunder and The Bell and the Door, two distinct 9x6 arenas, two-AP signature storm folding from four tiles with clear LOS versus adjacent warding gesture, two gated evacuations each, branching hero/villain intros, heal/suppress choice effects and distinct victory/defeat scenes. Identity-locked one-shot and story launch, existing save receipt validation. 96 isolated checks of committed map topology, registry and scene graphs passed; integrated studio and front-menu regressions expanded. Full CI and rendered acceptance pending; reused painted fallback venues only. Partial t-021: 13 of 48 playable upon merge; 35 others, original venue art and full new-game acceptance remain.
   - id: t-022
     milestone: m3
     title: "Build 48 villain-owned lairs with changing tactical environments"

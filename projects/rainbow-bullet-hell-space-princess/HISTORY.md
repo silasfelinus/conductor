@@ -1045,3 +1045,153 @@ standard.md; the final verdict stays with Silas (t-014).
 #5628 c5129034, #5670, #5679 de0e1b51; achievements t-045). Device, audible and live-account observations
 transfer to the playtest handoff per the 2026-11-27 owner direction in main-game-standard.md.
 <!-- note:end t-044 -->
+
+## t-013 — Deterministic combat fairness, multiplayer soak and campaign QA
+
+<!-- note:begin t-013 -->
+Full-route autoplay/property runs, zero unavoidable-hit scenarios at documented skill window, seeded repeatability, 60 Hz render target and acceptable mobile fallback, browser refresh/resume, local 1/2/3/4 player soak (no online co-op, t-006 cancelled), keyboard/gamepad and phone/tablet/ desktop UI snapshots. Record measured median completion duration and test all endings; never assert parity to commercial classics based solely on an encounter list.
+2026-11-23 PT QA groundwork: four Rainbow verifiers had drifted red on main because most verifyRainbow*.test.ts never ran in CI. kind_robots#5661 brought them in line with the canonical X1-X4 detours; kind_robots#5666 added rainbow-verifier-suite.yml so every Rainbow verifier (60) runs on Rainbow PRs, wall-clock CoopLoad alone. The full suite is now a trustworthy base for the campaign QA pass.
+2026-11-24 PT: kind_robots#5689 (merged cf90e9d7): verifyRainbowCampaignMatrix flies 16 fresh campaigns (crews 1-4, two seeds, dock self/early) to THE END; canonical Act order with each detour in its slot; together every detour, both sides of every fork, both roads, the stand-down and all three choices; deterministic replay; median clean campaign 51.6 min (45.3-58.3). verifyRainbowPerformance.browser: four pilots in Act I's boss fight with real art served, engine p50/p95 0.2/0.4 ms, frame pacing p50/p95 16.7/16.7 ms, heap 58 MB. All 64 Rainbow verifiers gate every Rainbow PR. Remaining for an independent reviewer: scripted fail/retry personas (the autopilot never loses a ship) and blind critic passes.
+2026-11-23 PT Silas decision (this session, verbatim): "Fresh agent sessions count as independent, go ahead". Fresh cloud agent sessions with no prior context satisfy #4146's blind critic passes and independent review. Launched 2026-11-23 PT: gameplay/fairness (session_01L5NKxambWbSZ7WwNsdzrW2, kind_robots branch claude/rainbow-review-gameplay), story/routes/endings (session_01L5NKxcoC41Nm2tWCsB9Wdk, claude/rainbow-review-story), art/motion/access/devices (session_01L5NKxc2Uyg6NvXB3Cv7jdw, claude/rainbow-review- presentation). Read-only; each pushes a defect report. Repeat the passes after the last significant art/animation change (t-030) before #4146's final verification.
+2026-11-23 PT: kind_robots#5709 (merged 66b6caa8) adds utils/scripts/rainbowPersonas.ts, scripted fail-and-retry players (idle, novice, typical, no-super, expert, camper) flying the real engine with damage on and continues on or off, deciding only from the snapshot. First matrix (seed 7): solo typical reaches THE END in 62.8 min with 3 continues (no continues: dies in Act VII); solo expert finishes in 48.4 min with no continues; idle and novice loop in Act I with continues. It found a Delphion phase-3 stalemate (a parked four-pilot crew never hit and never hitting for an hour), fixed with aimed twin fans and pinned by verifyRainbowBossCamping.
+2026-11-28 PT: done. Round-2 independent review after the last art change (#4146 section 9): three fresh read- only sessions on main 459343a2 (gameplay: 5 majors; story: ready, 2 majors; presentation: ready, 4 majors; no blockers). All 11 majors fixed and merged: story #6029, presentation #6034, gameplay #6041 (Halo revive by pilot, co-op X/Y, solo balance within 1.34x, Crown novice wipes 7-17 to 1-5, Clawburst pocket closed). All 72 Rainbow verifiers and the five Rainbow Chromium contracts pass on the combined branch. Device, audible and live- build observations transfer to human playtest. Table: READINESS-DOSSIER-2026-11-28.md section 2.
+<!-- note:end t-013 -->
+
+## t-014 — Verified production playtest handoff (public release separate)
+
+<!-- note:begin t-014 -->
+Assemble the tested preview, art delivery record, local four-player combat, full-run timing, performance/device captures and scores. Verify all finite original build, art, audio and QA tasks; follow CONTROL.md for playtest/normal and flag and close master issue #4146. Human gameplay/visual feedback and any new public Play registration, promotion or deployment are post-roadmap decisions requiring separate authorization. No human verdict is a prerequisite. Prior gate wording is preserved in Git history; no approval is inferred.
+2026-11-28 PT: done at Silas's in-session request to finish the roadmap for human playtests. All finite tasks done; lifecycle set to playtest/normal in project-overrides.yaml; master issue #4146 flagged [FLAGGED FOR HUMAN TESTING] and closed as completed. Public /play, Arcade promotion and deployment remain separate approvals; no approval inferred.
+<!-- note:end t-014 -->
+
+## t-030 — Gen-2 animation: animated pilot cut-ins, enemy sprite cycles and moving cutscenes
+
+<!-- note:begin t-030 -->
+GEN2-STANDARD.md sections 5-6. WAN first/last-frame clips from the delivered cutscene stills (ART-ROUND-19) and pilot cut-ins, then enemy idle/attack cycles packed into atlases. Bullets stay crisp code-drawn shapes; animation is for craft, pilots and scenes.
+
+Partial t-030: painted super cut-ins now have bounded per-pilot temporal camera animation, cropped art, and reduced-motion fallback, with a regression test in the Rainbow browser contract. Implementation commit 591a60cd; verify latest PR CI. Enemy frame atlases, moving cutscenes and full art verification remain outstanding.
+
+2026-11-23 PT (session_01L5NKxaUAWmNr7wxdToBdp3): living Act title cards shipped for
+S01, S02, S05, S06 (kind_robots#5703, merged 03f96cd4) and S07 (kind_robots#5704); Fever
+Dream look only, calm motion keeps the still, verifyRainbowAnimation covers files and
+gate. Rejected S03 (smear) and S04 (animated fake logo; the shipped s04 still also
+carries it and needs a clean re-render). First-pass enemy loops all crop-zoomed; framed
+-v2 cells and the eight pilot hit/victory poses are still rendering
+(T030-ANIMATION-2026-11-23.yaml). Remaining: enemy atlases, poses + hit-pose HUD card,
+S08.
+
+2026-11-24 PT: kind_robots#5717 (merged 73cc425e) ships the first enemy frame animation,
+Fever Dream idle atlases for picket and urchin (8 raw WAN frames each, matte keyed,
+centred, 4 fps; calm holds cell 0), and the S08 living title card (640 px loop), so Acts
+I, II, V-VIII now have living interludes. Rejected in review: spiral (turns to camera),
+anchor and relay (near-static), lantern (green tentacle streaks), skimmer (source still
+cut); third takes queued as jobs 77023-77026. Still open: those retakes, coral, S03/S04
+card retakes, the eight pilot poses and hit-pose HUD card, boss/ship motion, and moving
+endings (presentation critic P-01 to P-03).
+
+2026-11-24 PT: kind_robots#5727 (merged 4706755f) ships seven pilot poses (Maribel,
+Azure, Vivi hit and victory; Solenne victory; CAST-QA face, hair, skin and build against
+each identity lock), a hit card that flashes the hit pose over a ship that loses a life,
+and idle atlases for anchor and lantern (third takes), so picket, urchin, anchor and
+lantern now animate. Rejected: Solenne's hit pose (no reaction), spiral (turns to camera
+in both takes), relay and coral (near-static), skimmer (source cut). Still open: those
+retakes, S03/S04 cards, boss and ship motion, moving endings.
+
+2026-11-24 PT: P-02 one-shot Act card clips with real motion for all eight Acts
+(kind_robots#5743, #5744). The idle-atlas clock (P-01) and moving-ending support (P-03)
+are in #5767. 83 renders are in progress (conductor ANIM-BACKLOG-2026-11-24): idle loops
+for every enemy, guardian, ship, boss phase, pickup and hazard; motion clips for the six
+ending plates. B02 phase 2-3 redraws (P-12) and the Solenne Fever portrait (P-19) are in
+ART-BACKLOG.
+
+2026-11-25 PT: kind_robots#5767 merged (idle-atlas clock P-01, moving endings P-03,
+Solenne Fever portrait/comms P-19). First reviewed idle loop (angler) ships in #5774; 81
+loops and the six ending clips are still rendering (ANIM-BACKLOG-2026-11-24).
+
+2026-11-26 PT intent audit: partial, so back to ready. The idle-atlas clock, moving
+endings and P-19 shipped (#5767). Idle loops are being reviewed in batches
+(conductor#8117, batch 12); the rest are still rendering (ANIM-BACKLOG-2026-11-24). The
+11-22 claim had expired.
+
+2026-11-27 PT: reviewed six more loops. Kept skate-v2 and guardian-bulwark-v2 (kind_robots#5978).
+Rejected squid-v2 and turret-v2 (static), lighthouse-lamp-v3 (red flash, jitter) and salvager-v3 (morph).
+19 v2/v3 retakes are still rendering (ANIM-BACKLOG-2026-11-24).
+
+2026-11-27 PT (later): reviewed guardian clawstrike-v2, lantern-v2 and salvager-v2. All on model but
+near-static (keyed motion 1.7-4.3 against 27.6 for the kept bulwark-v2), so rejected; v3 retakes with
+bigger-motion prompts queued in ANIM-BACKLOG-2026-11-24. 16 earlier retakes are still rendering.
+
+2026-11-27 PT (third pass): reviewed guardian-urchin-v2, comet-crown-v2 and halo-fin-v2 (art 280886-280888).
+All on model but near-static (keyed motion 2.7-5.8 against 50.1 for the kept bulwark-v3), so rejected; v3
+retakes with bigger-motion prompts queued. 18 earlier retakes are still pending or rendering.
+
+2026-11-27 PT (fourth pass): kept guardian-salvager-v3 (art 280892, hover and tentacle curl on model, motion 60.3),
+shipped as an idle atlas in kind_robots#5993. Rejected petal-wing-v2 and guardian-lantern-v3 (near-static, 6.6 and
+7.7) and guardian-clawstrike-v3 (claw smear, cannon colour flicker). Final retakes queued: petal-wing-v3,
+clawstrike-v4, lantern-v4. 16 earlier retakes are still pending or rendering.
+
+2026-11-27 PT (fifth pass): kept halo-fin-v3 (art 280895, the saucer bobs and rocks, motion 74.7), shipped as the
+first ship idle atlas (ships/halo-fin) in kind_robots#5994. Rejected prism-lance-v2 (near-static, 3.8),
+guardian-urchin-v3 (spikes dissolve into a scribble on a mid-loop leap) and comet-crown-v3 (wings morph into
+another jet). Retakes queued: prism-lance-v3, urchin-v4, comet-crown-v4. 16 earlier retakes still pending.
+
+2026-11-27 PT (sixth pass): reviewed b07-phase1-v2, petal-wing-v3 and guardian-clawstrike-v4 (art 280915-280917).
+Rejected all three: b07-phase1 and clawstrike near-static (keyed motion 0.86 and 0.96), petal-wing tumbles off
+model (28.4). Petal-wing and guardian-clawstrike stay stills per the three-take rule; b07-phase1-v3 retake
+queued. 15 earlier retakes still pending or rendering.
+
+2026-11-27 PT (seventh pass): reviewed the final takes guardian-lantern-v4, prism-lance-v3 and guardian-urchin-v4
+(art 280918-280920). Rejected all three: lantern and urchin near-static (foreground change 0.73 and 1.89 against
+32.9 for the kept halo-fin-v3), prism-lance barely hovers and its tail fins swap shape and smear between cells.
+All three stay stills per the three-take rule; no retakes queued. 14 retakes (incl. comet-crown-v4,
+b07-phase1-v3) still pending or rendering.
+
+2026-11-27 PT (eighth pass): reviewed comet-crown-v4 and b07-phase1-v3 (art 280921-280922). Rejected both:
+comet-crown's swept wings fold away and regrow (silhouette height 146-501 px), so it stays a still per the
+three-take rule; the b07-phase1 serpent now moves (67.9) but slides as a whole, its neck curve fills in and the
+belly fins smear. Final retake b07-phase1-v4 queued (coil pinned, head and jaw only). 12 retakes still pending.
+
+2026-11-27 PT (ninth pass): reviewed b07-phase2/3-v2, b09-phase1/2/3-v2, motherdrone-v2 and pistol-v2 (art
+280923-280929). Kept motherdrone-v2 (nose tilts, thruster flares, on model, motion 51.2), shipped as an idle
+atlas in kind_robots#5996. Rejected the five boss loops (on model but near-static, 5.6-7.6, only glows and
+sparks move) and pistol-v2 (holds size now but static, 3.7). Queued bigger-motion v3 retakes for the five boss
+phases and a final pistol-v3. 6 earlier retakes still pending or rendering.
+
+2026-11-27 PT (tenth pass): reviewed the final takes b04-phase3-v3, guardian-kelp-warden-v3 and b07-phase1-v4
+(art 280930-280932). Rejected all three: kelp-warden and b07-phase1 near-static (motion.py 0.90 and 0.86 against
+19.98 for the shipped salvager atlas); b04-phase3 pops from a crouched first cell and smears its tail fluke. All
+three stay stills per the three-take rule. 9 retakes (b01-p3, b03-p1, b08-p1, b07-p2/3, b09-p1/2/3, pistol v3)
+still pending or rendering.
+
+2026-11-27 PT (eleventh pass): reviewed b07-phase2/3-v3 and b09-phase1/2/3-v3 (art 280933-280937). Kept
+b07-phase2-v3 (coil swells, head nods, jaw parts, on model, motion 20.7), shipped as an idle atlas after a
+despeckle and despill pass in kind_robots#6017. Rejected b07-phase3 (head smears on the jaw open), b09-phase1
+(cell 0 pops 27 px), and b09-phase2/3 (tail changes shape, green matte streak at the tail). These were second
+rendered takes, so final v4 retakes are queued. Still pending: b01-p3, b03-p1, b08-p1 and pistol v3, plus the
+four new v4s.
+
+2026-11-28 PT (twelfth pass): kept b01-phase3-v3 (art 280948, jaws snap and the head rears, on model, motion
+8.3), shipped as an idle atlas in kind_robots#6025. Rejected the final takes pistol-v3 (near-static, 1.85) and
+b07-phase3-v4 (green matte through the open jaw, teeth lost); both stay stills per the three-take rule.
+Still rendering, all final takes: b03-p1-v3, b08-p1-v3, b09-p1/2/3-v4.
+
+2026-11-28 PT: done. Every ANIM-BACKLOG-2026-11-24 subject has a review verdict (177: 53 keep, 120 reject).
+Final loops shipped this session: b01-phase3 (#6025), b09-phase2/3 (#6031), b08-phase1 (#6037); 46 idle atlases,
+living cards for all eight Acts, pilot poses and cut-ins and moving endings are on main. 29 subjects keep
+reviewed stills (READINESS-DOSSIER-2026-11-28.md section 1); squid and turret had one valid take each and stay
+stills per Silas's 2026-11-28 PT note that nothing more in the queue was worth waiting for.
+<!-- note:end t-030 -->
+
+## t-042 — Rainbow Bullet Hell Space Princess — Master Roadmap to Verified Playtest Readiness
+
+<!-- note:begin t-042 -->
+FROM GITHUB ISSUE silasfelinus/kind_robots#4146 (https://github.com/silasfelinus/kind_robots/issues/4146). Master coordination task, not a second campaign specification. Keep the issue open through verified finite playtest readiness; reference it with Refs, not Closes. CONTROL.md's 2026-11-15 handoff rule and 2026-11-19 local-only co-op decision supersede older issue language.
+
+Remaining scope: reconcile t-044 main-game standard, t-012 narrative/comms/audio, t-013 full local 1–4-player fairness/device QA, t-022 painted planes/retakes, and t-030 animation. Review the live art ledgers before submitting anything; P-03 all six ending clips shipped per recorded #5904, P-01 batch 14 reports ~29 pending loops and bulwark-v3/eel-v3 retakes. Keep rejected third attempts as stills only where accepted by the existing quality contract; never imply animation or visual verification from a ledger alone. Verify the latest evidence, attach accepted media and close each finite task only when its own scope passes. t-014 is the agent-owned readiness handoff; human feedback and publication are subsequent decisions. Refer to ROADMAP-OVERVIEW.md and the master issue for acceptance; earlier exact task note is in ROADMAP-HISTORY-2026-11-26.md#t-042. Existing T042-HISTORY.md remains intact.
+
+2026-11-27 P-01 idle batch 6: bulwark-v3 kept and shipped (kind_robots#5928); brood and eel stay stills after three takes; harbinger, coral-choir-pod and lighthouse-lamp v3 retakes queued in ANIM-BACKLOG. Master task stays ready for the next review batch.
+2026-11-27 PT P-01 idle batch 12: kept mirror-v2 (3.71) and coral-choir-pod-v3 (8.46), shipped in kind_robots#5955; harbinger stays a still after a third static take; salvager-v2 static (0.73), v3 retake queued. ~25 loops plus lighthouse-lamp-v3 pending.
+
+2026-11-28 PT: done. Reconciled in READINESS-DOSSIER-2026-11-28.md: t-044, t-012, t-013, t-022 and t-030 done
+with receipts, no queued mandatory render, no open Rainbow PR.
+<!-- note:end t-042 -->
