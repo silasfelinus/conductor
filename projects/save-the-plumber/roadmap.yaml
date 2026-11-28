@@ -431,14 +431,14 @@ tasks:
   - id: t-021
     milestone: m6
     title: "Gen-2 World 1: re-author Bluebell Pipeworks as a full SMB3/SMW-class world"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: plumber-boiler-20261128T003745Z-a9c72e
     claimed_at: '2026-11-28T00:37:45Z'
     depends_on: [t-002, t-011, t-020]
     passes: 0
     stakes: reversible
-    updated: '2026-11-28T00:37:45Z'
+    updated: '2026-11-28T00:39:00Z'
     note: |-
       Build World 1 to the GEN2-WORLDS.md graph: 6-9 nodes including a fortress, a Hush House, the first Valve Chapel and at least one secret exit, each level 3-6 minutes with sub-areas and a real secret. Wire the GEN2-ROUND-1 overworld plate and far-sky plate. Record first-clear times. This is the agent-verified production template for Worlds 2-8; human verdict is not a prerequisite. Completion checkpoints: 1-1, 1-2, 1-h and cottage, 1-3 and chapel, 1-f including Foreman Flange, 1-4 and 1-castle. Verify each authored beat, original art and route timing against GEN2-WORLDS.md.
 
@@ -481,6 +481,8 @@ tasks:
       App branch worker/save-the-plumber-t-021-chimney-f19c4e at 211ab07fc7d826478034264b4cffc44c804c2b63 adds a separate pipe-linked Copper Greenhouses chimney inspection chamber with vertical ladder, enclosed camera and token alcove. Extends potting-shed real-input regression for both chambers and runs it in the Maker gameplay workflow. Verified rectangular grid, empty prior geometry and three-file diff. Runtime CI pending; partial World 1 scope.
 
       Verified kind_robots#6013 merged at 74475423 with ten implementation workflows successful on exact head 614fd066. Chimney chamber and real-input token collection, climb and return delivered. Branch janitor cancelled; cleanup unverified. Partial World 1 scope; remaining Wildwaters, authored course beats and timing/art acceptance remain. Production unverified.
+
+      App branch worker/save-the-plumber-t-021-boiler-a9c72e at 7888c461da82c06e27fd745dd9108c9773d85a21 adds Rustbolt Keep optional press duct after first key lock, duck-only low clearance, token reward and return; Pump Tower boiler loop with recovery heart, tokens and non-farmable return. Added real-input gameplay regression for both rooms to Maker CI. Static geometry and three-file diff verified; runtime CI pending. Partial World 1 scope.
   - id: t-022
     milestone: m6
     title: "Gen-2 Worlds 2-4: Tideglass Marina, Lantern Orchard, Clockwork Fair"
