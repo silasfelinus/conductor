@@ -1,0 +1,227 @@
+# MONSTRIQUE Chapter 1 cast rig source art, general edition, round 1 (2026-11-28 PT).
+# Task monstress-convention/t-020. The cut-out rig shipped for the leads in t-018 (kind_robots#6057) cuts layered
+# parts from two images per character: a full-body A-pose (832x1216, plain flat grey, limbs clear of the body)
+# and a head sheet (1344x768) of four cells in a fixed order: neutral, open ah mouth, closed-eye blink, oh mouth.
+# This round asks for both images for the six Chapter 1 NPCs. Each prompt describes the delivered krea2 designs
+# from CH1-CAST-AND-MOTEL-R1: Odette expression sheet 280898 and stage figure 280900, Violet 280899 and 280901,
+# Marta 280902, Dolores 280903, Gavin 280904. Cleo Pappatra has no general-edition game art yet, so her cells
+# follow CHARACTER-LOOKBOOK.md (living mummy, visibly one of the oldest stars, aged linen, couture, hieroglyphic
+# jewelry) and her pin-up identity prose (gold-and-lapis collar, kohl-lined eyes) in a fully clothed couture look.
+# Lessons from CH1-LEADS-RIG-R2 applied: each head sheet names the same skin tone, jaw and fixed props as its
+# A-pose, keeps every prop (glasses, wig, sunglasses, curlers, cap) in the same place in all four cells, and draws
+# the blink as its own cell with the lids as curved lash lines. The two ghosts are painted as solid opaque pale
+# figures with crisp silhouettes on the flat grey so they cut cleanly; the ghost glow and float are added in
+# engine. Props that animate (Gavin's long lens) are held clear of the body; Marta keeps her opera gloves.
+# Marta's oversized black sunglasses are canon (she is the invisible drummer under the foundation), so her third
+# cell is a slow deadpan brow dip above the lenses in place of a visible eye blink. Same krea2 lane, style and
+# grey ground as R1 (Silas 2026-11-28 PT: "As usual, krea2 gives us the best designs for both."). Identity LoRAs
+# are not trained, so cast_loras is false. General edition only: the lookbook calls for no mature rig. is_mature
+# false, fully clothed, comedy, adults only. Private. priority 60 (game art). auto_submit: true.
+round: monstrique-cast-rig-1
+series: monstrique-ch1-cast-motel
+project_slug: monstress-convention
+designer: Monstrique Studio
+is_public: false
+is_mature: false
+cast_loras: false
+priority: 60
+auto_submit: true
+lanes:
+- key: krea2
+  label: Krea 2, painted 2D point-and-click adventure art
+  engine: krea2
+  prompt: prose
+subjects:
+- key: mc-rig-odette-apose
+  lane: krea2
+  entity: monstrique-cast
+  title: Odette Harker ghost rig source, neutral A-pose full body (matches ArtImages 280898 and 280900)
+  asset: monstress-convention/rig/odette/apose
+  size: 832x1216
+  seed: 1146001
+  prompt_prose: Hand-painted 2D point-and-click adventure game character figure for a cut-out animation rig, full
+    body head to toe, standing alone on a plain light grey background, bold ink outlines and flat cel shading, even
+    flat lighting. Odette Harker, a glamorous adult woman ghost who looks about thirty-five, painted as one solid
+    opaque figure in pale moonlit silver-blue tones with crisp ink edges against the grey. Pale silver-blue skin, a sharp
+    jaw and high cheekbones, a sleek platinum chignon, arched painted brows, red lipstick and a cool closed-mouth
+    dealmaker's smile, a string of pearls, a shoulder-padded silver power suit with a fitted knee-length pencil skirt,
+    diamond rings on every finger and silver stilettos. She stands in a relaxed neutral A-pose in three-quarter view
+    turned toward the right, feet planted a little apart, both arms hanging slightly away from her sides with open
+    relaxed hands, every limb clearly separated from her body, chin up. Sly, imperious and ready to haggle.
+- key: mc-rig-odette-heads
+  lane: krea2
+  entity: monstrique-cast
+  title: Odette Harker ghost rig source, talk and blink head sheet matched to the A-pose
+  asset: monstress-convention/rig/odette/heads
+  size: 1344x768
+  seed: 1146002
+  prompt_prose: Hand-painted 2D cartoon character head sheet for lip-sync animation on a plain light grey background,
+    bold ink outlines and flat cel shading, four head-and-shoulders studies of the same adult woman ghost side by
+    side, all at the same size and angle in three-quarter view turned toward the right, each painted solid and opaque
+    in pale moonlit silver-blue tones. First a cool calm face with a small closed-mouth dealmaker's smile, second
+    mid-word with her mouth open wide on an ah sound, third with both eyelids fully closed in a blink, the lids drawn
+    as two curved lash lines under her arched painted brows, and fourth a surprised oh with round red lips and raised
+    brows. Odette Harker, who looks about thirty-five, pale silver-blue skin, a sharp jaw and high cheekbones, a sleek
+    platinum chignon, red lipstick, a string of pearls and the padded shoulders of a silver power suit. Sly, imperious
+    and expressive.
+- key: mc-rig-violet-apose
+  lane: krea2
+  entity: monstrique-cast
+  title: Violet Wisp ghost rig source, neutral A-pose full body (matches ArtImages 280899 and 280901)
+  asset: monstress-convention/rig/violet/apose
+  size: 832x1216
+  seed: 1146003
+  prompt_prose: Hand-painted 2D point-and-click adventure game character figure for a cut-out animation rig, full
+    body head to toe, standing alone on a plain light grey background, bold ink outlines and flat cel shading, even
+    flat lighting. Violet Wisp, a curvy adult woman ghost about thirty, a professional companion hired to play a
+    vampire for one night, painted as one solid opaque figure in soft pale lavender tones with crisp ink edges against the grey.
+    Pale lavender skin, a soft round jaw, a black costume wig in a sharp bob sitting slightly askew, wry dark eyes
+    with one eyebrow up, red lipstick and two cheap plastic vampire fangs resting on her lower lip, a little black
+    dress and fishnet tights, one black high heel on her left foot and her right foot in bare fishnet. A rented red-and-black
+    satin vampire cape with a tall stand-up collar hangs straight down behind her back from her shoulders, her arms
+    and dress in full view. She stands in a relaxed neutral A-pose in three-quarter view turned toward the right,
+    feet planted a little apart, both arms hanging slightly away from her sides with open relaxed hands, every limb
+    clearly separated from her body. Dry, confident and funny.
+- key: mc-rig-violet-heads
+  lane: krea2
+  entity: monstrique-cast
+  title: Violet Wisp ghost rig source, talk and blink head sheet matched to the A-pose
+  asset: monstress-convention/rig/violet/heads
+  size: 1344x768
+  seed: 1146004
+  prompt_prose: Hand-painted 2D cartoon character head sheet for lip-sync animation on a plain light grey background,
+    bold ink outlines and flat cel shading, four head-and-shoulders studies of the same adult woman ghost side by
+    side, all at the same size and angle in three-quarter view turned toward the right, each painted solid and opaque
+    in soft pale lavender tones. First a calm face with a small dry closed-mouth smile and two plastic fang tips on
+    her lower lip, second mid-word with her mouth open wide on an ah sound showing the plastic fangs, third with both
+    eyelids fully closed in a blink, the lids drawn as two curved lash lines, and fourth a surprised oh with round
+    lips and raised brows. Violet Wisp, about thirty, pale lavender skin, a soft round jaw and full cheeks, a black
+    costume wig in a sharp bob tipped toward the same side in every study, red lipstick, and the tall stand-up red-and-black
+    satin collar of a vampire cape over a little black dress. Wry, deadpan and unimpressed by the afterlife.
+- key: mc-rig-marta-apose
+  lane: krea2
+  entity: monstrique-cast
+  title: Marta, night manager, rig source, neutral A-pose full body (matches ArtImage 280902)
+  asset: monstress-convention/rig/marta/apose
+  size: 832x1216
+  seed: 1146005
+  prompt_prose: Hand-painted 2D point-and-click adventure game character figure for a cut-out animation rig, full
+    body head to toe, standing alone on a plain light grey background, bold ink outlines and flat cel shading, even
+    flat lighting. Marta, the stout night manager of a 1960s roadside motel, an adult woman who looks about sixty.
+    A round face with a soft double chin under a thick even layer of matte peach foundation, oversized round black
+    sunglasses, a small pressed closed-mouth smile and a silk headscarf in deep wine red tied under the chin. Elbow-length
+    cream opera gloves, a sage-green cardigan over a 1960s knee-length shift dress, sturdy low heels and a key ring
+    on a lanyard around her neck. She stands in a relaxed neutral A-pose in three-quarter view turned toward the
+    right, feet planted a little apart, both arms hanging slightly away from her sides with open gloved hands, every
+    limb clearly separated from her body. Dry, unhurried and a little uncanny.
+- key: mc-rig-marta-heads
+  lane: krea2
+  entity: monstrique-cast
+  title: Marta rig source, talk and brow-dip head sheet matched to the A-pose
+  asset: monstress-convention/rig/marta/heads
+  size: 1344x768
+  seed: 1146006
+  prompt_prose: Hand-painted 2D cartoon character head sheet for lip-sync animation on a plain light grey background,
+    bold ink outlines and flat cel shading, four head-and-shoulders studies of the same stout older adult woman
+    side by side, all at the same size and angle in three-quarter view turned toward the right. First a calm face
+    with a small pressed closed-mouth smile, second mid-word with her mouth open wide on an ah sound, third a slow
+    deadpan pause with her painted brows lowered to the rim of the sunglasses and her lips pressed into a flat line,
+    and fourth a startled oh with round lips and brows shot up above the lenses. Marta, who looks about sixty, a
+    round face with a soft double chin coated in a thick even layer of matte peach foundation, the same oversized
+    round black sunglasses over her eyes in every study, a deep wine-red silk headscarf tied under the chin and the
+    collar of a sage-green cardigan. Dry, unhurried and a little uncanny.
+- key: mc-rig-dolores-apose
+  lane: krea2
+  entity: monstrique-cast
+  title: Dolores, superfan in Room 204, rig source, neutral A-pose full body (matches ArtImage 280903)
+  asset: monstress-convention/rig/dolores/apose
+  size: 832x1216
+  seed: 1146007
+  prompt_prose: Hand-painted 2D point-and-click adventure game character figure for a cut-out animation rig, full
+    body head to toe, standing alone on a plain light grey background, bold ink outlines and flat cel shading, even
+    flat lighting. Dolores, a cheerful nosy retired fan aged seventy-four, a sturdy lively adult woman. A wrinkled
+    round face with rosy cheeks, a delighted closed-mouth grin, pink foam curlers in lavender-grey hair and pointed
+    cat-eye glasses on a beaded chain. A quilted pink housecoat covered in shiny fan-club pins, belted at the waist
+    and ending just below the knee, and fuzzy pink slippers. She stands in a relaxed neutral A-pose in three-quarter
+    view turned toward the right, feet planted a little apart, both arms hanging slightly away from her sides with
+    open relaxed hands, every limb clearly separated from her body, head tilted with one ear cocked. Spry, sharp-eyed
+    and funny.
+- key: mc-rig-dolores-heads
+  lane: krea2
+  entity: monstrique-cast
+  title: Dolores rig source, talk and blink head sheet matched to the A-pose
+  asset: monstress-convention/rig/dolores/heads
+  size: 1344x768
+  seed: 1146008
+  prompt_prose: Hand-painted 2D cartoon character head sheet for lip-sync animation on a plain light grey background,
+    bold ink outlines and flat cel shading, four head-and-shoulders studies of the same elderly adult woman side
+    by side, all at the same size and angle in three-quarter view turned toward the right. First a delighted closed-mouth
+    grin, second mid-word with her mouth open wide on an ah sound, third with both eyelids fully closed in a blink,
+    the lids drawn as two curved lash lines behind her glasses, and fourth a gossip's gasp, an oh with round lips
+    and raised brows. Dolores, aged seventy-four, a wrinkled round face with rosy cheeks and a soft double chin, pink
+    foam curlers in lavender-grey hair, pointed cat-eye glasses sitting on her nose in every study with their beaded
+    chain looping down, and the collar of a quilted pink housecoat with shiny fan-club pins. Spry, nosy and funny.
+- key: mc-rig-gavin-apose
+  lane: krea2
+  entity: monstrique-cast
+  title: Gavin, fan with the long lens, rig source, neutral A-pose full body (matches ArtImage 280904)
+  asset: monstress-convention/rig/gavin/apose
+  size: 832x1216
+  seed: 1146009
+  prompt_prose: Hand-painted 2D point-and-click adventure game character figure for a cut-out animation rig, full
+    body head to toe, standing alone on a plain light grey background, bold ink outlines and flat cel shading, even
+    flat lighting. Gavin, a scrawny adult man about thirty-five, a little hunched and shifty. A narrow sallow face
+    with a weak chin, patchy stubble and an over-eager closed-mouth grin, greasy hair under a backwards baseball
+    cap, a rain-soaked blue windbreaker hung with a tangle of convention lanyards, cargo shorts, white socks and
+    sandals. He stands in a relaxed neutral A-pose in three-quarter view turned toward the right, skinny legs planted
+    a little apart, both arms hanging slightly away from his sides, every limb clearly separated from his body. His
+    left hand hangs open and his right hand loosely grips a black camera with a telephoto lens longer than his forearm,
+    the lens pointing at the floor with a clear strip of grey between it and his leg. Creepy, awkward and comic.
+- key: mc-rig-gavin-heads
+  lane: krea2
+  entity: monstrique-cast
+  title: Gavin rig source, talk and blink head sheet matched to the A-pose
+  asset: monstress-convention/rig/gavin/heads
+  size: 1344x768
+  seed: 1146010
+  prompt_prose: Hand-painted 2D cartoon character head sheet for lip-sync animation on a plain light grey background,
+    bold ink outlines and flat cel shading, four head-and-shoulders studies of the same scrawny adult man side by
+    side, all at the same size and angle in three-quarter view turned toward the right. First an over-eager closed-mouth
+    grin, second mid-word with his mouth open wide on an ah sound, third with both eyelids fully closed in a blink,
+    the lids drawn as two curved lash lines, and fourth a guilty startled oh with round lips and eyebrows shot up.
+    Gavin, about thirty-five, a narrow sallow face with a weak chin and patchy stubble, greasy hair poking out under
+    a backwards baseball cap in every study, shifty eyes, and the collar of a rain-soaked blue windbreaker hung with
+    convention lanyards. Creepy, awkward and comic.
+- key: mc-rig-cleo-apose
+  lane: krea2
+  entity: monstrique-cast
+  title: Cleo Pappatra rig source, neutral A-pose full body (first general-edition game figure)
+  asset: monstress-convention/rig/cleo/apose
+  size: 832x1216
+  seed: 1146011
+  prompt_prose: Hand-painted 2D point-and-click adventure game character figure for a cut-out animation rig, full
+    body head to toe, standing alone on a plain light grey background, bold ink outlines and flat cel shading, even
+    flat lighting. Cleo Pappatra, a living mummy fashion icon and visibly one of the oldest monster stars, a tall
+    dignified adult woman who looks about seventy. A mature, richly expressive face with dusky brown skin, laugh
+    lines, a strong jaw and high cheekbones, kohl-lined dark eyes, deep plum lipstick and a dry closed-mouth smile,
+    aged ivory linen bandages wrapped neatly across her brow, down her neck and around her forearms, and a striped
+    gold-and-lapis headdress. A tailored lapis-blue couture sheath dress ending at mid-calf, a broad gold-and-lapis
+    collar, hieroglyphic gold cuff bracelets and gold sandals on bandaged feet. She stands in a relaxed neutral A-pose
+    in three-quarter view turned toward the right, feet planted a little apart, both arms hanging slightly away from
+    her sides with open relaxed hands, every limb clearly separated from her body, chin raised. Regal, dry and formidable.
+- key: mc-rig-cleo-heads
+  lane: krea2
+  entity: monstrique-cast
+  title: Cleo Pappatra rig source, talk and blink head sheet matched to the A-pose
+  asset: monstress-convention/rig/cleo/heads
+  size: 1344x768
+  seed: 1146012
+  prompt_prose: Hand-painted 2D cartoon character head sheet for lip-sync animation on a plain light grey background,
+    bold ink outlines and flat cel shading, four head-and-shoulders studies of the same elderly adult woman mummy
+    side by side, all at the same size and angle in three-quarter view turned toward the right. First a regal calm
+    face with a small dry closed-mouth smile, second mid-word with her mouth open wide on an ah sound, third with both
+    eyelids fully closed in a blink, the lids drawn as two curved lash lines with the kohl wings still showing, and
+    fourth a surprised oh with round lips and one brow arched. Cleo Pappatra, a living mummy who looks about seventy,
+    dusky brown skin with laugh lines, a strong jaw and high cheekbones, aged ivory linen bandages wrapped neatly across
+    her brow and down her neck, deep plum lipstick, a striped gold-and-lapis headdress and a broad gold-and-lapis
+    collar in every study. Dry, erudite and formidable.
