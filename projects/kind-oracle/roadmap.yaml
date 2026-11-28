@@ -69,31 +69,38 @@ tasks:
 - id: t-005
   milestone: m2
   title: 'Author the content: 78 card meanings, position texts and pair texts (majors first)'
-  status: review
+  status: done
   owner: null
-  passes: 0
+  passes: 1
   stakes: reversible
-  updated: '2026-11-28T09:00:00Z'
+  updated: '2026-11-28T09:45:00Z'
   depends_on:
   - t-004
   implementation_pr: 'silasfelinus/kind_robots#6062'
   note: >-
-    Write every card meaning plus position and pair texts as static JSON. Read each reading style
-    through; warm, kind, never fatalistic. All-ages.
+    Write every card meaning plus position and pair texts as static JSON.
 
-    2026-11-28 PT: authored for the live Kind Tarot reader. 78 card meanings, energy pairs and openings/closings shipped earlier (kind_robots#6003); kind_robots#6062 adds 396 bespoke position passages for all 22 majors (9 positions x upright/reversed) and brings special pairs to 20. Minors keep the position frame by the spec's design. Done once #6062 merges.
+    Full history: projects/kind-oracle/HISTORY.md#t-005
 - id: t-006
   milestone: m2
   title: Generate and commit 78 card faces and a back (majors first)
-  status: waiting
+  status: blocked
   owner: null
   passes: 0
   stakes: reversible
-  updated: '2026-10-02T00:00:00Z'
+  updated: '2026-11-28T09:50:00Z'
   depends_on:
   - t-005
-  note: ArtJobs under one style bible and the Krea 2 contract in ART-PROMPTS.md; keep prompt/model metadata;
+  note: >-
+    ArtJobs under one style bible and the Krea 2 contract in ART-PROMPTS.md; keep prompt/model metadata;
     names and numerals composed in code.
+
+    2026-11-28 09:50 UTC: blocked, not ready. This deck's art is produced by the Kind Tarot studio
+    (tarot-studio; kind_robots /admin/tarot), which renders the full 78-card set only after Silas
+    approves a design checkpoint there. 75 of 95 style samples are rendered across the kind-robots,
+    superkate and zuzu decks; the checkpoint tests are still queued. Do not enqueue a parallel 78-card
+    set from this task. Unblocks when Silas approves a design in the studio; whether to fold t-006/t-007
+    into tarot-studio is also his call.
 - id: t-007
   milestone: m2
   title: Draw page /play/oracle with flip animation and spread picker
