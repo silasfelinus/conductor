@@ -49,7 +49,9 @@ polish.
 ## 2. Independent review, round 2 (after the last art change)
 
 Three fresh read-only sessions reviewed kind_robots `main` at `459343a2`. Silas ruled on 2026-11-23 PT that fresh
-sessions count as independent. Their reports are on kind_robots branches `claude/rainbow-review2-{gameplay,story,presentation}`.
+sessions count as independent. Their reports are on kind_robots `main` (landed in #6101) as
+`projects-review/rainbow-{gameplay,story,presentation}-critic-r2.md`, with evidence crops in
+`projects-review/rainbow-r2-shots/`.
 
 | lens | verdict as reviewed | blockers | majors | minors |
 | --- | --- | --- | --- | --- |
