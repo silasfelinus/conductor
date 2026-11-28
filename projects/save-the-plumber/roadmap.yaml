@@ -155,7 +155,7 @@ tasks:
   - id: t-005
     milestone: m2
     title: "Implement enemy interaction, held objects and powerup systems"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: plumber-boneyard-20261128T020315Z-92f81a
     claimed_at: '2026-11-28T02:03:15Z'
@@ -202,7 +202,9 @@ tasks:
       App branch worker/save-the-plumber-t-005-rootcellar-5b8c21 at 207c596ccf056d00a8fbfbeea795f832182e4c3c adds a pipe-linked optional Rootcellar sluice tunnel with a companion scale plate, low gate, token cache and a safe exit for solo players. Real-input regression tests unweighted gate, Gurgle parking, reward collection, remount and exit using a test barrel to represent arriving with companion. Geometry verified rectangular and previously empty, two-file diff. CI pending; partial traversal scope.
 
       Verified kind_robots#6020 merged at ee3bd413; all ten implementation workflows and branch janitor passed on exact head 207c596c. Rootcellar companion sluice tunnel and input replay delivered. Partial scope: remaining water courses, fruit weight interaction and original art acceptance. Production unverified.
-    updated: '2026-11-28T02:03:15Z'
+
+      App branch worker/save-the-plumber-t-005-boneyard-92f81a at 0eacf4f23e7ac90a10abfcf610c6c1b540e9467a adds optional Glassboat Boneyard pipe-linked swim chamber, six-tile pool, Tidecoat supply and token reward. Input regression exercises Tidecoat solo and Gurgle mounted routes, both banks and safe return. Verified rectangular geometry and two-file diff; runtime CI pending. Partial traversal scope.
+    updated: '2026-11-28T02:04:40Z'
   - id: t-006
     milestone: m3
     title: "Build World 1: four complete garden/pipeworks levels and boss"
@@ -434,14 +436,11 @@ tasks:
   - id: t-021
     milestone: m6
     title: "Gen-2 World 1: re-author Bluebell Pipeworks as a full SMB3/SMW-class world"
-    status: review
-    owner: worker
-    claimed_by: plumber-boiler-20261128T003745Z-a9c72e
-    claimed_at: '2026-11-28T00:37:45Z'
+    status: ready
     depends_on: [t-002, t-011, t-020]
     passes: 0
     stakes: reversible
-    updated: '2026-11-28T00:39:00Z'
+    updated: '2026-11-28T02:02:10Z'
     note: |-
       Build World 1 to the GEN2-WORLDS.md graph: 6-9 nodes including a fortress, a Hush House, the first Valve Chapel and at least one secret exit, each level 3-6 minutes with sub-areas and a real secret. Wire the GEN2-ROUND-1 overworld plate and far-sky plate. Record first-clear times. This is the agent-verified production template for Worlds 2-8; human verdict is not a prerequisite. Completion checkpoints: 1-1, 1-2, 1-h and cottage, 1-3 and chapel, 1-f including Foreman Flange, 1-4 and 1-castle. Verify each authored beat, original art and route timing against GEN2-WORLDS.md.
 
@@ -486,6 +485,8 @@ tasks:
       Verified kind_robots#6013 merged at 74475423 with ten implementation workflows successful on exact head 614fd066. Chimney chamber and real-input token collection, climb and return delivered. Branch janitor cancelled; cleanup unverified. Partial World 1 scope; remaining Wildwaters, authored course beats and timing/art acceptance remain. Production unverified.
 
       App branch worker/save-the-plumber-t-021-boiler-a9c72e at 7888c461da82c06e27fd745dd9108c9773d85a21 adds Rustbolt Keep optional press duct after first key lock, duck-only low clearance, token reward and return; Pump Tower boiler loop with recovery heart, tokens and non-farmable return. Added real-input gameplay regression for both rooms to Maker CI. Static geometry and three-file diff verified; runtime CI pending. Partial World 1 scope.
+
+      Verified kind_robots#6024 merged at cdd4c4a4; all ten implementation workflows and branch janitor passed on exact head 7888c461. Rustbolt crouch duct and Pump Tower boiler loop delivered with real-input regression. Remaining Wildwaters, other authored beats and art/timing acceptance; production unverified.
   - id: t-022
     milestone: m6
     title: "Gen-2 Worlds 2-4: Tideglass Marina, Lantern Orchard, Clockwork Fair"
