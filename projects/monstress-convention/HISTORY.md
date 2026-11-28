@@ -133,3 +133,11 @@ Francesca rig landed in kind_robots#6102 (squash 11e33bd2): cut from delivered C
 
 Chapter 2 Beach Hex complete: story/puzzles (kind_robots#6053), painted rooms, figures and five-knives plate (#6097), Francesca rig (#6102); no-fail sweep covers both chapters (#6085). Chapter playtest and acceptance carried by t-012/t-013 (whole-arc finite QA); optional Clem/Dee Dee rigs deferred to t-009 scene-by-scene art. Unblocks t-023.
 <!-- note:end t-022 -->
+
+## t-008 — Consensual opt-in romances, dual ghosts, MONSTRIQUE idol arcs and scrapbook
+
+<!-- note:begin t-008 -->
+Motel and convention banter, consensual romances including both ghosts, optional flirtation, settings-based exclusion and alternate nonsexual dialogue. Never lock clue or completion behind romance. Independent mature account gate remains mandatory.
+
+kind_robots#6104 (squash d962b9e5) after every latest-head check was green: new romance.ts. Banter covers all 21 Chapter 1-3 rooms, with motel and convention banter, general-safe text and 4 mature flirty variants. 7 friendships (Violet, Odette, Cleo, Francesca, Laguna, Delta, Cherie) serve as the nonsexual alternates. 7 opt-in mature romance beats across 5 arcs: both ghosts (Violet: Cold Kiss, After Hours; Odette: Toast, Waltz) plus Francesca, Delta and Cherie. Consent works like this: Iris flirts, she says no until ready and then asks, and Iris answers yes, not tonight or just friends at no cost. Norb is never a route; Laguna and Marta are friendship only. Romance & flirting setting (per edition, synced in the kit) hides every flirt and swaps in friendly lines. Friendship alternates keep scores at 205; 64/60; 74/70 and leave clue and ending reachability identical. The general edition has no romance, and the general account slot refuses romance flags and drops romance keepsakes. Idols scrapbook tab holds 8 cards (Cleo, Francesca, Laguna). 3 new achievements (28 total), all earnable in the general edition with romance off. Saves stay v3. verifyMonstriqueRomance runs in contract shard 1; NoFail now sweeps every side action. Later chapters add their own beats, banter and idol cards (Cleo encore in Ch4) through romance.ts in t-024 to t-026.
+<!-- note:end t-008 -->
