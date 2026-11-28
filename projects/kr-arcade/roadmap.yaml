@@ -1512,11 +1512,11 @@ tasks:
   - id: t-090
     milestone: m8
     title: "Glitch Garden depth slice 3: Autumn and Winter"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: krarcade090-20261128-ci-4fa831
     claimed_at: '2026-11-28T03:45:26.824Z'
-    updated: '2026-11-28T03:45:26.824Z'
+    updated: '2026-11-28T03:45:52.243Z'
     passes: 0
     stakes: reversible
     depends_on: t-089
@@ -1553,6 +1553,8 @@ tasks:
       Fixed winter fixture destruction by sprinkler blasts, beetles and mower clears; restore missing authored heaters on wave entry. Added winter fixture survival, boss-entry recovery, heater reflection and full 44-wave seeded campaign pilot assertions. Existing Autumn tests already verify crow swoop and prism protection. Branch worker/kr-arcade-t090-heater-73d5b9, head 1ca1fec6; runtime CI not yet verified. Close only if full scope and applicable checks pass.
 
       Kind Robots #6035 merged cf8c2730; latest head 4cff1d83 has fifteen successful checks and one skipped autofix. Crow-bot already implemented and covered by Autumn tests. Audit of Actions steps found the full-year Glitch Garden test is registered under test:arcade-engine but not executed by the PR cabinet workflow. Remaining engineering acceptance: wire the focused Glitch Garden suite into PR CI and confirm the full-year run. No human confirmation gate.
+
+      Added independent path-filtered Glitch Garden campaign workflow invoking all eight existing cabinet engine suites and future Glitch Garden suites. This executes the merged #6035 full-year pilot and heater regression in PR CI; branch worker/kr-arcade-t090-engine-ci-4fa831, head 0d1451bc. No manual validation gate. Close only after the focused engine contracts actually pass.
 
   - id: t-091
     milestone: m8
