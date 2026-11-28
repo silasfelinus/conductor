@@ -238,7 +238,14 @@ tasks:
       renders incl. Gurgle idle/puddle). Partial scope: render review, media delivery (no
       plumber delivery bridge; Tidecoat/Sailwing keepers still 404) and art acceptance remain.
       Production deployment unverified.
-    updated: '2026-11-28T12:04:01Z'
+
+      Delivery bridge: round ledgers (TIDECOAT/SAILWING/WATERWORKS) only render private
+      ArtImages; the media-direct art-prompts.yaml lane is what writes Plumber files (steam-vent,
+      brass-token, stage plates return 200 on media.acrocatranch.com; all eight new keys 404).
+      Added eight pending kr-arcade rows targeting props/{tidecoat,sailwing,springfruit,
+      scale-plate-up,scale-plate-down,sluice-gate} and cast/gurgle-{idle,puddle}. Partial scope:
+      render, live-URL verification and art acceptance remain. Production deployment unverified.
+    updated: '2026-11-28T20:30:00Z'
     owner: worker
     implementation_pr: 'silasfelinus/kind_robots#6082'
   - id: t-006
