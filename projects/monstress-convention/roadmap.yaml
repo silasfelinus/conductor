@@ -6,6 +6,7 @@ autonomous: true
 goal: >-
   Ship MONSTRIQUE, an original art-led point-and-click mystery: Iris investigates Odette and Violet's murders with Norb and two ghost witnesses, fair evidence/verb puzzles, connected city sites, optional consensual adult romance and evidence-driven endings. Keep a safe general edition and strictly server-authorized mature opt-in extras; verify saves, full story, art, security and device QA. Existing route approval remains scoped; further publication separately gated.
 notes_from_silas: |
+  2026-11-28 PT LEADS: "No customized character, they play as iris. As usual, krea2 gives us the best designs for both" — the main-game standard's customization item is waived for MONSTRIQUE (Iris is the player character; no press-pass or wardrobe options). Canonical lead faces are the krea2 dialogue portraits, Iris ArtImage 280896 and Norb ArtImage 280897 (art/CH1-CAST-AND-MOTEL-R1.yaml); the flux2 turnarounds are retired as references and all later lead art uses the krea2 lane.
   2026-11-27 PT ANIMATION AND REPLAN: "I like the cut out rig. And yes on replan and art" — characters animate in-engine as 2D cut-out rigs (layered parts: head, torso, limbs, mouth/eye shapes with pivots) for walk/idle/talk/gesture; cutscenes may use rendered video separately. Roadmap re-planned into per-chapter tasks (t-022..t-026) and explicit art-integration, rig, object-state and cutscene tasks (t-017..t-021); delivered Chapter 1 art goes into the game now (t-017).
   2026-11-22 PT LEAD REDESIGN: "The two leads are vitally important to the flavor of the game, and both are falling short." Iris: black hair with a white streak, sassy tramp vibe but positive, open hearted, curious, sharp tongue, brave. Norb: a little person, ugly misshapen features, wide open eyes one larger than the other, heavy lids, Quasimodo x Igor x Peter Lorre drawn like a 1990s TV cartoon. Each act deals with a former member who had an issue with the agent; a bayou trailer park where the fish lady lives, pregnant with tadpole-to-teen younglings and helpful adult daughters. See CHARACTER-LOOKBOOK.md "The two leads" and "Laguna Brine and the bayou brood", STORY-BIBLE.md "Act spine".
   2026-11-07 PT LATEST ACCESS DIRECTIVE: MONSTRIQUE is one point-and-click game with two editions. General edition is playable by guests, mature-off adults and CHILD accounts with covered, non-graphic murder aftermath, public-safe dialogue/locations/art, no sexual/romance interactions or adult scrapbook; retain all required clues, witnesses and endings. Mature extras unlock only for signed-in non-CHILD adults with persisted `showMature: true`, server-enforced on APIs and ArtImage delivery. Separate save and progress namespaces; new content defaults hidden from general until explicitly safe-listed. Keep /admin/monstrique a restricted creator studio. Public Play route and external publication await actual visual/security human approval. See DESIGN-BRIEF.md "Access and release" and kind_robots PR #4903.\n  2026-11-07 PT LATEST CAST DIRECTIVE: Draculina is an original charter member but appears about 20, younger-looking than every other star; her clique-leader/high-school mean-girl demeanor hides centuries of calculation. Siobhan MacRae (The Pack) is the second-youngest in apparent age, a Scottish former were-pop singer with an unresolved frenemy rivalry against were-panther Nyx Sable. Cleo Pappatra appears and behaves among the oldest, with real mature mummy-star gravitas. Albina / Allie Gator is NOT a never-hired wannabe: she was a billed 1963 founding Monstrique performer removed before Beach Hex, now a huge fully reptilian albino alligator hiding in the motel sewers, staging tragic old-star comebacks amid rotting memorabilia. Preserve the seven official album-era expulsions in addition to this secret pre-album erasure. See FRANCHISE-HISTORY.md and CHARACTER-LOOKBOOK.md; art prompts, dialogue, scrapbook clues must reflect this.
@@ -58,6 +59,8 @@ tasks:
       Main-game standard: STANDARD-AUDIT-2026-11-12.md and docs/agents/main-game-standard.md. #5061 merged 22da02d after six green workflows: title Achievements sheet, endings scrapbook, truthful browser-local settings and double-confirmed edition-scoped reset, other edition/account achievements untouched. Remaining account-backed saves, sound/music volume, finished-run history, delivered painted ending plates, additional earned endings, replay/customization and full acceptance. Verify 12+ achievements, accessibility and scope against audit; preserve edition/CHILD gates. Full prior note: ROADMAP-HISTORY-2026-11-26.md#t-015.
 
       2026-11-27 PT: three main-game-standard gaps closed, each merged after every latest-head check was green. (1) Account-backed saves, kind_robots#6005 (squash 407ae1e): GET/PUT /api/monstrique/account-save on the shared ArcadeCabinetSave table. The slot is monstrique-general or monstrique-mature, chosen server-side by monstriqueAudienceFor. Human sessions only; revisioned writes with 409 on conflict; edition mismatch refused; the general slot rejects mature-only flags and items; 512 KB cap. The public store syncs automatically (newest wins, a fresh device adopts the account copy, scrapbook unlocks merge permanently), and the title sheet shows sync status. (2) Sound and music, kind_robots#6006 (squash 385e91e): seven original procedural WebAudio themes, a rain bed and comic cues; gesture unlock; persisted master/music/effects/mute sliders on the title settings sheet; the kit Sound setting honoured. Real-Chromium check at 390/1440: the AudioContext runs after the first tap and the slider persists. (3) Ending plates, kind_robots#6007 (squash 4c62090): delivered ArtImages 270458 (lead-earned) and 270459 (reckless), both isMature false, committed as static webp and wired as src/alt in both editions' endings and on the ending card. They show the pre-2026-11-22 lead looks; a repaint is optional. Remaining t-015: finished-run history, a third earned ending, replay/customization (or Silas's character-customization exception, per the audit's B), a cross-device save round trip on the deployed build after Force Update, and full acceptance. Returned to ready, not done.
+
+      2026-11-28 PT: Silas decided audit item B: "No customized character, they play as iris." The customizable-characters item is waived for MONSTRIQUE (like Zuzu Gamebook's fixed protagonist); no press pass or wardrobe options. Remaining t-015: finished-run history, a third earned ending, replay hooks, the cross-device save round trip on the deployed build, and full acceptance.
   - id: t-016
     title: 'MONSTRIQUE achievement upgrade: 12 or more live achievements'
     status: done
@@ -292,7 +295,12 @@ tasks:
       stage figures, and seven unpeopled Chapter 1 room backgrounds (exterior, office,
       ice alcove, balcony, Room 205 with covered victims, 207, 204). Remaining: record
       ArtJob/ArtImage ids and verified final URLs, Silas's face pick, then LoRA datasets.
-    updated: '2026-11-27T11:55:25Z'
+      2026-11-28 PT: all 18 cells DONE (ArtImages 280896-280913) and in the game via t-017
+      (kind_robots#6027). Face pick made by Silas: "As usual, krea2 gives us the best designs for
+      both" — canonical faces are the krea2 portraits, Iris 280896 and Norb 280897; the flux2
+      turnarounds 280912/280913 are not used. Remaining: the ten-shot lead LoRA datasets, built
+      from those two krea2 designs.
+    updated: '2026-11-28T02:00:00Z'
   - id: t-017
     milestone: m3
     title: "Chapter 1 delivered art in the game: painted rooms, cast figures, walk areas refit"
@@ -315,7 +323,7 @@ tasks:
     passes: 0
     stakes: reversible
     depends_on: []
-    updated: '2026-11-27T23:45:00Z'
+    updated: '2026-11-28T02:00:00Z'
     note: >-
       Silas 2026-11-27 PT chose the cut-out rig. Define a rig format (part images or clip regions
       over a neutral A-pose cutout, pivots, z-order, mouth and eye swaps), an animation player
@@ -323,6 +331,10 @@ tasks:
       point, reach/pick-up, recoil) with reduced-motion fallbacks, and queue the source art
       (neutral A-pose full bodies plus mouth/eye shape sheets). Iris and Norb first, replacing
       their vector rigs; regression tests on pivots, frame timing and fallbacks.
+      2026-11-28 PT: source art QUEUED, not delivered: art/CH1-LEADS-RIG-R1.yaml (krea2, general,
+      private, priority 60, auto_submit) asks for an A-pose full body and a four-head talk/blink sheet
+      for each lead, described from the canonical krea2 portraits (Iris 280896, Norb 280897) per
+      Silas's face pick. The rig format and player can be built against the vector leads meanwhile.
   - id: t-019
     milestone: m3
     title: "Interactive object states and interaction animation"

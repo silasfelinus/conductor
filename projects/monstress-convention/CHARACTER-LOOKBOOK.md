@@ -60,6 +60,12 @@ sells him, "four foot eleven" means nothing to an image model, and Iris's "dark 
 collided with Draculina's black bob. Portraits on tag lanes now get Danbooru-style identity tags, each lead
 has a *signature* expression, and Norb carries a per-character caricature note.
 
+**Canonical faces (Silas, 2026-11-28 PT: *"As usual, krea2 gives us the best designs for both."*):** the
+krea2 dialogue portraits are the reference for every later Iris and Norb image, rig part and LoRA dataset:
+Iris ArtImage 280896 and Norb ArtImage 280897 (`art/CH1-CAST-AND-MOTEL-R1.yaml`). Request lead art on the
+krea2 lane and describe those delivered designs; the flux2 turnarounds (280912, 280913) are retired as references.
+Players play as Iris; there is no character customization.
+
 ### Iris Quill · sassy, open-hearted, brave
 - **Read at 64 px:** a big messy mane of **jet-black hair with one thick white streak**, a rose trench
   belted tight, a press camera swinging on its strap, a plaster on her neck.

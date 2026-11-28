@@ -1,0 +1,94 @@
+# MONSTRIQUE lead rig source art, general edition, round 1 (2026-11-28 PT).
+# Task monstress-convention/t-018: the cut-out character rig (Silas chose it 2026-11-27 PT). The rig cuts
+# layered parts (head, torso, upper and lower arms, hands, legs, mouth and eye shapes) from one neutral
+# full-body figure per character, so each lead needs a clean A-pose figure plus a sheet of talk and blink heads.
+# Face pick, Silas 2026-11-28 PT: "As usual, krea2 gives us the best designs for both." The canonical faces
+# are the krea2 dialogue portraits from CH1-CAST-AND-MOTEL-R1: Iris ArtImage 280896 (mc-ch1-iris-portrait-sass)
+# and Norb ArtImage 280897 (mc-ch1-norb-portrait-unblinking). Every prompt below describes those two delivered
+# designs (hair, outfit, glasses, gloves, palette) so the rig matches the portraits; the flux2 turnarounds
+# (280912, 280913) are retired as references. Same krea2 lane, style and grey ground as the stage figures in
+# CH1-CAST-AND-MOTEL-R1, which cut out cleanly. Arms hang slightly away from the body and legs stand a little
+# apart so limbs separate at the joints. Players play as Iris (Silas 2026-11-28 PT). Identity LoRAs are not
+# trained, so cast_loras is false and each prompt carries the full identity prose. General edition: is_mature
+# false, fully clothed, comedy, adults only. Private. priority 60 (game art). auto_submit: true.
+round: monstrique-leads-rig-1
+series: monstrique-ch1-cast-motel
+project_slug: monstress-convention
+designer: Monstrique Studio
+is_public: false
+is_mature: false
+cast_loras: false
+priority: 60
+auto_submit: true
+lanes:
+- key: krea2
+  label: Krea 2, painted 2D point-and-click adventure art
+  engine: krea2
+  prompt: prose
+subjects:
+- key: mc-rig-iris-apose
+  lane: krea2
+  entity: monstrique-cast
+  title: Iris Quill rig source, neutral A-pose full body (matches ArtImage 280896)
+  asset: monstress-convention/rig/iris/apose
+  size: 832x1216
+  seed: 1143001
+  prompt_prose: Hand-painted 2D point-and-click adventure game character figure for a cut-out animation rig, full
+    body head to toe, standing alone on a plain light grey background, bold ink outlines and flat cel shading, even
+    flat lighting. Iris Quill, a sassy adult woman about thirty, curvy and full-figured, stands in a relaxed neutral
+    A-pose in three-quarter view turned toward the right, feet planted a little apart, both arms hanging slightly
+    away from her sides with open relaxed hands, every limb clearly separated from her body. A big messy shoulder-length
+    mane of jet-black hair with one thick bold white streak sweeping back from the front, bright wide curious eyes
+    with winged eyeliner, a small warm closed-mouth smile, berry lipstick and big gold hoop earrings. She wears a
+    belted rose-and-plum trench coat cinched at the waist and hanging open below the belt over a black crop top,
+    a high-waisted black pencil skirt, laddered fishnet tights and scuffed black ankle boots. A chunky vintage press camera with a flash bulb hangs at her
+    right hip on a shoulder strap and a white press pass is clipped to her belt. Friendly, confident and ready to
+    move.
+- key: mc-rig-iris-heads
+  lane: krea2
+  entity: monstrique-cast
+  title: Iris Quill rig source, talk and blink head sheet (matches ArtImage 280896)
+  asset: monstress-convention/rig/iris/heads
+  size: 1344x768
+  seed: 1143002
+  prompt_prose: Hand-painted 2D cartoon character head sheet for lip-sync animation on a plain light grey background,
+    bold ink outlines and flat cel shading, four head-and-shoulders studies of the same adult woman side by side,
+    all at the same size and angle in three-quarter view turned toward the right. First a calm neutral face with
+    lips closed, second mid-word with her mouth open wide on an ah sound, third both eyes shut in a blink with a
+    soft smile, fourth a surprised oh with round lips and raised brows. Iris Quill, about thirty, a big messy
+    shoulder-length mane of jet-black hair with one thick bold white streak sweeping back from the front, bright
+    wide eyes with winged eyeliner, berry lipstick, big gold hoop earrings and the collar of a rose-and-plum trench
+    coat over a black crop top. Warm, cheeky and expressive.
+- key: mc-rig-norb-apose
+  lane: krea2
+  entity: monstrique-cast
+  title: Norb Vale rig source, neutral A-pose full body (matches ArtImage 280897)
+  asset: monstress-convention/rig/norb/apose
+  size: 832x1216
+  seed: 1143003
+  prompt_prose: Hand-painted 2D point-and-click adventure game character figure for a cut-out animation rig, full
+    body head to toe, standing alone on a plain light grey background, bold ink outlines and flat cel shading, even
+    flat lighting, drawn like a 1990s TV cartoon. Norb Vale, a short stocky adult man about forty-five, a little
+    person with a big round head, stands in a relaxed neutral A-pose in three-quarter view turned toward the right,
+    short legs planted a little apart, both arms hanging slightly away from his sides with gloved hands open, every
+    limb clearly separated from his body. Untidy brown hair greying at the temples, a heavy wrinkled brow, a round
+    bulbous pink nose, ruddy cheeks, grey stubble and a small polite closed-mouth smile. Small round wire spectacles
+    with a thick magnifying left lens that makes his left eye look huge. He wears a hot-pink T-shirt under a rumpled
+    charcoal-grey suit jacket, a grey bow tie, baggy grey trousers, scuffed brown shoes and bright yellow rubber
+    gloves pulled up to the wrist. Fussy, alert and oddly lovable.
+- key: mc-rig-norb-heads
+  lane: krea2
+  entity: monstrique-cast
+  title: Norb Vale rig source, talk and blink head sheet (matches ArtImage 280897)
+  asset: monstress-convention/rig/norb/heads
+  size: 1344x768
+  seed: 1143004
+  prompt_prose: Hand-painted 2D cartoon character head sheet for lip-sync animation on a plain light grey background,
+    bold ink outlines and flat cel shading, drawn like a 1990s TV cartoon, four head-and-shoulders studies of the
+    same middle-aged man side by side, all at the same size and angle in three-quarter view turned toward the right.
+    First a calm neutral face with lips closed, second mid-word with his mouth open wide on an ah sound, third both
+    eyes shut in a blink, fourth a startled oh with round lips and eyebrows shot up. Norb Vale, about forty-five,
+    a big round head, untidy brown hair greying at the temples, a heavy wrinkled brow, a round bulbous pink nose,
+    ruddy cheeks and grey stubble, small round wire spectacles with a thick magnifying left lens that makes his
+    left eye look huge, a grey bow tie, a hot-pink T-shirt collar and a charcoal-grey suit jacket. Fussy, earnest
+    and comic.
