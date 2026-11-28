@@ -123,12 +123,12 @@ tasks:
       Full history: projects/crystal-street/HISTORY.md#t-001
   - id: t-024
     title: 'Main-game standard: audit and close the gaps for Terrors on Crystal Street'
-    status: claimed
+    status: review
     milestone: m3
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-28T01:52:21Z'
+    updated: '2026-11-28T01:54:36Z'
     note: |-
       Silas 2026-11-11 PT, in session: "Our games should all have a base standard of quality ... We want our main games to have 12 plus achievements." Standard: docs/agents/main-game-standard.md; CONTROL.md global overview.
 
@@ -160,6 +160,8 @@ tasks:
       Scoped console settings/achievements slice: persistent effects and music volume, immediate mixer gain and title achievements entry, with regression assertions. Remaining t-024 account saves and other standard evidence stay open; return to ready after merge.
 
       Merged kind_robots#6021 (459343a) settings/title achievements; stale trailer attribute assertion fixed by merged #6022 with green latest CI. Account-backed saves and reading speed remain; return to ready.
+
+      Implemented revisioned account-backed Crystal Street saves through existing ArcadeCabinetSave table, authenticated routes, per-account device cache, guest fallback and explicit import, section-aware progress merge and reset tombstone, with regression contract. Partial t-024 scope; return to ready after merge for reading speed and remaining acceptance.
     owner: worker
     claimed_by: 20261128T015221Z-crystal-street-t024-b3a7
     claimed_at: '2026-11-28T01:52:21Z'
