@@ -479,14 +479,14 @@ tasks:
   - id: t-021
     milestone: m6
     title: "Gen-2 World 1: re-author Bluebell Pipeworks as a full SMB3/SMW-class world"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: plumber-press-gear-20261128T1315Z-1c9e7b
     claimed_at: '2026-11-28T13:15:43Z'
     depends_on: [t-002, t-011, t-020]
     passes: 0
     stakes: reversible
-    updated: '2026-11-28T13:15:43Z'
+    updated: '2026-11-28T13:16:49.989Z'
     note: |-
       Build World 1 to the GEN2-WORLDS.md graph: 6-9 nodes including a fortress, a Hush House, the first Valve Chapel and at least one secret exit, each level 3-6 minutes with sub-areas and a real secret. Wire the GEN2-ROUND-1 overworld plate and far-sky plate. Record first-clear times. This is the agent-verified production template for Worlds 2-8; human verdict is not a prerequisite. Completion checkpoints: 1-1, 1-2, 1-h and cottage, 1-3 and chapel, 1-f including Foreman Flange, 1-4 and 1-castle. Verify each authored beat, original art and route timing against GEN2-WORLDS.md.
 
@@ -555,6 +555,8 @@ tasks:
       App branch worker/save-the-plumber-t-021-tower-tilt-c7e19a at 53742f29fedd9e7fc732308501304742a8bc5de9 adds boiler Wild Tap, temporary sloped entrance route, downhill pumpbug, Pearl, terrain and foe restoration, and persistent castle Pearl. Three-file diff verified; independent movement probe ascended 48 pixels on slopes without jumping; real-input regression added, CI pending. This is localized slope gameplay, not a full 30-degree scene rotation or conversion of every tower floor. Remaining authored beats, original art and full course timing/acceptance stay open.
 
       Verified kind_robots#6088 merged at 799a0901 after all thirteen exact-head workflows succeeded on 53742f29, including Tower Tilt actual-input gameplay. Seven World 1 Wildwater implementations now on main; full authored transformations, remaining original artwork and course timing acceptance remain. Production deployment unverified.
+
+      App branch worker/save-the-plumber-t-021-press-gear-1c9e7b at c929c038166d585299baa3f2694ed7b9643165b5 adds the previously missing Rustbolt Keep Golden Gear behind the low press duct. Timed cover opens for 60 of 180 ticks, with visible open-window countdown; collection, map gear count and persistence respect the optional fortress course. Added actual-input tests for closed cover, open collection, no farming, save validation and completion count. Four-file diff verified; actual CI pending. This is a timed reward cover, not a damaging press collision. Remaining World 1 authored beats, art and timing acceptance stay open.
   - id: t-022
     milestone: m6
     title: "Gen-2 Worlds 2-4: Tideglass Marina, Lantern Orchard, Clockwork Fair"
