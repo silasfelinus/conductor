@@ -1208,3 +1208,19 @@ tasks:
     claimed_by: null
     claimed_at: null
     implementation_pr: 'silasfelinus/kind_robots#5651'
+  - id: t-073
+    milestone: m3
+    title: 'Generate and wire Meat currency and Street Pack artwork'
+    status: ready
+    stakes: reversible
+    passes: 0
+    depends_on: []
+    playtest_iteration: true
+    note: >-
+      Silas 2026-11-27 PT requests pack purchases on the front end with Meat art.
+      Runtime work is kind_robots#6026 (Faction/Alliance match setup and
+      daily/weekly quests). Art requests are in art/MEAT-ECONOMY-ROUND-1.yaml;
+      curate delivered Meat currency and Street Pack renders, wire both into
+      the wallet and shop on the normal play surface, and verify actual image
+      delivery and 390/768/1440 layout. Preserve account-owned virtual Meat,
+      existing pack prices and no real-money purchases. No human playtest gate.
