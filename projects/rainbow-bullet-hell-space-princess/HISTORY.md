@@ -982,3 +982,66 @@ doodle/alt planes are on kind_robots main. Stage planes: #5685, #5767, #5774, #5
 Round-9 recolour and group/cutscene composition were folded into t-030 on 2026-11-23 and
 stay tracked there; pickups u04/u11/u12 were redrawn in ART-ROUND-10-VOLUME.
 <!-- note:end t-022 -->
+
+## t-044 — Main-game standard: audit and close the gaps for Rainbow Bullet Hell Space Princess
+
+<!-- note:begin t-044 -->
+Silas 2026-11-11 PT, in session: "Our games should all have a base standard of quality ... We want our main games to have 12 plus achievements." Standard: docs/agents/main-game-standard.md; CONTROL.md global overview.
+
+AUDIT DONE 2026-11-12: projects/rainbow-bullet-hell-space-princess/STANDARD-AUDIT-2026-11-12.md holds the Met/Partial/Missing table, a proposed achievement list with award points, character-fit notes and the three smallest next PRs. Start there.
+
+Start with the audit table from docs/agents/main-game-standard.md (title screen; settings menu; save/load and persistent progress; 12+ achievements; scrapbook; multiple endings with painted plates; customizable characters; 3+ replay hooks), marking each Met / Partial / Missing with evidence (file, route, live record). Put the table in this note and the first PR. Then close each gap in small CI-tested PRs; queue any needed ending, scrapbook or portrait art in an auto_submit ledger.
+
+Item 7 (customizable characters) applies "in most cases": if this genre makes it a poor fit, say so in the audit with the reason and leave it for Silas rather than skipping silently.
+
+Achievements are tracked by their own task; this one covers everything else.
+
+Stale claim recovery: no matching open Rainbow PR or implementation branch; no code is identified as committed by this claim. Keep main-game logbook and other acceptance gaps open, and reclaim before implementing.
+
+Scoped Seas flight-log implementation pushed as 856edb03ba7a5a49a5668018e631eec6e44bc654: progress silhouettes, earned medals, current Act and ending count; added pure logbook regression test. This is one part of the still-open main-game standard, not completion of t-044.
+
+Added a scoped ending scrapbook to the Rainbow cabinet, tracking only the three actually earned finale choices and keeping unearned endings locked. Distinct Motherland-road variant recording, incomplete ending illustrations, and remaining main-game-standard acceptance remain open.
+
+2026-11-21 PT recovery: prior scrapbook review claim is over 24 hours old, no open t-044 PR or active branch remains; existing logbook/ending scrapbook work is preserved. Reopen for real allegiance-specific ending scrapbook unlocks without falsely attributing historical generic choice feats.
+
+Partial t-044: standalone app PR silasfelinus/kind_robots#5547 (commit 0090f25d) records six exact Motherland rebel/loyal ending roads in existing mastery persistence, adds distinct nine-slot scrapbook with safe legacy generic-choice records, and full choice/road regression. Last-head CI and merge required. Additional polished ending art, full main-game standard acceptance and live device verification remain open.
+
+2026-11-22 PT recovery: the 02:41Z review handoff is past its TTL with no open t-044 PR or branch (#5547 merged). Returned to ready; nothing discarded. Ending plates: Fever Dream restore 279195 and evacuate 279196 passed review and ship in the next kind_robots PR; sever 279197 failed CAST-QA and re-renders as ArtJob 76729 (ENDINGS-FEVER-DREAM-2026-11-22). Remaining main-game-standard scope per PLAYTEST-GAP-MATRIX-2026-11-22: sever plate, settings (comms, contrast, remap, erase flight log), call sign/paint.
+
+2026-11-22 PT: kind_robots#5621 ships Fever Dream restore (279195) and evacuate (279196)
+plates. Sever held: 279197 and 279201 both fail CAST-QA on Maribel's proportions; next
+attempt from her doodle portrait via Kontext. Remaining t-044 scope after merge: sever
+plate, settings (comms/contrast/remap/erase flight log), call sign/paint.
+
+2026-11-22 PT: kind_robots#5621 merged as 9b74baa8 after all checks completed green;
+restore and evacuate endings now show Fever Dream plates. Released for the remaining
+scope: sever plate (start from Maribel's doodle portrait via Kontext), settings
+(comms/contrast/remap/erase flight log), call sign/paint.
+
+2026-11-22 PT: Silas said 'do what you think best' on the sever plate. Take 4 (279239)
+passes CAST-QA and ships in kind_robots#5628, completing all three ending plates.
+Remaining t-044 scope: settings (comms/contrast/remap/erase flight log), call
+sign/paint.
+
+2026-11-22 PT: kind_robots#5628 merged as c5129034 after all checks completed green; all
+three endings (restore, evacuate, sever) now show Fever Dream plates. Released for
+remaining scope: settings (comms/contrast/remap/erase flight log), call sign/paint.
+
+2026-11-23 PT: kind_robots#5670 ships the settings gaps: comms full/story/off, high-
+contrast (bold) enemy shots, erase-a-slot flight log (two-tap), and per-game key remap
+for A/B/X/Y, with pure + real-cabinet Chromium tests. Remaining t-044 scope: call sign
+(comms + credits) and three medal-unlocked paint schemes per ship.
+
+2026-11-23 PT: kind_robots#5679 merged as de0e1b51 after all 23 checks completed green:
+call sign (Hangar, comms header, credits) and three paint schemes per ship (Factory;
+Tide at three silver-or-better medals; Nova at three golds), drawing only; credits now
+name the pilots actually flown. With #5670 (comms/contrast/erase slot/key remap), #5628
+(all three ending plates), #5547 (nine-slot ending scrapbook) and the existing title,
+saves, replay hooks and achievements task, every main-game-standard row from STANDARD-
+AUDIT-2026-11-12 now has shipped work. Ready for review against docs/agents/main-game-
+standard.md; the final verdict stays with Silas (t-014).
+
+2026-11-28 PT review: done. Every main-game-standard row has merged work on kind_robots main (#5547 0090f25d,
+#5628 c5129034, #5670, #5679 de0e1b51; achievements t-045). Device, audible and live-account observations
+transfer to the playtest handoff per the 2026-11-27 owner direction in main-game-standard.md.
+<!-- note:end t-044 -->
