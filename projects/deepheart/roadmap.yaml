@@ -215,18 +215,10 @@ tasks:
     owner: null
     passes: 0
     stakes: reversible
-    note: |-
-      Silas, 2026-11-16 PT: once complete including art, mark ready for human testing and
-      swap to playtest with normal priority. Follow docs/agents/hourly-playtest-advancement.md
-      "Graduation". Public /play release stays a separate human gate.
+    note: >-
+      Silas, 2026-11-16 PT: once complete including art, mark ready for human testing and swap to playtest with normal priority.
 
-      Silas, 2026-11-27 PT: "Once the art is done, we are done." t-013 is cancelled as the same
-      post-human-gate playtest requirement; this task now waits only on t-018 (nine ending
-      plates, ENDING-PLATES-ANTHRO-2026-11-27.yaml). When t-018 closes, graduate immediately.
-
-      Graduated per Silas 2026-11-27 PT (art done = done): project-overrides deepheart status
-      playtest, priority normal. sync-playtest-master-issues flags and closes kind_robots#5256
-      as completed. Public /play release and creative signoff remain separate human gates.
+      Full history: projects/deepheart/HISTORY.md#t-014
     updated: '2026-11-27T23:57:51Z'
   - id: t-015
     milestone: m3
@@ -278,52 +270,10 @@ tasks:
     depends_on: t-007
     passes: 0
     stakes: reversible
-    note: |-
-      Audit every authored scrapbook moment and ending, including all support pairs, romance and artifacts. Replace incompatible humanoid art with approved anthro canon where needed. Preserve earned-only discovery and existing maturity gates. Verify distinct delivered artwork on every required scrapbook entry. No publication or new subjective gate.
+    note: >-
+      Audit every authored scrapbook moment and ending, including all support pairs, romance and artifacts.
 
-      Commit 4a6e8dcf adds private auto-submit Krea 2 ledger for all 35 canonical support pairs: 12 pre-anthro replacements and 23 new support moments, with stable sorted pair IDs. Exact roster coverage and no duplicate accepted anthro requests; 56+ own words per prompt. Return ready after merge for delivery, missing scrapbook unlock wiring, and remaining endings/artifacts audit.
-
-      Conductor #8103 merged c2f606ed after four successful workflows. All 35 support art requests are on main. Resume runtime scrapbook mapping, render receipts, curation and ending audit.
-
-      Kind Robots commit 97651cd1 adds the 23 missing support unlock mappings and scrapbook entries, preserves all 12 existing IDs, applies romance visibility to lovers/exes, and adds earned-discovery regression tests for every pair. Art delivery and final ending/artifact curation remain outstanding; return ready after merge.
-
-      Kind Robots #5921 merged 288fcb85; exact PR head e3517e0a has seven completed successful implementation workflows plus successful branch janitor. All 35 support unlock mappings are integrated, with original IDs preserved. Art delivery, curation and ending/artifact audit remain outstanding. Return ready, not done.
-
-      App commit 31ca132c maps four completed support art receipts (jobs 77507-77510; ArtImages 280822-280825). All keys match existing authored scrapbook entries; checked distinct IDs and absence of collisions. Preserve earned discovery and maturity filters. Remaining 31 renders pending; return ready after green merge.
-
-      Kind Robots #5956 merged ffa95400; all seven exact-head workflows and branch janitor completed successfully. Four completed support illustrations wired (jobs 77507-77510, ArtImages 280822-280825). Return ready for remaining renders and curation; no new art jobs.
-
-      App commit 44dbb433 wires 25 additional DONE support receipts (jobs 77511-77535, ArtImages 280826-280850), making 29 of 35 support plates mapped. Checked all IDs against authored scrapbook and engine, no duplicates or collisions. Six render receipts pending; authenticated media and visual curation not verified. Return ready after green merge, not done.
-
-      Kind Robots #5966 merged 26d4cad6. All seven exact-head implementation workflows and branch janitor passed. Twenty-five additional support plates mapped; 29 of 35 total. Jobs 77536-77541 remain pending in the ledger. Return ready for remaining receipts and authenticated visual/media verification.
-
-      App commit b8ec8df1 keeps earned support paintings visible for successful second-tier campfire conversations, while rejected or stale actions clear presentation and cannot reveal art. Added regression assertions for first and second tiers, romance-off refusal, stale action, and unchanged earned moment list. Return ready after merge for six remaining render receipts and delivery checks.
-
-      Kind Robots #5970 merged 9421f42a; seven exact-head workflows and branch janitor green. Both support tiers now use earned paintings; refused/stale actions reveal none. All 35 support jobs now have DONE receipts, six remaining mappings (jobs 77536-77541, ArtImages 280852-280857). Return ready for final wiring and delivery verification.
-
-      Kind Robots commit 0fe7dd08 maps final six DONE support receipts (jobs 77536-77541, ArtImages 280852-280857). All 35 support mappings are distinct and agree with authored scene IDs. Added assertions requiring all 35 painted support scenes and matching scrapbook sources. Authenticated media and visual verification remain outstanding; reconcile after green merge.
-
-      Kind Robots #5973 merged 8cbc9996 after all seven exact-head workflows passed. All 35 support paintings now wired and regression-tested. Remaining authenticated media and visual curation checks are not yet verified.
-
-      Kind Robots head 3c637aff stops locked Deepheart scrapbook and ending tiles from loading their actual paintings; uses the existing key-art cover until earned. Added regression coverage for every authored moment and ending, preserves other games and existing romance settings and saves. Live authenticated delivery/visual curation still outstanding. Return ready after green merge, not done.
-
-      Kind Robots #5979 merged 875b552f; all seven exact-head implementation workflows and branch janitor succeeded (Playbook Kit 45981967934). Locked artwork no longer loads before earned discovery. Return ready for actual authenticated delivery and visual curation.
-
-      Ending audit: all nine wired ending plates (jobs 69590-69598, ArtImages 273934-273942)
-      are original pre-anthro kit renders, which DESIGN-BRIEF rejects as final art. Commit
-      3c69399 adds ENDING-PLATES-ANTHRO-2026-11-27.yaml: nine private auto-submit Krea 2
-      briefs on the original ending:* nodes, current animal-folk delvers matching moment:full-
-      party, Aldric as an elderly moose, undead kept as monsters. Live prompt contract 9/9.
-      All 35 support plates and the full-party repaint are wired and live-verified (run
-      46021674043, 257/257). Return ready after merge: map the nine ending receipts in
-      renderedArt.ts, replacing 273934-273942, then close.
-
-      Ending repaint delivered: Krea 2 jobs 77602-77610 DONE, ArtImages 280939-280947
-      (private, not mature, authenticated webp delivery verified). Kind Robots #6018 maps all
-      nine ending:* keys, replacing pre-anthro 273934-273942, and asserts no ending uses a
-      pre-anthro plate. All 35 support plates, full-party repaint and scrapbook moments
-      already wired and live-verified. Minor nit, not a gate: one queue figure in the Gilded
-      plate reads as human.
+      Full history: projects/deepheart/HISTORY.md#t-018
     owner: worker
     claimed_by: 2026-11-28T000500Z-deepheart-t018-graduate-3b7e
     claimed_at: '2026-11-27T23:57:36Z'
