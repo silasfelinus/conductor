@@ -84,15 +84,23 @@ tasks:
 - id: t-006
   milestone: m2
   title: Generate and commit 78 card faces and a back (majors first)
-  status: waiting
+  status: blocked
   owner: null
   passes: 0
   stakes: reversible
-  updated: '2026-10-02T00:00:00Z'
+  updated: '2026-11-28T09:50:00Z'
   depends_on:
   - t-005
-  note: ArtJobs under one style bible and the Krea 2 contract in ART-PROMPTS.md; keep prompt/model metadata;
+  note: >-
+    ArtJobs under one style bible and the Krea 2 contract in ART-PROMPTS.md; keep prompt/model metadata;
     names and numerals composed in code.
+
+    2026-11-28 09:50 UTC: blocked, not ready. This deck's art is produced by the Kind Tarot studio
+    (tarot-studio; kind_robots /admin/tarot), which renders the full 78-card set only after Silas
+    approves a design checkpoint there. 75 of 95 style samples are rendered across the kind-robots,
+    superkate and zuzu decks; the checkpoint tests are still queued. Do not enqueue a parallel 78-card
+    set from this task. Unblocks when Silas approves a design in the studio; whether to fold t-006/t-007
+    into tarot-studio is also his call.
 - id: t-007
   milestone: m2
   title: Draw page /play/oracle with flip animation and spread picker
