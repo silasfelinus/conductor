@@ -191,7 +191,8 @@ tasks:
   - id: t-004
     milestone: m2
     title: "Art round 2: encounter scene plates (every lead, signature, finale, beat, deck card and meeting)"
-    status: ready
+    status: claimed
+    owner: worker
     depends_on: t-003
     passes: 0
     stakes: reversible
@@ -205,7 +206,9 @@ tasks:
       Prepared 84 precise scene retakes in REDO-SCENES-2026-11-27.yaml, preserving original asset paths and rejected ArtImage IDs. Exact one-to-one coverage checked, no accepted assets or other jobs resubmitted. After merge wait for DONE receipts and reconnect the replacements. Partial t-004 scope; return to ready after merge.
 
       Conductor #8153 merged 929b9e4; all final checks passed or skipped. 84 corrected private retakes on main, no render receipts yet. Remaining durable asset delivery and integration, not rerender of prior DONE art.
-    updated: '2026-11-28T02:43:31Z'
+    updated: '2026-11-28T02:45:00Z'
+    claimed_by: 20261128T024500Z-crystal-street-t004-7ad2
+    claimed_at: '2026-11-28T02:45:00Z'
 
   - id: t-005
     milestone: m2
