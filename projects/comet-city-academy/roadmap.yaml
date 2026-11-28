@@ -368,7 +368,7 @@ tasks:
   - id: t-016
     milestone: m2
     title: "Build playable student-hero-villain evolution, betrayal and accomplice state"
-    status: ready
+    status: claimed
     depends_on: t-003
     passes: 0
     stakes: reversible
@@ -390,7 +390,10 @@ tasks:
       Kind Robots commit 62130ec8ed62a5a0f66e599e0e1681dfb7459348 preserves active or isolated betrayal consequences in partner, sidekick, romance and committed triad finale narration without mutating saved bonds. Regression cases cover active, isolated and reconciled relationship endings, either triad member separated and unrelated separation. Full CI pending. Partial t-016; return ready after green merge.
 
       Kind Robots #5999 merged 3e112075da977f3d2adea5b8a201f6490a1abb54. All nine latest-head workflows including branch janitor succeeded on fc793fab1b1cf3fbe2c309e966830320bdf8a1ce. Active/isolated betrayal now interrupts partner, sidekick, romance and triad finale narration without changing saves. Remaining full personal relationship arcs, accomplice and campaign acceptance; partial scope.
-    updated: '2026-11-27T22:15:00Z'
+    updated: '2026-11-28T11:20:35.601Z'
+    owner: worker
+    claimed_by: 20261128T112030Z-comet-t016-r8m6q2
+    claimed_at: '2026-11-28T11:20:35.601Z'
   - id: t-017
     milestone: m3
     title: "Deliver 48 stable-name characters, three contextual splashes and meaningful branching arcs"
@@ -427,17 +430,16 @@ tasks:
   - id: t-002
     milestone: m1
     title: "Write 30-day cast/power/romance villain and connected-map bible"
-    status: review
-    updated: '2026-11-28T11:13:42.349Z'
+    status: ready
+    updated: '2026-11-28T11:21:41.183Z'
     passes: 0
     stakes: reversible
     note: |-
       Thirty-day five-band bible: six power families with week-specific unique approaches, 16 recruits, eight romanceable adults, two mutually negotiated triad arcs, 24 geographically coherent sites, eight villain plans and twelve endings; reconcile six prototype IDs. 16/16 recruits authored, four (Vesna Duarte, Bram Kowalczyk, Femi Ilunga, Cyrus Adeyemi) received a runtime onboarding slice at e2b40c8d, but verify merge/runtime before claiming all 16 playable. Preserve six night-three friends and twelve legacy contacts. Remaining full story bible, week-specific powers, villain plans, endings and relationship/follower art. Read actual authored bibles and linked source history instead of starting over. Full prior note: ROADMAP-HISTORY-2026-11-26.md#t-002.
 
       Scoped authoring increment at conductor commit 628468faa9d2ef2956e3fdde89c6fb808399abc4: 60 distinct power interventions with costs across six fields and five bands, four additional full-term ending designs with existing-save prerequisites and original painting subjects, verified runtime baseline. Structural matrix checks passed. Runtime implementation, art and complete QA remain; return ready after merge.
-    owner: worker
-    claimed_by: 20261128T105130Z-comet-t002-p7x4n9
-    claimed_at: '2026-11-28T10:51:30Z'
+
+      Conductor #8172 squash-merged 4b6f0d8bc19662410658e986060e3ac0d5f9e3c4 after all 24 latest checks completed successfully or appropriately skipped. Five-band route and four additional full-campaign finale bible is now canonical; remaining runtime integration, map correction and verified art are not completed. Partial scope; return ready.
   - id: t-003
     milestone: m2
     title: "Build 30-day day/night map, dispatch, relationship and save engine"
