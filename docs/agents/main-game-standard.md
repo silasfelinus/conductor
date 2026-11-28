@@ -37,12 +37,22 @@ Silas, 2026-11-11 PT, in session:
 - Every Villain Tactics
 - MONSTRIQUE (`monstress-convention`)
 - Deepheart (`deepheart`)
+- Kind Tarot (the public `tarot-studio` reader at `/play/tarot`; Silas, 2026-11-27 PT. The admin studio stays a non-game tool.)
 
 A new full-length game joins this list when it's created. Paused or finished main games
 (Zuzu's Lair, Zuzu Showdown) meet the standard if they're reopened.
 
 **Arcade cabinets** (`kr-arcade`) and small toys keep the smaller arcade standard: three
 achievements. They still need complete gameplay, generated art and icons, art-first single-screen presentation, front page, settings, sound/music, account progress and an appropriate collection/history. Full-length Arcade campaigns use 12+ achievements.
+
+**Coming cross-project goal (Silas, 2026-11-27 PT):** a front-end group chat for people and an
+earn-only gacha layer (daily rewards, a collectible card set of mixed rarity, unlockable card backs
+and a scrapbook of collected cards and backs) will become a goal for all projects. Kind Tarot is the
+test case. Its implementations are shared and project-agnostic: kind_robots
+`utils/community/rooms.ts` + `components/community/kr-group-chat.vue` for chat rooms, and
+`utils/collectibles/` + `components/collectibles/kr-collectible-board.vue` for collectible sets. A
+project adopts them by registering a room or set; it does not fork them. The requirement is not yet
+in force for other projects; don't open retrofit tasks until Silas confirms the test case.
 
 ## The standard
 
@@ -128,7 +138,7 @@ Existing scopes to reconcile, not another task ledger. Live roadmaps own task st
 | Terrors on Crystal Street | t-024 standard, t-004/005 art, t-016 Jess slice plus complete-game coverage, t-011 verified handoff; release separate |
 | Every Villain Tactics | t-025 standard, t-009–011/018/020–024 routes/AI/editor/identity, t-012 art, t-013 QA; t-029 audio done, t-014 verified handoff; t-015 publication moved post-roadmap |
 | MONSTRIQUE | t-015 standard, t-003–010 story/rooms/art/endings, t-014 art, t-011 security, t-012 QA; t-013 verified handoff; release separate |
-| Tarot Studio | Non-game production tool: t-004/005 decks, t-006 print exports, t-009 accessible workflow; generated visuals/icons, global private deck state/settings. t-007/008 commerce gated |
+| Tarot Studio | Admin studio is a non-game production tool: t-004/005 decks, t-006 print exports, t-009 accessible workflow. The public Kind Tarot reader is a main project (Silas, 2026-11-27 PT): t-011 reader, t-012 settings/sound/music, t-013 achievements (12), t-014 group chat, t-015 collectibles/daily rewards/backs/scrapbook, t-016 collectible art. t-007/008 commerce gated |
 | The Ruler Is Hooked | t-067 standard, t-047/057/058 art, t-048 fairness/economy, t-050/061 device QA, t-051 readiness; t-032 cancelled obsolete human gate |
 | Playbook Kit | Shared infrastructure: t-003–007 adoptions, t-008/013 adapter, t-009/017 art, t-026 review. Provide standard through shared components, preserve engines/saves. No revived daily challenge |
 | Rebel Button | Small game: t-001 brief, t-003/004 foundation, t-005 finale/full 100-press loop; 3 achievements, global progress, generated icons, front/settings, audio and discovery/history equivalent. t-002 soft gate |

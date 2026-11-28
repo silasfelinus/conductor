@@ -811,6 +811,11 @@ vendor API order fulfillment.
   (majors and minors), approve a design, then generate the full set with
   per-card prompt edits, revisions and default-art switching. The reader shows
   only approved art from decks marked public; SuperKate stays private.
+- Silas, 2026-11-27 PT (later): the reader gets the large-project set: settings,
+  sound, music, 12 achievements, plus the test case for a coming all-project goal:
+  a front-end group chat for people and an earn-only gacha layer (daily rewards,
+  a 100-card collectible set of mixed rarity, unlockable card backs, a scrapbook).
+  Build these shared and project-agnostic; no purchase path (money stays gated).
 
 ### hybridizer (software)
 
