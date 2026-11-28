@@ -468,11 +468,8 @@ tasks:
   - id: t-021
     milestone: m3
     title: "Ship 48 power-specific playable origin opening battles"
-    status: review
-    owner: worker
-    claimed_by: 20261128T094210Z-evt-magic-trio-2c4e8a
-    claimed_at: '2026-11-28T09:42:10Z'
-    updated: '2026-11-28T09:44:10Z'
+    status: ready
+    updated: '2026-11-28T10:36:00Z'
     depends_on: [t-005, t-017]
     passes: 0
     stakes: reversible
@@ -500,6 +497,10 @@ tasks:
       #6046 merged 67de34d6a6e62dc740dbd56739677c90bda64225. Exact head 96db8e7d46b72bd965ca35ba95429680d3fe5a8c all eight workflows completed successfully, including Tactics and branch janitor. Overdue Thunder and The Bell and the Door on main; 13/48 origin implementations. Remaining 35, dedicated artwork and full new-game acceptance. Partial, return ready.
 
       Kind Robots da731e87fdd912a42150c161b636566d279f5750 implements When Two Plus Two Screamed, The Heir Who Said No and The Empty Applause, completing all eight Magic origin implementations. Distinct 9x6 arenas, two-AP five-tile LOS bridge proof, two-tile LOS ancestral pact ritual, and stage-mark monologue rewrite; gated evacuations, branching hero/villain intros, heal/suppress choice effects and distinct ending scenes. 145 isolated assertions passed against actual committed map/graph/registry/menu data; expanded Studio and Front Menu regressions. 16 of 48 implemented upon merge, 32 other origins and original venue art/full new-game acceptance remain. Existing painted fallback venues only. Full CI pending.
+
+      #6065 merged 91388bac63ad31ae2683166ea09d898aa0127786. Exact head 9b9cccb7589afb7bc8886f32efbefb731621820b all nine workflows passed including Tactics and branch janitor. Forty canonical origin arena implementations now on main. Remaining eight Psychic origins, dedicated venue paintings and full earned new-game acceptance. Partial return ready.
+
+      KR #6065 merged 91388bac63ad31ae2683166ea09d898aa0127786, exact head 9b9cccb7589afb7bc8886f32efbefb731621820b all eight substantive workflows and branch janitor passed. 40/48 playable origin implementations. Eight Psychic origins, dedicated paintings and full new-game acceptance remain.
   - id: t-022
     milestone: m3
     title: "Build 48 villain-owned lairs with changing tactical environments"
