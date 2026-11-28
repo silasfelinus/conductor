@@ -160,7 +160,7 @@ tasks:
   - id: t-005
     milestone: m2
     title: "Implement enemy interaction, held objects and powerup systems"
-    status: claimed
+    status: ready
     depends_on: [t-003]
     passes: 0
     stakes: reversible
@@ -218,10 +218,9 @@ tasks:
       kind_robots#6051 merged at a5f019ef; all 16 exact-head checks on 7f5ebce6 passed (Prettier autofix skipped), including maker-contract running the extended verifyCabinetSavePlumberSpringfruit regression. Apricot Slope (3-1) now grows three springfruits on its climb (cols 60, 116, 166); the checkpoint fruit bounces her onto the row-14 terrace a plain jump cannot reach. Partial scope: other authored water courses, campaign scale-plate placement and painted companion/plate/sluice/springfruit props remain. Pre-existing on main: verifySavePlumberInteractions fails at '1-2 no platform by gate 23' (not in CI; needs separate follow-up). Production deployment unverified.
 
       kind_robots#6052 merged at d50fdd37; all 16 exact-head checks on e6453686 passed (Prettier autofix skipped), including contract shards and maker-contract. Fixes the pre-existing verifySavePlumberInteractions failure '1-2: no platform by gate 23': the new Overgrowth pistons let the hero vault the closed valve gate over row 0 (local probe: 347 crossings, some without Wildwater). Copper Greenhouses gate moved col 23 to col 6 and valve col 17 to col 4, so pistons, pipes and pearl route lie past the gate; Potting Shed and Wildwater replays turn the valve with the wrench first. All 34 Save the Plumber suites pass locally. Partial scope: other authored water courses, campaign scale-plate placement and painted companion/plate/sluice/springfruit props remain. Pre-existing unrelated: runArcadeCabinetSuites fails at Glitch Garden 'each garden opens faster' on main. Production deployment unverified.
-    updated: '2026-11-28T06:45:26Z'
-    owner: worker
-    claimed_by: 20261128T064526Z-stp-t005-
-    claimed_at: '2026-11-28T06:45:26Z'
+
+      kind_robots#6054 merged at e8c193fe; all 16 exact-head checks on 5099abe5 passed (Prettier autofix skipped), including maker-contract running the extended verifyCabinetSavePlumberScalePlates regression. Echo Sluice (6-3) gains an optional pipe-linked chamber (ground pipe col 12): two springfruits, two scale plates and a full-height sluice guarding a seven-token cache; one weighed plate leaves it shut, both lift it; solo-solvable without powers or companion, safe pipe return. Real-input replay covers walk/jump blocking, one-plate rejection, two-plate open, cache and exit. Gears, Levels, MovementReplay, Interactions and Springfruit suites pass locally. Partial scope: other authored water courses and painted companion/plate/sluice/springfruit props remain. Production deployment unverified.
+    updated: '2026-11-28T07:25:00Z'
   - id: t-006
     milestone: m3
     title: "Build World 1: four complete garden/pipeworks levels and boss"
