@@ -159,6 +159,21 @@ def test_find_strays_skips_referenced_young_and_foreign_jobs():
     assert [j["id"] for j in strays] == [1] and extra == 0
 
 
+def test_find_strays_skips_studio_owned_request_keys():
+    old = (datetime.now(timezone.utc) - timedelta(hours=10)).isoformat()
+    jobs = [
+        {"id": 1, "status": "DONE", "projectSlug": "tarot-studio", "artImageId": 11, "createdAt": old,
+         "requestKey": "tarot-art:412"},
+        {"id": 2, "status": "DONE", "projectSlug": "tarot-studio", "artImageId": 22, "createdAt": old,
+         "requestKey": None},
+        {"id": 3, "status": "DONE", "projectSlug": "tarot-studio", "artImageId": 33, "createdAt": old,
+         "requestKey": "conductor:tarot-studio:x"},
+    ]
+    min_age = datetime.now(timezone.utc) - timedelta(hours=3)
+    strays, _ = rec.find_strays(jobs, set(), {"tarot-studio"}, set(), min_age)
+    assert [j["id"] for j in strays] == [2, 3]
+
+
 def test_extra_renders_of_known_prompts_are_duplicates_not_strays(tmp_path):
     _write_ledger(tmp_path, subjects=[_subject("done", prose="Choirfish sings under the dock at dawn.", jobs={"krea": 3})])
     (tmp_path / "projects" / "art-prompts.yaml").write_text(yaml.safe_dump({"requests": [

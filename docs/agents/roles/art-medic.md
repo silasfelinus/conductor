@@ -34,7 +34,9 @@ lost job ids back on its own; what reaches you needs judgment:
   One PR per project's batch; merge when green.
   Check Kind Robots studio pages that keep job ids in the database first (Monstrique series bible:
   `GET /api/monstrique/bible` galleries). The stray scan skips those (`STUDIO_GALLERIES` in
-  `reconcile_unrecorded_art.py`); add a new page there when one turns up.
+  `reconcile_unrecorded_art.py`); add a new page there when one turns up. Studios whose job rows
+  sit behind admin-only APIs are skipped by request-key prefix instead (`STUDIO_REQUEST_KEY_PREFIXES`;
+  Tarot Studio's `tarot-art:<id>`).
 - **Report older than 6h.** The workflow stopped: open its last run, fix it (workflow-medic rules).
 - **Lookup unavailable for 48h.** kind_robots#5031 (`POST /api/art/queue/lookup`) is not live.
   Check the deploy; until it is, run with `--backfill-days 3` by hand.
