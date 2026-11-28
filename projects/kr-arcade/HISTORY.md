@@ -1318,3 +1318,21 @@ Two seated players now move and fire independently on the shared garden, share p
 
 #6064 merged 78575a01; all substantive checks green, including the complete campaign engine suite (140940270359) and cabinet Chromium checks (140941002518). Two sprayers, shared lives/prisms, Crossfire, split-bed Rivals and standalone modes implemented with persistence and engine regressions. Device/controller-specific subjective playtesting transfers to post-roadmap handoff.
 <!-- note:end t-092 -->
+
+## t-076 — Ribbon Riders depth slice 3: The last two fairgrounds and the endings
+
+<!-- note:begin t-076 -->
+Ribbon Riders, Lantern Festival Circuit: depth-pass/CABINETS.md section 10, slice 3, plus shared Rules for every slice. #5566 delivered ten late arenas and rival steering; #5694 merged fe340664 (8 green workflows) adds six-second comet trail expiry and champion-unlocked mirrored Encore with compatible saves. Finish bespoke marshals, remaining hazards (including Rainbow Spool), endings and campaign QA; audit actual shipped scope first. Full prior note: ROADMAP-HISTORY-2026-11-26.md#t-076.
+
+Implemented persistent one-per-fairground Golden Bows from under-par kind special clears, perfect moon escort, backward compatible save migration, locked secret entry, a playable mirrored four-Marshal gauntlet and final four-rival Rainbow Spool duel, distinct true-ending credits and trophy. Added scripted reward, save, unlock and secret route contracts and wired focused Ribbon Riders suites into cabinet CI. Branch worker/kr-arcade-t076-rainbow-spool-99f641, head 37955f76. Partial t-076; remaining bespoke conveyor/bell pads/portals/spiral hazard work and complete campaign playthrough QA. Runtime CI pending.
+
+PR #6042 merged e693e467; all substantive checks green. Four golden bows and Rainbow Spool gauntlet implemented. Remaining conveyor lanes, bell pads, portals, spiral walls, fuller remix and campaign QA.
+
+Added conveyor lane eight-cell shifts, beat reversal on Conductor arena, two-second global bell flare (new trail cells are physically wider; existing trails glow), paired portal routing with entry/exit reservations, inward spiral walls with warning and collision, late fairground and Rainbow Spool layouts, Encore transforms, focused engine contracts in cabinet CI. Branch worker/kr-arcade-t076-hazards-7c4d91 head bcb33e0c. Remaining acceptance: CI, bespoke coach uncoupling and Loom thread capture audit, and full campaign QA. No manual gate.
+
+#6068 merged 214fc0d3 with all substantive checks passed including real cabinet job 140948831294. Late hazards, full temporary bell width, timed coach uncoupling, Loom thread capture, mirrored secret remixes implemented. Remaining full first-clear campaign/route QA and audit against slice 3; no human gate.
+
+Branch worker/kr-arcade-t076-campaign-qa-61da9f, head a747e482. Scripted campaign through real menu, objective capture and checkpoint paths: 16 standard, 5 secret, 16 Encore events; all 12 Marshal fights, bows, both endings and persistence. Bounded saturated glowbug respawn, mirrored spiral wall rank and phase-2-only conveyor reversals. CI pending. Script stages actors and invokes engine capture handlers; geometry and live movement remain separately tested by existing contracts.
+
+#6084 merged eb644ca4, final head 05369910 with TypeScript, all four contract shards, actual Chromium cabinet checks and branch prune green. Scripted campaign covers 37 events, 12 Marshal encounters, all four bows, both endings, Encore, checkpoint persistence; existing geometry and hazard suites pass. Scripted actor staging is intentional, not an unassisted pilot. Saturated glowbug respawn, mirrored spiral and phase-specific conveyor fixes shipped. Slice 4 social modes remain t-077; no human gate.
+<!-- note:end t-076 -->

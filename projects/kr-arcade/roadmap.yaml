@@ -1278,31 +1278,22 @@ tasks:
   - id: t-076
     milestone: m8
     title: "Ribbon Riders depth slice 3: The last two fairgrounds and the endings"
-    status: review
-    owner: worker
+    status: done
     claimed_by: krarcade076-20261128-campaign-qa-61da9f
     claimed_at: '2026-11-28T11:42:39.299Z'
     passes: 0
     stakes: reversible
     depends_on: t-075
-    note: |-
-      Ribbon Riders, Lantern Festival Circuit: depth-pass/CABINETS.md section 10, slice 3, plus shared Rules for every slice. #5566 delivered ten late arenas and rival steering; #5694 merged fe340664 (8 green workflows) adds six-second comet trail expiry and champion-unlocked mirrored Encore with compatible saves. Finish bespoke marshals, remaining hazards (including Rainbow Spool), endings and campaign QA; audit actual shipped scope first. Full prior note: ROADMAP-HISTORY-2026-11-26.md#t-076.
+    note: >-
+      Ribbon Riders, Lantern Festival Circuit: depth-pass/CABINETS.md section 10, slice 3, plus shared Rules for every slice.
 
-      Implemented persistent one-per-fairground Golden Bows from under-par kind special clears, perfect moon escort, backward compatible save migration, locked secret entry, a playable mirrored four-Marshal gauntlet and final four-rival Rainbow Spool duel, distinct true-ending credits and trophy. Added scripted reward, save, unlock and secret route contracts and wired focused Ribbon Riders suites into cabinet CI. Branch worker/kr-arcade-t076-rainbow-spool-99f641, head 37955f76. Partial t-076; remaining bespoke conveyor/bell pads/portals/spiral hazard work and complete campaign playthrough QA. Runtime CI pending.
-
-      PR #6042 merged e693e467; all substantive checks green. Four golden bows and Rainbow Spool gauntlet implemented. Remaining conveyor lanes, bell pads, portals, spiral walls, fuller remix and campaign QA.
-
-      Added conveyor lane eight-cell shifts, beat reversal on Conductor arena, two-second global bell flare (new trail cells are physically wider; existing trails glow), paired portal routing with entry/exit reservations, inward spiral walls with warning and collision, late fairground and Rainbow Spool layouts, Encore transforms, focused engine contracts in cabinet CI. Branch worker/kr-arcade-t076-hazards-7c4d91 head bcb33e0c. Remaining acceptance: CI, bespoke coach uncoupling and Loom thread capture audit, and full campaign QA. No manual gate.
-
-      #6068 merged 214fc0d3 with all substantive checks passed including real cabinet job 140948831294. Late hazards, full temporary bell width, timed coach uncoupling, Loom thread capture, mirrored secret remixes implemented. Remaining full first-clear campaign/route QA and audit against slice 3; no human gate.
-
-      Branch worker/kr-arcade-t076-campaign-qa-61da9f, head a747e482. Scripted campaign through real menu, objective capture and checkpoint paths: 16 standard, 5 secret, 16 Encore events; all 12 Marshal fights, bows, both endings and persistence. Bounded saturated glowbug respawn, mirrored spiral wall rank and phase-2-only conveyor reversals. CI pending. Script stages actors and invokes engine capture handlers; geometry and live movement remain separately tested by existing contracts.
-    updated: '2026-11-28T12:06:12.535Z'
+      Full history: projects/kr-arcade/HISTORY.md#t-076
+    updated: '2026-11-28T12:29:17.427Z'
 
   - id: t-077
     milestone: m8
     title: "Ribbon Riders depth slice 4: The people slice"
-    status: waiting
+    status: ready
     passes: 0
     stakes: reversible
     depends_on: t-076
@@ -1367,11 +1358,11 @@ tasks:
   - id: t-081
     milestone: m8
     title: "Brick Bloom depth slice 4: Night Bloom House, the Conservatory and the endings"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: krarcade081-20261128-night-switch-moth-22b7e1
     claimed_at: '2026-11-28T12:29:26.455Z'
-    updated: '2026-11-28T12:29:26.455Z'
+    updated: '2026-11-28T12:32:11.716Z'
     passes: 0
     stakes: reversible
     depends_on: t-080
@@ -1385,6 +1376,8 @@ tasks:
       #6072: nine branching Moonflower Conservatory walls, five-seed unlock, Thorn opponent paddle and root guard, normal and true credits/trophies, Second Bloom mirrors and faster ball, validated legacy and secret saves. Focused contracts added. CI pending. Remaining switch crates, moth, further mechanic remix and actual ball play QA; no human gate.
 
       #6072 merged 8c4e2143 on green checks, including Brick Bloom campaign job 140958634222. Secret route, Thorn, credits and Second Bloom verified. Remaining switch crates, moth and campaign QA.
+
+      Branch worker/kr-arcade-t081-night-switch-moth-22b7e1, head 4cde5b2a. Authored red/blue switch crates with colour-specific pass-through bolts, moth hover/lock/dive attraction and capture, returning pests across Night Bloom and Conservatory walls, mirrored ring placement, richer secret-house seed drops, focused engine contracts. CI pending; check actual campaign QA before closing.
 
   - id: t-082
     milestone: m8
