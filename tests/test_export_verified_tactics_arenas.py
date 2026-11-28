@@ -15,7 +15,9 @@ spec.loader.exec_module(module)
 
 def test_verified_private_arena_receipts_from_real_ledgers():
     receipts = module.receipts_from_ledgers(module.PROJECT)
-    assert {k: (v["jobId"], v["imageId"]) for k, v in receipts.items()} == {
+    assert {k: (receipts[k]["jobId"], receipts[k]["imageId"]) for k in (
+        "last-order", "sunken-street", "unlicensed-rescue"
+    )} == {
         "last-order": (71163, 276806),
         "sunken-street": (74323, 277221),
         "unlicensed-rescue": (74324, 277330),
@@ -80,3 +82,74 @@ subjects:
 """
     (tmp_path / "public.yaml").write_text(ledger, encoding="utf-8")
     assert module.receipts_from_ledgers(tmp_path) == {}
+
+def test_all_origin_arena_requests_match_receipt_registry():
+    import yaml
+    from scripts.art_ledger_authoring import ledger_problems
+    from scripts.sweep_art_ledgers import is_auto_ledger
+
+    assets = []
+    keys = []
+    seeds = []
+    counts = []
+    for path in sorted(module.PROJECT.glob("ORIGIN-ARENAS-*-ROUND-1.yaml")):
+        ledger = yaml.safe_load(path.read_text())
+        assert ledger["project_slug"] == "every-villain-tactics"
+        assert ledger["is_public"] is False
+        assert ledger["is_mature"] is False
+        assert ledger["cast_loras"] is False
+        assert is_auto_ledger(ledger)
+        assert ledger["lanes"][0]["engine"] == "krea2"
+        assert ledger_problems(ledger, only_unsubmitted=False) == []
+        counts.append(len(ledger["subjects"]))
+        for subject in ledger["subjects"]:
+            assert subject["size"] == "1152x768"
+            assert subject["lane"] == "krea2"
+            assert "Solid structural obstructions occupy" in subject["prompt_prose"]
+            assert "column " in subject["prompt_prose"]
+            assert "NaN" not in subject["prompt_prose"]
+            assets.append(subject["asset"])
+            keys.append(subject["key"])
+            seeds.append(subject["seed"])
+    assert sorted(counts) == [5, 8, 8, 8, 8, 8]
+    assert len(set(assets)) == len(assets) == len(set(keys)) == len(set(seeds)) == 45
+    assert set(module.STAGES_BY_ASSET) == set(assets) | {
+        "every-villain-tactics/maps/last-order-diner",
+        "every-villain-tactics/maps/sunken-street",
+        "every-villain-tactics/maps/unlicensed-rescue",
+    }
+    assert len(set(module.STAGES_BY_ASSET.values())) == 48
+
+
+def test_new_origin_uses_same_private_verified_receipt_contract(tmp_path):
+    ledger = """is_public: false
+subjects:
+  - asset: every-villain-tactics/maps/ferris-wheel
+    size: 1152x768
+    jobs:
+      krea2: 123
+    art:
+      krea2:
+        status: DONE
+        art_image_id: 456
+    media_proof:
+      krea2:
+        status: VERIFIED
+        art_job_id: 123
+        art_image_id: 456
+        downloaded_bytes: 1234
+        width: 1152
+        height: 768
+        aspect_match: true
+        blank_check: PASS
+        pixel_sha256: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+"""
+    (tmp_path / "new-origin.yaml").write_text(ledger, encoding="utf-8")
+    assert module.receipts_from_ledgers(tmp_path) == {
+        "ferris-wheel": {
+            "artKey": "every-villain-tactics/maps/ferris-wheel",
+            "jobId": 123,
+            "imageId": 456,
+            "sourceLedger": "new-origin.yaml",
+        }
+    }
