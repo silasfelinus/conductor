@@ -176,3 +176,11 @@ stays with layout-contract/e2e. Next: merge #5779 when green, then done.
 2026-11-24 PT: kind_robots#5779 merged (8e17dd2c) after a capture-group-guard fix;
 crystal-street-gameplay contract green with the new render test.
 <!-- note:end t-026 -->
+
+## t-016 — First playable slice (scope after the front end lands)
+
+<!-- note:begin t-016 -->
+Counselor Jess end-to-end vertical slice: scene/outcome art, leads/nights/finale/four endings, daylight decks, first-day onboarding, effects/theme, balance/narrative. #4168 onboarding (21f752c), #4169 SFX, #4175 106 full-size reviewed plates, #4173 continuity. JESS-1 ArtJobs 45413–45525; seven retakes recorded in art/JESS-REROLL-3.yaml. Verify actual deliveries and Jess balance (historical Best 73%, within band), plus live route acceptance. Do not resubmit finished jobs. Full prior note: ROADMAP-HISTORY-2026-11-26.md#t-016.
+
+Verified all 106 WebP paths from merged kind_robots#4175 still exist on main, plus all seven JESS-REROLL-3 paths (ArtJobs 45546–45552, ArtImages 253418–253424, DONE). All four Jess tier endings ship. Merged #4168 and #4169 supply onboarding and audio, with recorded 390/1440 smoke and audio checks; #4173 supplies continuity. BALANCE-REPORT.md records 73% Best over 96 careful Jess weeks, within 40–75%. Recent Crystal Street CI run 46088731622 passed 460 autoplay weeks, 6624 adversarial weeks, 16 achievements and 7891 scrapbook checks. No new render or manual approval required. Current full-project recovery and upstream trailer assertion fix remain in #6022 under t-004; no new live-device check claimed.
+<!-- note:end t-016 -->
