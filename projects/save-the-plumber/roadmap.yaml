@@ -84,7 +84,7 @@ tasks:
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-28T11:41:18.174Z'
+    updated: '2026-11-28T14:55:00Z'
     note: |-
       Main-game standard: use STANDARD-AUDIT-2026-11-12.md and docs/agents/main-game-standard.md. Verify title, settings, persistent saves, 12+ achievements (separate task), scrapbook, multiple painted endings, customizable heroine and three replay hooks. Recorded merges #5722, #5772, #5773, #5832, #5843, #5883, #5884, #5890, #5896 and #5901 delivered settings/contrast, achievement browser, separate New Game/Continue, three endings/epilogues, reset, taunts, reading options, name entry and repaired engine tests. Latest receipt #5901 at 9debf882 reports all 17 exact-head checks passed. Remaining: global account-backed saves and permanent unlocks across devices (reload, account isolation and reset), actual earned/deduplicated achievement records and generated badges, complete scrapbook including run outcomes and locked counts, distinct delivered painted ending plates, rendered finale/gallery screenshots and accessibility against the current main-game standard; do not repeat shipped controls. No production deployment verified. Keep ready until actual visual/acceptance evidence. Full prior note: ROADMAP-HISTORY-2026-11-26.md#t-028.
 
@@ -111,6 +111,8 @@ tasks:
       App branch worker/save-the-plumber-t-028-guest-d84b2f19 at ee7b0c350e463d26044352907f8187abc43f8cc2 adds explicit guest-to-account copying via Settings, empty-slot-only import, souvenir merge, size and owner guards, revisioned account sync and guest retention. Added actual cloud mock regression for account isolation, existing slot preservation, duplicate import, full slots and guest retention. Runtime CI pending; remaining art/acceptance partial scope.
 
       Verified kind_robots#6070 merged at 4283bbd2; all eleven exact-head workflows and branch janitor succeeded on 774f5168. Explicit guest copy into empty account slots, retention and scrapbook merge delivered. Remaining original artwork and full acceptance. Deployment unverified.
+
+      2026-11-28 14:55 UTC production acceptance (kindrobots.org/play/save-the-plumber, Playwright, signed out): title menu, scrapbook Worlds, Achievements and Endings render at 390/820/1440 px with 0 page errors, 0 broken images and no horizontal overflow. Art gap closed: all 15 achievements return generated badge art (ArtImage 270282-270296) and all three ending plates (finale-reversal, finale-clockwork-gift, finale-open-tap) serve 1344px image/webp. A seeded guest album with all three endings shows 3 of 3 discovered with distinct painted plates and titles; locked state blurs the plates with hints. Defect found: phone footer wrapped TITLE MENU / ESC BACK; fix in kind_robots#6099. Remaining agent-verifiable gap: signed-in cross-device save acceptance (needs an account session) and an in-run finale cutscene render; then flag for human playtest.
   - id: t-029
     title: 'Save the Plumber achievement upgrade: 12 or more live achievements'
     status: done
