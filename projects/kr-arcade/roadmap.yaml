@@ -1293,7 +1293,7 @@ tasks:
   - id: t-077
     milestone: m8
     title: "Ribbon Riders depth slice 4: The people slice"
-    status: review
+    status: ready
     passes: 0
     stakes: reversible
     depends_on: t-076
@@ -1301,10 +1301,9 @@ tasks:
       CABINETS.md section 10, Ribbon Riders (Tron light cycles riff), slice 4 of 4: The people slice. The upgrade is "The Lantern Festival Circuit". Spec: projects/kr-arcade/depth-pass/CABINETS.md -- read the game's section first; this slice's scope is item 4 under its '#### Slices', and 'Rules for every slice' at the top applies. Code: kind_robots utils/arcade/games/ (registry slug ribbon-riders). Silas, 2026-10-11: "I need an assessment done of the other arcade games. I want the same level of quality improvements, they should not just be thin veneers of the old games. But newer, better, even more awesome."
 
       Partial scope: four independent local rider seats, allied trail crossing and wrap sides, shared lives and cooperative objective scoring, registry and engine contracts on worker/kr-arcade-t077-coop-7d49c3. Versus, Midnight Marathon, Time Trial and medal board remain; requeue after merge. CI not yet verified.
-    owner: worker
-    claimed_by: krarcade-t077-20261128-1316-7d49c3
-    claimed_at: '2026-11-28T13:16:00Z'
-    updated: '2026-11-28T13:21:00Z'
+
+      kind_robots#6096 squash-merged b42ab019 after updating branch from main (base-only Brick Bloom failure fixed by #6095). All latest-head checks green including Chromium cabinet suites. Partial: four seats and co-op Festival play; Versus, rule toggles, Midnight Marathon, Time Trial ghost and medals remain.
+    updated: '2026-11-28T17:04:28Z'
 
   - id: t-078
     milestone: m8
