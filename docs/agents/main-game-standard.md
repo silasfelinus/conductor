@@ -14,6 +14,8 @@ Silas, 2026-11-11 PT, in session:
 
 **Owner direction (2026-11-26 PT):** Completed generated art is presumed present for roadmap acceptance. Do not retain subjective human approval, manual art inspection or human playtesting as finite build tasks or graduation prerequisites, including older project-specific acceptance wording (e.g. Deepheart t-012 and t-016–018). Finish integration and agent-owned automated QA, then graduate; record unavailable manual art checks as handoff observations rather than requiring a human to perform them. Known concrete failures still require repair. Independent release/publication and security-sensitive approvals remain separate and unchanged.
 
+**Owner direction (2026-11-27 PT):** Delivered implementation that meets the intended scope, passes code review and applicable automated checks, and has no known material defect is sufficient for finite roadmap acceptance. Do not keep tasks open merely because a current production deployment, physical device, signed-in session, audible playback, screenshot refresh, or manual art/URL inspection is unavailable. Record those observations as nonblocking playtest handoff notes; distinguish tests actually run from expected behavior. Do not invent a human approval or claim a live check passed. Missing functionality, pending mandatory renders, concrete defects and failing applicable checks remain actionable. This does not authorize deployment, publication, account mutation, or bypass of real safety gates.
+
 ## Which games
 
 **Main games** are the full-length, story or campaign games:
@@ -65,7 +67,7 @@ achievements. They still need complete gameplay, generated art and icons, art-fi
    - Each is awarded in game and shown with `components/achievements/game-achievement-strip.vue`.
    - Mix story, skill, discovery and completion achievements. Tying some to endings is fine,
      but don't overboard: usually 12–30.
-   - Verify actual award, deduplication, persistence and displayed generated original badge/icon art. Obtain account evidence on the authorized deployed build; no automatic deployment.
+   - Verify actual award, deduplication, persistence and displayed generated original badge/icon art. Use automated award/persistence tests; collect authorized live-account evidence when available, not as a closure gate. No automatic deployment.
 5. **Scrapbook.** A persistent collection of what the player has found:
    - endings earned
    - characters met
@@ -90,7 +92,7 @@ achievements. They still need complete gameplay, generated art and icons, art-fi
 
 9. **Art-first single-screen console.** One composed primary screen, with substantial art and controls/choices immediately adjacent. No scroll-dependent primary gameplay, document-like pages, modal maze, placeholder skeleton or admin chrome. Test phone, tablet portrait/landscape, desktop and short-wide layouts. Internal accessible collection panes may scroll.
 10. **Original generated artwork AND icons.** All player-facing illustrations, portraits, backgrounds, items, sprites, effects, cards, title/ending plates, collection art, achievement badges and thematic UI icons use original generated art. No SVG art or SVG icon sets, emoji stand-ins, stock substitutes, programmer-drawn placeholders or CSS shapes masquerading as illustrations. Functional layout, meters, focus outlines, hitboxes and semantic text remain functional UI. Reuse suitable original generated assets. Verify successful render receipts with concrete ArtImage IDs (or committed generated files), expected asset coverage and runtime bindings. Queued, running or failed jobs are not acceptance. Assume successful renders with concrete asset IDs are delivered unless there is affirmative evidence of a missing or broken asset; authenticated URL checks and visual curation are helpful when available, not blockers for finite roadmap closure. Preserve licensing, mature/privacy and security gates.
-11. **Sound and music.** Original or approved rights-safe soundtrack, gameplay and UI cues, working volume/mute controls, looping/transitions, browser gesture unlock and persistent settings. Verify audible playback and controls on the accessible build. Existing completed Prom/Tactics audio is sufficient until human testing; do not reopen merely for subjective taste.
+11. **Sound and music.** Original or approved rights-safe soundtrack, gameplay and UI cues, working volume/mute controls, looping/transitions, browser gesture unlock and persistent settings. Verify playback and controls with automated tests and review; collect audible observations on the accessible build when available. Existing completed Prom/Tactics audio is sufficient until human testing; do not reopen merely for subjective taste.
 12. **Complete gameplay and adversarial testing.** All promised stages, enemies/bosses, encounters, routes, choices and endings are playable. Test from New Game through real conclusions, alternate/adverse decisions, losses, retry/reload, resource extremes, device input and accessibility. Record reproducible seeds, screenshots and defects. Fix critical/high failures and material art/UX gaps, rerun tests. A prototype, single vertical slice, green CI, metadata count or drained art queue is not full readiness.
 
 ## Character exceptions and decisions (Silas, 2026-11-11 PT)
@@ -110,7 +112,7 @@ Any other exception to item 7 is Silas's call. Record it here when he makes one.
 
 Audit each applicable row once against actual main/runtime evidence: Met, Partial or Missing, exact evidence, responsible existing task ID and next finite action. Keep the table in the existing audit/spec or linked acceptance document, not every task note. Use existing standard, art, build and QA tasks; add a finite task only for an uncovered requirement. Keep original art ledgers and auto-submit; never duplicate jobs.
 
-Handoff requires all applicable rows verified, finite original build/art/content/QA resolved, no missing required render receipts or runtime bindings, or known critical/high defects, and inspectable actual run/device evidence. Then use the existing playtest/normal and master-issue procedure. Do not require a human verdict first. Do not deploy/publish automatically. Preserve explicit prior owner waivers; no new exceptions without owner approval. Do not automatically reopen projects already in playtest.
+Handoff requires all applicable rows verified, finite original build/art/content/QA resolved, no missing required render receipts or runtime bindings, or known critical/high defects, and inspectable automated run evidence. Include available device evidence; unavailable live or physical-device observations transfer to playtest. Then use the existing playtest/normal and master-issue procedure. Do not require a human verdict first. Do not deploy/publish automatically. Preserve explicit prior owner waivers; no new exceptions without owner approval. Do not automatically reopen projects already in playtest.
 
 ## Active project acceptance ownership
 
