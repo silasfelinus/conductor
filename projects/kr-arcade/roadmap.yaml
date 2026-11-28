@@ -389,20 +389,20 @@ tasks:
 
   - id: t-020
     milestone: m5
-    title: "Ghost Trail finish: sound, HUD, balance, device QA and >=60-minute playtest"
+    title: "Ghost Trail finish: sound, HUD, balance and agent-owned campaign/device QA"
     status: waiting
     owner: null
     passes: 0
     stakes: reversible
     depends_on: [t-019, t-160]
     note: >-
-      2026-10-22 PT: held behind the Gen-2 upgrade (m9; GEN2-STANDARD.md). Balancing and timing the Gen-1 six-stage loop would be spent on a structure Silas has asked to replace; this playtest runs on the Gen-2 Bell Road once t-160 lands.
+      2026-10-22 PT: held behind the Gen-2 upgrade (m9; GEN2-STANDARD.md). Balancing and timing the Gen-1 six-stage loop would be spent on a structure Silas has asked to replace; this agent QA runs on the Gen-2 Bell Road once t-160 lands.
 
-      Replace placeholder sounds with authored ambience/combat/music; playtest boss tells, attack cooldown, save/resume and secrets, verify DPR/pixel/HD, phone/tablet/desktop and keyboard/gamepad/touch. Log actual unfamiliar-player run durations; target >=60 minutes for first successful clear without artificial waiting. [...]
+      Replace placeholder sounds with authored ambience/combat/music; playtest boss tells, attack cooldown, save/resume and secrets, verify DPR/pixel/HD, phone/tablet/desktop and keyboard/gamepad/touch. Verify authored progression and pacing with reproducible agent-run campaign tests; target >=60 minutes for a first successful clear without artificial waiting. Actual unfamiliar-player timings are a nonblocking post-roadmap human playtest observation. [...]
 
       [Earlier history (1,921 chars) archived verbatim to projects/kr-arcade/T020-HISTORY.md -- read it there only when you need a specific past cycle. Append new cycles below, one short paragraph each.]
 
-      2026-10-11 later: River Croc, the abbey rescue, Storm Crow lightning and THE CLIFF ROAD shipped (kind_robots#3496, #3497); the campaign is 18 acts and 21 relics. Remaining here: device/input QA and the human timed playtest.
+      2026-10-11 later: River Croc, the abbey rescue, Storm Crow lightning and THE CLIFF ROAD shipped (kind_robots#3496, #3497); the campaign is 18 acts and 21 relics. Remaining here: agent-owned device/input and campaign QA. Human timed playtesting follows the master issue handoff.
     updated: '2026-10-11T05:00:00Z'
 
   - id: t-022
@@ -2586,12 +2586,12 @@ tasks:
 
       2026-11-26 PT, Silas-directed finite-roadmap clearing: verified
       https://github.com/silasfelinus/kind_robots/pull/5652 merged as partial scope. Shared
-      recorded cues, browser/controller tests and verified soundtrack playback remain.
+      recorded cues and automated browser/controller playback tests remain. Audible and physical-device observations are post-roadmap playtest notes, not acceptance gates.
       Returned to ready; no human approval or deployment inferred.
     implementation_pr: 'silasfelinus/kind_robots#5652'
   - id: t-155
     milestone: m8
-    title: "Turn on ACE arcade soundtrack generation, ingest the first approved track, and listen to it in a cabinet"
+    title: "ACE arcade soundtrack generation: ingest a completed track and verify cabinet playback integration"
     status: ready
     owner: null
     claimed_by: null
@@ -2601,7 +2601,7 @@ tasks:
     stakes: reversible
     approved_by_human: true
     note: |-
-      ACE-Step soundtrack: Silas authorized internal generation without per-cue approval 2026-10-19. #5663 merged 989b6f37 all-green, admin enqueue is deduplicated and no longer requires retired approval/env/relay gates. Rainbow jobs 40796–40816 historical, do not duplicate. Remaining: ingest actual completed approved track, activate cue and verify audible cabinet playback. Current self-hosted deployment required to exercise production; no automatic deploy. Earlier detail T155-HISTORY.md. Full prior note: ROADMAP-HISTORY-2026-11-26.md#t-155.
+      ACE-Step soundtrack: Silas authorized internal generation without per-cue approval 2026-10-19. #5663 merged 989b6f37 all-green, admin enqueue is deduplicated and no longer requires retired approval/env/relay gates. Rainbow jobs 40796–40816 historical, do not duplicate. Remaining: ingest an actual completed track, activate its cue and verify playback integration through review and applicable automated tests. Audible production playback is a nonblocking post-roadmap observation; no automatic deploy. Earlier detail T155-HISTORY.md. Full prior note: ROADMAP-HISTORY-2026-11-26.md#t-155.
     implementation_pr: 'silasfelinus/kind_robots#5663'
   - id: t-156
     milestone: m8
