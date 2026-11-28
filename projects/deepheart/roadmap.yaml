@@ -25,7 +25,7 @@ milestones:
   - id: m4
     title: "ART & SHIP - every picture rendered, adversarial QA, playtest handoff"
     weight: 30
-    status: in-progress
+    status: done
 tasks:
   - id: t-001
     milestone: m1
@@ -210,7 +210,7 @@ tasks:
   - id: t-014
     milestone: m4
     title: "Playtest graduation: readiness gate, status playtest at normal priority, flag the hub"
-    status: waiting
+    status: done
     depends_on: t-018
     owner: null
     passes: 0
@@ -223,6 +223,11 @@ tasks:
       Silas, 2026-11-27 PT: "Once the art is done, we are done." t-013 is cancelled as the same
       post-human-gate playtest requirement; this task now waits only on t-018 (nine ending
       plates, ENDING-PLATES-ANTHRO-2026-11-27.yaml). When t-018 closes, graduate immediately.
+
+      Graduated per Silas 2026-11-27 PT (art done = done): project-overrides deepheart status
+      playtest, priority normal. sync-playtest-master-issues flags and closes kind_robots#5256
+      as completed. Public /play release and creative signoff remain separate human gates.
+    updated: '2026-11-27T23:57:51Z'
   - id: t-015
     milestone: m3
     title: "Expand enemy roster to 40 distinct types and recalibrate seeded encounter variety"
@@ -268,8 +273,8 @@ tasks:
   - id: t-018
     milestone: m4
     title: "Complete canon-consistent scrapbook, support scenes and relationship art"
-    status: claimed
-    updated: '2026-11-27T23:57:36Z'
+    status: done
+    updated: '2026-11-27T23:57:48Z'
     depends_on: t-007
     passes: 0
     stakes: reversible
@@ -312,6 +317,14 @@ tasks:
       All 35 support plates and the full-party repaint are wired and live-verified (run
       46021674043, 257/257). Return ready after merge: map the nine ending receipts in
       renderedArt.ts, replacing 273934-273942, then close.
+
+      Ending repaint delivered: Krea 2 jobs 77602-77610 DONE, ArtImages 280939-280947
+      (private, not mature, authenticated webp delivery verified). Kind Robots #6018 maps all
+      nine ending:* keys, replacing pre-anthro 273934-273942, and asserts no ending uses a
+      pre-anthro plate. All 35 support plates, full-party repaint and scrapbook moments
+      already wired and live-verified. Minor nit, not a gate: one queue figure in the Gilded
+      plate reads as human.
     owner: worker
     claimed_by: 2026-11-28T000500Z-deepheart-t018-graduate-3b7e
     claimed_at: '2026-11-27T23:57:36Z'
+    implementation_pr: 'silasfelinus/kind_robots#6018'
