@@ -1,0 +1,82 @@
+# MONSTRIQUE shipped cutscenes, painted 2D shots, MATURE edition, round 1 (2026-11-28 PT).
+# Task monstress-convention/t-021: painted art per shot from Kind Robots utils/monstrique/cutscenes.ts
+# (origin/main 441d8f80). This ledger holds ONLY mature-edition cells; the general shots are in
+# CUTSCENES-GENERAL-R1.yaml and the two are never mixed. Three cells: A Cold Kiss (matureOnly: kiss-1, kiss-2;
+# the second is a comic cutaway, kept here because the general edition never discloses a mature-only scene) and
+# the mature version of Cold Open shot 2 ("Bite Me", edition.ts MATURE_INTRO: Odette tops up the gin and Violet
+# loses a fang as the curtain yanks shut). Mature Cold Open shots 1, 3 and 4 differ only in caption text and
+# reuse the general paintings.
+# Mature rules (DESIGN-BRIEF "Access and release"; STORY-BIBLE tone): suggestive, comic, consenting adults,
+# clothed and never explicit; steamy beats cut away on a comic beat (here the ice machine and Norb facing the
+# wall). Saved isMature and private, served only to signed-in non-CHILD adults with persisted showMature through
+# the server-gated routes, never as a public static file. Silas reviews the finished images before anything ships.
+# Cast: Iris matches the canonical krea2 design (ArtImage 280896) and Norb ArtImage 280897, in the wording of
+# CH1-LEADS-RIG-R1. Violet in kiss-1 is a ghost (lavender glow); Odette and Violet in the cold open are alive,
+# Odette at her real fifty-eight. Spoiler rule: no killer and no culprit on the art. Queued is not delivered.
+# 1344x768, krea2, same style as the general shots. cast_loras false. priority 60 (game art). auto_submit: true.
+round: monstrique-cutscenes-mature-1
+series: monstrique-cutscenes-mature
+project_slug: monstress-convention
+designer: Monstrique Studio
+is_public: false
+is_mature: true
+cast_loras: false
+priority: 60
+auto_submit: true
+lanes:
+- key: krea2
+  label: Krea 2, painted 2D point-and-click adventure art
+  engine: krea2
+  prompt: prose
+subjects:
+- key: mc-cut-m-cold-open-2
+  lane: krea2
+  entity: monstrique-cutscene
+  title: 'Cold Open, shot 2: Bite Me (medium two-shot, mature version)'
+  asset: monstress-convention/cutscenes-mature/cold-open/cold-open-2
+  size: 1344x768
+  seed: 1145101
+  prompt_prose: Hand-painted cinematic cutscene illustration for a cheeky adults-only 2D comedy mystery adventure
+    game, bold ink outlines, painted detail, sultry magenta and crimson neon. A medium two-shot inside a seedy motel
+    room at night with peeling flamingo wallpaper, a mirrored wall and a satin bedspread. At the left Odette Harker,
+    a glamorous talent agent about fifty-eight with a platinum chignon, red lipstick, pearls and a silver power
+    suit with the jacket unbuttoned, lounges against the headboard and tops up two glasses from a bottle of gin
+    with a hungry, flirtatious smirk. At the right Violet Wisp, a curvy woman about thirty in a black costume wig
+    bob, a little black dress and fishnet tights, swirls a red-and-black satin vampire cape around herself like
+    a showgirl with a sultry smirk, and one plastic vampire fang pops out of her mouth mid-swirl. An ice bucket
+    sweats on the nightstand. Behind them a hand yanks the floral curtain shut with a swish of motion lines. Two
+    clothed consenting adults, flirtatious, teasing and comic.
+- key: mc-cut-m-kiss-1
+  lane: krea2
+  entity: monstrique-cutscene
+  title: 'A Cold Kiss, shot 1: Paid in Full (romantic medium close-up, mature only)'
+  asset: monstress-convention/cutscenes-mature/cold-kiss/kiss-1
+  size: 1344x768
+  seed: 1145102
+  prompt_prose: Hand-painted cinematic cutscene illustration for a cheeky adults-only 2D comedy mystery adventure
+    game, bold ink outlines, painted detail, soft lavender ghost light with icy blue highlights. A romantic medium
+    close-up in a shabby motel room at night, frost blooming in feathery swirls across a tall mirror behind them.
+    Left of centre the ghost of Violet Wisp, a curvy woman about thirty glowing with a soft translucent lavender
+    light, in a black costume wig bob, plastic vampire fangs and a red-and-black satin vampire cape, sweeps the
+    cape around both of them and pulls Iris close with a knowing smirk. Right of centre Iris Quill, a curvy full-figured
+    adult woman about thirty with a big messy jet-black mane and one thick bold white streak, winged eyeliner, berry
+    lipstick and gold hoops, in a rose-and-plum trench coat over a black crop top, leans in with a flirtatious grin
+    and half-closed eyes, their lips almost meeting. Wisps of lavender mist curl around them. Two clothed consenting
+    adults, tender, tasteful and a little funny.
+- key: mc-cut-m-kiss-2
+  lane: krea2
+  entity: monstrique-cutscene
+  title: 'A Cold Kiss, shot 2: Meanwhile, Downstairs (wide comic cutaway, mature only)'
+  asset: monstress-convention/cutscenes-mature/cold-kiss/kiss-2
+  size: 1344x768
+  seed: 1145103
+  prompt_prose: Hand-painted cinematic cutscene illustration for a 2D comedy mystery adventure game, bold ink outlines,
+    painted detail, cold teal fluorescent light against pink neon. A wide cutaway view of a shabby two-storey 1960s
+    motel at night, cut open like a dollhouse. On the ground floor at the left, a battered avocado-green ice machine
+    in a concrete alcove shudders and jumps, with comic shake lines and two puffs of frost bursting from its chute.
+    On the second-floor hallway above at the right, Norb Vale, a short stocky adult man about forty-five, a little
+    person with a big round head, untidy brown hair greying at the temples, a round bulbous pink nose, ruddy cheeks,
+    grey stubble and small round wire spectacles with a thick magnifying left lens, in a hot-pink T-shirt, a rumpled
+    charcoal-grey suit jacket, a grey bow tie and bright yellow rubber gloves, stands with his nose pressed to the
+    flamingo wallpaper, arms folded, tapping one foot with an annoyed scowl. A row of closed turquoise doors and
+    rain on the railing. Deadpan and very funny.
