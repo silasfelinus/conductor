@@ -302,6 +302,14 @@ def reference_numbers(paths: list[Path]) -> set[int]:
 # neither repo's text can see them. A job listed by one of these is recorded, not a stray
 # (2026-11-12: all 53 "unrecorded" Monstress renders were Monstrique series-bible portraits).
 STUDIO_GALLERIES = ("/api/monstrique/bible",)
+# Request-key prefixes of Kind Robots studios that keep their own job rows behind admin-only APIs.
+# Tarot Studio creates a TarotArt row first and enqueues it as `tarot-art:<id>` (kind_robots
+# server/utils/tarotStudio.ts); 2026-11-28: all 104 non-manifest "strays" were its renders.
+STUDIO_REQUEST_KEY_PREFIXES = ("tarot-art:",)
+
+
+def studio_owned(job: dict) -> bool:
+    return str(job.get("requestKey") or "").startswith(STUDIO_REQUEST_KEY_PREFIXES)
 
 
 def studio_gallery_numbers(get=None) -> set[int]:
@@ -367,6 +375,8 @@ def find_strays(jobs: list[dict], refs: set[int], projects: set[str], claimed: s
         if job.get("status") != "DONE" or job.get("projectSlug") not in projects:
             continue
         if job["id"] in claimed or job["id"] in refs or (job.get("artImageId") or 0) in refs:
+            continue
+        if studio_owned(job):
             continue
         created = parse_time(job.get("createdAt"))
         if created and created > min_age:
