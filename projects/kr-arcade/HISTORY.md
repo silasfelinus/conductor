@@ -1304,3 +1304,17 @@ Owner-directed parallel implementation: authored five dark remix waves and separ
 
 PR #6045 merged b914a81b; all substantive checks passed, dedicated job 140902715518 confirms secret save unlock, real four-colour beam trajectories across all three core phases, true and normal endings, Overgrown. Remaining broader live-input playtest belongs to post-roadmap handoff; no missing slice-4 features identified.
 <!-- note:end t-091 -->
+
+## t-092 — Glitch Garden depth slice 5: Two sprayers and the modes
+
+<!-- note:begin t-092 -->
+CABINETS.md section 13, Glitch Garden (Centipede riff), slice 5 of 5: Two sprayers and the modes. The upgrade is "The Four Seasons of the Glitch". Spec: projects/kr-arcade/depth-pass/CABINETS.md -- read the game's section first; this slice's scope is item 5 under its '#### Slices', and 'Rules for every slice' at the top applies. Code: kind_robots utils/arcade/games/ (registry slug glitch-garden). Silas, 2026-10-11: "I need an assessment done of the other arcade games. I want the same level of quality improvements, they should not just be thin veneers of the old games. But newer, better, even more awesome."
+
+Implemented first t-092 tranche: Endless Lawn seasonal five-wave rollover with main ranked board; UTC-seeded Daily Garden with deterministic layout and personal daily best; campaign save isolation; permanent per-wave medal masks and medal board; eight mastery goals and focused contracts. Branch worker/kr-arcade-t092-modes-8d926a head d307e7d0. Runtime CI pending. Remaining t-092: independently controlled two sprayers, Crossfire, split-bed Garden Rivals, integration and campaign regression QA. No human gate.
+
+#6059 merged 3ddf63a4; all substantive checks passed, including actual full campaign workflow 140929864195. Endless Lawn, seeded Daily Garden, save isolation, medals and mastery complete. Remaining two-player co-op, Crossfire, Garden Rivals and multiplayer contracts.
+
+Two seated players now move and fire independently on the shared garden, share prisms and lives, and earn Crossfire when different players fix segments of the same worm lineage within 30 ticks. Garden Rivals is a local 90-second or wave-clear match with mirrored lamp layout, split bed, independent segment totals and respawn shields, isolated from campaign and ranked scores. Added multiplayer contracts and two-seat registry wiring. Branch worker/kr-arcade-t092-coop-6cfb28 head 905c086b. Runtime CI pending; verify full Glitch Garden workflow and multiplayer integration before final closure.
+
+#6064 merged 78575a01; all substantive checks green, including the complete campaign engine suite (140940270359) and cabinet Chromium checks (140941002518). Two sprayers, shared lives/prisms, Crossfire, split-bed Rivals and standalone modes implemented with persistence and engine regressions. Device/controller-specific subjective playtesting transfers to post-roadmap handoff.
+<!-- note:end t-092 -->
