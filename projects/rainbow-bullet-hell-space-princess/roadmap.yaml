@@ -93,13 +93,13 @@ tasks:
       not rendered assets, and no playable implementation is claimed.
   - id: t-044
     title: 'Main-game standard: audit and close the gaps for Rainbow Bullet Hell Space Princess'
-    status: review
+    status: done
     owner: reviewer
     milestone: m6
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-23T21:50:19Z'
+    updated: '2026-11-28T01:05:00Z'
     note: |-
       Silas 2026-11-11 PT, in session: "Our games should all have a base standard of quality ... We want our main games to have 12 plus achievements." Standard: docs/agents/main-game-standard.md; CONTROL.md global overview.
 
@@ -155,6 +155,10 @@ tasks:
       saves, replay hooks and achievements task, every main-game-standard row from STANDARD-
       AUDIT-2026-11-12 now has shipped work. Ready for review against docs/agents/main-game-
       standard.md; the final verdict stays with Silas (t-014).
+
+      2026-11-28 PT review: done. Every main-game-standard row has merged work on kind_robots main (#5547 0090f25d,
+      #5628 c5129034, #5670, #5679 de0e1b51; achievements t-045). Device, audible and live-account observations
+      transfer to the playtest handoff per the 2026-11-27 owner direction in main-game-standard.md.
     implementation_pr: 'silasfelinus/kind_robots#5679'
   - id: t-045
     title: 'Rainbow Bullet Hell Space Princess achievement upgrade: 12 or more live achievements'
@@ -781,6 +785,11 @@ tasks:
       (cell 0 pops 27 px), and b09-phase2/3 (tail changes shape, green matte streak at the tail). These were second
       rendered takes, so final v4 retakes are queued. Still pending: b01-p3, b03-p1, b08-p1 and pistol v3, plus the
       four new v4s.
+
+      2026-11-28 PT (twelfth pass): kept b01-phase3-v3 (art 280948, jaws snap and the head rears, on model, motion
+      8.3), shipped as an idle atlas in kind_robots#6025. Rejected the final takes pistol-v3 (near-static, 1.85) and
+      b07-phase3-v4 (green matte through the open jaw, teeth lost); both stay stills per the three-take rule.
+      Still rendering, all final takes: b03-p1-v3, b08-p1-v3, b09-p1/2/3-v4.
     implementation_pr: 'silasfelinus/kind_robots#5767'
   - id: t-031
     milestone: m6
