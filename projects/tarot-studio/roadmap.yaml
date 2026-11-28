@@ -154,16 +154,16 @@ tasks:
   - id: t-011
     milestone: m2
     title: 'Public Kind Tarot reader in Projects: automatic readings, horoscope tracking and natal chart analysis'
-    status: ready
+    status: done
     owner: null
     passes: 0
     stakes: reversible
-    updated: '2026-11-27T23:40:00Z'
+    updated: '2026-11-28T09:00:00Z'
     implementation_pr: 'silasfelinus/kind_robots#6003'
     note: >-
-      Silas, 2026-11-27 PT: one front-end page in Projects with an admin-visible link to the studio; a reader that does multiple automatic reads; horoscope tracking including sun, moon and ascendant from birth time; in-depth chart analysis; multiple front and back designs. Shipped in kind_robots#6003 as /play/tarot (Projects tab tarot): three daily spreads from the full 78-card Kind Oracle (authored content for all cards), browser-local birth profiles, astronomy-engine natal chart with Placidus houses, aspects, balance, wheel, daily transit horoscope, weekly Moon ingresses and birth cards. Visitors only ever see APPROVED art from decks marked public (Kind Robots by default; SuperKate stays private).
+      Silas, 2026-11-27 PT: one front-end page in Projects with an admin-visible link to the studio; a reader that does multiple automatic reads; horoscope tracking including sun, moon and ascendant from birth time; in-depth chart analysis; multiple front and back designs.
 
-      2026-11-27 PT: merged in kind_robots#6003 (merge 311c4816; all 22 checks green on its head). Merged is not deployed. Remaining after deploy: load /play/tarot on kindrobots.org at 390/768/1440, confirm the Projects tab entry and liveUrl, and that visitors see only approved art.
+      Full history: projects/tarot-studio/HISTORY.md#t-011
   - id: t-012
     milestone: m2
     title: 'Kind Tarot reader: settings menu, sound effects and ambient music'
@@ -171,12 +171,14 @@ tasks:
     owner: null
     passes: 0
     stakes: reversible
-    updated: '2026-11-27T23:40:00Z'
+    updated: '2026-11-28T09:00:00Z'
     implementation_pr: 'silasfelinus/kind_robots#6003'
     note: >-
       Silas, 2026-11-27 PT: like the other large projects, the reader needs a settings menu, sound and music. Settings (music and effects volume, text size, card reveal speed, reduced motion, high contrast, two-tap reset of browser progress) persist locally; sound uses the shared arcade WebAudio engine with a soft chime palette and one ambient loop. Implementation PR follows kind_robots#6003.
 
       2026-11-27 PT: merged in kind_robots#6003 (merge 311c4816; all 22 checks green on its head). Merged is not deployed. Remaining after deploy: verify settings persist across reloads and that music and effects play after a gesture on a real device.
+
+      2026-11-28 PT: settings persistence verified on production at three widths. Account sync for charts and progress merged in kind_robots#6044 (no schema change). Remaining: hear music and effects after a gesture on a real device, and a two-browser signed-in sync round trip.
   - id: t-013
     milestone: m2
     title: 'Kind Tarot reader: 12 achievements registered as a main project'
@@ -184,12 +186,14 @@ tasks:
     owner: null
     passes: 0
     stakes: reversible
-    updated: '2026-11-27T23:40:00Z'
+    updated: '2026-11-28T09:00:00Z'
     implementation_pr: 'silasfelinus/kind_robots#6003'
     note: >-
       Twelve tarot-studio-* achievements (spreads, shuffles, charts, deck study, daily streaks, packs, legendary pull, 50 and 100 cards, first circle message) in utils/achievements/catalog/main/tarot-studio.ts, awarded at the deed and shown in the reader's achievements view. Seeding and badge art follow the existing achievement catalog workflows after merge; verify award, dedupe and badge art on the deployed build.
 
       2026-11-27 PT: merged in kind_robots#6003 (merge 311c4816; all 22 checks green on its head). Merged is not deployed. Remaining after deploy: confirm the catalog workflow seeded all 12 tarot-studio-* rows, badge art queued, and one award dedupes on a signed-in account.
+
+      2026-11-28 PT: all 12 tarot-studio-* Achievement rows are seeded in production and their 12 badge ArtJobs are queued (priority 5). Remaining: one award and dedupe on a signed-in account, and badge art attached once rendered.
   - id: t-014
     milestone: m2
     title: 'Shared live group chat for front-end pages; first room Tarot Circle'
