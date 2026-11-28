@@ -1,0 +1,8 @@
+version: 1
+project: monstress-convention
+task: t-017
+operation: done
+updated: '2026-11-28T01:15:31Z'
+verify_pr: silasfelinus/kind_robots#6027
+note: >-
+  kind_robots#6027 merged (squash 7afeb22) after all 12 checks were green, including TypeScript and the 4 contract shards. Seven Chapter 1 rooms (motel exterior, front office, ice alcove, balcony, Rooms 205/207/204) now render painted backgrounds (ArtImages 280905-280911) from public/monstress-convention/rooms. Hand-drawn SVG remains only as the missing-art fallback for city-map and convention-center. Marta, Dolores, Gavin and the Odette/Violet ghosts stand as cut-out figures (280900-280904): feet on marks, depth-scaled, ghost float, speaker bob, Marta clipped behind the counter. Painted dialogue portraits come from the ghost expression sheets and figure crops. A 1344x768 world layer letterboxes on desktop over blurred ambient art and pans with Iris on phones, so pips stay on their objects. Every hotspot, WALK_AREAS floor, per-room depth and per-door entry point is refit to the paintings (closes t-003's remainder). Data lives in utils/monstrique/stageArt.ts; the art-pipeline and navigation contract tests are extended. Visual QA used Playwright at 390x844 and 1440x900 for every painted room: no page errors, no overflow. The missing city-map and convention-center backgrounds are queued as round CH1-CITY-AND-CONVENTION-R1 (conductor#8150, merged). Iris, Norb and Cleo stay vector until t-018/t-020.
