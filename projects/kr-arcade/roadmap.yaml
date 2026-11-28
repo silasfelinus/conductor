@@ -1507,11 +1507,11 @@ tasks:
   - id: t-090
     milestone: m8
     title: "Glitch Garden depth slice 3: Autumn and Winter"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: krarcade090-20261128-heater-73d5b9
     claimed_at: '2026-11-28T02:43:12.942Z'
-    updated: '2026-11-28T02:43:12.942Z'
+    updated: '2026-11-28T02:44:13.346Z'
     passes: 0
     stakes: reversible
     depends_on: t-089
@@ -1544,6 +1544,8 @@ tasks:
       Implemented the fourth seasonal boss at wave 44: three frost-armored phases, reflected heater attacks, collision in the final coil, and campaign progression. Updated four test suites. Remaining full campaign and rendered QA; no task completion claimed.
 
       Kind Robots #6016 merged; all ten returned latest-head Actions workflows completed successfully. Frost Millipede shipped. Remaining original crow-bot scope audit and eight-garden agent-owned campaign/render QA; return to ready, not done. Human playtest verdict is outside roadmap.
+
+      Fixed winter fixture destruction by sprinkler blasts, beetles and mower clears; restore missing authored heaters on wave entry. Added winter fixture survival, boss-entry recovery, heater reflection and full 44-wave seeded campaign pilot assertions. Existing Autumn tests already verify crow swoop and prism protection. Branch worker/kr-arcade-t090-heater-73d5b9, head 1ca1fec6; runtime CI not yet verified. Close only if full scope and applicable checks pass.
 
   - id: t-091
     milestone: m8

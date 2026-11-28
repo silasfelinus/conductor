@@ -184,3 +184,42 @@ Counselor Jess end-to-end vertical slice: scene/outcome art, leads/nights/finale
 
 Verified all 106 WebP paths from merged kind_robots#4175 still exist on main, plus all seven JESS-REROLL-3 paths (ArtJobs 45546–45552, ArtImages 253418–253424, DONE). All four Jess tier endings ship. Merged #4168 and #4169 supply onboarding and audio, with recorded 390/1440 smoke and audio checks; #4173 supplies continuity. BALANCE-REPORT.md records 73% Best over 96 careful Jess weeks, within 40–75%. Recent Crystal Street CI run 46088731622 passed 460 autoplay weeks, 6624 adversarial weeks, 16 achievements and 7891 scrapbook checks. No new render or manual approval required. Current full-project recovery and upstream trailer assertion fix remain in #6022 under t-004; no new live-device check claimed.
 <!-- note:end t-016 -->
+
+## t-024 — Main-game standard: audit and close the gaps for Terrors on Crystal Street
+
+<!-- note:begin t-024 -->
+Silas 2026-11-11 PT, in session: "Our games should all have a base standard of quality ... We want our main games to have 12 plus achievements." Standard: docs/agents/main-game-standard.md; CONTROL.md global overview.
+
+DECIDED 2026-11-12 (Silas): "Yes on crystal street silhouettes." Show locked silhouettes and X of N for nightmares, friends and endings (overrides the 2026-10-24 show-only-met rule).
+
+AUDIT DONE 2026-11-12: projects/crystal-street/STANDARD-AUDIT-2026-11-12.md holds the Met/Partial/Missing table, a proposed achievement list with award points, character-fit notes and the three smallest next PRs. Start there.
+
+Start with the audit table from docs/agents/main-game-standard.md (title screen; settings menu; save/load and persistent progress; 12+ achievements; scrapbook; multiple endings with painted plates; customizable characters; 3+ replay hooks), marking each Met / Partial / Missing with evidence (file, route, live record). Put the table in this note and the first PR. Then close each gap in small CI-tested PRs; queue any needed ending, scrapbook or portrait art in an auto_submit ledger.
+
+Item 7 (customizable characters) applies "in most cases": if this genre makes it a poor fit, say so in the audit with the reason and leave it for Silas rather than skipping silently.
+
+Achievements are tracked by their own task; this one covers everything else.
+
+Scrapbook silhouette slice prepared in kind_robots worker/crystal-street-t-024-scrapbook-silhouettes-b7e1: anonymous locked nightmares and friends with catalog-grounded counts. Remaining t-024 scope is not complete; return to ready after this slice merges.
+
+2026-11-16 PT reviewer: scrapbook silhouette slice merged as kind_robots#5240 (de95ff2;
+all 14 checks green). Locked nightmare/friend silhouettes + X/N counts live. Remaining
+t-024 scope: ending-specific silhouettes and the rest of STANDARD-AUDIT-2026-11-12.md;
+returned to ready.
+
+Ending-silhouette slice pushed to Kind Robots branch worker/crystal-street-t-024-ending-silhouettes-c4f2 at 1aff9b4: spoiler-safe locked scene silhouettes across the 92 nightmare ending slots and 4 special endings, catalog-grounded found/96 progress, focused reel shows all four slots, and duplicate/stale save keys cannot inflate counts. Local discovery and 16-achievement tests passed; adversarial fuzz completed 6,624 weeks with every invariant held. Remaining t-024 standard-audit scope stays open.
+
+2026-11-16 PT: MERGED kind_robots #5252, squash a9d92a0; all 13 check runs green after
+pr-medic fix 10f9ba0 (the ending wall still called the removed villainEndings import,
+failing vue-tsc; it now counts nightmare endings via discoveryProgress over the 92-key
+catalog). Locked ending silhouettes slice only; the broader main-game-standard umbrella
+and t-026 rendered coverage remain. Return to ready.
+
+Scoped console settings/achievements slice: persistent effects and music volume, immediate mixer gain and title achievements entry, with regression assertions. Remaining t-024 account saves and other standard evidence stay open; return to ready after merge.
+
+Merged kind_robots#6021 (459343a) settings/title achievements; stale trailer attribute assertion fixed by merged #6022 with green latest CI. Account-backed saves and reading speed remain; return to ready.
+
+Implemented revisioned account-backed Crystal Street saves through existing ArcadeCabinetSave table, authenticated routes, per-account device cache, guest fallback and explicit import, section-aware progress merge and reset tombstone, with regression contract. Partial t-024 scope; return to ready after merge for reading speed and remaining acceptance.
+
+Kind Robots #6030 merged 4802d0f; latest head 1e0f9ec, all 18 checks success/skipped including TypeScript, contract shards and gameplay. Account-backed saves, guest isolation, versioned sync/reset, reading speed with reduced motion and instant default, title achievements, 16 achievements, silhouettes/counts, avatar customization and replay hooks implemented. Per-tier ending art paths wired; remaining art delivery belongs to t-004/t-005 and final acceptance to t-011, not duplicate standard work.
+<!-- note:end t-024 -->
