@@ -1278,7 +1278,7 @@ tasks:
   - id: t-076
     milestone: m8
     title: "Ribbon Riders depth slice 3: The last two fairgrounds and the endings"
-    status: claimed
+    status: review
     owner: worker
     claimed_by: krarcade076-20261128-campaign-qa-61da9f
     claimed_at: '2026-11-28T11:42:39.299Z'
@@ -1295,7 +1295,9 @@ tasks:
       Added conveyor lane eight-cell shifts, beat reversal on Conductor arena, two-second global bell flare (new trail cells are physically wider; existing trails glow), paired portal routing with entry/exit reservations, inward spiral walls with warning and collision, late fairground and Rainbow Spool layouts, Encore transforms, focused engine contracts in cabinet CI. Branch worker/kr-arcade-t076-hazards-7c4d91 head bcb33e0c. Remaining acceptance: CI, bespoke coach uncoupling and Loom thread capture audit, and full campaign QA. No manual gate.
 
       #6068 merged 214fc0d3 with all substantive checks passed including real cabinet job 140948831294. Late hazards, full temporary bell width, timed coach uncoupling, Loom thread capture, mirrored secret remixes implemented. Remaining full first-clear campaign/route QA and audit against slice 3; no human gate.
-    updated: '2026-11-28T11:42:39.299Z'
+
+      Branch worker/kr-arcade-t076-campaign-qa-61da9f, head a747e482. Scripted campaign through real menu, objective capture and checkpoint paths: 16 standard, 5 secret, 16 Encore events; all 12 Marshal fights, bows, both endings and persistence. Bounded saturated glowbug respawn, mirrored spiral wall rank and phase-2-only conveyor reversals. CI pending. Script stages actors and invokes engine capture handlers; geometry and live movement remain separately tested by existing contracts.
+    updated: '2026-11-28T12:06:12.535Z'
 
   - id: t-077
     milestone: m8
