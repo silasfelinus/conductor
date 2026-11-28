@@ -2989,3 +2989,18 @@ pitches:
         verification:
           - headless Chromium render at 1280x800, 390x844 and reduced-motion 800x500 with hover and click, no page errors, ~60 fps
           - eslint, prettier, audit:icons, verifyAnimationCatalog and vue-tsc (changed files) clean; registered in stores/animationCatalog.ts
+  - id: suminagashi-marbling
+    title: Suminagashi Marbling
+    status: shipped
+    priority: 99
+    surprise: A still suminagashi tray seen from above where ink and clear-water drops alternate at a few brush points and every bloom pushes all earlier rings outward through the exact area-preserving drop map, a slow divergence-free current sways the pattern, a bamboo stylus occasionally combs it into feathered tongues, and each cycle a washi sheet settles, soaks and lifts the print away; pointer drags comb the ink, click drops an ink-clear-ink ring sequence.
+    builds:
+      - version: 1
+        status: shipped
+        component: components/screenfx/suminagashi-marbling.vue
+        pull_request: silasfelinus/kind_robots#6061
+        merge_sha: '2540907'
+        released_at: '2026-11-28T14:00:00Z'
+        verification:
+          - headless Chromium render at 1280x800 over a full 90 s print cycle with pointer comb and click, 390x844 with click, reduced-motion 800x500 and unmount, no page errors, ~51-61 fps
+          - eslint, prettier, audit:icons, verifyAnimationCatalog and vue-tsc clean; registered in stores/animationCatalog.ts; all PR checks green
