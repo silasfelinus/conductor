@@ -155,7 +155,10 @@ tasks:
   - id: t-005
     milestone: m2
     title: "Implement enemy interaction, held objects and powerup systems"
-    status: ready
+    status: claimed
+    owner: worker
+    claimed_by: plumber-plate-20261128T000600Z-5b8c21
+    claimed_at: '2026-11-28T00:06:00Z'
     depends_on: [t-003]
     passes: 0
     stakes: reversible
@@ -195,7 +198,7 @@ tasks:
       App branch worker/save-the-plumber-t-005-wharf-9c2f7e at 24fcbba3deedd12d6b497006fa038d4e9c6efebd adds a shallow four-tile water practice pool immediately after the Floating Wharves Gurgle barrel and Tidecoat pickup, with real-input mount, swim, charge and safe bank traversal regression. Verified 24 by 355 rectangular grid, empty approach and solid bottom, scoped two-file diff. Full gameplay CI pending; partial scope, other authored traversal and art acceptance remain.
 
       Merged kind_robots#6009 at 5a8b06e4 after all ten exact-head workflows completed successfully on 24fcbba3, including the actual Gurgle input replay and full contracts. Floating Wharves safe introductory swimming pool delivered. Partial scope: additional authored water courses, campaign plate placement and original art remain. Production deployment unverified.
-    updated: '2026-11-27T23:32:00Z'
+    updated: '2026-11-28T00:06:00Z'
   - id: t-006
     milestone: m3
     title: "Build World 1: four complete garden/pipeworks levels and boss"
