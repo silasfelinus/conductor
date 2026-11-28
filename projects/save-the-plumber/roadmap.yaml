@@ -79,7 +79,7 @@ tasks:
       images asserted as live.
   - id: t-028
     title: 'Main-game standard: audit and close the gaps for Save the Plumber'
-    status: claimed
+    status: review
     owner: worker
     claimed_by: plumber-album-20261128T035940Z-83b1fa
     claimed_at: '2026-11-28T03:59:42Z'
@@ -87,7 +87,7 @@ tasks:
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-28T03:59:42Z'
+    updated: '2026-11-28T04:00:51.908Z'
     note: |-
       Main-game standard: use STANDARD-AUDIT-2026-11-12.md and docs/agents/main-game-standard.md. Verify title, settings, persistent saves, 12+ achievements (separate task), scrapbook, multiple painted endings, customizable heroine and three replay hooks. Recorded merges #5722, #5772, #5773, #5832, #5843, #5883, #5884, #5890, #5896 and #5901 delivered settings/contrast, achievement browser, separate New Game/Continue, three endings/epilogues, reset, taunts, reading options, name entry and repaired engine tests. Latest receipt #5901 at 9debf882 reports all 17 exact-head checks passed. Remaining: global account-backed saves and permanent unlocks across devices (reload, account isolation and reset), actual earned/deduplicated achievement records and generated badges, complete scrapbook including run outcomes and locked counts, distinct delivered painted ending plates, rendered finale/gallery screenshots and accessibility against the current main-game standard; do not repeat shipped controls. No production deployment verified. Keep ready until actual visual/acceptance evidence. Full prior note: ROADMAP-HISTORY-2026-11-26.md#t-028.
 
@@ -102,6 +102,8 @@ tasks:
       Account-scoped client save integration on worker/save-the-plumber-t-028-client-b7f39a at 8c355f1b5236ba825fad087ac3ac796e92d1c178. Device caches isolate accounts and guests, pull before cabinet launch, PUT with expected revision, preserve local and server copies on conflict, expose sync status, and add account-switch/conflict regression coverage. CI and rendered acceptance pending; explicit conflict resolution and guest migration choice remain. Partial t-028 scope.
 
       PR kind_robots#5974 merged at c46eede4; exact-head 27633a63 all 18 applicable checks passed (autofix skipped), including TypeScript, browser, viewport and contracts; branch janitor passed. Account-isolated client synchronization delivered. Remaining explicit conflict resolution, guest import decision, cross-device acceptance, scrapbook/ending art and final acceptance. Production deployment unverified.
+
+      App branch worker/save-the-plumber-t-028-album-83b1fa at 2c9454d24b66c2e6b41c615013c47265cc9b0354 archives first campaign finales and game-over outcomes before continue resets, preserving heroine name, outcome, node, score, falls, time and collectible counts across slot deletion and cross-device merges. Collection shows latest 12 memories (bounded for shared 8 KiB save envelope), correct account/guest copy and pearl counts. Added validation, deduplication, merge, bounded history and actual game-over regression. Four-file diff verified; runtime CI pending. Partial t-028; explicit account conflict resolution and remaining generated art/acceptance still open.
   - id: t-029
     title: 'Save the Plumber achievement upgrade: 12 or more live achievements'
     status: done
@@ -445,14 +447,11 @@ tasks:
   - id: t-021
     milestone: m6
     title: "Gen-2 World 1: re-author Bluebell Pipeworks as a full SMB3/SMW-class world"
-    status: review
-    owner: worker
-    claimed_by: plumber-overgrowth-20261128T024340Z-58bfe2
-    claimed_at: '2026-11-28T02:44:09Z'
+    status: ready
     depends_on: [t-002, t-011, t-020]
     passes: 0
     stakes: reversible
-    updated: '2026-11-28T02:45:23Z'
+    updated: '2026-11-28T03:59:14.005Z'
     note: |-
       Build World 1 to the GEN2-WORLDS.md graph: 6-9 nodes including a fortress, a Hush House, the first Valve Chapel and at least one secret exit, each level 3-6 minutes with sub-areas and a real secret. Wire the GEN2-ROUND-1 overworld plate and far-sky plate. Record first-clear times. This is the agent-verified production template for Worlds 2-8; human verdict is not a prerequisite. Completion checkpoints: 1-1, 1-2, 1-h and cottage, 1-3 and chapel, 1-f including Foreman Flange, 1-4 and 1-castle. Verify each authored beat, original art and route timing against GEN2-WORLDS.md.
 
@@ -501,6 +500,8 @@ tasks:
       Verified kind_robots#6024 merged at cdd4c4a4; all ten implementation workflows and branch janitor passed on exact head 7888c461. Rustbolt crouch duct and Pump Tower boiler loop delivered with real-input regression. Remaining Wildwaters, other authored beats and art/timing acceptance; production unverified.
 
       App branch worker/save-the-plumber-t-021-overgrowth-58bfe2 at 2aae6cc750305f255326ea1d5845e6db4b3e0c92 authors three Copper Greenhouses pistons, shed Wild Tap, temporary vine step, piston-to-bloom bounce chain and Wild Pearl at the summit. Actual-input regression exercises entry, activation, normal/active piston motion, two automatic bounces, pearl, reset and save filtering. Verified all three piston sweeps and the vine occupy empty cells in a rectangular grid. Runtime CI pending; dedicated flower art, other authored beats and timing acceptance remain. Partial scope.
+
+      Verified kind_robots#6039 merged at e95a24ba; all eleven implementation workflows passed on final head d4336764, including Maker, browser and viewport contracts. Branch janitor queued. Overgrowth bloom route and Wild Pearl regression delivered. Remaining World 1 Wildwaters, authored beats, original art and full timing acceptance. Production deployment unverified.
   - id: t-022
     milestone: m6
     title: "Gen-2 Worlds 2-4: Tideglass Marina, Lantern Orchard, Clockwork Fair"
