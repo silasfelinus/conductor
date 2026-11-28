@@ -1243,3 +1243,12 @@ Fixed a sleet slider regression reproduced on main and verified three seeded fiv
 
 kind_robots#6004 merged at 82e747c after 15 successful checks. Rain Catcher engine and forecast suites pass, with five Orchard Hills waves cleared on seeds 5, 15 and 42. Qt WebEngine rendered waves one and three to a real 320x240 canvas; inspected the wave-three HUD, sky, beds, barrels and launchers. Slice one complete.
 <!-- note:end t-114 -->
+
+## t-157 — Verify game achievement art rendered and one achievement earns live after deploy
+
+<!-- note:begin t-157 -->
+Follow-up to kind_robots#3700. Queued is not rendered: confirm the Achievement Catalog Maintenance run seeded 142 rows (117 game + 25 site) and queued ArtJobs, then that each new Achievement has a non-empty imagePath whose URL fetches from production (repair failed jobs by reusing their ArtJob ids). After Alexandria deploys the merge, earn one arcade achievement (e.g. Gloom Invaders sunny-skies) and one event achievement while signed in, and confirm the popup, the cabinet pane's earned state and the /achievements?section=arcade chip counts at 390/768/1440.
+2026-11-14 PT progress: production check -- all 128 active arcade Achievement rows have imagePath art that fetches 200 image/webp from kindrobots.org (redirects followed). With Silas's in-session permission a live record was created for him: AchievementRecord #913, arcade-gloom-invaders-sunny-skies (id 1201), userId 1, isConfirmed false, so the earn popup fires on his next signed-in page load. REMAINING: signed-in browser check of popup, cabinet pane earned state and /achievements?section=arcade chip counts at 390/768/1440 -- a signed-in agent browser is blocked in the sandbox; folded into the final playtest acceptance checklist.
+
+Accepted under 2026-11-27 main-game-standard owner direction. Kind Robots #3700 merged; Actions 38676891948 contract shard 2 completed successfully, including achievement catalog/trigger/popup/artwork and hydration checks. Current main source still wires score/mastery and event awards, deduplication, pending award retries, earned strip artwork and gallery sections. Prior recorded production evidence: 128 active arcade badges fetched successfully and AchievementRecord #913 created. Signed-in popup, event-award walkthrough and 390/768/1440 visual observations remain nonblocking human playtest follow-up; no new live account mutation or manual verification claimed.
+<!-- note:end t-157 -->

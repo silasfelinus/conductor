@@ -2620,29 +2620,15 @@ tasks:
   - id: t-157
     milestone: m8
     title: "Verify game achievement art rendered and one achievement earns live after deploy"
-    status: claimed
+    status: done
     passes: 0
     stakes: reversible
     depends_on: t-156
     note: >-
-      Follow-up to kind_robots#3700. Queued is not rendered: confirm the Achievement
-      Catalog Maintenance run seeded 142 rows (117 game + 25 site) and queued ArtJobs,
-      then that each new Achievement has a non-empty imagePath whose URL fetches from
-      production (repair failed jobs by reusing their ArtJob ids). After Alexandria
-      deploys the merge, earn one arcade achievement (e.g. Gloom Invaders sunny-skies)
-      and one event achievement while signed in, and confirm the popup, the cabinet
-      pane's earned state and the /achievements?section=arcade chip counts at 390/768/1440.
+      Follow-up to kind_robots#3700.
 
-      2026-11-14 PT progress: production check -- all 128 active arcade Achievement rows have
-      imagePath art that fetches 200 image/webp from kindrobots.org (redirects followed). With
-      Silas's in-session permission a live record was created for him: AchievementRecord #913,
-      arcade-gloom-invaders-sunny-skies (id 1201), userId 1, isConfirmed false, so the earn
-      popup fires on his next signed-in page load. REMAINING: signed-in browser check of
-      popup, cabinet pane earned state and /achievements?section=arcade chip counts at
-      390/768/1440 -- a signed-in agent browser is blocked in the sandbox; folded into the
-      final playtest acceptance checklist.
-    updated: '2026-11-28T02:09:00Z'
-    owner: worker
+      Full history: projects/kr-arcade/HISTORY.md#t-157
+    updated: '2026-11-28T02:15:00Z'
     claimed_by: krarcade157-20261128T0209Z-9d721a
     claimed_at: '2026-11-28T02:09:00Z'
   - id: t-158
