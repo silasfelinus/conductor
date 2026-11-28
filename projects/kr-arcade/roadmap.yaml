@@ -1278,10 +1278,7 @@ tasks:
   - id: t-076
     milestone: m8
     title: "Ribbon Riders depth slice 3: The last two fairgrounds and the endings"
-    status: review
-    owner: worker
-    claimed_by: krarcade076-20261128-hazards-7c4d91
-    claimed_at: '2026-11-28T09:46:33.327Z'
+    status: ready
     passes: 0
     stakes: reversible
     depends_on: t-075
@@ -1293,7 +1290,9 @@ tasks:
       PR #6042 merged e693e467; all substantive checks green. Four golden bows and Rainbow Spool gauntlet implemented. Remaining conveyor lanes, bell pads, portals, spiral walls, fuller remix and campaign QA.
 
       Added conveyor lane eight-cell shifts, beat reversal on Conductor arena, two-second global bell flare (new trail cells are physically wider; existing trails glow), paired portal routing with entry/exit reservations, inward spiral walls with warning and collision, late fairground and Rainbow Spool layouts, Encore transforms, focused engine contracts in cabinet CI. Branch worker/kr-arcade-t076-hazards-7c4d91 head bcb33e0c. Remaining acceptance: CI, bespoke coach uncoupling and Loom thread capture audit, and full campaign QA. No manual gate.
-    updated: '2026-11-28T09:48:14.697Z'
+
+      #6068 merged 214fc0d3 with all substantive checks passed including real cabinet job 140948831294. Late hazards, full temporary bell width, timed coach uncoupling, Loom thread capture, mirrored secret remixes implemented. Remaining full first-clear campaign/route QA and audit against slice 3; no human gate.
+    updated: '2026-11-28T10:41:15.554Z'
 
   - id: t-077
     milestone: m8
