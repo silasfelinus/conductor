@@ -160,7 +160,7 @@ tasks:
   - id: t-005
     milestone: m2
     title: "Implement enemy interaction, held objects and powerup systems"
-    status: claimed
+    status: ready
     depends_on: [t-003]
     passes: 0
     stakes: reversible
@@ -212,10 +212,9 @@ tasks:
       App branch worker/save-the-plumber-t-005-fruit-plate at 128bc846 makes carried weight count on scale plates: a Pocket Lift crate thrown or placed on a plate's cell holds it down; lifting it off releases the plate and drops the sluice. Real-input regressions (throw onto plate, overthrow miss, walk through, lift off) in verifyCabinetSavePlumberScalePlates. CI pending. Partial scope: springfruit itself, authored water courses and painted art remain.
 
       kind_robots#6040 merged at bf34a52c; all 17 exact-head checks on 128bc846 passed (Prettier autofix skipped), including maker-contract, which runs the extended scale-plate regression. A Pocket Lift crate thrown or placed on a scale plate holds it down until lifted off. Partial scope: springfruit carry/bounce, other authored water courses, campaign plate placement and painted art remain. Production deployment unverified.
-    updated: '2026-11-28T03:45:30Z'
-    owner: worker
-    claimed_by: 20261128T0520Z-plumber-fruit-7e3a
-    claimed_at: '2026-11-28T03:45:30Z'
+
+      kind_robots#6048 merged at ee50ff94; all 16 applicable exact-head checks on 70a573db passed (Prettier autofix skipped), including maker-contract running the new verifyCabinetSavePlumberSpringfruit regression. Springfruit (glyph x, Maker tile): landing from above bounces her high, X lifts/tosses, Down+X sets down, a resting fruit weighs scale plates, a hit drops it, a fruit lost in a pit regrows home. Rootcellar tunnel now has a fruit so solo players can weigh its plate. Partial scope: Apricot Slope springfruit placement, other authored water courses, campaign plate placement and painted companion/plate/sluice/springfruit props remain. Production deployment unverified.
+    updated: '2026-11-28T04:25:00Z'
   - id: t-006
     milestone: m3
     title: "Build World 1: four complete garden/pipeworks levels and boss"
