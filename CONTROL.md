@@ -39,9 +39,8 @@ work.
 
 **Creative focus portfolio (2026-10-21):** Weird Humboldt, Emperor of Dust, Zuzu Gamebook, Zuzu
 Shifting Lands, Shifting Desks, Rainbow Space Princess and Save the Plumber are one unranked
-portfolio, favored for discretionary story, choice, gameplay, test and image-led work (five are
-in playtest; Rainbow and Plumber are active). Not permission for launch, billing or irreversible
-changes.
+portfolio, favored for discretionary story, choice, gameplay, test and image-led work (six are
+in playtest; Plumber is active). Not permission for launch, billing or irreversible changes.
 
 **Casts (2026-10-11):** Character-led projects show a genuine range of bodies, skin tones,
 cultures, gender identities and expression through distinctive, fully realized people, not

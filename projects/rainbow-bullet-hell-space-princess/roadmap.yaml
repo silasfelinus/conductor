@@ -61,7 +61,7 @@ milestones:
   - id: m2
     title: "PLAYABLE CORE — 60 Hz combat, co-op, save and collision truth"
     weight: 15
-    status: in-progress
+    status: done
   - id: m3
     title: "FULL CAMPAIGN — authored stages, routes, bosses and progression"
     weight: 20
@@ -69,15 +69,15 @@ milestones:
   - id: m4
     title: "VISUAL SPECTACLE — animation, layered worlds, music and cinematic story"
     weight: 20
-    status: in-progress
+    status: done
   - id: m5
     title: "BALANCE, QA AND RELEASE VERDICT"
     weight: 10
-    status: in-progress
+    status: done
   - id: m6
     title: "GEN 2 — ROUTE MAP & MEMORY: Star Fox 64-style branches, medals, hangar, N64-bar animation"
     weight: 25
-    status: in-progress
+    status: done
 tasks:
   - id: t-001
     milestone: m1
@@ -324,7 +324,7 @@ tasks:
   - id: t-013
     milestone: m5
     title: "Deterministic combat fairness, multiplayer soak and campaign QA"
-    status: review
+    status: done
     depends_on: [t-009, t-010, t-011, t-012]
     owner: null
     passes: 0
@@ -371,12 +371,19 @@ tasks:
       and novice loop in Act I with continues. It found a Delphion phase-3 stalemate (a parked
       four-pilot crew never hit and never hitting for an hour), fixed with aimed twin fans and
       pinned by verifyRainbowBossCamping.
-    updated: '2026-11-24T06:11:23Z'
+
+      2026-11-28 PT: done. Round-2 independent review after the last art change (#4146 section 9): three fresh read-
+      only sessions on main 459343a2 (gameplay: 5 majors; story: ready, 2 majors; presentation: ready, 4 majors; no
+      blockers). All 11 majors fixed and merged: story #6029, presentation #6034, gameplay #6041 (Halo revive by
+      pilot, co-op X/Y, solo balance within 1.34x, Crown novice wipes 7-17 to 1-5, Clawburst pocket closed). All 72
+      Rainbow verifiers and the five Rainbow Chromium contracts pass on the combined branch. Device, audible and live-
+      build observations transfer to human playtest. Table: READINESS-DOSSIER-2026-11-28.md section 2.
+    updated: '2026-11-28T03:15:00Z'
     implementation_pr: 'silasfelinus/kind_robots#5689'
   - id: t-014
     milestone: m5
     title: "Verified production playtest handoff (public release separate)"
-    status: waiting
+    status: done
     depends_on: [t-013]
     owner: null
     passes: 0
@@ -388,6 +395,11 @@ tasks:
       gameplay/visual feedback and any new public Play registration, promotion or deployment are
       post-roadmap decisions requiring separate authorization. No human verdict is a prerequisite.
       Prior gate wording is preserved in Git history; no approval is inferred.
+
+      2026-11-28 PT: done at Silas's in-session request to finish the roadmap for human playtests. All finite tasks
+      done; lifecycle set to playtest/normal in project-overrides.yaml; master issue #4146 flagged [FLAGGED FOR HUMAN
+      TESTING] and closed as completed. Public /play, Arcade promotion and deployment remain separate approvals; no
+      approval inferred.
 
   - id: t-015
     milestone: m2
@@ -622,11 +634,11 @@ tasks:
   - id: t-030
     milestone: m6
     title: "Gen-2 animation: animated pilot cut-ins, enemy sprite cycles and moving cutscenes"
-    status: ready
+    status: done
     owner: worker
     passes: 0
     stakes: reversible
-    updated: '2026-11-28T04:58:00Z'
+    updated: '2026-11-28T03:15:00Z'
     note: |-
       GEN2-STANDARD.md sections 5-6. WAN first/last-frame clips from the delivered cutscene stills (ART-ROUND-19) and pilot cut-ins, then enemy idle/attack cycles packed into atlases. Bullets stay crisp code-drawn shapes; animation is for craft, pilots and scenes.
 
@@ -735,6 +747,12 @@ tasks:
       8.3), shipped as an idle atlas in kind_robots#6025. Rejected the final takes pistol-v3 (near-static, 1.85) and
       b07-phase3-v4 (green matte through the open jaw, teeth lost); both stay stills per the three-take rule.
       Still rendering, all final takes: b03-p1-v3, b08-p1-v3, b09-p1/2/3-v4.
+
+      2026-11-28 PT: done. Every ANIM-BACKLOG-2026-11-24 subject has a review verdict (177: 53 keep, 120 reject).
+      Final loops shipped this session: b01-phase3 (#6025), b09-phase2/3 (#6031), b08-phase1 (#6037); 46 idle atlases,
+      living cards for all eight Acts, pilot poses and cut-ins and moving endings are on main. 29 subjects keep
+      reviewed stills (READINESS-DOSSIER-2026-11-28.md section 1); squid and turret had one valid take each and stay
+      stills per Silas's 2026-11-28 PT note that nothing more in the queue was worth waiting for.
     implementation_pr: 'silasfelinus/kind_robots#5767'
   - id: t-031
     milestone: m6
@@ -919,11 +937,11 @@ tasks:
     implementation_pr: 'silasfelinus/kind_robots#4105'
   - id: t-042
     title: "Rainbow Bullet Hell Space Princess — Master Roadmap to Verified Playtest Readiness"
-    status: ready
+    status: done
     stakes: reversible
     passes: 0
     source_issue: "silasfelinus/kind_robots#4146"
-    updated: '2026-11-27T05:00:00Z'
+    updated: '2026-11-28T03:15:00Z'
     note: |-
       FROM GITHUB ISSUE silasfelinus/kind_robots#4146 (https://github.com/silasfelinus/kind_robots/issues/4146). Master coordination task, not a second campaign specification. Keep the issue open through verified finite playtest readiness; reference it with Refs, not Closes. CONTROL.md's 2026-11-15 handoff rule and 2026-11-19 local-only co-op decision supersede older issue language.
 
@@ -931,6 +949,9 @@ tasks:
 
       2026-11-27 P-01 idle batch 6: bulwark-v3 kept and shipped (kind_robots#5928); brood and eel stay stills after three takes; harbinger, coral-choir-pod and lighthouse-lamp v3 retakes queued in ANIM-BACKLOG. Master task stays ready for the next review batch.
       2026-11-27 PT P-01 idle batch 12: kept mirror-v2 (3.71) and coral-choir-pod-v3 (8.46), shipped in kind_robots#5955; harbinger stays a still after a third static take; salvager-v2 static (0.73), v3 retake queued. ~25 loops plus lighthouse-lamp-v3 pending.
+
+      2026-11-28 PT: done. Reconciled in READINESS-DOSSIER-2026-11-28.md: t-044, t-012, t-013, t-022 and t-030 done
+      with receipts, no queued mandatory render, no open Rainbow PR.
   - id: t-043
     milestone: m4
     title: "Fever Dream look: review the doodle re-renders (DOODLE-SET-2) and ship the keepers"

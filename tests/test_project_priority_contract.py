@@ -102,6 +102,11 @@ def test_lead_projects_are_the_ones_silas_named():
     2026-11-21 PT: "the kind robots project should be swapped to normal 'playtest'
     priority"): it leaves the focus tier, which keeps its order and still leads.
 
+    Updated 2026-11-28 PT on Silas's named playtest handoff for Rainbow Bullet Hell Space
+    Princess (session 2026-11-28 PT: "close rainbow ... and be ready for human playtests"):
+    it leaves the focus tier; Save the Plumber keeps leading and every band behind it moves
+    up one slot unchanged.
+
     The point of this test is unchanged: an agent tidying priority.yaml must not quietly
     reorder the top, and changing it means editing this test with a named human decision
     in the docstring.
@@ -110,17 +115,16 @@ def test_lead_projects_are_the_ones_silas_named():
     order = data.get("order") or []
 
     focus = [
-        "rainbow-bullet-hell-space-princess",
         "save-the-plumber",
     ]
     # 2026-11-19 PT: slime-city (rank 1 from 2026-11-09) graduated to playtest; the
     # named tier that sat behind it leads again, unchanged. 2026-11-22 PT:
-    # emperor-of-dust graduated the same way.
-    assert len(order) >= 13
-    assert order[:2] == focus
-    assert order[2:6] == ["kind-pinball", "zuzu-lair", "kr-arcade", "zuzu-showdown"]
-    assert order[6] == "memory-dungeon"
-    assert order[7:9] == ["cthulhuquarium", "kind-economy"]
+    # emperor-of-dust graduated the same way, and 2026-11-28 PT rainbow did too.
+    assert len(order) >= 12
+    assert order[:1] == focus
+    assert order[1:5] == ["kind-pinball", "zuzu-lair", "kr-arcade", "zuzu-showdown"]
+    assert order[5] == "memory-dungeon"
+    assert order[6:8] == ["cthulhuquarium", "kind-economy"]
     assert order.index("shifting-desks") > order.index("zuzu-shifting-lands")
     assert order.index("weird-humboldt") > order.index("shifting-desks")
     assert order.index("slime-city") > order.index("weird-humboldt")
@@ -179,6 +183,21 @@ def test_emperor_of_dust_graduated_to_playtest_normal():
     assert overrides["emperor-of-dust"]["priority"] == "normal"
 
 
+def test_rainbow_space_princess_graduated_to_playtest_normal():
+    """Silas 2026-10-21 put Rainbow Space Princess in the creative focus tier; in the 2026-11-28 PT
+    session he directed finishing its roadmap for human playtests. The finite roadmap is verified
+    complete (projects/rainbow-bullet-hell-space-princess/READINESS-DOSSIER-2026-11-28.md)."""
+    priority = yaml.safe_load(PRIORITY.read_text(encoding="utf-8")) or {}
+    order = priority.get("order") or []
+    assert order.count("rainbow-bullet-hell-space-princess") == 1
+    assert order.index("rainbow-bullet-hell-space-princess") > order.index("emperor-of-dust")
+
+    raw = yaml.safe_load(OVERRIDES.read_text(encoding="utf-8")) or {}
+    overrides = {item["slug"]: item for item in raw.get("overrides", [])}
+    assert overrides["rainbow-bullet-hell-space-princess"]["status"] == "playtest"
+    assert overrides["rainbow-bullet-hell-space-princess"]["priority"] == "normal"
+
+
 def test_remaining_creative_focus_projects_are_active_and_high_priority():
     """2026-10-21: do not let creative focus silently become a label-only promise.
 
@@ -194,14 +213,15 @@ def test_remaining_creative_focus_projects_are_active_and_high_priority():
     Silas's direction ("normal priority and set for 'playtest'"). The three stay and lead.
     2026-11-22 PT: Emperor of Dust joins playtest on Silas's direction ("swapped to
     normal 'playtest' priority"). The remaining two stay and lead.
+    2026-11-28 PT: Rainbow Bullet Hell Space Princess joins playtest on Silas's direction
+    ("close rainbow ... and be ready for human playtests"). Save the Plumber stays and leads.
     """
     focus = {
-        "rainbow-bullet-hell-space-princess",
         "save-the-plumber",
     }
     data = yaml.safe_load(PRIORITY.read_text(encoding="utf-8")) or {}
     # 2026-11-19 PT: slime-city no longer sits ahead of the tier (playtest handoff).
-    assert set(data["order"][0:2]) == focus
+    assert set(data["order"][0:1]) == focus
     raw = yaml.safe_load(OVERRIDES.read_text(encoding="utf-8")) or {}
     overrides = {row["slug"]: row for row in raw.get("overrides", [])}
     for slug in focus:
