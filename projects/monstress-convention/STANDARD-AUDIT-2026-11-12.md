@@ -48,6 +48,8 @@ I audited four games against the main-game standard: Every Villain Tactics, MONS
 
 **B) Characters.** This is an authored comedy duo, which argues for a Silas exception like Zuzu Gamebook's; ask him. If not granted, add a light "press pass": Iris's coat/camera palette (`utils/monstrique/characterModels.ts` already has `outfit`/`wardrobe` fields) plus a reporter specialty (Snoop / Charmer / Shutterbug) that adds one alternate hotspot line per room.
 
+**B resolved (Silas, 2026-11-28 PT):** *"No customized character, they play as iris."* The customization item is waived for MONSTRIQUE; no press pass.
+
 **C) Achievements** (`monstress-convention-*`)
 
 Award all of these from a shared `achievementsFor(prev, next)` called in both stores' `commit()`. No mature-only items, so the general edition can earn everything.
