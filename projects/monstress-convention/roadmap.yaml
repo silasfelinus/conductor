@@ -370,17 +370,19 @@ tasks:
   - id: t-021
     milestone: m3
     title: "Render the shipped cutscenes: painted 2D panels and animated key shots"
-    status: ready
-    owner: null
+    status: claimed
+    owner: worker
     passes: 0
     stakes: reversible
     depends_on: [t-017]
-    updated: '2026-11-27T23:45:00Z'
+    updated: '2026-11-28T03:41:17Z'
     note: >-
       Cold Open, Your New Client, Elbow Deep, A Cold Kiss (mature only) and Get the Car:
       queue painted panel art per shot from utils/monstrique/cutscenes.ts, optionally
       image-to-video for key shots, and play them in the cutscene player with captions and
       a skip. General and mature art never mixed; never replays on load.
+    claimed_by: 20261128T0300Z-art-p6d
+    claimed_at: '2026-11-28T03:41:17Z'
   - id: t-022
     milestone: m2
     title: "Chapter 2, Beach Hex: drive-in and Francesca's science-cinema"
