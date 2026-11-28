@@ -39,30 +39,7 @@
 #
 # Status values: pending, needs-prompt (no prompt written yet; never rendered)
 
-images:
-  - project: tarot-studio
-    priority: 60
-    card:
-      status: pending
-      image_path: projects/images/tarot-studio-card.webp
-      size: 512x768
-      engine: krea2
-      prompt: >-
-        A friendly brass robot fortune teller seated at a round velvet table inside a starry violet tent,
-        fanning out a spread of glowing painted tarot cards decorated with suns and moons, a crystal orb and
-        three candles casting warm gold light, a softly glowing wheel of twelve constellations on the canvas
-        wall behind, luminous storybook illustration, jewel-tone palette, tall vertical framing.
-    hero:
-      status: pending
-      image_path: projects/images/tarot-studio-hero.webp
-      size: 1280x720
-      engine: krea2
-      prompt: >-
-        A wide moonlit observatory garden where a tall woman with bright rainbow-dyed hair and a small round
-        teal robot sit together at a stone table laid with a glowing three-card tarot spread, a great brass
-        orrery of turning planets rising overhead, zodiac constellations shimmering across a deep violet sky,
-        paper lanterns and wildflowers lining the garden path, luminous storybook illustration, cinematic wide
-        landscape.
+images: []
 requests:
 - id: creation-burst-tom-tomtum-the-monastery-of-the-long-quiet
   last_art_job_id: 21617
@@ -13824,108 +13801,6 @@ requests:
     down to green lands far below, a young heroine and a small boy watching from a cloud bridge,
     cinematic storybook animation still, richly painted, soft dawn lighting, clear staging,
     16:9 widescreen composition, every surface bare and unmarked
-- id: hopeful-hues-tile-circus-jewel-0-v2
-  last_art_job_id: 77427
-  source: hopeful-hues
-  status: done
-  priority: 1000
-  auto_submit: true
-  target_repo: silasfelinus/kind_robots
-  project_slug: hopeful-hues
-  lane: game-art
-  image_path: public/images/hopeful-hues/tiles/circus/jewel-0.webp
-  source_url: /images/hopeful-hues/tiles/circus/jewel-0.webp
-  page_url: https://kindrobots.org/play/hopeful-hues
-  variant: icon
-  label: 'Hopeful Hues tile: The Ember and Glass Street Circus Ember Club (re-render: v1 read
-    as a flame like Torch Flame)'
-  engine: krea2
-  size: 1024x1024
-  negative_prompt: text, letters, words, numbers, logo, watermark, signature, frame border,
-    grid, collage, multiple objects, cropped object, photograph, photorealistic, 3d render,
-    blurry, low quality, dark muddy background, flame, fire, torch, candle
-  prompt: A single circus juggling club, a bowling-pin shaped club with a round knob handle,
-    glossy tangerine orange body with one pale cream stripe at the neck, standing upright
-    and tilted slightly, one object only, a single game tile icon centered on a soft rounded
-    square with a gentle glowing pale background, bold readable silhouette that reads instantly
-    at small sizes, glossy candy highlights, warm hopecore storybook 2D hand-painted game
-    illustration, ember orange, flame gold, smoky plum and glass aqua palette, cozy cobblestone
-    glow, rounded friendly shapes, unlettered surfaces
-- id: hopeful-hues-tile-dustneon-jewel-4-v2
-  last_art_job_id: 77428
-  source: hopeful-hues
-  status: done
-  priority: 1000
-  auto_submit: true
-  target_repo: silasfelinus/kind_robots
-  project_slug: hopeful-hues
-  lane: game-art
-  image_path: public/images/hopeful-hues/tiles/dustneon/jewel-4.webp
-  source_url: /images/hopeful-hues/tiles/dustneon/jewel-4.webp
-  page_url: https://kindrobots.org/play/hopeful-hues
-  variant: icon
-  label: 'Hopeful Hues tile: Dust and Neon Cactus Flower (re-render: v1 read as a star like
-    Disco Sun)'
-  engine: krea2
-  size: 1024x1024
-  negative_prompt: text, letters, words, numbers, logo, watermark, signature, frame border,
-    grid, collage, multiple objects, cropped object, photograph, photorealistic, 3d render,
-    blurry, low quality, dark muddy background, star, sun, starburst, sparkle
-  prompt: A single small round green cactus pad with one big soft sunset coral cactus bloom
-    on top, rounded cup-shaped petals, coral and fresh green, one object only, a single game
-    tile icon centered on a soft rounded square with a gentle glowing pale background, bold
-    readable silhouette that reads instantly at small sizes, glossy candy highlights, dreamy
-    desert art festival hopecore cutecore 2D hand-painted storybook game illustration, dusty
-    pastel and glowing neon palette of dusty rose, sand, sunset coral, neon cyan, magenta
-    and ultraviolet violet, rounded friendly shapes, soft glow, unlettered surfaces
-- id: superkate-spectrum-orb-prismatic-gold-v2
-  last_art_job_id: 77429
-  source: kr-arcade
-  status: done
-  priority: 1000
-  auto_submit: true
-  target_repo: silasfelinus/kind_robots
-  project_slug: kr-arcade
-  lane: arcade
-  image_path: public/images/arcade/superkate-spectrum/orbs/prismatic-gold.webp
-  source_url: /images/arcade/superkate-spectrum/orbs/prismatic-gold.webp
-  page_url: https://kindrobots.org/arcade
-  variant: icon
-  label: 'Superkate''s Spectrum orb: prismatic gold (re-render: v1 read as rainbow, not gold)'
-  engine: krea2
-  size: 1024x1024
-  negative_prompt: text, letters, words, numbers, logo, watermark, signature, multiple objects,
-    cropped orb, frame border, photograph, photorealistic, 3d render, blurry, low quality,
-    small orb, empty margin, vignette, rainbow colored orb, multicolor orb
-  prompt: a gleaming faceted crystal orb of rich warm gold all the way through, honey gold
-    and amber glass, thin gold rim, premium 2D western animation game sprite, vivid saturated
-    gold, neon glass shine, strong readable silhouette at small sizes, one perfectly round
-    orb that fills almost the entire square edge to edge, on a plain deep indigo background,
-    every surface bare and unmarked
-- id: superkate-spectrum-orb-prismatic-lime-v2
-  last_art_job_id: 77430
-  source: kr-arcade
-  status: done
-  priority: 1000
-  auto_submit: true
-  target_repo: silasfelinus/kind_robots
-  project_slug: kr-arcade
-  lane: arcade
-  image_path: public/images/arcade/superkate-spectrum/orbs/prismatic-lime.webp
-  source_url: /images/arcade/superkate-spectrum/orbs/prismatic-lime.webp
-  page_url: https://kindrobots.org/arcade
-  variant: icon
-  label: 'Superkate''s Spectrum orb: prismatic lime (re-render: v1 orb was too small in frame)'
-  engine: krea2
-  size: 1024x1024
-  negative_prompt: text, letters, words, numbers, logo, watermark, signature, multiple objects,
-    cropped orb, frame border, photograph, photorealistic, 3d render, blurry, low quality,
-    small orb, empty margin, vignette, rainbow colored orb, multicolor orb
-  prompt: an iridescent faceted crystal orb tinted bright lime green all the way through,
-    refracting light through lime prisms with a thin gold rim, premium 2D western animation
-    game sprite, vivid saturated lime, neon glass shine, strong readable silhouette at small
-    sizes, one perfectly round orb that fills almost the entire square edge to edge, on a
-    plain deep indigo background, every surface bare and unmarked
 - id: ruler-hooked-console-events-nursery-reeds
   last_art_job_id: 77544
   source: ruler-hooked
@@ -13938,19 +13813,19 @@ requests:
   source_url: https://media.acrocatranch.com/images/ruler-hooked/events/nursery-reeds.webp
   page_url: https://kindrobots.org/plan/projects/ruler-hooked
   variant: image
-  label: "Ruler Hooked console: daily proclamation: The Nursery Reed Parade"
+  label: 'Ruler Hooked console: daily proclamation: The Nursery Reed Parade'
   engine: krea2
   size: 1344x768
   negative_prompt: photorealistic, photograph, 3d render, cgi, cartoon, chibi, anime, glossy
     digital painting, blurry, low quality, deformed, extra limbs, bad hands, cropped
-  prompt: psychedelic rainbow screenprinted fantasy illustration, punchy magenta cyan acid yellow and
-    emerald inks, confident hand-carved linework, expressive characters, slight imperfect ink
-    alignment and fine halftone texture on smooth saturated paper. Three reed-keepers kneeling in
-    shallow turquoise water, planting upright green reed shoots in rows, woven baskets of
-    seedlings on the muddy bank, small golden koi visible beneath the water, pink morning light. a
-    printed scene seen at eye level, the townsfolk facing the viewer, every page, scroll and paper
-    in the scene bare blank paper. every surface left bare and unmarked, blank clean untouched
-    surfaces, one single uncropped scene reaching every edge
+  prompt: psychedelic rainbow screenprinted fantasy illustration, punchy magenta cyan acid
+    yellow and emerald inks, confident hand-carved linework, expressive characters, slight
+    imperfect ink alignment and fine halftone texture on smooth saturated paper. Three reed-keepers
+    kneeling in shallow turquoise water, planting upright green reed shoots in rows, woven
+    baskets of seedlings on the muddy bank, small golden koi visible beneath the water, pink
+    morning light. a printed scene seen at eye level, the townsfolk facing the viewer, every
+    page, scroll and paper in the scene bare blank paper. every surface left bare and unmarked,
+    blank clean untouched surfaces, one single uncropped scene reaching every edge
 - id: ruler-hooked-console-events-orchard-basket
   last_art_job_id: 77545
   source: ruler-hooked
@@ -13963,19 +13838,19 @@ requests:
   source_url: https://media.acrocatranch.com/images/ruler-hooked/events/orchard-basket.webp
   page_url: https://kindrobots.org/plan/projects/ruler-hooked
   variant: image
-  label: "Ruler Hooked console: daily proclamation: Robin and Ash's Floating Orchard"
+  label: 'Ruler Hooked console: daily proclamation: Robin and Ash''s Floating Orchard'
   engine: krea2
   size: 1344x768
   negative_prompt: photorealistic, photograph, 3d render, cgi, cartoon, chibi, anime, glossy
     digital painting, blurry, low quality, deformed, extra limbs, bad hands, cropped
-  prompt: psychedelic rainbow screenprinted fantasy illustration, punchy magenta cyan acid yellow and
-    emerald inks, confident hand-carved linework, expressive characters, slight imperfect ink
-    alignment and fine halftone texture on smooth saturated paper. Two orchard workers in bright
-    tunics on a low wooden dock lower a broad wicker basket of red and yellow apples into the
-    lake, a spotted perch beneath the ripples, flowering apple trees on the opposite bank. a
-    printed scene seen at eye level, the townsfolk facing the viewer, every page, scroll and paper
-    in the scene bare blank paper. every surface left bare and unmarked, blank clean untouched
-    surfaces, one single uncropped scene reaching every edge
+  prompt: psychedelic rainbow screenprinted fantasy illustration, punchy magenta cyan acid
+    yellow and emerald inks, confident hand-carved linework, expressive characters, slight
+    imperfect ink alignment and fine halftone texture on smooth saturated paper. Two orchard
+    workers in bright tunics on a low wooden dock lower a broad wicker basket of red and yellow
+    apples into the lake, a spotted perch beneath the ripples, flowering apple trees on the
+    opposite bank. a printed scene seen at eye level, the townsfolk facing the viewer, every
+    page, scroll and paper in the scene bare blank paper. every surface left bare and unmarked,
+    blank clean untouched surfaces, one single uncropped scene reaching every edge
 - id: ruler-hooked-console-events-bridge-watch
   last_art_job_id: 77546
   source: ruler-hooked
@@ -13988,19 +13863,20 @@ requests:
   source_url: https://media.acrocatranch.com/images/ruler-hooked/events/bridge-watch.webp
   page_url: https://kindrobots.org/plan/projects/ruler-hooked
   variant: image
-  label: "Ruler Hooked console: daily proclamation: A Bridge Made of Promises"
+  label: 'Ruler Hooked console: daily proclamation: A Bridge Made of Promises'
   engine: krea2
   size: 1344x768
   negative_prompt: photorealistic, photograph, 3d render, cgi, cartoon, chibi, anime, glossy
     digital painting, blurry, low quality, deformed, extra limbs, bad hands, cropped
-  prompt: psychedelic rainbow screenprinted fantasy illustration, punchy magenta cyan acid yellow and
-    emerald inks, confident hand-carved linework, expressive characters, slight imperfect ink
-    alignment and fine halftone texture on smooth saturated paper. Three carpenters in rolled
-    sleeves replace wooden planks on a narrow arched footbridge, hammers and a stack of fresh
-    boards at their feet, a broad silver sturgeon visible below the bridge in clear water, strong
-    afternoon sunlight. a printed scene seen at eye level, the townsfolk facing the viewer, every
-    page, scroll and paper in the scene bare blank paper. every surface left bare and unmarked,
-    blank clean untouched surfaces, one single uncropped scene reaching every edge
+  prompt: psychedelic rainbow screenprinted fantasy illustration, punchy magenta cyan acid
+    yellow and emerald inks, confident hand-carved linework, expressive characters, slight
+    imperfect ink alignment and fine halftone texture on smooth saturated paper. Three carpenters
+    in rolled sleeves replace wooden planks on a narrow arched footbridge, hammers and a stack
+    of fresh boards at their feet, a broad silver sturgeon visible below the bridge in clear
+    water, strong afternoon sunlight. a printed scene seen at eye level, the townsfolk facing
+    the viewer, every page, scroll and paper in the scene bare blank paper. every surface
+    left bare and unmarked, blank clean untouched surfaces, one single uncropped scene reaching
+    every edge
 - id: ruler-hooked-console-events-quill-correction
   last_art_job_id: 77547
   source: ruler-hooked
@@ -14013,19 +13889,19 @@ requests:
   source_url: https://media.acrocatranch.com/images/ruler-hooked/events/quill-correction.webp
   page_url: https://kindrobots.org/plan/projects/ruler-hooked
   variant: image
-  label: "Ruler Hooked console: daily proclamation: A Correction from Quill"
+  label: 'Ruler Hooked console: daily proclamation: A Correction from Quill'
   engine: krea2
   size: 1344x768
   negative_prompt: photorealistic, photograph, 3d render, cgi, cartoon, chibi, anime, glossy
     digital painting, blurry, low quality, deformed, extra limbs, bad hands, cropped
-  prompt: psychedelic rainbow screenprinted fantasy illustration, punchy magenta cyan acid yellow and
-    emerald inks, confident hand-carved linework, expressive characters, slight imperfect ink
-    alignment and fine halftone texture on smooth saturated paper. A royal messenger in a violet
-    coat pins a large clean cream sheet to a wooden noticeboard beside the castle gate, villagers
-    in colorful clothing watching with relieved faces, small wax seals, bright morning light. a
-    printed scene seen at eye level, the townsfolk facing the viewer, every page, scroll and paper
-    in the scene bare blank paper. every surface left bare and unmarked, blank clean untouched
-    surfaces, one single uncropped scene reaching every edge
+  prompt: psychedelic rainbow screenprinted fantasy illustration, punchy magenta cyan acid
+    yellow and emerald inks, confident hand-carved linework, expressive characters, slight
+    imperfect ink alignment and fine halftone texture on smooth saturated paper. A royal messenger
+    in a violet coat pins a large clean cream sheet to a wooden noticeboard beside the castle
+    gate, villagers in colorful clothing watching with relieved faces, small wax seals, bright
+    morning light. a printed scene seen at eye level, the townsfolk facing the viewer, every
+    page, scroll and paper in the scene bare blank paper. every surface left bare and unmarked,
+    blank clean untouched surfaces, one single uncropped scene reaching every edge
 - id: ruler-hooked-console-events-fen-seventeen-encores
   last_art_job_id: 77548
   source: ruler-hooked
@@ -14038,19 +13914,19 @@ requests:
   source_url: https://media.acrocatranch.com/images/ruler-hooked/events/fen-seventeen-encores.webp
   page_url: https://kindrobots.org/plan/projects/ruler-hooked
   variant: image
-  label: "Ruler Hooked console: daily proclamation: Fen's Seventeenth Encore"
+  label: 'Ruler Hooked console: daily proclamation: Fen''s Seventeenth Encore'
   engine: krea2
   size: 1344x768
   negative_prompt: photorealistic, photograph, 3d render, cgi, cartoon, chibi, anime, glossy
     digital painting, blurry, low quality, deformed, extra limbs, bad hands, cropped
-  prompt: psychedelic rainbow screenprinted fantasy illustration, punchy magenta cyan acid yellow and
-    emerald inks, confident hand-carved linework, expressive characters, slight imperfect ink
-    alignment and fine halftone texture on smooth saturated paper. A busy tavern with a lute
-    player on a raised wooden platform, villagers clapping and laughing at long tables, a tipped
-    open coin pouch and tankards on the nearest table, magenta lanterns and amber light. a printed
-    scene seen at eye level, the townsfolk facing the viewer, every page, scroll and paper in the
-    scene bare blank paper. every surface left bare and unmarked, blank clean untouched surfaces,
-    one single uncropped scene reaching every edge
+  prompt: psychedelic rainbow screenprinted fantasy illustration, punchy magenta cyan acid
+    yellow and emerald inks, confident hand-carved linework, expressive characters, slight
+    imperfect ink alignment and fine halftone texture on smooth saturated paper. A busy tavern
+    with a lute player on a raised wooden platform, villagers clapping and laughing at long
+    tables, a tipped open coin pouch and tankards on the nearest table, magenta lanterns and
+    amber light. a printed scene seen at eye level, the townsfolk facing the viewer, every
+    page, scroll and paper in the scene bare blank paper. every surface left bare and unmarked,
+    blank clean untouched surfaces, one single uncropped scene reaching every edge
 - id: ruler-hooked-console-events-mossy-moon
   last_art_job_id: 77549
   source: ruler-hooked
@@ -14063,19 +13939,20 @@ requests:
   source_url: https://media.acrocatranch.com/images/ruler-hooked/events/mossy-moon.webp
   page_url: https://kindrobots.org/plan/projects/ruler-hooked
   variant: image
-  label: "Ruler Hooked console: daily proclamation: Mossy's Moonwater"
+  label: 'Ruler Hooked console: daily proclamation: Mossy''s Moonwater'
   engine: krea2
   size: 1344x768
   negative_prompt: photorealistic, photograph, 3d render, cgi, cartoon, chibi, anime, glossy
     digital painting, blurry, low quality, deformed, extra limbs, bad hands, cropped
-  prompt: psychedelic rainbow screenprinted fantasy illustration, punchy magenta cyan acid yellow and
-    emerald inks, confident hand-carved linework, expressive characters, slight imperfect ink
-    alignment and fine halftone texture on smooth saturated paper. A gloved gardener pours glowing
-    pale-blue liquid from a round glass bottle onto a row of enormous turnips with violet leaves,
-    low stone garden wall, full moon in a deep indigo sky, two astonished druids nearby. a printed
-    scene seen at eye level, the townsfolk facing the viewer, every page, scroll and paper in the
-    scene bare blank paper. every surface left bare and unmarked, blank clean untouched surfaces,
-    one single uncropped scene reaching every edge
+  prompt: psychedelic rainbow screenprinted fantasy illustration, punchy magenta cyan acid
+    yellow and emerald inks, confident hand-carved linework, expressive characters, slight
+    imperfect ink alignment and fine halftone texture on smooth saturated paper. A gloved
+    gardener pours glowing pale-blue liquid from a round glass bottle onto a row of enormous
+    turnips with violet leaves, low stone garden wall, full moon in a deep indigo sky, two
+    astonished druids nearby. a printed scene seen at eye level, the townsfolk facing the
+    viewer, every page, scroll and paper in the scene bare blank paper. every surface left
+    bare and unmarked, blank clean untouched surfaces, one single uncropped scene reaching
+    every edge
 - id: ruler-hooked-console-events-cordelia-lanterns
   last_art_job_id: 77550
   source: ruler-hooked
@@ -14088,19 +13965,20 @@ requests:
   source_url: https://media.acrocatranch.com/images/ruler-hooked/events/cordelia-lanterns.webp
   page_url: https://kindrobots.org/plan/projects/ruler-hooked
   variant: image
-  label: "Ruler Hooked console: daily proclamation: Cordelia's Lantern Drill"
+  label: 'Ruler Hooked console: daily proclamation: Cordelia''s Lantern Drill'
   engine: krea2
   size: 1344x768
   negative_prompt: photorealistic, photograph, 3d render, cgi, cartoon, chibi, anime, glossy
     digital painting, blurry, low quality, deformed, extra limbs, bad hands, cropped
-  prompt: psychedelic rainbow screenprinted fantasy illustration, punchy magenta cyan acid yellow and
-    emerald inks, confident hand-carved linework, expressive characters, slight imperfect ink
-    alignment and fine halftone texture on smooth saturated paper. A line of castle guards in blue
-    tunics holding colored glass lanterns above their heads in a cobbled alley, one raises an
-    emerald lantern and another a red lantern, townspeople watching from open doorways at
-    twilight. a printed scene seen at eye level, the townsfolk facing the viewer, every page,
-    scroll and paper in the scene bare blank paper. every surface left bare and unmarked, blank
-    clean untouched surfaces, one single uncropped scene reaching every edge
+  prompt: psychedelic rainbow screenprinted fantasy illustration, punchy magenta cyan acid
+    yellow and emerald inks, confident hand-carved linework, expressive characters, slight
+    imperfect ink alignment and fine halftone texture on smooth saturated paper. A line of
+    castle guards in blue tunics holding colored glass lanterns above their heads in a cobbled
+    alley, one raises an emerald lantern and another a red lantern, townspeople watching from
+    open doorways at twilight. a printed scene seen at eye level, the townsfolk facing the
+    viewer, every page, scroll and paper in the scene bare blank paper. every surface left
+    bare and unmarked, blank clean untouched surfaces, one single uncropped scene reaching
+    every edge
 - id: ruler-hooked-console-events-gristle-abacus
   last_art_job_id: 77551
   source: ruler-hooked
@@ -14113,19 +13991,19 @@ requests:
   source_url: https://media.acrocatranch.com/images/ruler-hooked/events/gristle-abacus.webp
   page_url: https://kindrobots.org/plan/projects/ruler-hooked
   variant: image
-  label: "Ruler Hooked console: daily proclamation: Gristle's Emergency Abacus"
+  label: 'Ruler Hooked console: daily proclamation: Gristle''s Emergency Abacus'
   engine: krea2
   size: 1344x768
   negative_prompt: photorealistic, photograph, 3d render, cgi, cartoon, chibi, anime, glossy
     digital painting, blurry, low quality, deformed, extra limbs, bad hands, cropped
-  prompt: psychedelic rainbow screenprinted fantasy illustration, punchy magenta cyan acid yellow and
-    emerald inks, confident hand-carved linework, expressive characters, slight imperfect ink
-    alignment and fine halftone texture on smooth saturated paper. A close view of a large wooden
-    abacus with six brass coins arranged in a row beside it, closed ledgers stacked on a counting
-    desk, two clerks in plain brown coats looking at the coins, warm yellow desk lamp. a printed
-    scene seen at eye level, the townsfolk facing the viewer, every page, scroll and paper in the
-    scene bare blank paper. every surface left bare and unmarked, blank clean untouched surfaces,
-    one single uncropped scene reaching every edge
+  prompt: psychedelic rainbow screenprinted fantasy illustration, punchy magenta cyan acid
+    yellow and emerald inks, confident hand-carved linework, expressive characters, slight
+    imperfect ink alignment and fine halftone texture on smooth saturated paper. A close view
+    of a large wooden abacus with six brass coins arranged in a row beside it, closed ledgers
+    stacked on a counting desk, two clerks in plain brown coats looking at the coins, warm
+    yellow desk lamp. a printed scene seen at eye level, the townsfolk facing the viewer,
+    every page, scroll and paper in the scene bare blank paper. every surface left bare and
+    unmarked, blank clean untouched surfaces, one single uncropped scene reaching every edge
 - id: ruler-hooked-console-events-vex-millwheel
   last_art_job_id: 77552
   source: ruler-hooked
@@ -14138,19 +14016,20 @@ requests:
   source_url: https://media.acrocatranch.com/images/ruler-hooked/events/vex-millwheel.webp
   page_url: https://kindrobots.org/plan/projects/ruler-hooked
   variant: image
-  label: "Ruler Hooked console: daily proclamation: Vex's Very Efficient Wheel"
+  label: 'Ruler Hooked console: daily proclamation: Vex''s Very Efficient Wheel'
   engine: krea2
   size: 1344x768
   negative_prompt: photorealistic, photograph, 3d render, cgi, cartoon, chibi, anime, glossy
     digital painting, blurry, low quality, deformed, extra limbs, bad hands, cropped
-  prompt: psychedelic rainbow screenprinted fantasy illustration, punchy magenta cyan acid yellow and
-    emerald inks, confident hand-carved linework, expressive characters, slight imperfect ink
-    alignment and fine halftone texture on smooth saturated paper. A wooden waterwheel raised just
-    above the turquoise river, brass gears and a taut drive belt attached to a small mill, two
-    merchants examining the mechanism on a grassy bank, flattened reeds below, bright coral and
-    cyan daylight. a printed scene seen at eye level, the townsfolk facing the viewer, every page,
-    scroll and paper in the scene bare blank paper. every surface left bare and unmarked, blank
-    clean untouched surfaces, one single uncropped scene reaching every edge
+  prompt: psychedelic rainbow screenprinted fantasy illustration, punchy magenta cyan acid
+    yellow and emerald inks, confident hand-carved linework, expressive characters, slight
+    imperfect ink alignment and fine halftone texture on smooth saturated paper. A wooden
+    waterwheel raised just above the turquoise river, brass gears and a taut drive belt attached
+    to a small mill, two merchants examining the mechanism on a grassy bank, flattened reeds
+    below, bright coral and cyan daylight. a printed scene seen at eye level, the townsfolk
+    facing the viewer, every page, scroll and paper in the scene bare blank paper. every surface
+    left bare and unmarked, blank clean untouched surfaces, one single uncropped scene reaching
+    every edge
 - id: ruler-hooked-console-events-bakers-truce
   last_art_job_id: 77553
   source: ruler-hooked
@@ -14163,19 +14042,19 @@ requests:
   source_url: https://media.acrocatranch.com/images/ruler-hooked/events/bakers-truce.webp
   page_url: https://kindrobots.org/plan/projects/ruler-hooked
   variant: image
-  label: "Ruler Hooked console: daily proclamation: The Bakers' Flour Truce"
+  label: 'Ruler Hooked console: daily proclamation: The Bakers'' Flour Truce'
   engine: krea2
   size: 1344x768
   negative_prompt: photorealistic, photograph, 3d render, cgi, cartoon, chibi, anime, glossy
     digital painting, blurry, low quality, deformed, extra limbs, bad hands, cropped
-  prompt: psychedelic rainbow screenprinted fantasy illustration, punchy magenta cyan acid yellow and
-    emerald inks, confident hand-carved linework, expressive characters, slight imperfect ink
-    alignment and fine halftone texture on smooth saturated paper. Two flour-covered bakers with
-    rolled sleeves shake hands across a low market table piled with fresh loaves, two rolling pins
-    resting beside an open sack of flour, smiling villagers around them, warm yellow awnings. a
-    printed scene seen at eye level, the townsfolk facing the viewer, every page, scroll and paper
-    in the scene bare blank paper. every surface left bare and unmarked, blank clean untouched
-    surfaces, one single uncropped scene reaching every edge
+  prompt: psychedelic rainbow screenprinted fantasy illustration, punchy magenta cyan acid
+    yellow and emerald inks, confident hand-carved linework, expressive characters, slight
+    imperfect ink alignment and fine halftone texture on smooth saturated paper. Two flour-covered
+    bakers with rolled sleeves shake hands across a low market table piled with fresh loaves,
+    two rolling pins resting beside an open sack of flour, smiling villagers around them,
+    warm yellow awnings. a printed scene seen at eye level, the townsfolk facing the viewer,
+    every page, scroll and paper in the scene bare blank paper. every surface left bare and
+    unmarked, blank clean untouched surfaces, one single uncropped scene reaching every edge
 - id: ruler-hooked-console-events-ink-delivery
   last_art_job_id: 77554
   source: ruler-hooked
@@ -14188,19 +14067,20 @@ requests:
   source_url: https://media.acrocatranch.com/images/ruler-hooked/events/ink-delivery.webp
   page_url: https://kindrobots.org/plan/projects/ruler-hooked
   variant: image
-  label: "Ruler Hooked console: daily proclamation: The Royal Ink Shipment"
+  label: 'Ruler Hooked console: daily proclamation: The Royal Ink Shipment'
   engine: krea2
   size: 1344x768
   negative_prompt: photorealistic, photograph, 3d render, cgi, cartoon, chibi, anime, glossy
     digital painting, blurry, low quality, deformed, extra limbs, bad hands, cropped
-  prompt: psychedelic rainbow screenprinted fantasy illustration, punchy magenta cyan acid yellow and
-    emerald inks, confident hand-carved linework, expressive characters, slight imperfect ink
-    alignment and fine halftone texture on smooth saturated paper. A wooden delivery crate open on
-    a castle writing desk, round glass jars of bright red, blue and emerald ink nestled in straw,
-    an oversized quill and blank parchment beside the crate, pink and blue light from a tall
-    window. a printed scene seen at eye level, the townsfolk facing the viewer, every page, scroll
-    and paper in the scene bare blank paper. every surface left bare and unmarked, blank clean
-    untouched surfaces, one single uncropped scene reaching every edge
+  prompt: psychedelic rainbow screenprinted fantasy illustration, punchy magenta cyan acid
+    yellow and emerald inks, confident hand-carved linework, expressive characters, slight
+    imperfect ink alignment and fine halftone texture on smooth saturated paper. A wooden
+    delivery crate open on a castle writing desk, round glass jars of bright red, blue and
+    emerald ink nestled in straw, an oversized quill and blank parchment beside the crate,
+    pink and blue light from a tall window. a printed scene seen at eye level, the townsfolk
+    facing the viewer, every page, scroll and paper in the scene bare blank paper. every surface
+    left bare and unmarked, blank clean untouched surfaces, one single uncropped scene reaching
+    every edge
 - id: ruler-hooked-console-events-crown-gone-missing
   last_art_job_id: 77555
   source: ruler-hooked
@@ -14213,19 +14093,19 @@ requests:
   source_url: https://media.acrocatranch.com/images/ruler-hooked/events/crown-gone-missing.webp
   page_url: https://kindrobots.org/plan/projects/ruler-hooked
   variant: image
-  label: "Ruler Hooked console: daily proclamation: The Missing Crown"
+  label: 'Ruler Hooked console: daily proclamation: The Missing Crown'
   engine: krea2
   size: 1344x768
   negative_prompt: photorealistic, photograph, 3d render, cgi, cartoon, chibi, anime, glossy
     digital painting, blurry, low quality, deformed, extra limbs, bad hands, cropped
-  prompt: psychedelic rainbow screenprinted fantasy illustration, punchy magenta cyan acid yellow and
-    emerald inks, confident hand-carved linework, expressive characters, slight imperfect ink
-    alignment and fine halftone texture on smooth saturated paper. An open round biscuit tin on a
-    castle kitchen counter, a small jeweled gold crown nestled among golden biscuits, a cook in an
-    apron and a uniformed guard peering into the tin, a new brass padlock on the counter. a
-    printed scene seen at eye level, the townsfolk facing the viewer, every page, scroll and paper
-    in the scene bare blank paper. every surface left bare and unmarked, blank clean untouched
-    surfaces, one single uncropped scene reaching every edge
+  prompt: psychedelic rainbow screenprinted fantasy illustration, punchy magenta cyan acid
+    yellow and emerald inks, confident hand-carved linework, expressive characters, slight
+    imperfect ink alignment and fine halftone texture on smooth saturated paper. An open round
+    biscuit tin on a castle kitchen counter, a small jeweled gold crown nestled among golden
+    biscuits, a cook in an apron and a uniformed guard peering into the tin, a new brass padlock
+    on the counter. a printed scene seen at eye level, the townsfolk facing the viewer, every
+    page, scroll and paper in the scene bare blank paper. every surface left bare and unmarked,
+    blank clean untouched surfaces, one single uncropped scene reaching every edge
 - id: ruler-hooked-console-events-mooring-rations
   last_art_job_id: 77556
   source: ruler-hooked
@@ -14238,19 +14118,20 @@ requests:
   source_url: https://media.acrocatranch.com/images/ruler-hooked/events/mooring-rations.webp
   page_url: https://kindrobots.org/plan/projects/ruler-hooked
   variant: image
-  label: "Ruler Hooked console: daily proclamation: Biscuit Crumbs at the Mooring"
+  label: 'Ruler Hooked console: daily proclamation: Biscuit Crumbs at the Mooring'
   engine: krea2
   size: 1344x768
   negative_prompt: photorealistic, photograph, 3d render, cgi, cartoon, chibi, anime, glossy
     digital painting, blurry, low quality, deformed, extra limbs, bad hands, cropped
-  prompt: psychedelic rainbow screenprinted fantasy illustration, punchy magenta cyan acid yellow and
-    emerald inks, confident hand-carved linework, expressive characters, slight imperfect ink
-    alignment and fine halftone texture on smooth saturated paper. Boat workers sitting on a
-    lakeside pier crumble biscuits into clear blue water, a school of silvery mullet gathering
-    beneath floating crumbs, moored wooden boats with coiled ropes, pink sunrise reflected on the
-    surface. a printed scene seen at eye level, the townsfolk facing the viewer, every page,
-    scroll and paper in the scene bare blank paper. every surface left bare and unmarked, blank
-    clean untouched surfaces, one single uncropped scene reaching every edge
+  prompt: psychedelic rainbow screenprinted fantasy illustration, punchy magenta cyan acid
+    yellow and emerald inks, confident hand-carved linework, expressive characters, slight
+    imperfect ink alignment and fine halftone texture on smooth saturated paper. Boat workers
+    sitting on a lakeside pier crumble biscuits into clear blue water, a school of silvery
+    mullet gathering beneath floating crumbs, moored wooden boats with coiled ropes, pink
+    sunrise reflected on the surface. a printed scene seen at eye level, the townsfolk facing
+    the viewer, every page, scroll and paper in the scene bare blank paper. every surface
+    left bare and unmarked, blank clean untouched surfaces, one single uncropped scene reaching
+    every edge
 - id: ruler-hooked-console-events-border-bells
   last_art_job_id: 77557
   source: ruler-hooked
@@ -14263,19 +14144,19 @@ requests:
   source_url: https://media.acrocatranch.com/images/ruler-hooked/events/border-bells.webp
   page_url: https://kindrobots.org/plan/projects/ruler-hooked
   variant: image
-  label: "Ruler Hooked console: daily proclamation: The Bell Beneath the Ferry"
+  label: 'Ruler Hooked console: daily proclamation: The Bell Beneath the Ferry'
   engine: krea2
   size: 1344x768
   negative_prompt: photorealistic, photograph, 3d render, cgi, cartoon, chibi, anime, glossy
     digital painting, blurry, low quality, deformed, extra limbs, bad hands, cropped
-  prompt: psychedelic rainbow screenprinted fantasy illustration, punchy magenta cyan acid yellow and
-    emerald inks, confident hand-carved linework, expressive characters, slight imperfect ink
-    alignment and fine halftone texture on smooth saturated paper. A wooden ferry with a ferryman
-    leaning over its rail, clear turquoise water revealing a broad sturgeon and a small bronze
-    bell among submerged stones beneath the hull, a striped ferry shelter on the distant shore. a
-    printed scene seen at eye level, the townsfolk facing the viewer, every page, scroll and paper
-    in the scene bare blank paper. every surface left bare and unmarked, blank clean untouched
-    surfaces, one single uncropped scene reaching every edge
+  prompt: psychedelic rainbow screenprinted fantasy illustration, punchy magenta cyan acid
+    yellow and emerald inks, confident hand-carved linework, expressive characters, slight
+    imperfect ink alignment and fine halftone texture on smooth saturated paper. A wooden
+    ferry with a ferryman leaning over its rail, clear turquoise water revealing a broad sturgeon
+    and a small bronze bell among submerged stones beneath the hull, a striped ferry shelter
+    on the distant shore. a printed scene seen at eye level, the townsfolk facing the viewer,
+    every page, scroll and paper in the scene bare blank paper. every surface left bare and
+    unmarked, blank clean untouched surfaces, one single uncropped scene reaching every edge
 - id: ruler-hooked-console-events-lamplighter
   last_art_job_id: 77558
   source: ruler-hooked
@@ -14288,19 +14169,19 @@ requests:
   source_url: https://media.acrocatranch.com/images/ruler-hooked/events/lamplighter.webp
   page_url: https://kindrobots.org/plan/projects/ruler-hooked
   variant: image
-  label: "Ruler Hooked console: daily proclamation: A Light in the Fog"
+  label: 'Ruler Hooked console: daily proclamation: A Light in the Fog'
   engine: krea2
   size: 1344x768
   negative_prompt: photorealistic, photograph, 3d render, cgi, cartoon, chibi, anime, glossy
     digital painting, blurry, low quality, deformed, extra limbs, bad hands, cropped
-  prompt: psychedelic rainbow screenprinted fantasy illustration, punchy magenta cyan acid yellow and
-    emerald inks, confident hand-carved linework, expressive characters, slight imperfect ink
-    alignment and fine halftone texture on smooth saturated paper. A lamplighter holding a bright
-    amber lantern on a narrow foggy dock, another amber light glowing from a large fish just
-    beneath the dark teal water, violet fog and distant roofs, wide view at dusk. a printed scene
-    seen at eye level, the townsfolk facing the viewer, every page, scroll and paper in the scene
-    bare blank paper. every surface left bare and unmarked, blank clean untouched surfaces, one
-    single uncropped scene reaching every edge
+  prompt: psychedelic rainbow screenprinted fantasy illustration, punchy magenta cyan acid
+    yellow and emerald inks, confident hand-carved linework, expressive characters, slight
+    imperfect ink alignment and fine halftone texture on smooth saturated paper. A lamplighter
+    holding a bright amber lantern on a narrow foggy dock, another amber light glowing from
+    a large fish just beneath the dark teal water, violet fog and distant roofs, wide view
+    at dusk. a printed scene seen at eye level, the townsfolk facing the viewer, every page,
+    scroll and paper in the scene bare blank paper. every surface left bare and unmarked,
+    blank clean untouched surfaces, one single uncropped scene reaching every edge
 - id: ruler-hooked-console-events-rainbow-bunting
   last_art_job_id: 77559
   source: ruler-hooked
@@ -14313,19 +14194,20 @@ requests:
   source_url: https://media.acrocatranch.com/images/ruler-hooked/events/rainbow-bunting.webp
   page_url: https://kindrobots.org/plan/projects/ruler-hooked
   variant: image
-  label: "Ruler Hooked console: daily proclamation: Bunting for Every Weather"
+  label: 'Ruler Hooked console: daily proclamation: Bunting for Every Weather'
   engine: krea2
   size: 1344x768
   negative_prompt: photorealistic, photograph, 3d render, cgi, cartoon, chibi, anime, glossy
     digital painting, blurry, low quality, deformed, extra limbs, bad hands, cropped
-  prompt: psychedelic rainbow screenprinted fantasy illustration, punchy magenta cyan acid yellow and
-    emerald inks, confident hand-carved linework, expressive characters, slight imperfect ink
-    alignment and fine halftone texture on smooth saturated paper. Villagers in bright coats
-    stretch strings of red, orange, yellow, green, blue and violet fabric pennants across a
-    village square, rain droplets on the cloth, puddles reflecting the colors, sunlit clouds
-    behind the rooftops. a printed scene seen at eye level, the townsfolk facing the viewer, every
-    page, scroll and paper in the scene bare blank paper. every surface left bare and unmarked,
-    blank clean untouched surfaces, one single uncropped scene reaching every edge
+  prompt: psychedelic rainbow screenprinted fantasy illustration, punchy magenta cyan acid
+    yellow and emerald inks, confident hand-carved linework, expressive characters, slight
+    imperfect ink alignment and fine halftone texture on smooth saturated paper. Villagers
+    in bright coats stretch strings of red, orange, yellow, green, blue and violet fabric
+    pennants across a village square, rain droplets on the cloth, puddles reflecting the colors,
+    sunlit clouds behind the rooftops. a printed scene seen at eye level, the townsfolk facing
+    the viewer, every page, scroll and paper in the scene bare blank paper. every surface
+    left bare and unmarked, blank clean untouched surfaces, one single uncropped scene reaching
+    every edge
 - id: ruler-hooked-console-events-dry-bank
   last_art_job_id: 77560
   source: ruler-hooked
@@ -14338,19 +14220,20 @@ requests:
   source_url: https://media.acrocatranch.com/images/ruler-hooked/events/dry-bank.webp
   page_url: https://kindrobots.org/plan/projects/ruler-hooked
   variant: image
-  label: "Ruler Hooked console: daily proclamation: The Exposed Lakebed"
+  label: 'Ruler Hooked console: daily proclamation: The Exposed Lakebed'
   engine: krea2
   size: 1344x768
   negative_prompt: photorealistic, photograph, 3d render, cgi, cartoon, chibi, anime, glossy
     digital painting, blurry, low quality, deformed, extra limbs, bad hands, cropped
-  prompt: psychedelic rainbow screenprinted fantasy illustration, punchy magenta cyan acid yellow and
-    emerald inks, confident hand-carved linework, expressive characters, slight imperfect ink
-    alignment and fine halftone texture on smooth saturated paper. Two shore workers kneel beside
-    a receding lake, laying smooth stones and bundles of reeds along cracked mud, old iron anchors
-    exposed in the foreground, ducks standing on the remaining waterline, strong afternoon light.
-    a printed scene seen at eye level, the townsfolk facing the viewer, every page, scroll and
-    paper in the scene bare blank paper. every surface left bare and unmarked, blank clean
-    untouched surfaces, one single uncropped scene reaching every edge
+  prompt: psychedelic rainbow screenprinted fantasy illustration, punchy magenta cyan acid
+    yellow and emerald inks, confident hand-carved linework, expressive characters, slight
+    imperfect ink alignment and fine halftone texture on smooth saturated paper. Two shore
+    workers kneel beside a receding lake, laying smooth stones and bundles of reeds along
+    cracked mud, old iron anchors exposed in the foreground, ducks standing on the remaining
+    waterline, strong afternoon light. a printed scene seen at eye level, the townsfolk facing
+    the viewer, every page, scroll and paper in the scene bare blank paper. every surface
+    left bare and unmarked, blank clean untouched surfaces, one single uncropped scene reaching
+    every edge
 - id: ruler-hooked-console-events-ferry-rest
   last_art_job_id: 77561
   source: ruler-hooked
@@ -14363,16 +14246,17 @@ requests:
   source_url: https://media.acrocatranch.com/images/ruler-hooked/events/ferry-rest.webp
   page_url: https://kindrobots.org/plan/projects/ruler-hooked
   variant: image
-  label: "Ruler Hooked console: daily proclamation: An Hour Without a Bell"
+  label: 'Ruler Hooked console: daily proclamation: An Hour Without a Bell'
   engine: krea2
   size: 1344x768
   negative_prompt: photorealistic, photograph, 3d render, cgi, cartoon, chibi, anime, glossy
     digital painting, blurry, low quality, deformed, extra limbs, bad hands, cropped
-  prompt: psychedelic rainbow screenprinted fantasy illustration, punchy magenta cyan acid yellow and
-    emerald inks, confident hand-carved linework, expressive characters, slight imperfect ink
-    alignment and fine halftone texture on smooth saturated paper. A ferry crew in simple bright
-    tunics rests on wooden benches beside a moored boat, one worker sleeps against a coil of rope,
-    another repairs a paddle, an empty brass bell hangs above the quiet landing, pink sunset. a
-    printed scene seen at eye level, the townsfolk facing the viewer, every page, scroll and paper
-    in the scene bare blank paper. every surface left bare and unmarked, blank clean untouched
-    surfaces, one single uncropped scene reaching every edge
+  prompt: psychedelic rainbow screenprinted fantasy illustration, punchy magenta cyan acid
+    yellow and emerald inks, confident hand-carved linework, expressive characters, slight
+    imperfect ink alignment and fine halftone texture on smooth saturated paper. A ferry crew
+    in simple bright tunics rests on wooden benches beside a moored boat, one worker sleeps
+    against a coil of rope, another repairs a paddle, an empty brass bell hangs above the
+    quiet landing, pink sunset. a printed scene seen at eye level, the townsfolk facing the
+    viewer, every page, scroll and paper in the scene bare blank paper. every surface left
+    bare and unmarked, blank clean untouched surfaces, one single uncropped scene reaching
+    every edge
