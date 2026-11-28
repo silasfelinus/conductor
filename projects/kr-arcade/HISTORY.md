@@ -1252,3 +1252,55 @@ Follow-up to kind_robots#3700. Queued is not rendered: confirm the Achievement C
 
 Accepted under 2026-11-27 main-game-standard owner direction. Kind Robots #3700 merged; Actions 38676891948 contract shard 2 completed successfully, including achievement catalog/trigger/popup/artwork and hydration checks. Current main source still wires score/mastery and event awards, deduplication, pending award retries, earned strip artwork and gallery sections. Prior recorded production evidence: 128 active arcade badges fetched successfully and AchievementRecord #913 created. Signed-in popup, event-award walkthrough and 390/768/1440 visual observations remain nonblocking human playtest follow-up; no new live account mutation or manual verification claimed.
 <!-- note:end t-157 -->
+
+## t-090 — Glitch Garden depth slice 3: Autumn and Winter
+
+<!-- note:begin t-090 -->
+CABINETS.md section 13, Glitch Garden (Centipede riff), slice 3 of 5: Autumn and Winter. The upgrade is "The Four Seasons of the Glitch". Spec: projects/kr-arcade/depth-pass/CABINETS.md -- read the game's section first; this slice's scope is item 3 under its '#### Slices', and 'Rules for every slice' at the top applies. Code: kind_robots utils/arcade/games/ (registry slug glitch-garden). Silas, 2026-10-11: "I need an assessment done of the other arcade games. I want the same level of quality improvements, they should not just be thin veneers of the old games. But newer, better, even more awesome."
+
+Partial Autumn/Winter depth slice: authored Leaf Pile Lane with five increasingly difficult fronts, moving wind-blown leaf shields that soak shots, the Rake Up special objective with golden trowel, a distinctive autumn palette, refreshed progression/save tests, and seeded deterministic leaf-capture/regression tests. Implementation on worker/kr-arcade-t-090-20261122T061917Z-ae72. Remaining t-090: Pumpkin Patch, new Autumn/Winter foes and bosses, both winter gardens, full eight-garden pacing, visual QA. After this partial PR merges, return t-090 to ready rather than done.
+
+Leaf Pile Lane merged as a partial Autumn increment; remaining Pumpkin Patch, new foes and bosses, Winter gardens, campaign QA.
+
+Added the sixth authored Glitch Garden, Pumpkin Patch, with five waves, 2x2 breakable seed-sprouting gourds, collision-danger rollers, five-second slow-down inchworms, Great Pumpkin objective, autumn art palette and three-phase Gourd Hydra season boss. Expanded deterministic cabinet tests, campaign and pilot regressions. Branch worker/kr-arcade-t-090-pumpkin-20261122T084350Z-8ac2. Partial scope: Winter gardens 7-8, frost/snow foes, Frost Millipede and full eight-garden pacing/QA still remain. After merge return t-090 to ready, not done.
+
+2026-11-22 PT: Kind Robots PR #5568 merged after all latest-head substantive checks completed green. Partial campaign slice delivered; remaining documented scope stays ready.
+
+Partial winter slice: authored Frost Frame Greenhouse and Snowball Hill layouts and ten escalating waves; winter-specific mechanics and bosses remain.
+
+PR silasfelinus/kind_robots#5572 merged at 2026-11-22T11:47:47Z (d75deb7), adding two winter garden layouts and ten authored waves. Partial t-090 only: frost and heater interactions, icy movement, winter-specific enemies, Frost Millipede boss, deterministic regression tests and full campaign QA remain. Return to ready for implementation.
+
+Winter follow-up implemented spreading frost, four spray-lit greenhouse heaters, Warm Up objective, Snowball Hill icy inertia and shootable rolling snowballs with Snow Day special wave. Added deterministic cabinet regression tests and updated eight-garden campaign contracts. Await latest-head CI; Frost Millipede and full eight-garden QA remain before t-090 is done.
+
+2026-11-26 PT, Silas-directed finite-roadmap clearing: verified
+https://github.com/silasfelinus/kind_robots/pull/5575 merged as partial scope. Frost
+sprite, Frost Millipede and eight-garden QA remain. Returned to ready; no human approval
+or deployment inferred.
+
+Implemented a seeded moving Frost Sprite that freezes exposed lamps, respects lit heaters, can be sprayed for points, and resets across waves and deaths. Added targeted winter regression coverage. Partial scope; Frost Millipede and full campaign QA remain.
+
+kind_robots#6014 merged after all substantive latest-head checks passed. Frost Sprite shipped; Frost Millipede and full eight-garden QA remain.
+
+Implemented the fourth seasonal boss at wave 44: three frost-armored phases, reflected heater attacks, collision in the final coil, and campaign progression. Updated four test suites. Remaining full campaign and rendered QA; no task completion claimed.
+
+Kind Robots #6016 merged; all ten returned latest-head Actions workflows completed successfully. Frost Millipede shipped. Remaining original crow-bot scope audit and eight-garden agent-owned campaign/render QA; return to ready, not done. Human playtest verdict is outside roadmap.
+
+Fixed winter fixture destruction by sprinkler blasts, beetles and mower clears; restore missing authored heaters on wave entry. Added winter fixture survival, boss-entry recovery, heater reflection and full 44-wave seeded campaign pilot assertions. Existing Autumn tests already verify crow swoop and prism protection. Branch worker/kr-arcade-t090-heater-73d5b9, head 1ca1fec6; runtime CI not yet verified. Close only if full scope and applicable checks pass.
+
+Kind Robots #6035 merged cf8c2730; latest head 4cff1d83 has fifteen successful checks and one skipped autofix. Crow-bot already implemented and covered by Autumn tests. Audit of Actions steps found the full-year Glitch Garden test is registered under test:arcade-engine but not executed by the PR cabinet workflow. Remaining engineering acceptance: wire the focused Glitch Garden suite into PR CI and confirm the full-year run. No human confirmation gate.
+
+Added independent path-filtered Glitch Garden campaign workflow invoking all eight existing cabinet engine suites and future Glitch Garden suites. This executes the merged #6035 full-year pilot and heater regression in PR CI; branch worker/kr-arcade-t090-engine-ci-4fa831, head 0d1451bc. No manual validation gate. Close only after the focused engine contracts actually pass.
+
+PRs #6035 and #6043 merged (189f6d2e). All substantive checks green; actual focused engine run 140902705822 passed all eight suites, including seeded 44 encounters in 64517 ticks, 331937 points, winter heater survival, crow and frost bosses. Human playtest outside roadmap.
+<!-- note:end t-090 -->
+
+## t-091 — Glitch Garden depth slice 4: The Midnight Garden and the endings
+
+<!-- note:begin t-091 -->
+CABINETS.md section 13, Glitch Garden (Centipede riff), slice 4 of 5: The Midnight Garden and the endings. The upgrade is "The Four Seasons of the Glitch". Spec: projects/kr-arcade/depth-pass/CABINETS.md -- read the game's section first; this slice's scope is item 4 under its '#### Slices', and 'Rules for every slice' at the top applies. Code: kind_robots utils/arcade/games/ (registry slug glitch-garden). Silas, 2026-10-11: "I need an assessment done of the other arcade games. I want the same level of quality improvements, they should not just be thin veneers of the old games. But newer, better, even more awesome."
+Owner explicitly directed starting t-091 before t-090's independent CI-only PR merges. Retain the dependency for final acceptance; winter implementation is already on main.
+
+Owner-directed parallel implementation: authored five dark remix waves and separate eight-trowel secret route, three Root Kernel field rewrites with four-colour beam gate and season foes, normal and true-ending credits, lifetime champion save flags and Overgrown selection. Added focused save/unlock/core/ending contracts. Branch worker/kr-arcade-t091-midnight-a4c619 head 36225639. Runtime CI and final full-scope acceptance pending; retain dependency on t-090. No human gate.
+
+PR #6045 merged b914a81b; all substantive checks passed, dedicated job 140902715518 confirms secret save unlock, real four-colour beam trajectories across all three core phases, true and normal endings, Overgrown. Remaining broader live-input playtest belongs to post-roadmap handoff; no missing slice-4 features identified.
+<!-- note:end t-091 -->

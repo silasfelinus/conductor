@@ -79,15 +79,12 @@ tasks:
       images asserted as live.
   - id: t-028
     title: 'Main-game standard: audit and close the gaps for Save the Plumber'
-    status: review
-    owner: worker
-    claimed_by: plumber-album-20261128T035940Z-83b1fa
-    claimed_at: '2026-11-28T03:59:42Z'
+    status: ready
     milestone: m6
     stakes: reversible
     passes: 0
     depends_on: []
-    updated: '2026-11-28T04:00:51.908Z'
+    updated: '2026-11-28T08:58:21.870Z'
     note: |-
       Main-game standard: use STANDARD-AUDIT-2026-11-12.md and docs/agents/main-game-standard.md. Verify title, settings, persistent saves, 12+ achievements (separate task), scrapbook, multiple painted endings, customizable heroine and three replay hooks. Recorded merges #5722, #5772, #5773, #5832, #5843, #5883, #5884, #5890, #5896 and #5901 delivered settings/contrast, achievement browser, separate New Game/Continue, three endings/epilogues, reset, taunts, reading options, name entry and repaired engine tests. Latest receipt #5901 at 9debf882 reports all 17 exact-head checks passed. Remaining: global account-backed saves and permanent unlocks across devices (reload, account isolation and reset), actual earned/deduplicated achievement records and generated badges, complete scrapbook including run outcomes and locked counts, distinct delivered painted ending plates, rendered finale/gallery screenshots and accessibility against the current main-game standard; do not repeat shipped controls. No production deployment verified. Keep ready until actual visual/acceptance evidence. Full prior note: ROADMAP-HISTORY-2026-11-26.md#t-028.
 
@@ -104,6 +101,8 @@ tasks:
       PR kind_robots#5974 merged at c46eede4; exact-head 27633a63 all 18 applicable checks passed (autofix skipped), including TypeScript, browser, viewport and contracts; branch janitor passed. Account-isolated client synchronization delivered. Remaining explicit conflict resolution, guest import decision, cross-device acceptance, scrapbook/ending art and final acceptance. Production deployment unverified.
 
       App branch worker/save-the-plumber-t-028-album-83b1fa at 2c9454d24b66c2e6b41c615013c47265cc9b0354 archives first campaign finales and game-over outcomes before continue resets, preserving heroine name, outcome, node, score, falls, time and collectible counts across slot deletion and cross-device merges. Collection shows latest 12 memories (bounded for shared 8 KiB save envelope), correct account/guest copy and pearl counts. Added validation, deduplication, merge, bounded history and actual game-over regression. Four-file diff verified; runtime CI pending. Partial t-028; explicit account conflict resolution and remaining generated art/acceptance still open.
+
+      Verified kind_robots#6049 merged at cb4302f0. All eleven implementation workflows and branch janitor completed successfully on exact head 6798655c. Persistent recent adventure memories, cross-device deduplication and retention after slot erasure delivered. Partial scope: explicit conflict resolution, guest import and outstanding generated art remain. Production deployment unverified.
   - id: t-029
     title: 'Save the Plumber achievement upgrade: 12 or more live achievements'
     status: done
