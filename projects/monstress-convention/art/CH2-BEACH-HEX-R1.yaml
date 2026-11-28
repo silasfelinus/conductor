@@ -1,0 +1,202 @@
+# MONSTRIQUE Chapter 2 "Beach Hex" art, general edition, round 1 (2026-11-28 PT).
+# Task monstress-convention/t-022: queue the chapter's art round first (backgrounds, cast figures), then build
+# the chapter. Silas gave standing permission to submit art requests. Queued is not delivered: each cell needs
+# a DONE ArtJob, an ArtImage id and a verified final URL before a later worker puts it into the game, and Silas
+# reviews before anything ships publicly (t-013 gate unchanged).
+# Source: STORY-BIBLE.md chapter plan row 2 and act spine (featured ex-member Francesca Stein, cut 1964; her
+# grudge: Odette sold her Hexblade designs as merch), Midnight City districts Hexwater Beach (Starlite Drive-In,
+# where the 1964 Beach Hex films still play: the 1964 reels and prop invoices) and Bolt Street (Francesca's
+# midnight science-cinema). Puzzles: the 1964 reel, Francesca's prop invoice, the scratched-out sleeve
+# (FRANCHISE-HISTORY: the original Beach Hex sleeve hides a scratched-out Francesca photograph). Ends with
+# Francesca's "I made five knives". Kind Robots prologue.ts already names the destination "Starlite Drive-In,
+# Hexwater Beach" and the knife stamp "STARLITE PICTURES · BEACH HEX · 1964".
+# Rooms (six): drive-in lot and screen, projection booth (1964 reel can on the shelf), snack bar (scratched sleeve
+# in the memorabilia case), Starlite Pictures office behind the screen (prop invoice on the desk spike), the
+# science-cinema lobby on Bolt Street, and Francesca's lab behind her cinema screen (the five-knife blueprint and
+# the empty five-slot case). Puzzle props are placed where hotspots can sit on them. 1344x768, unpeopled, lower
+# third open floor for cut-out figures, same krea2 lane and style as CH1-CAST-AND-MOTEL-R1.
+# Cast: Francesca Stein (Kind Robots characterModels.ts `francesca`: pale green patchwork skin, neat stitches,
+# small neck bolts, towering black beehive with white lightning streaks, lab coat over a 1960s cocktail dress,
+# goggles pushed up, soldering iron) gets a full-body stage figure and a four-head expression sheet. The bible
+# names no other Chapter 2 NPC, so two supporting witnesses are PROPOSED here under Silas's 2026-11-22 free
+# authority over clues and scenes: Clem, the Starlite's night projectionist since 1964 (keeper of the reels),
+# and Dee Dee, a bat-woman carhop at the snack bar (gossip route to the sleeve). Both are adults; the builder
+# may rename or drop them. Stage figures 832x1216 full body on plain light grey.
+# Spoiler rule: Draculina and any culprit stay off the art; Marta (the misdirect) too. The 1964 line-up appears
+# only as unnamed surf-era monster starlets on the screen and the sleeve. General edition: is_mature false,
+# comedy, adults only, fully clothed. Identity LoRAs are not trained, so cast_loras is false and every prompt
+# carries full identity prose. Private. priority 60 (game art). auto_submit: true.
+round: monstrique-ch2-beach-hex-1
+series: monstrique-ch2-beach-hex
+project_slug: monstress-convention
+designer: Monstrique Studio
+is_public: false
+is_mature: false
+cast_loras: false
+priority: 60
+auto_submit: true
+lanes:
+- key: krea2
+  label: Krea 2, painted 2D point-and-click adventure art
+  engine: krea2
+  prompt: prose
+subjects:
+- key: mc-ch2-bg-drive-in
+  lane: krea2
+  entity: monstrique-room
+  title: 'Background: Starlite Drive-In lot and screen, Hexwater Beach (drive-in)'
+  asset: monstress-convention/rooms/drive-in
+  size: 1344x768
+  seed: 1144001
+  prompt_prose: Hand-painted 2D point-and-click adventure game background painting, 1990s comedy adventure meets
+    modern HD cartoon, bold ink outlines, painted detail, saturated neon noir palette. The Starlite Drive-In at Hexwater
+    Beach at night, a faded 1960s seaside drive-in theatre. A giant weathered white movie screen on wooden scaffolding
+    fills the upper centre, flickering with a black-and-white beach-party picture of surfboards, a bonfire and a
+    rubber sea monster rising from the waves. Above it a tall neon sign shaped like a shooting star buzzes pink and
+    gold. Beyond the screen, moonlit surf rolls onto a pale beach between leaning palm trees. Rows of metal speaker
+    posts with clip-on speakers march across the lot, and a lone rusty finned convertible is parked at the left.
+    At the far left a low snack-bar hut glows with a neon hot-dog sign. At the far right a little wooden projection
+    booth throws a dusty beam of light over the lot, its door ajar. A narrow gravel path leads behind the screen
+    at the lower right. The gravel lot of the foreground lies open and deserted, an unpeopled stage for characters
+    to walk across. Nostalgic, moody and funny.
+- key: mc-ch2-bg-projection-booth
+  lane: krea2
+  entity: monstrique-room
+  title: 'Background: drive-in projection booth with the 1964 reel (projection-booth)'
+  asset: monstress-convention/rooms/projection-booth
+  size: 1344x768
+  seed: 1144002
+  prompt_prose: Hand-painted 2D point-and-click adventure game background painting, bold ink outlines, painted detail,
+    warm amber light cut by a bright projector beam. Interior of a cramped plywood projection booth at a 1960s
+    drive-in at night. At the left two hulking green carbon-arc film projectors on iron pedestals aim through small
+    square port holes in the wall, one throwing a dusty white beam out into the dark. In the centre a rewind bench
+    with hand cranks, a film splicer and a coil of loose film spilling onto the floor. At the right a tall metal
+    rack of round silver film cans, and on its middle shelf one dented rusty can stands apart, labelled with a strip
+    of masking tape that says 1964 in red marker. A percolator coffee pot, a chipped mug, an overflowing ashtray,
+    a battered stool, a wall clock and faded studio schedules pinned to the plywood. The scuffed floorboards of
+    the lower third lie open and unpeopled. Cosy, cluttered and comic.
+- key: mc-ch2-bg-snack-bar
+  lane: krea2
+  entity: monstrique-room
+  title: 'Background: drive-in snack bar with the scratched 1964 sleeve (snack-bar)'
+  asset: monstress-convention/rooms/snack-bar
+  size: 1344x768
+  seed: 1144003
+  prompt_prose: Hand-painted 2D point-and-click adventure game background painting, bold ink outlines, painted detail,
+    candy-coloured neon and fluorescent light. Interior of a retro 1960s drive-in snack bar at night. A long chrome
+    and turquoise counter runs across the middle with a glowing popcorn machine, a rolling hot-dog grill, a soda
+    fountain with three taps and a stack of red-and-white paper trays. Above it a menu board of hot dogs, malts and
+    clam rolls with price tiles. On the back wall at the upper right a glass-fronted memorabilia case holds an old
+    vinyl surf-record sleeve showing four glamorous monster starlets on a moonlit beach beside a drive-in screen,
+    and a fifth face at the end of the line-up has been scratched away to bare grey cardboard. Below the case a
+    jukebox glows, and a cardboard cut-out of a dancing hot dog waves from the left. Black-and-white checkerboard
+    tiles fill the lower third, open and unpeopled. Bright, greasy and comic.
+- key: mc-ch2-bg-starlite-office
+  lane: krea2
+  entity: monstrique-room
+  title: 'Background: Starlite Pictures office behind the screen, prop invoice (starlite-office)'
+  asset: monstress-convention/rooms/starlite-office
+  size: 1344x768
+  seed: 1144004
+  prompt_prose: Hand-painted 2D point-and-click adventure game background painting, bold ink outlines, painted detail,
+    dim green banker's-lamp light. A dusty forgotten 1960s film studio office tucked into the timber scaffolding
+    behind a giant drive-in movie screen, its pale canvas back glowing with a reversed flicker above the room. At
+    the left a heavy oak desk with a banker's lamp, a black rotary phone, an adding machine and a tall metal spike
+    stacked with yellowed carbon-copy invoices, the top sheet curling. Behind the desk a row of grey filing cabinets,
+    one drawer hanging open and stuffed with old paperwork. At the right a wooden crate of beach-party movie props
+    spills out a papier-mache sea monster head, rubber tentacles, a striped surfboard and a coconut bra on a hook.
+    A wall of faded publicity stills of surfers and monster starlets, a squat iron safe and a slow desk fan. Warped
+    floorboards fill the lower third, open and unpeopled. Musty, secretive and comic.
+- key: mc-ch2-bg-cinema-lobby
+  lane: krea2
+  entity: monstrique-room
+  title: "Background: Francesca's midnight science-cinema lobby, Bolt Street (science-cinema)"
+  asset: monstress-convention/rooms/science-cinema
+  size: 1344x768
+  seed: 1144005
+  prompt_prose: Hand-painted 2D point-and-click adventure game background painting, bold ink outlines, painted detail,
+    electric green and violet light. The art deco lobby of a tiny midnight science-fiction movie house on a rainy
+    city street at night. Through tall glass doors at the left a marquee of chasing light bulbs and a lightning-bolt
+    neon sign glow in the rain. In the centre a curved candy counter with a crackling miniature Tesla coil inside
+    a glass bell jar, jars of glowing green punch, licorice and popcorn in striped bags. Lobby cards of 1950s and
+    1960s science-horror pictures line the walls, giant ants, flying saucers, brains in jars and robots with ray
+    guns. A small brass ticket window at the far left, a lightning-bolt chandelier overhead and a velvet rope before
+    heavy purple auditorium curtains at the right, with a sign that says Midnight Show. A worn red carpet fills
+    the lower third, open and unpeopled. Quirky, electric and inviting.
+- key: mc-ch2-bg-francesca-lab
+  lane: krea2
+  entity: monstrique-room
+  title: "Background: Francesca's lab behind the cinema screen, five-knife blueprint (francesca-lab)"
+  asset: monstress-convention/rooms/francesca-lab
+  size: 1344x768
+  seed: 1144006
+  prompt_prose: Hand-painted 2D point-and-click adventure game background painting, bold ink outlines, painted detail,
+    crackling electric blue light against warm lamplight. A mad-science prop workshop built on the stage behind
+    a small cinema's movie screen, the back of the screen glowing overhead with a reversed old science-fiction
+    film. Two tall Tesla coils at the far left and right throw arcs of blue lightning. Left of centre a big faded
+    blueprint pinned to the wall shows five ornate jewelled 1960s stage daggers drawn side by side, each numbered
+    one to five. Beneath it on a long workbench lies an open walnut presentation case lined with red velvet, with
+    five dagger-shaped hollows, all five empty. Around it a soldering iron, safety goggles, brass gears, glass gems,
+    tins of gold paint and pencil sketches. At the right a riveted steel operating slab holds a half-built tin robot
+    costume. Coils of cable snake across the boards. The stage floor of the lower third lies open and unpeopled.
+    Brilliant, eccentric and wistful.
+- key: mc-ch2-francesca-stage
+  lane: krea2
+  entity: monstrique-cast
+  title: Francesca Stein, full-body stage figure
+  asset: monstress-convention/cast/francesca/stage
+  size: 832x1216
+  seed: 1144007
+  prompt_prose: Hand-painted 2D point-and-click adventure game stage figure, full body head to toe, standing alone
+    on a plain light grey background, bold ink outlines and flat cel shading. Francesca Stein, a tall stitched-together
+    scientist actress, an adult woman who looks about forty-five, with pale green patchwork skin joined by neat
+    surgical stitches, two small silver bolts at the sides of her neck and a towering black beehive hairdo shot
+    through with white lightning-bolt streaks. Sharp dark eyes, arched brows and plum lipstick. She wears a crisp
+    white lab coat with the sleeves rolled up over a knee-length purple 1960s cocktail dress, sensible black heels
+    and brass safety goggles pushed up into the beehive. She holds a smoking soldering iron in one hand and a rolled
+    blueprint under the other arm, weight on one hip, one eyebrow raised with brilliant impatience. Witty, proud
+    and a little dangerous.
+- key: mc-ch2-francesca-expressions
+  lane: krea2
+  entity: monstrique-cast
+  title: Francesca Stein expression sheet (dialogue portraits)
+  asset: monstress-convention/cast/francesca/expressions
+  size: 1344x768
+  seed: 1144008
+  prompt_prose: Hand-painted 2D cartoon character expression sheet on a plain light grey background, bold ink outlines
+    and flat cel shading, four head-and-shoulders studies of the same stitched adult woman side by side. First
+    a cool neutral look, second an impatient scowl with narrowed eyes and pursed plum lips, third a delighted mad-scientist
+    grin with goggles pulled down over her eyes and a spark crackling by her ear, fourth a proud, rueful half-smile
+    with her eyes lowered, remembering something she built long ago. Francesca Stein, a scientist actress who looks
+    about forty-five, pale green patchwork skin with neat surgical stitches, small silver neck bolts, a towering
+    black beehive with white lightning-bolt streaks, brass safety goggles and the collar of a white lab coat over
+    a purple dress. Brilliant, prickly and secretly sentimental.
+- key: mc-ch2-clem-stage
+  lane: krea2
+  entity: monstrique-cast
+  title: Clem, Starlite night projectionist since 1964, full-body stage figure (proposed NPC)
+  asset: monstress-convention/cast/clem/stage
+  size: 832x1216
+  seed: 1144009
+  prompt_prose: Hand-painted 2D point-and-click adventure game stage figure, full body head to toe, standing alone
+    on a plain light grey background, bold ink outlines and flat cel shading. Clem, the night projectionist of a
+    seaside drive-in, a wiry stooped adult man about eighty who has run the same projectors since 1964. A proud
+    white pompadour, thick black-rimmed glasses, bushy eyebrows, a toothpick in the corner of his mouth and a squint
+    from sixty years of projector light. He wears a short-sleeved teal bowling shirt printed with little film reels,
+    a brown knitted cardigan, baggy trousers and tartan carpet slippers, with a flashlight clipped to his belt. He
+    hugs a big silver film reel to his chest like a baby and squints sideways, suspicious and sentimental. Cranky,
+    loyal and funny.
+- key: mc-ch2-deedee-stage
+  lane: krea2
+  entity: monstrique-cast
+  title: Dee Dee, bat-woman carhop at the snack bar, full-body stage figure (proposed NPC)
+  asset: monstress-convention/cast/deedee/stage
+  size: 832x1216
+  seed: 1144010
+  prompt_prose: Hand-painted 2D point-and-click adventure game stage figure, full body head to toe, standing alone
+    on a plain light grey background, bold ink outlines and flat cel shading. Dee Dee, a perky drive-in carhop,
+    an adult bat-woman about twenty-five with lilac-grey fur at her temples, big pointed bat ears, a little upturned
+    bat nose, bright button eyes, two tiny fangs in a big gossipy grin and small leathery wings folded at her back.
+    She wears a 1960s carhop uniform, a teal short-sleeved dress to the knee with a pink apron, a paper soda-jerk
+    cap, a name badge and white roller skates. She balances a tray of root-beer floats on one hand and leans in
+    with the other hand cupped beside her mouth, mid-gossip. Bubbly, nosy and fun.
